@@ -44,39 +44,47 @@
       z-index: -1;
       top: 0;
       left: 0;
-      background-color: #000;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
       opacity: 0.4;
     }
 
     .auth-bg img {
-      width: 90px;
+      width: 100px;
+      margin-bottom: 15px;
     }
 
     .auth-login-form label {
       color: #fff;
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
     }
 
     .login_card {
-      border-radius: 10px;
-      padding: 40px 20px;
-      background-color: #0000001f;
-      backdrop-filter: blur(16px);
+      border-radius: 12px;
+      padding: 50px 30px;
+      background-color: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(18px);
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
     }
 
     .custom-btn {
       background: linear-gradient(to right, #a0e9ff, #b19cd9);
       color: white;
       border: none;
-      padding: 10px;
-      font-size: 16px;
+      padding: 12px;
+      font-size: 17px;
       font-weight: bold;
       border-radius: 8px;
       box-shadow: 0px 2px 5px rgba(160, 233, 255, 0.3);
       transition: 0.3s ease-in-out;
+      width: 100%;
+      margin-top: 10px;
     }
-
     .custom-btn:hover {
       filter: brightness(1.05);
       color: white;
