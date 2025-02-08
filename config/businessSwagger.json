@@ -1,0 +1,350 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Edify",
+        "description": "project description",
+        "version": "1.0"
+    },
+    "produces": ["application/json"],
+    "basePath": "/",
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "authorization",
+            "in": "header"
+        }
+    },
+    "paths": {
+        "/business/signUp": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "business-signUp-post",
+                "tags": ["Application Business"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "firstName",
+                        "in": "formData",
+                        "description": "Enter the firstName",
+                        "required": true,
+                        "type": "string",
+                        "value": "test"
+                    },
+                    {
+                        "name": "lastName",
+                        "in": "formData",
+                        "description": "Enter lastName ",
+                        "required": true,
+                        "type": "string",
+                        "value": "test"
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Enter the email",
+                        "required": true,
+                        "type": "string",
+                        "value": "test@gmail.com"
+                    },
+                    {
+                        "name": "phoneNumber",
+                        "in": "formData",
+                        "description": "Enter phone number",
+                        "required": true,
+                        "type": "string",
+                        "value": "+911010101010"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "Enter password",
+                        "required": true,
+                        "type": "string",
+                        "value": "123456"
+                    },
+                    {
+                        "name": "profilePicture",
+                        "in": "formData",
+                        "description": "Profile picture to upload",
+                        "required": false,
+                        "type": "file",
+                        "format": "binary",
+                        "maxLength": 5242880,
+                        "allowedMimeTypes": [
+                          "image/jpeg",
+                          "image/png"
+                        ]
+                    },
+                    {
+                        "name": "bio",
+                        "in": "formData",
+                        "description": "Enter bio",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "deviceToken",
+                        "in": "formData",
+                        "description": "Enter deviceToken",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "deviceType",
+                        "in": "formData",
+                        "description": "Enter deviceType",
+                        "enum": [1,2],
+                        "required": false,
+                        "type": "number",
+                        "value": "1"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        
+        "/business/login": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "business-login-post",
+                "tags": ["Application Business"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Enter the email",
+                        "required": true,
+                        "type": "string",
+                        "value": "test@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "Enter password",
+                        "required": true,
+                        "type": "string",
+                        "value": "123456"
+                    },
+                    {
+                        "name": "deviceToken",
+                        "in": "formData",
+                        "description": "Enter deviceToken",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "deviceType",
+                        "in": "formData",
+                        "description": "Enter deviceType",
+                        "enum": [1,2],
+                        "required": false,
+                        "type": "number",
+                        "value": "1"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+
+        "/business/updateProfile": {
+            "patch": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "business-updateProfile-post",
+                "tags": ["Application Business"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+                "parameters": [
+                    {
+                        "name": "firstName",
+                        "in": "formData",
+                        "description": "Enter the firstName",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "lastName",
+                        "in": "formData",
+                        "description": "Enter lastName ",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Enter the email",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "phoneNumber",
+                        "in": "formData",
+                        "description": "Enter phone number",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+
+        "/business/logout": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "business-logout-post",
+                "tags": ["Application Business"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": [
+					
+				],
+                "responses": {}
+            }
+        },
+
+        "/business/changePassword": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "business-changePassword-post",
+                "tags": ["Application Business"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+                "parameters": [
+                    {
+                        "name": "currentPassword",
+                        "in": "formData",
+                        "description": "Enter the currentPassword",
+                        "required": true,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "newPassword",
+                        "in": "formData",
+                        "description": "Enter newPassword ",
+                        "required": true,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+
+        "/business/forgotPassword": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "business-forgotPassword-post",
+                "tags": ["Application Business"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Enter the email",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+
+        "/business/sidIdGenerate": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "business-otsidIdGeneratepSend-post",
+                "tags": ["Application Business"],
+                "description": "",
+                "parameters": [
+                
+                ],
+                "responses": {}
+            }
+        },
+
+
+        "/business/otpSend": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "business-otpSend-post",
+                "tags": ["Application Business"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "phoneNumber",
+                        "in": "formData",
+                        "description": "Enter the phoneNumber",
+                        "required": false,
+                        "type": "string",
+                        "value": "1010101010"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+
+        "/business/otpVerify": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "business-otpVerify-post",
+                "tags": ["Application Business"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "otp",
+                        "in": "formData",
+                        "description": "Enter the otp",
+                        "required": false,
+                        "type": "string",
+                        "value": "1414"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+
+        "/business/resendOtp": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "business-resendOtp-post",
+                "tags": ["Application Business"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "phoneNumber",
+                        "in": "formData",
+                        "description": "Enter the phoneNumber",
+                        "required": false,
+                        "type": "string",
+                        "value": "1010101010"
+                    }
+                ],
+                "responses": {}
+            }
+        }
+
+    },
+    "definitions": {
+    }
+}

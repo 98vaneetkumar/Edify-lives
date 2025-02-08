@@ -1,0 +1,350 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Edify",
+        "description": "project description",
+        "version": "1.0"
+    },
+    "produces": ["application/json"],
+    "basePath": "/",
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "authorization",
+            "in": "header"
+        }
+    },
+    "paths": {
+        "/church/signUp": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-signUp-post",
+                "tags": ["Application Church"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "firstName",
+                        "in": "formData",
+                        "description": "Enter the firstName",
+                        "required": true,
+                        "type": "string",
+                        "value": "test"
+                    },
+                    {
+                        "name": "lastName",
+                        "in": "formData",
+                        "description": "Enter lastName ",
+                        "required": true,
+                        "type": "string",
+                        "value": "test"
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Enter the email",
+                        "required": true,
+                        "type": "string",
+                        "value": "test@gmail.com"
+                    },
+                    {
+                        "name": "phoneNumber",
+                        "in": "formData",
+                        "description": "Enter phone number",
+                        "required": true,
+                        "type": "string",
+                        "value": "+911010101010"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "Enter password",
+                        "required": true,
+                        "type": "string",
+                        "value": "123456"
+                    },
+                    {
+                        "name": "profilePicture",
+                        "in": "formData",
+                        "description": "Profile picture to upload",
+                        "required": false,
+                        "type": "file",
+                        "format": "binary",
+                        "maxLength": 5242880,
+                        "allowedMimeTypes": [
+                          "image/jpeg",
+                          "image/png"
+                        ]
+                    },
+                    {
+                        "name": "bio",
+                        "in": "formData",
+                        "description": "Enter bio",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "deviceToken",
+                        "in": "formData",
+                        "description": "Enter deviceToken",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "deviceType",
+                        "in": "formData",
+                        "description": "Enter deviceType",
+                        "enum": [1,2],
+                        "required": false,
+                        "type": "number",
+                        "value": "1"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        
+        "/church/login": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-login-post",
+                "tags": ["Application Church"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Enter the email",
+                        "required": true,
+                        "type": "string",
+                        "value": "test@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "Enter password",
+                        "required": true,
+                        "type": "string",
+                        "value": "123456"
+                    },
+                    {
+                        "name": "deviceToken",
+                        "in": "formData",
+                        "description": "Enter deviceToken",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "deviceType",
+                        "in": "formData",
+                        "description": "Enter deviceType",
+                        "enum": [1,2],
+                        "required": false,
+                        "type": "number",
+                        "value": "1"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+
+        "/church/updateProfile": {
+            "patch": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-updateProfile-post",
+                "tags": ["Application Church"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+                "parameters": [
+                    {
+                        "name": "firstName",
+                        "in": "formData",
+                        "description": "Enter the firstName",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "lastName",
+                        "in": "formData",
+                        "description": "Enter lastName ",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Enter the email",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "phoneNumber",
+                        "in": "formData",
+                        "description": "Enter phone number",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+
+        "/church/logout": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-logout-post",
+                "tags": ["Application Church"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": [
+					
+				],
+                "responses": {}
+            }
+        },
+
+        "/church/changePassword": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-changePassword-post",
+                "tags": ["Application Church"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+                "parameters": [
+                    {
+                        "name": "currentPassword",
+                        "in": "formData",
+                        "description": "Enter the currentPassword",
+                        "required": true,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "newPassword",
+                        "in": "formData",
+                        "description": "Enter newPassword ",
+                        "required": true,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+
+        "/church/forgotPassword": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-forgotPassword-post",
+                "tags": ["Application Church"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Enter the email",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+
+        "/church/sidIdGenerate": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-otsidIdGeneratepSend-post",
+                "tags": ["Application Church"],
+                "description": "",
+                "parameters": [
+                
+                ],
+                "responses": {}
+            }
+        },
+
+
+        "/church/otpSend": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-otpSend-post",
+                "tags": ["Application Church"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "phoneNumber",
+                        "in": "formData",
+                        "description": "Enter the phoneNumber",
+                        "required": false,
+                        "type": "string",
+                        "value": "1010101010"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+
+        "/church/otpVerify": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-otpVerify-post",
+                "tags": ["Application Church"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "otp",
+                        "in": "formData",
+                        "description": "Enter the otp",
+                        "required": false,
+                        "type": "string",
+                        "value": "1414"
+                    }
+                ],
+                "responses": {}
+            }
+        },
+
+        "/church/resendOtp": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-resendOtp-post",
+                "tags": ["Application Church"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "phoneNumber",
+                        "in": "formData",
+                        "description": "Enter the phoneNumber",
+                        "required": false,
+                        "type": "string",
+                        "value": "1010101010"
+                    }
+                ],
+                "responses": {}
+            }
+        }
+
+    },
+    "definitions": {
+    }
+}
