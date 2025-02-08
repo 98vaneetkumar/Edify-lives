@@ -25,7 +25,6 @@ module.exports = {
         countryCode: Joi.string().optional(),
         phoneNumber: Joi.string().required(),
         password: Joi.string().required(),
-        role: Joi.number().valid(0, 1, 2, 3, 4).optional(),
         location: Joi.string().optional(),
         latitude: Joi.string().optional(),
         longitude: Joi.string().optional(),
@@ -52,7 +51,7 @@ module.exports = {
         countryCode: payload.countryCode,
         phoneNumber: payload.phoneNumber,
         password: hashedPassword,
-        role: payload.role,
+        role: 1,
         location: payload.location,
         latitude: payload.latitude,
         longitude: payload.longitude,
@@ -304,10 +303,11 @@ module.exports = {
   },
   resendOtp: async (req, res) => {
     try {
-      const { phone } = req.body; //"+911010101010"; // Replace with dynamic input
+      const { countryCode,phoneNumber } = req.body; //"+911010101010"; // Replace with dynamic input
       const userExist = await Models.userModel.findOne({
         where: {
-          phoneNumber: req.body.phone,
+          countryCode: req.body.countryCode,
+          phoneNumber: req.body.phoneNumber,
         },
       });
 

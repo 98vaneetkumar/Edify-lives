@@ -119,15 +119,6 @@
                         "value": ""
                     },
                     {
-                        "name": "role",
-                        "in": "formData",
-                        "description": "Enter role",
-                        "enum": [0,1,2,3,4],
-                        "required": true,
-                        "type": "number",
-                        "value": "1"
-                    },
-                    {
                         "name": "hartOfService",
                         "in": "formData",
                         "description": "Enter hartOfService",
