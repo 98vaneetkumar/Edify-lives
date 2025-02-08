@@ -12,9 +12,9 @@ const flash = require("connect-flash");
 const indexRouter = require("./routes/index");
 const adminRouter = require("./routes/adminRouter")();
 const usersRouter = require("./routes/userRoute")();
-// const chruchRouter = require("./routes/churchRoute")();
-// const businessRouter = require("./routes/businessRoute")();
-// const nonProfitRouter = require("./routes/nonProfitRoute")();
+const chruchRouter = require("./routes/churchRouter")();
+const businessRouter = require("./routes/businessRouter")();
+const nonProfitRouter = require("./routes/nonProfitRouter")();
 
 const app = express();
 
