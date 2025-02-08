@@ -89,11 +89,11 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(null, swaggerOptions));
 app.use("/", indexRouter);
 app.use("/admin", adminRouter);
 app.use("/users", usersRouter);
-// app.use("/church", chruchRouter);
-// app.use("/business", businessRouter);
-// app.use("/nonProfit", nonProfitRouter);
+app.use("/church", chruchRouter);
+app.use("/business", businessRouter);
+app.use("/nonProfit", nonProfitRouter);
 
-// catch 404 and forward to error handler
+// catch 404 and forward to error handler 
 app.use(function (req, res, next) {
   next(createError(404));
 });
