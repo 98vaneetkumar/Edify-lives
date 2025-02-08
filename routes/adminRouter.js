@@ -5,7 +5,7 @@ const {authentication,forgotPasswordVerify} = require('../middlewares/authentica
 
 
 module.exports=function(){
-    // router.post('/login', controller.adminController.login);
+    router.get('/login', controller.adminController.login_page);
     // router.post('/logout', authentication, controller.adminController.logout);
 
     return router

@@ -1,0 +1,68 @@
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui">
+  <meta name="description" content="Vuexy admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template with unlimited possibilities.">
+  <meta name="keywords" content="admin template, Vuexy admin template, dashboard template, flat admin template, responsive admin template, web app">
+  <meta name="author" content="PIXINVENT">
+  <title>Edify Lives</title>
+  <link rel="shortcut icon" type="image/x-icon" href="../../assets/logo1.png">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600" rel="stylesheet">
+
+  <!-- BEGIN: Vendor CSS-->
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/vendors.min.css">
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/charts/apexcharts.css">
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/extensions/toastr.min.css">
+  <!-- END: Vendor CSS-->
+
+  <!-- BEGIN: Theme CSS-->
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/css/bootstrap-extended.css">
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/css/colors.css">
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/css/components.css">
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/dark-layout.css">
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/bordered-layout.css">
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/css/themes/semi-dark-layout.css">
+
+  <!-- BEGIN: Page CSS-->
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-menu.css">
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/css/pages/dashboard-ecommerce.css">
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/charts/chart-apex.css">
+  <link rel="stylesheet" type="text/css" href="../../../app-assets/css/plugins/extensions/ext-component-toastr.css">
+  <!-- END: Page CSS-->
+
+  <!-- summernote -->
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet" />
+  <!-- BEGIN: Custom CSS-->
+  <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <!-- END: Custom CSS-->
+
+  <% if(msg != '' || error !='' ) { %>
+  <div class="alert alert-success msg" style="position: absolute; z-index: 9999; color:black; background-color: white;top: 8%; left: 50%;text-align: center;">
+    <% if(msg !='' ) { %>
+    <span style="font-size: 15px; color: white; background-color:  #40bf40
+            ; padding: 10px;">
+      <%= msg %>
+    </span>
+    <% } else { %>
+    <span style="font-size: 15px; color: white; background-color:  red
+            ; padding: 10px; ">
+      <%= error %>
+    </span>
+    <% } %>
+  </div>
+  <% } %>
+
+  <script>
+    setTimeout(function() {
+      $("div.msg").fadeOut();
+    }, 2000);
+  </script>
+</head>

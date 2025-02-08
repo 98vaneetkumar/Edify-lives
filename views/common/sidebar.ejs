@@ -1,0 +1,45 @@
+<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+  <div class="navbar-header">
+    <ul class="nav navbar-nav flex-row">
+      <li class="nav-item mx-auto w-100">
+        <a class="navbar-brand me-0  w-100" href="#"><span class="brand-logo w-100"> <img src="../../assets/logo1.png" alt=""></span>
+        </a>
+      </li>
+      <li class="nav-item nav-toggle">
+        <a class="nav-link modern-nav-toggle pe-0" data-bs-toggle="collapse"><i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i class="d-none d-xl-block collapse-toggle-icon font-medium-4 text-primary" data-feather="disc" data-ticon="disc"></i></a>
+      </li>
+    </ul>
+  </div>
+  <div class="main-menu-content">
+    <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+      <li class="<% if(title =='Dashboard'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/dashboard"><i data-feather="home"></i><span class="menu-title text-truncate" data-i18n="Dashboards">Dashboard</span></a>
+      </li>
+      <li class="<% if(title =='Users'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/users_listing"><i data-feather="users"></i><span class="menu-title text-truncate" data-i18n="Users">Users</span></a>
+      </li>
+      <li class="<% if(title =='Lessons'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/lessonList"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Lessons">Lessons</span></a>
+      </li>
+      <li class="<% if(title =='Notification'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/notification_page"><i data-feather="bell"></i><span class="menu-title text-truncate" data-i18n="Notification">Notification</span></a>
+      </li>
+      <li class="<% if(title =='Contact Us'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/contactList"><i data-feather="phone-call"></i><span class="menu-title text-truncate" data-i18n="Contact Us">Contact Us</span></a>
+      </li>
+      <li class="<% if(title =='About Us'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/aboutUs"><i data-feather="help-circle"></i><span class="menu-title text-truncate" data-i18n="About Us">About Us</span></a>
+      </li>
+      <li class="<% if(title =='Privacy Policy'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/privacyPolicy"><i data-feather="file-text"></i><span class="menu-title text-truncate" data-i18n="Privacy Policy">Privacy Policy</span></a>
+      </li>
+          <li class="<% if(title =='Imprint'){ %> nav-item dropdown active <% }%>">
+            <a class="d-flex align-items-center" href="/imprint"><i data-feather="circle"></i><span class="menu-title text-truncate" data-i18n="Privacy Policy">Imprint</span></a>
+          </li>
+      <li class="<% if(title =='Terms & Conditions'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/termsConditions"><i data-feather="edit-3"></i><span class="menu-title text-truncate" data-i18n="Terms & Conditions">Terms & Conditions</span></a>
+      </li>
+
+    </ul>
+  </div>
+</div>

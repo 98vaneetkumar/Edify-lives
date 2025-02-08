@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const fileUpload = require("express-fileupload");
 const swaggerUi = require("swagger-ui-express");
+const session = require("express-session");
+const flash = require("connect-flash");
 
 const indexRouter = require("./routes/index");
 const adminRouter = require("./routes/adminRouter")();
@@ -35,6 +37,24 @@ app.use(
     tempFileDir: "/tmp/",
   })
 );
+
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      maxAge: 24 * 60 * 60 * 365 * 1000,
+    },
+  })
+);
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.msg = req.flash("msg");
+  res.locals.error = req.flash("error");
+  next();
+});
 
 const swaggerOptions = {
   explorer: true,
