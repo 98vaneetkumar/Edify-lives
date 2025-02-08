@@ -12,9 +12,9 @@ const flash = require("connect-flash");
 const indexRouter = require("./routes/index");
 const adminRouter = require("./routes/adminRouter")();
 const usersRouter = require("./routes/userRoute")();
-// const chruchRouter = require("./routes/churchRoute")();
-// const businessRouter = require("./routes/businessRoute")();
-// const nonProfitRouter = require("./routes/nonProfitRoute")();
+const chruchRouter = require("./routes/churchRouter")();
+const businessRouter = require("./routes/businessRouter")();
+const nonProfitRouter = require("./routes/nonProfitRouter")();
 
 const app = express();
 
@@ -89,11 +89,11 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(null, swaggerOptions));
 app.use("/", indexRouter);
 app.use("/admin", adminRouter);
 app.use("/users", usersRouter);
-// app.use("/church", chruchRouter);
-// app.use("/business", businessRouter);
-// app.use("/nonProfit", nonProfitRouter);
+app.use("/church", chruchRouter);
+app.use("/business", businessRouter);
+app.use("/nonProfit", nonProfitRouter);
 
-// catch 404 and forward to error handler
+// catch 404 and forward to error handler 
 app.use(function (req, res, next) {
   next(createError(404));
 });
