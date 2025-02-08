@@ -1,14 +1,19 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const controller = require('../controllers/index');
-const {authentication,forgotPasswordVerify} = require('../middlewares/authentication');
+const controller = require("../controllers/index");
+const {
+  authentication,
+  forgotPasswordVerify,
+} = require("../middlewares/authentication");
+const { session } = require("../helpers/commonHelper.js");
 
+module.exports = function () {
+  router.get("/", controller.adminController.login_page);
+  router.get("/login", controller.adminController.login_page);
+  router.post("/Login", controller.adminController.login);
+  router.get("/dashboard", session, controller.adminController.dashboard);
 
-module.exports=function(){ 
-    router.get("/",controller.adminController.login_page)
-    router.get('/login', controller.adminController.login_page);
-    // router.post('/logout', authentication, controller.adminController.logout);
+  // router.post('/logout', authentication, controller.adminController.logout);
 
-    return router
-}
-
+  return router;
+};

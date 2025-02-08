@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+<%-include('./common/header')%>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
+
+  <!-- BEGIN: Header-->
+  <%-include('./common/navbar')%>
+
+  <!-- END: Header-->
+
+
+  <!-- BEGIN: Main Menu-->
+  <%-include('./common/sidebar')%>
+  <!-- END: Main Menu-->
+
+  <!-- BEGIN: Content-->
+  <div class="app-content content ">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper container-xxl p-0">
+      <div class="content-header row">
+      </div>
+      <div class="content-body">
+        <!-- Dashboard Ecommerce Starts -->
+        <section id="dashboard-ecommerce">
+          <div class="row match-height">
+
+
+            <!-- Statistics Card -->
+            <div class="col-xl-12 col-md-6 col-12">
+              <div class="card card-statistics">
+                <div class="card-header">
+
+                </div>
+                <div class="card-body statistics-body">
+                  <a href="/users_listing">
+                    <div class="row">
+                      <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                        <div class="d-flex flex-row">
+                          <div class="avatar bg-light-primary me-2">
+                            <div class="avatar-content">
+                              <i data-feather="users" class="avatar-icon"></i>
+                            </div>
+                          </div>
+                          <div class="my-auto text-white">
+                            <h4 class="fw-bolder mb-0 text-white"><%- user%></h4>
+                            <p class="card-text font-small-3 mb-0">Users</p>
+                          </div>
+                        </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card p-4">
+            <div id="chart"></div>
+          </div>
+
+          <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              const counts_data = JSON.parse('<%- JSON.stringify(counts1) %>');
+              const months_data = JSON.parse('<%- JSON.stringify(months1) %>').map(month => month.split(',')[0]); // Extracting only the month names
+
+              console.log("Counts Data:", counts_data);
+              console.log("Months Data:", months_data);
+
+              var options = {
+                chart: {
+                  height: 380,
+                  width: "100%",
+                  type: "area",
+                  animations: {
+                    enabled: false
+                  },
+
+                },
+                series: [{
+                  name: "Users",
+                  data: counts_data // Use counts data directly
+                }],
+                xaxis: {
+                  categories: months_data // Use months data for x-axis categories
+                }
+              };
+
+              var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+              chart.render();
+            });
+          </script>
+
+      </div>
+      <!--/ Statistics Card -->
+    </div>
+
+
+  </div>
+  </section>
+  <!-- Dashboard Ecommerce ends -->
+
+  </div>
+  </div>
+  </div>
+  <!-- END: Content-->
+
+  <div class="sidenav-overlay"></div>
+  <div class="drag-target"></div>
+
+
+  </section>
+  <!-- Dashboard Ecommerce ends -->
+
+
+  <!-- END: Content-->
+
+  <div class="sidenav-overlay"></div>
+  <div class="drag-target"></div>
+
+  <!-- BEGIN: Footer-->
+  <%-include('./common/footer')%>
+  <!-- END: Footer-->
+
+  <!-- script -->
+  <%-include('./common/script')%>
+  <script>
+    $(window).on('load', function() {
+      if (feather) {
+        feather.replace({
+          width: 14,
+          height: 14
+        });
+      }
+    })
+  </script>
+</body>
+<!-- END: Body-->
+
+</html>

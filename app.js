@@ -25,10 +25,8 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(cookieParser());
 
 // Enable file upload using express-fileupload
 app.use(
@@ -55,6 +53,9 @@ app.use((req, res, next) => {
   res.locals.error = req.flash("error");
   next();
 });
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 const swaggerOptions = {
   explorer: true,
@@ -89,7 +90,7 @@ app.use("/church", chruchRouter);
 app.use("/business", businessRouter);
 app.use("/nonProfit", nonProfitRouter);
 
-// catch 404 and forward to error handler 
+// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
