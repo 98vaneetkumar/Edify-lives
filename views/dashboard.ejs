@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html class="loading" lang="en" data-textdirection="ltr">
+
 <!-- BEGIN: Head-->
 <%-include('./common/header')%>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -124,12 +123,14 @@
   <div class="sidenav-overlay"></div>
   <div class="drag-target"></div>
 
+  <!-- script -->
+  <%-include('./common/script')%>
+
   <!-- BEGIN: Footer-->
   <%-include('./common/footer')%>
   <!-- END: Footer-->
 
-  <!-- script -->
-  <%-include('./common/script')%>
+
   <script>
     $(window).on('load', function() {
       if (feather) {
@@ -140,8 +141,5 @@
       }
     })
   </script>
-</body>
-<!-- END: Body-->
 
-</html>
 
