@@ -16,7 +16,7 @@ module.exports = {
   login_page: async (req, res) => {
     if (req.session.user) return res.redirect("/admin/dashboard");
     res.render("Admin/login_page", { layout: false, msg: req.flash("msg") });
-  },
+  }, 
 
   login: async (req, res) => {
     try {
@@ -48,9 +48,43 @@ module.exports = {
     try {
       
       if (!req.session.user) return res.redirect("/admin/login");
+      let user=await Models.userModel.count()
+      const currentYear1 = moment().year();
+
+       // Count sign-ups for each month
+       const counts1 = [];
+       const months1 = [];
+ 
+       for (let month = 1; month <= 12; month++) {
+         const startOfMonth1 = moment(
+           `${currentYear1}-${month}-01`,
+           "YYYY-MM-DD"
+         )
+           .startOf("month")
+           .toDate();
+         const endOfMonth1 = moment(startOfMonth1).endOf("month").toDate();
+ 
+         const whereCondition = {
+           createdAt: {
+             [Op.between]: [startOfMonth1, endOfMonth1],
+           },
+           role: "1",
+         };
+ 
+         const month_data1 = moment(startOfMonth1).format("MMM, YYYY");
+ 
+         // Count sign-ups for each month
+         const userCount = await Models.userModel.count({ where: whereCondition });
+ 
+         counts1.push(userCount);
+         months1.push(month_data1);
+       }
 
       res.render("dashboard", {
         title: "Dashboard",
+        counts1:counts1,
+        months1:months1,
+        user,
         session: req.session.user,
       });
     } catch (error) {
