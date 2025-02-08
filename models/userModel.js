@@ -54,7 +54,7 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
       otpVerify: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        defaultValue:''
+        // defaultValue:''
       },
       gender: {
         type: DataTypes.STRING(10),
@@ -201,13 +201,13 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
       resetToken: {
         type: DataTypes.STRING(255),
         allowNull: true,
-        defaultValue:''
+        // defaultValue:''
       },
 
       resetTokenExpires: {
         type: DataTypes.DATE,
         allowNull: true,
-        defaultValue:''
+        // defaultValue:''
       },
 
       deviceToken: {
@@ -225,7 +225,7 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
       bio: {
         type: DataTypes.TEXT("long"),
         allowNull: true,
-        defaultValue:''
+        // defaultValue:''
       },
 
     },
