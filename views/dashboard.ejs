@@ -49,7 +49,7 @@
                             </div>
                           </div>
                           <div class="my-auto text-white">
-                            <h4 class="fw-bolder mb-0 text-white"><%- user%></h4>
+                            <h4 class="fw-bolder mb-0 text-white"></h4>
                             <p class="card-text font-small-3 mb-0">Users</p>
                           </div>
                         </div>
@@ -64,8 +64,10 @@
 
           <script>
             document.addEventListener("DOMContentLoaded", function() {
-              const counts_data = JSON.parse('<%- JSON.stringify(counts1) %>');
-              const months_data = JSON.parse('<%- JSON.stringify(months1) %>').map(month => month.split(',')[0]); // Extracting only the month names
+             
+              const counts_data = 0;
+              const months_data = 0
+
 
               console.log("Counts Data:", counts_data);
               console.log("Months Data:", months_data);
@@ -142,3 +144,4 @@
 <!-- END: Body-->
 
 </html>
+

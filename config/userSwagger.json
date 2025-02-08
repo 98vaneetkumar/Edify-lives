@@ -44,7 +44,15 @@
                         "description": "Enter the email",
                         "required": true,
                         "type": "string",
-                        "value": "test@gmail.com"
+                        "value": "vaneet@gmail.com"
+                    },
+                    {
+                        "name": "countryCode",
+                        "in": "formData",
+                        "description": "Enter country code",
+                        "required": true,
+                        "type": "string",
+                        "value": "+91"
                     },
                     {
                         "name": "phoneNumber",
@@ -52,7 +60,7 @@
                         "description": "Enter phone number",
                         "required": true,
                         "type": "string",
-                        "value": "+911010101010"
+                        "value": "8628023157"
                     },
                     {
                         "name": "password",
@@ -63,17 +71,52 @@
                         "value": "123456"
                     },
                     {
-                        "name": "profilePicture",
+                        "name": "location",
                         "in": "formData",
-                        "description": "Profile picture to upload",
+                        "description": "Enter your location",
                         "required": false,
-                        "type": "file",
-                        "format": "binary",
-                        "maxLength": 5242880,
-                        "allowedMimeTypes": [
-                          "image/jpeg",
-                          "image/png"
-                        ]
+                        "type": "string",
+                        "value": "Mohali "
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "formData",
+                        "description": "Enter latitude",
+                        "required": false,
+                        "type": "string",
+                        "value": "30.7046"
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "formData",
+                        "description": "Enter longitude",
+                        "required": false,
+                        "type": "string",
+                        "value": "76.7179"
+                    },
+                    {
+                        "name": "donateEdifyLivers",
+                        "in": "formData",
+                        "description": "Enter donateEdifyLivers",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "traitAndExperience",
+                        "in": "formData",
+                        "description": "Enter traitAndExperience",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "postEmpSeekingSection",
+                        "in": "formData",
+                        "description": "Enter postEmpSeekingSection",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
                     },
                     {
                         "name": "role",
@@ -85,12 +128,21 @@
                         "value": "1"
                     },
                     {
-                        "name": "bio",
+                        "name": "hartOfService",
                         "in": "formData",
-                        "description": "Enter bio",
+                        "description": "Enter hartOfService",
                         "required": false,
                         "type": "string",
                         "value": ""
+                    },
+                    {
+                        "name": "deviceType",
+                        "in": "formData",
+                        "description": "Enter deviceType",
+                        "enum": [1,2],
+                        "required": false,
+                        "type": "number",
+                        "value": "1"
                     },
                     {
                         "name": "deviceToken",
@@ -273,40 +325,6 @@
                         "required": false,
                         "type": "string",
                         "value": ""
-                    }
-                ],
-                "responses": {}
-            }
-        },
-
-        "/users/sidIdGenerate": {
-            "get": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-otsidIdGeneratepSend-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                
-                ],
-                "responses": {}
-            }
-        },
-
-
-        "/users/otpSend": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-otpSend-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "phoneNumber",
-                        "in": "formData",
-                        "description": "Enter the phoneNumber",
-                        "required": false,
-                        "type": "string",
-                        "value": "1010101010"
                     }
                 ],
                 "responses": {}

@@ -138,7 +138,7 @@ module.exports = {
       let mailOptions = {
         from: process.env.MAIL_USERNAME,
         to: user.email,
-        subject: "Password Reset Request",
+        subject: "Password Reset Request OTP",
         html: emailTamplate.forgotPassword(resetUrl),
       };
       return mailOptions;

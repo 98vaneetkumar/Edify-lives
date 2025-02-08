@@ -14,13 +14,12 @@ const Response = require("../config/responses.js");
 
 module.exports = {
   login_page: async (req, res) => {
-    if (req.session.user) return res.redirect("/dashboard");
+    if (req.session.user) return res.redirect("/admin/dashboard");
     res.render("Admin/login_page", { layout: false, msg: req.flash("msg") });
   },
 
   login: async (req, res) => {
     try {
-      console.log("=====>", req.body);
       const { email, password } = req.body;
       const login_data = await Models.userModel.findOne({
         where: { email: email },
@@ -28,27 +27,29 @@ module.exports = {
 
       if (!login_data || !bcrypt.compareSync(password, login_data.password)) {
         req.flash("error", "Invalid email or password");
-        return res.redirect("/login");
+        return res.redirect("/admin/login");
       }
 
       if (login_data.role !== 0) {
         req.flash("error", "Please enter valid credentials");
-        return res.redirect("/login");
+        return res.redirect("/admin/login");
       }
 
       req.session.user = login_data;
       req.flash("msg", "You are logged in successfully");
+      return res.redirect("/admin/dashboard");
     } catch (error) {
       console.error("Login Error:", error);
-      res.redirect("/login");
+      res.redirect("/admin/login");
     }
   },
 
   dashboard: async (req, res) => {
     try {
-      if (!req.session.user) return res.redirect("/login");
+      
+      if (!req.session.user) return res.redirect("/admin/login");
 
-      res.render("Admin/dashboard", {
+      res.render("dashboard", {
         title: "Dashboard",
         session: req.session.user,
       });
