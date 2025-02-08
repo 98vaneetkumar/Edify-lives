@@ -4,7 +4,8 @@ const controller = require('../controllers/index');
 const {authentication,forgotPasswordVerify} = require('../middlewares/authentication');
 
 
-module.exports=function(){
+module.exports=function(){ 
+    router.get("/",controller.adminController.login_page)
     router.get('/login', controller.adminController.login_page);
     // router.post('/logout', authentication, controller.adminController.logout);
 

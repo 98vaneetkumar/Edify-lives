@@ -61,10 +61,6 @@ const swaggerOptions = {
   swaggerOptions: {
     urls: [
       {
-        url: "/admin",
-        name: "Admin API",
-      },
-      {
         url: "/user",
         name: "User API",
       },
