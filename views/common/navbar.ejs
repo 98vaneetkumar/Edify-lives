@@ -34,37 +34,37 @@
 </nav>
 <script>
   function logoutUser(id) {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You will be logged Out!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, logout!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        $.ajax({
-          url: "/logout",
-          method: "post",
-          data: {
-            id: id
-          },
-          success: function(res) {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You will be logged Out!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, logout!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      $.ajax({
+        url: "/admin/logout",
+        method: "post",
+        data: { id: id },
+        success: function (res) {
+          if (res.success) {
+            Swal.fire({
+              title: "Logged Out!",
+              text: "You are logged out successfully",
+              icon: "success",
+              timer: 2000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+            }).then(() => {
+              window.location.href = "/admin/login";
+            });
+          }
+        },
+      });
+    }
+  });
+}
 
-            if (res) {
-              Swal.fire({
-                title: "Log Out!",
-                text: "You are logged Out",
-                icon: "success",
-                timer: 4000,
-               timerProgressBar: true,
-              });
-              window.location.reload();
-            }
-          },
-        });
-      }
-    });
-  }
 </script>

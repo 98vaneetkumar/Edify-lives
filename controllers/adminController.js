@@ -37,6 +37,16 @@ module.exports = {
     }
   },
 
+  logout: async (req, res) => {
+    try {
+      req.session.destroy(() => {
+        res.json({ success: true });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   dashboard: async (req, res) => {
     try {
       if (!req.session.user) return res.redirect("/admin/login");

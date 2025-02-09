@@ -7,6 +7,7 @@ module.exports = function () {
   router.get("/", controller.adminController.login_page);
   router.get("/login", controller.adminController.login_page);
   router.post("/Login", controller.adminController.login);
+  router.post("/logout", controller.adminController.logout);
   router.get("/dashboard", session, controller.adminController.dashboard);
 
   // router.post('/logout', authentication, controller.adminController.logout);

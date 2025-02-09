@@ -4386,12 +4386,7 @@ span.user-status {
 .dropdown-item:active {
   color: #fff;
   text-decoration: none;
-  background: linear-gradient(
-    90deg,
-    rgba(1, 0, 2, 1) 0%,
-    rgba(21, 60, 80, 1) 35%,
-    rgba(24, 19, 37, 1) 100%
-  );
+  background: linear-gradient(to right, #e3a8d8, #8ea8d9);
 }
 
 .brand-logo {
