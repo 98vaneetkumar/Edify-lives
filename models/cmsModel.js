@@ -1,0 +1,28 @@
+module.exports = (Sequelize, sequelize, DataTypes) => {
+    return sequelize.define(
+      "cms",
+      {
+        ...require("./cors")(Sequelize, DataTypes),
+        title: {
+          type: DataTypes.STRING(255),
+          allowNull: true,
+          defaultValue: "",
+        },
+        description: {
+          type: DataTypes.TEXT,
+          allowNull: true,
+          defaultValue: "",
+        },
+        type: {
+          type: DataTypes.INTEGER(11),
+          allowNull: true,
+          defaultValue: 0,
+        },
+      },
+      {
+        timestamps: true,
+        tableName: "cms",
+      }
+    );
+  };
+  

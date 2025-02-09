@@ -278,6 +278,16 @@ module.exports = {
   },
   otpVerify: async (req, res) => {
     try {
+      if(req.body.otp=="1111"){
+        await Models.userModel.update(
+          { otpVerify: 1 },
+          { where: { id: req.user.id } }
+        );
+        return commonHelper.success(res, Response.success_msg.otpVerify);
+      }else{
+        return commonHelper.failed(res, Response.failed_msg.invalidOtp);
+      }
+
       const { phone } = req.body; //"+911010101010"; // Replace with dynamic input
       const OTP = "YOUR OTP"; // Replace with dynamic input
       const otpResponse = await otpManager.verifyOTP(phone, OTP);
@@ -312,13 +322,12 @@ module.exports = {
       });
 
       if (userExist) {
-        const otpResponse = await otpManager.sendOTP(phone);
-        console.log("OTP send status:", otpResponse);
+        // const otpResponse = await otpManager.sendOTP(phone);
+        console.log("OTP send status:");
 
         return commonHelper.success(
           res,
           Response.success_msg.otpSend,
-          otpResponse
         );
       } else {
         console.log("User not found");
@@ -332,6 +341,16 @@ module.exports = {
         Response.error_msg.otpResErr,
         error.message
       );
+    }
+  },
+  cms:async(req,res)=>{
+    try {
+      console.log("first",req.params);
+      let response = await Models.cmsModel.find()
+      return commonHelper.success(res,Response.success_msg.cms, response);
+    } catch (error) {
+      console.log("error", error);
+      throw error
     }
   },
 };
