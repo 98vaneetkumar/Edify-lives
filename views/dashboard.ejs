@@ -37,9 +37,11 @@
 
                 </div>
                 <div class="card-body statistics-body">
-                  <a href="/users_listing">
-                    <div class="row">
-                      <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                  <div class="row">
+                    
+                    <!-- Users -->
+                    <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                      <a href="/users_listing">
                         <div class="d-flex flex-row">
                           <div class="avatar bg-light-primary me-2">
                             <div class="avatar-content">
@@ -47,12 +49,66 @@
                             </div>
                           </div>
                           <div class="my-auto text-white">
-                            <h4 class="fw-bolder mb-0 text-white"><%- user%></h4>
+                            <h4 class="fw-bolder mb-0 text-white"><%- user %></h4>
                             <p class="card-text font-small-3 mb-0">Users</p>
                           </div>
                         </div>
-                  </a>
+                      </a>
+                    </div>
+
+                    <!-- Churches -->
+                    <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                      <a href="/churches_listing">
+                        <div class="d-flex flex-row">
+                          <div class="avatar bg-light-danger me-2">
+                            <div class="avatar-content">
+                              <i data-feather="cross" class="fas fa-church text-white"></i>
+                            </div>
+                          </div>
+                          <div class="my-auto text-white">
+                            <h4 class="fw-bolder mb-0 text-white"><%- churches %></h4>
+                            <p class="card-text font-small-3 mb-0">Churches</p>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                
+                    <!-- Business -->
+                    <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                      <a href="/business_listing">
+                        <div class="d-flex flex-row">
+                          <div class="avatar bg-light-success me-2">
+                            <div class="avatar-content">
+                              <i data-feather="briefcase" class="fas fa-briefcase text-white"></i>
+                            </div>
+                          </div>
+                          <div class="my-auto text-white">
+                            <h4 class="fw-bolder mb-0 text-white"><%- business %></h4>
+                            <p class="card-text font-small-3 mb-0">Business</p>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                
+                    <!-- Non-Profit -->
+                    <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                      <a href="/non_profit_listing">
+                        <div class="d-flex flex-row">
+                          <div class="avatar bg-light-warning me-2">
+                            <div class="avatar-content">
+                              <i data-feather="heart" class="fas fa-hand-holding-heart text-white"></i>
+                            </div>
+                          </div>
+                          <div class="my-auto text-white">
+                            <h4 class="fw-bolder mb-0 text-white"><%- nonprofit %></h4>
+                            <p class="card-text font-small-3 mb-0">Non-Profit</p>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
                 </div>
+                
               </div>
             </div>
           </div>

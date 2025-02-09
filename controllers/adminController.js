@@ -41,6 +41,10 @@ module.exports = {
     try {
       if (!req.session.user) return res.redirect("/admin/login");
       let user = await Models.userModel.count();
+      let churches = 0;
+      let business = 0;
+      let nonprofit = 0;
+
       const currentYear1 = moment().year();
 
       // Count sign-ups for each month
@@ -79,6 +83,9 @@ module.exports = {
         counts1: counts1,
         months1: months1,
         user,
+        churches,
+        business,
+        nonprofit,
         session: req.session.user,
       });
     } catch (error) {

@@ -51,23 +51,32 @@
           ></a
         >
       </li>
-      <li class="<% if(title =='Lessons'){ %> nav-item dropdown active <% }%>">
-        <a class="d-flex align-items-center" href="/#"
-          ><i data-feather="file-text"></i
-          ><span class="menu-title text-truncate" data-i18n="Lessons"
-            >Lessons</span
-          ></a
-        >
+      <li class="<% if(title =='Churches'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/#">
+          <i class="fas fa-church"></i>
+          <span class="menu-title text-truncate" data-i18n="Churches"
+            >Churches</span
+          >
+        </a>
       </li>
+      <li class="<% if(title =='Business'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/#">
+          <i class="fas fa-briefcase"></i>
+          <span class="menu-title text-truncate" data-i18n="Business"
+            >Business</span
+          >
+        </a>
+      </li>
+
       <li
-        class="<% if(title =='Notification'){ %> nav-item dropdown active <% }%>"
+        class="<% if(title =='Non-Profit'){ %> nav-item dropdown active <% }%>"
       >
-        <a class="d-flex align-items-center" href="/#"
-          ><i data-feather="bell"></i
-          ><span class="menu-title text-truncate" data-i18n="Notification"
-            >Notification</span
-          ></a
-        >
+        <a class="d-flex align-items-center" href="/#">
+          <i class="fas fa-hand-holding-heart"></i>
+          <span class="menu-title text-truncate" data-i18n="Non-Profit"
+            >Non-Profit</span
+          >
+        </a>
       </li>
       <li
         class="<% if(title =='Contact Us'){ %> nav-item dropdown active <% }%>"
@@ -91,7 +100,7 @@
       <li
         class="<% if(title =='Privacy Policy'){ %> nav-item dropdown active <% }%>"
       >
-        <a class="d-flex align-items-center" href="/admin/privacyPolicy"
+        <a class="d-flex align-items-center" href="/admin/privacypolicy"
           ><i data-feather="file-text"></i
           ><span class="menu-title text-truncate" data-i18n="Privacy Policy"
             >Privacy Policy</span
@@ -101,7 +110,7 @@
       <li
         class="<% if(title =='Terms & Conditions'){ %> nav-item dropdown active <% }%>"
       >
-        <a class="d-flex align-items-center" href="/admin/termsConditions"
+        <a class="d-flex align-items-center" href="/admin/termsconditions"
           ><i data-feather="edit-3"></i
           ><span class="menu-title text-truncate" data-i18n="Terms & Conditions"
             >Terms & Conditions</span
