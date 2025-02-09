@@ -36,6 +36,7 @@ app.use(
   })
 );
 
+console.log("port")
 app.use(
   session({
     secret: "keyboard cat",
