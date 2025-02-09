@@ -1,4 +1,4 @@
-<nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl">
+<nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow container-xxl" style="background: linear-gradient(to right, #e3a8d8, #8ea8d9)">
 
   <div class="navbar-container d-flex content">
     <div class="bookmark-wrapper d-flex align-items-center">
@@ -17,10 +17,10 @@
             <span class="user-name fw-bolder"><%= session.first_name%></span><span class="user-status">Admin</span>
           </div>
           <span class="avatar">
-            <%if(session.profile_image == null || session.profile_image == '' || session.profile_image == undefined){%>
+            <%if(session.profilePicture == null || session.profilePicture == '' || session.profilePicture == undefined){%>
             <img class="round" src="../../assets/images (1).jpeg" alt="avatar" height="40" width="40" />
             <%}else{%>
-            <img class="round" src="../../images/<%= session.profile_image%>" alt="avatar" height="40" width="40" />
+            <img class="round" src="../../images/<%= session.profilePicture%>" alt="avatar" height="40" width="40" />
             <%}%>
         </a>
         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-user">

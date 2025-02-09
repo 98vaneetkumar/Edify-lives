@@ -24,6 +24,7 @@ module.exports = {
         countryCode: Joi.string().optional(),
         phoneNumber: Joi.string().required(),
         password: Joi.string().required(),
+        profilePicture: Joi.string().optional(),
         location: Joi.string().optional(),
         latitude: Joi.string().optional(),
         longitude: Joi.string().optional(),
@@ -59,6 +60,12 @@ module.exports = {
         process.env.SALT
       );
 
+      let profilePicturePath = null;
+      if (req.files && req.files.profilePicture) {
+        profilePicturePath = await commonHelper.fileUpload(
+          req.files.profilePicture
+        );
+      }
  
       let objToSave = {
         firstName: payload.firstName,
@@ -68,6 +75,7 @@ module.exports = {
         phoneNumber: payload.phoneNumber,
         password: hashedPassword,
         role: 1,
+        profilePicture: profilePicturePath ? profilePicturePath : null,
         location: payload.location,
         latitude: payload.latitude,
         longitude: payload.longitude,

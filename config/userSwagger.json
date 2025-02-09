@@ -71,6 +71,19 @@
                         "value": "123456"
                     },
                     {
+                        "name": "profilePicture",
+                        "in": "formData",
+                        "description": "Profile picture to upload",
+                        "required": false,
+                        "type": "file",
+                        "format": "binary",
+                        "maxLength": 5242880,
+                        "allowedMimeTypes": [
+                          "image/jpeg",
+                          "image/png"
+                        ]
+                    },
+                    {
                         "name": "location",
                         "in": "formData",
                         "description": "Enter your location",
