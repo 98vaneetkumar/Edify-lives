@@ -8,6 +8,7 @@ const fileUpload = require("express-fileupload");
 const swaggerUi = require("swagger-ui-express");
 const session = require("express-session");
 const flash = require("connect-flash");
+const PORT = process.env.PORT || 3000;
 
 const indexRouter = require("./routes/index");
 const adminRouter = require("./routes/adminRouter")();
@@ -106,4 +107,6 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-module.exports = app;
+app.listen(PORT, ()=>{
+  console.log(`Server is running on port ${PORT}`);
+})
