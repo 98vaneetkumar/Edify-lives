@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Edify",
+        "title": "project name",
         "description": "project description",
         "version": "1.0"
     },
@@ -19,7 +19,7 @@
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-signUp-post",
-                "tags": ["Application Church"],
+                "tags": ["Application User"],
                 "description": "",
                 "parameters": [
                     {
@@ -28,7 +28,7 @@
                         "description": "Enter the firstName",
                         "required": true,
                         "type": "string",
-                        "value": "test"
+                        "value": "Vaneet"
                     },
                     {
                         "name": "lastName",
@@ -36,7 +36,7 @@
                         "description": "Enter lastName ",
                         "required": true,
                         "type": "string",
-                        "value": "test"
+                        "value": "Kumar"
                     },
                     {
                         "name": "email",
@@ -44,7 +44,15 @@
                         "description": "Enter the email",
                         "required": true,
                         "type": "string",
-                        "value": "test@gmail.com"
+                        "value": "vaneet@gmail.com"
+                    },
+                    {
+                        "name": "countryCode",
+                        "in": "formData",
+                        "description": "Enter country code",
+                        "required": true,
+                        "type": "string",
+                        "value": "+91"
                     },
                     {
                         "name": "phoneNumber",
@@ -52,7 +60,7 @@
                         "description": "Enter phone number",
                         "required": true,
                         "type": "string",
-                        "value": "+911010101010"
+                        "value": "8628023157"
                     },
                     {
                         "name": "password",
@@ -76,12 +84,69 @@
                         ]
                     },
                     {
-                        "name": "bio",
+                        "name": "location",
                         "in": "formData",
-                        "description": "Enter bio",
+                        "description": "Enter your location",
+                        "required": false,
+                        "type": "string",
+                        "value": "Mohali "
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "formData",
+                        "description": "Enter latitude",
+                        "required": false,
+                        "type": "string",
+                        "value": "30.7046"
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "formData",
+                        "description": "Enter longitude",
+                        "required": false,
+                        "type": "string",
+                        "value": "76.7179"
+                    },
+                    {
+                        "name": "donateEdifyLivers",
+                        "in": "formData",
+                        "description": "Enter donateEdifyLivers",
                         "required": false,
                         "type": "string",
                         "value": ""
+                    },
+                    {
+                        "name": "traitAndExperience",
+                        "in": "formData",
+                        "description": "Enter trait And Experience",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "postEmpSeekingSection",
+                        "in": "formData",
+                        "description": "Would you like to profile posted  on the employment seeking section",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "hartOfService",
+                        "in": "formData",
+                        "description": "Who do you have the heart of service",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "deviceType",
+                        "in": "formData",
+                        "description": "Enter deviceType",
+                        "enum": [1,2],
+                        "required": false,
+                        "type": "number",
+                        "value": "1"
                     },
                     {
                         "name": "deviceToken",
@@ -109,7 +174,7 @@
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-login-post",
-                "tags": ["Application Church"],
+                "tags": ["Application User"],
                 "description": "",
                 "parameters": [
                     {
@@ -118,7 +183,7 @@
                         "description": "Enter the email",
                         "required": true,
                         "type": "string",
-                        "value": "test@gmail.com"
+                        "value": "vaneet@gmail.com"
                     },
                     {
                         "name": "password",
@@ -150,60 +215,11 @@
             }
         },
 
-        "/church/updateProfile": {
-            "patch": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "church-updateProfile-post",
-                "tags": ["Application Church"],
-                "description": "",
-                "security": [
-					{
-						"Bearer": []
-					}
-				],
-                "parameters": [
-                    {
-                        "name": "firstName",
-                        "in": "formData",
-                        "description": "Enter the firstName",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "lastName",
-                        "in": "formData",
-                        "description": "Enter lastName ",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "email",
-                        "in": "formData",
-                        "description": "Enter the email",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "phoneNumber",
-                        "in": "formData",
-                        "description": "Enter phone number",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    }
-                ],
-                "responses": {}
-            }
-        },
-
         "/church/logout": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-logout-post",
-                "tags": ["Application Church"],
+                "tags": ["Application User"],
                 "description": "",
                 "security": [
 					{
@@ -221,7 +237,7 @@
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-changePassword-post",
-                "tags": ["Application Church"],
+                "tags": ["Application User"],
                 "description": "",
                 "security": [
 					{
@@ -254,7 +270,7 @@
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-forgotPassword-post",
-                "tags": ["Application Church"],
+                "tags": ["Application User"],
                 "description": "",
                 "parameters": [
                     {
@@ -269,55 +285,56 @@
                 "responses": {}
             }
         },
-
-        "/church/sidIdGenerate": {
-            "get": {
+        "/church/resendForgotPasswordLink": {
+            "post": {
                 "x-swagger-router-controller": "middleware-name1",
-                "operationId": "church-otsidIdGeneratepSend-post",
-                "tags": ["Application Church"],
+                "operationId": "church-resendForgotPasswordLink-post",
+                "tags": ["Application User"],
                 "description": "",
                 "parameters": [
-                
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Enter the email",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
                 ],
                 "responses": {}
             }
         },
-
-
-        "/church/otpSend": {
+    
+        "/church/otpVerify": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
-                "operationId": "church-otpSend-post",
-                "tags": ["Application Church"],
+                "operationId": "church-otpVerify-post",
+                "tags": ["Application User"],
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "countryCode",
+                        "in": "formData",
+                        "description": "Enter the phoneNumber",
+                        "required": false,
+                        "type": "string",
+                        "value": "+91"
+                    },
                     {
                         "name": "phoneNumber",
                         "in": "formData",
                         "description": "Enter the phoneNumber",
                         "required": false,
                         "type": "string",
-                        "value": "1010101010"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-
-        "/church/otpVerify": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "church-otpVerify-post",
-                "tags": ["Application Church"],
-                "description": "",
-                "parameters": [
+                        "value": "8628023157"
+                    },
                     {
                         "name": "otp",
                         "in": "formData",
                         "description": "Enter the otp",
                         "required": false,
                         "type": "string",
-                        "value": "1414"
+                        "value": "1111"
                     }
                 ],
                 "responses": {}
@@ -328,9 +345,17 @@
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-resendOtp-post",
-                "tags": ["Application Church"],
+                "tags": ["Application User"],
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "countryCode",
+                        "in": "formData",
+                        "description": "Enter the phoneNumber",
+                        "required": false,
+                        "type": "string",
+                        "value": "+91"
+                    },
                     {
                         "name": "phoneNumber",
                         "in": "formData",
@@ -342,8 +367,24 @@
                 ],
                 "responses": {}
             }
+        },
+        "/church/cms": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-cms-post",
+                "tags": ["Application User"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": [
+                  
+				],
+                "responses": {}
+            }
         }
-
     },
     "definitions": {
     }
