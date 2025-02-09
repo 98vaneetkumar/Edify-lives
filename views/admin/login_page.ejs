@@ -26,12 +26,11 @@
     }
 
     .login_area {
-      background: url(/assets/login02.jpg) no-repeat center/cover;
+      background: url(/assets/logo2.jpg) no-repeat center/cover;
       min-height: 100vh;
       display: flex;
-      justify-content: center;
-      align-items: stretch;
-      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
       position: relative;
       z-index: 0;
     }
@@ -44,9 +43,17 @@
       z-index: -1;
       top: 0;
       left: 0;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.3);
       backdrop-filter: blur(10px);
       opacity: 0.4;
+    }
+
+    .login-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 0 5%;
     }
 
     .auth-bg img {
@@ -66,13 +73,14 @@
     .login_card {
       border-radius: 12px;
       padding: 50px 30px;
-      background-color: rgba(0, 0, 0, 0.2);
       backdrop-filter: blur(18px);
       width: 100%;
       max-width: 400px;
       box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+      transform: translateX(-100%);
+      animation: slideInLeft 0.6s ease-in-out forwards;
+      margin-left: 50px;
       transition: transform 0.3s ease-in-out;
-      animation: slideUp 0.6s ease-in-out;
     }
 
     .login_card:hover {
@@ -123,37 +131,92 @@
       color: white;
     }
 
+    .welcome_text {
+      color: #fff;
+      max-width: 500px;
+      text-align: left;
+      opacity: 0;
+      animation: fadeInRight 0.8s ease-in-out 0.4s forwards;
+      margin-right: 50px;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .welcome_quote {
+      font-size: 24px;
+      font-style: italic;
+      margin-top: 30px;
+      padding-left: 80px;
+      font-family: "Playfair Display", Georgia, serif;
+      animation: quoteGlow 3s ease-in-out infinite;
+    }
+
+    .quote_author {
+      font-size: 16px;
+      margin-top: 10px;
+      text-align: right;
+      font-style: normal;
+      opacity: 0.8;
+    }
+
+    .welcome_description {
+      font-size: 18px;
+      line-height: 1.6;
+      margin-top: 20px;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
     @keyframes fadeIn {
       from {
         opacity: 0;
-        transform: scale(0.9);
       }
       to {
         opacity: 1;
-        transform: scale(1);
       }
     }
 
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
+    @keyframes quoteGlow {
+      0% {
+        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.1);
       }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+      50% {
+        text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.2);
+      }
+      100% {
+        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.1);
       }
     }
   </style>
-  <!-- BEGIN: Body-->
 
+  <!-- BEGIN: Body-->
   <body
     class="login_page vertical-layout vertical-menu-modern blank-page navbar-floating footer-static"
     data-open="click"
     data-menu="vertical-menu-modern"
     data-col="blank-page"
   >
-    <!-- BEGIN: Content-->
     <!-- BEGIN: Content-->
     <div class="app-content content">
       <div class="content-overlay"></div>
@@ -162,63 +225,66 @@
         <div class="content-header row"></div>
         <div class="content-body">
           <div class="login_area">
-            <div class="row">
-              <div class="col-md-4 col-12 mx-auto">
-                <div class="login_card">
-                  <div class="text-center">
-                    <img
-                      class="mx-auto"
-                      src="../../assets/logo1.png"
-                      width="120"
-                      alt=""
+            <div class="login-container">
+              <div class="login_card">
+                <div class="text-center">
+                  <img
+                    class="mx-auto"
+                    src="../../assets/logo1.png"
+                    width="120"
+                    alt=""
+                  />
+                </div>
+                <form
+                  class="auth-login-form mt-2"
+                  action="/admin/login"
+                  id="login_form"
+                  method="POST"
+                >
+                  <div class="mb-1">
+                    <label class="form-label" for="email">Email</label>
+                    <input
+                      class="form-control"
+                      id="email"
+                      type="text"
+                      name="email"
+                      placeholder="Enter Email"
+                      aria-describedby="email"
+                      autofocus=""
+                      tabindex="1"
                     />
                   </div>
-                  <form
-                    class="auth-login-form mt-2"
-                    action="/admin/login"
-                    id="login_form"
-                    method="POST"
-                  >
-                    <div class="mb-1">
-                      <label class="form-label" for="email">Email</label>
+                  <div class="mb-1">
+                    <div class="d-flex justify-content-between">
+                      <label class="form-label" for="password">Password</label>
+                    </div>
+                    <div
+                      class="input-group input-group-merge form-password-toggle"
+                    >
                       <input
-                        class="form-control"
-                        id="email"
-                        type="text"
-                        name="email"
-                        placeholder="Enter Email"
-                        aria-describedby="email"
-                        autofocus=""
-                        tabindex="1"
+                        class="form-control form-control-merge"
+                        id="password"
+                        type="password"
+                        name="password"
+                        placeholder="Enter Password"
+                        aria-describedby="password"
+                        tabindex="2"
                       />
+                      <span class="input-group-text cursor-pointer"
+                        ><i data-feather="eye"></i
+                      ></span>
                     </div>
-                    <div class="mb-1">
-                      <div class="d-flex justify-content-between">
-                        <label class="form-label" for="password"
-                          >Password</label
-                        >
-                      </div>
-                      <div
-                        class="input-group input-group-merge form-password-toggle"
-                      >
-                        <input
-                          class="form-control form-control-merge"
-                          id="password"
-                          type="password"
-                          name="password"
-                          placeholder="Enter Password"
-                          aria-describedby="password"
-                          tabindex="2"
-                        /><span class="input-group-text cursor-pointer"
-                          ><i data-feather="eye"></i
-                        ></span>
-                      </div>
-                    </div>
-
-                    <button class="btn w-100 custom-btn" tabindex="4">
-                      Sign in
-                    </button>
-                  </form>
+                  </div>
+                  <button class="btn w-100 custom-btn" tabindex="4">
+                    Sign in
+                  </button>
+                </form>
+              </div>
+              <div class="welcome_text">
+                <div class="welcome_quote">
+                  "Encourage one another and build each other up,<br />
+                  for together we are stronger than we are alone."
+                  <div class="quote_author">— Community Values</div>
                 </div>
               </div>
             </div>
@@ -228,6 +294,7 @@
     </div>
     <!-- END: Content-->
 
+    <!-- BEGIN: Scripts -->
     <%-include('../common/script')%>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
@@ -289,6 +356,6 @@
         }
       });
     </script>
+    <!-- END: Scripts -->
   </body>
-  <!-- END: Body-->
 </html>
