@@ -11,8 +11,19 @@ module.exports = function () {
 
   // router.post('/logout', authentication, controller.adminController.logout);
 
-  router.get("/aboutUs", controller.adminController.aboutUs);
+  router.get("/aboutUs", session, controller.adminController.aboutUs);
+  router.post("/about_post", controller.adminController.about_post);
 
+  router.get("/privacyPolicy", session, controller.adminController.privacyPolicy);
+  router.post("/privacy_post", controller.adminController.privacy_post);
+
+  router.get("/termsConditions", session, controller.adminController.termsConditions);
+  router.post(
+    "/termsConditionsPost",
+    controller.adminController.termsConditionsPost
+  );
+
+  router.post("/test", controller.adminController.test);
 
   return router;
 };

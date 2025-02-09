@@ -482,8 +482,8 @@ input:focus ~ .bg-light {
 }
 
 .btn-primary {
-  border-color: #0c202c !important;
-  background: linear-gradient(118deg, #09a6ec, #c20afa);
+  border: none !important;
+  background: linear-gradient(to right, #e3a8d8, #8ea8d9);
   color: #fff !important;
 }
 
