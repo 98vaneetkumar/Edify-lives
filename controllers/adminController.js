@@ -141,7 +141,7 @@ module.exports = {
           description: req.body.description,
         },
         {
-          where: { type: 1 },
+          where: { type: 1 }
         }
       );
       req.flash("msg", "About Us updated successfully");
@@ -178,7 +178,7 @@ module.exports = {
           description: req.body.description,
         },
         {
-          where: { type: 2 },
+          where: { type: 2 }
         }
       );
       req.flash("msg", "Privacy Policy updated successfully");
@@ -214,7 +214,7 @@ module.exports = {
           description: req.body.description,
         },
         {
-          where: { type: 3 },
+          where: { type: 3 }
         }
       );
       req.flash("msg", "Terms and Conditions updated successfully");

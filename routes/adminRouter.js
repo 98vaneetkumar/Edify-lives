@@ -13,14 +13,14 @@ module.exports = function () {
   // router.post('/logout', authentication, controller.adminController.logout);
 
   router.get("/aboutUs", session, controller.adminController.aboutUs);
-  router.post("/about_post", controller.adminController.about_post);
+  router.post("/about_post",session, controller.adminController.about_post);
 
   router.get(
     "/privacyPolicy",
     session,
     controller.adminController.privacyPolicy
   );
-  router.post("/privacy_post", controller.adminController.privacy_post);
+  router.post("/privacy_post",session, controller.adminController.privacy_post);
 
   router.get(
     "/termsConditions",
@@ -29,13 +29,14 @@ module.exports = function () {
   );
   router.post(
     "/termsConditionsPost",
+    session,
     controller.adminController.termsConditionsPost
   );
 
-  router.get("/users_listing", controller.adminController.users_listing);
-  router.get("/user_view/:id", controller.adminController.user_view);
-  router.post("/user_status", controller.adminController.user_status);
-  router.post("/user_delete", controller.adminController.user_delete);
+  router.get("/users_listing",session, controller.adminController.users_listing);
+  router.get("/user_view/:id",session, controller.adminController.user_view);
+  router.post("/user_status",session,controller.adminController.user_status);
+  router.post("/user_delete",session, controller.adminController.user_delete);
 
   router.get("/churches_listing", controller.adminController.churches_listing);
   router.get("/church_view/:id", controller.adminController.church_view);
