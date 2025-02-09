@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+  <!-- BEGIN: Head-->
+
+  <%-include('../../common/header')%>
+  <!-- BEGIN: Body-->
+
+  <body
+    class="vertical-layout vertical-menu-modern navbar-floating footer-static"
+    data-open="click"
+    data-menu="vertical-menu-modern"
+    data-col=""
+  >
+    <!-- sidebar -->
+    <%-include('../../common/sidebar')%>
+    <!-- navbar -->
+
+    <%-include('../../common/navbar')%>
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+      <div class="content-overlay"></div>
+      <div class="header-navbar-shadow"></div>
+      <div class="content-wrapper">
+        <div class="content-header row"></div>
+
+        <div class="content-body">
+          <div class="row justify-content-center">
+            <!-- <div class="col-md-6"> -->
+            <div class="content-header-left col-md-12 col-12 mb-2">
+              <div class="auth-wrapper auth-v1 px-2">
+                <div class="auth-inner py-2">
+                  <!-- Register v1 -->
+                  <div class="card mb-0">
+                    <div class="card-body">
+                      <form class="auth-register-form mt-2">
+                        <div class="mb-1">
+                          <label for="churchName" class="form-label"
+                            >Church Name</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="church_name"
+                            name="church_name"
+                            aria-describedby="church_name"
+                            value="<%=data.churchName ? data.churchName : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="churchWebsite" class="form-label"
+                            >Church Website</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="churchWebsite"
+                            name="churchWebsite"
+                            value="<%=data.churchWebsite ? data.churchWebsite : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="churchAccessCode" class="form-label"
+                            >Church Access Code</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="churchAccessCode"
+                            name="churchAccessCode"
+                            value="<%=data.churchAccessCode ? data.churchAccessCode : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="numberOfMembers" class="form-label">Number Of Members</label>
+                          <input
+                            type="numberOfMembers"
+                            class="form-control"
+                            id="numberOfMembers"
+                            name="numberOfMembers"
+                            value="<%=data.numberOfMembers ? data.numberOfMembers : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="visionStatement" class="form-label">Vision of Statement</label>
+                          <input
+                            type="visionStatement"
+                            class="form-control"
+                            id="visionStatement"
+                            name="visionStatement"
+                            value="<%=data.visionStatement ? data.visionStatement : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="valuesStatement" class="form-label">Values of Statement</label>
+                          <input
+                            type="valuesStatement"
+                            class="form-control"
+                            id="valuesStatement"
+                            name="valuesStatement"
+                            value="<%=data.valuesStatement ? data.valuesStatement : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                      </form>
+                      <br /><br />
+                      <a href="/admin/churches_listing" class="btn btn-primary">
+                        <i
+                          class="ph ph-arrow-fat-lines-left"
+                          style="font-size: 20px"
+                        ></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- /Register v1 -->
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END: Content-->
+
+    <%-include('../../common/script')%>
+
+    <script>
+      $(window).on("load", function () {
+        if (feather) {
+          feather.replace({
+            width: 14,
+            height: 14,
+          });
+        }
+      });
+    </script>
+  </body>
+  <!-- END: Body-->
+</html>

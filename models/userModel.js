@@ -167,7 +167,7 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         defaultValue:''
       },
 
-      //4.Non Profit fileds
+      //4.Non Profit fields
       nameNonProfit: {
         type: DataTypes.STRING(255),
         allowNull: true,
@@ -188,7 +188,7 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:0
       },
-      nonPorfitOrganization:{ 
+      nonProfitServe:{ 
         type: DataTypes.STRING(255),
         allowNull: true,
         defaultValue:''
@@ -203,6 +203,9 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:''
       },
+
+
+      // ===============
       resetToken: {
         type: DataTypes.STRING(255),
         allowNull: true,

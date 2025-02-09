@@ -37,6 +37,21 @@ module.exports = function () {
   router.post("/user_status", controller.adminController.user_status);
   router.post("/user_delete", controller.adminController.user_delete);
 
+  router.get("/churches_listing", controller.adminController.churches_listing);
+  router.get("/church_view/:id", controller.adminController.church_view);
+  router.post("/church_status", controller.adminController.church_status);
+  router.post("/church_delete", controller.adminController.church_delete);
+
+  router.get("/business_listing", controller.adminController.business_listing);
+  router.get("/business_view/:id", controller.adminController.business_view);
+  router.post("/business_status", controller.adminController.business_status);
+  router.post("/business_delete", controller.adminController.business_delete);
+
+  router.get("/nonprofit_listing", controller.adminController.nonprofit_listing);
+  router.get("/nonprofit_view/:id", controller.adminController.nonprofit_view);
+  router.post("/nonprofit_status", controller.adminController.nonprofit_status);
+  router.post("/nonprofit_delete", controller.adminController.nonprofit_delete);
+
   router.post("/test", controller.adminController.test);
 
   return router;

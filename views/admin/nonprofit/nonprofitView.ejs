@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+  <!-- BEGIN: Head-->
+
+  <%-include('../../common/header')%>
+  <!-- BEGIN: Body-->
+
+  <body
+    class="vertical-layout vertical-menu-modern navbar-floating footer-static"
+    data-open="click"
+    data-menu="vertical-menu-modern"
+    data-col=""
+  >
+    <!-- sidebar -->
+    <%-include('../../common/sidebar')%>
+    <!-- navbar -->
+
+    <%-include('../../common/navbar')%>
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+      <div class="content-overlay"></div>
+      <div class="header-navbar-shadow"></div>
+      <div class="content-wrapper">
+        <div class="content-header row"></div>
+
+        <div class="content-body">
+          <div class="row justify-content-center">
+            <!-- <div class="col-md-6"> -->
+            <div class="content-header-left col-md-12 col-12 mb-2">
+              <div class="auth-wrapper auth-v1 px-2">
+                <div class="auth-inner py-2">
+                  <!-- Register v1 -->
+                  <div class="card mb-0">
+                    <div class="card-body">
+                      <a href="#" class="brand-logo">
+                        <div
+                          style="
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                          "
+                        >
+                          <% if(!data.companyLogo) { %>
+                          <img
+                            src="../../assets/images (1).jpeg"
+                            class="profile_img"
+                            alt="avatar"
+                            height="120px"
+                            width="150px"
+                            style="align-items: center"
+                          />
+                          <% } else { %>
+                          <img
+                            src="<%= data.businessLogo %>"
+                            class="profile_img"
+                            alt="user image"
+                            height="120px"
+                            width="150px"
+                          />
+                          <% } %>
+                        </div>
+                      </a>
+                      <form class="auth-register-form mt-2">
+                        <div class="mb-1">
+                          <label for="nameNonProfit" class="form-label"
+                            >Name Of Non-Profit</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="nameNonProfit"
+                            name="nameNonProfit"
+                            aria-describedby="nameNonProfit"
+                            value="<%=data.nameNonProfit ? data.nameNonProfit : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="addressNonProfit" class="form-label"
+                            >Address Of Non-Profit</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="addressNonProfit"
+                            name="addressNonProfit"
+                            value="<%=data.addressNonProfit ? data.addressNonProfit : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="webSiteNonProfile" class="form-label"
+                            >WebSite</label
+                          >
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="webSiteNonProfile"
+                            name="webSiteNonProfile"
+                            value="<%=data.webSiteNonProfile ? data.webSiteNonProfile : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="nonProfitServe" class="form-label">Non-Profit Serve</label>
+                          <input
+                            type="nonProfitServe"
+                            class="form-control"
+                            id="nonProfitServe"
+                            name="nonProfitServe"
+                            value="<%=data.nonProfitServe ? data.nonProfitServe : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="nonPorfitOrganization" class="form-label">Non-Porfit Organization</label>
+                          <input
+                            type="nonPorfitOrganization"
+                            class="form-control"
+                            id="nonPorfitOrganization"
+                            name="nonPorfitOrganization"
+                            value="<%=data.nonPorfitOrganization ? data.nonPorfitOrganization : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="chruchAttendAddress" class="form-label">Chruch Attend Address</label>
+                          <input
+                            type="chruchAttendAddress"
+                            class="form-control"
+                            id="chruchAttendAddress"
+                            name="chruchAttendAddress"
+                            value="<%=data.chruchAttendAddress ? data.chruchAttendAddress : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                      </form>
+                      <br /><br />
+                      <a href="/admin/nonprofit_listing" class="btn btn-primary">
+                        <i
+                          class="ph ph-arrow-fat-lines-left"
+                          style="font-size: 20px"
+                        ></i>
+                      </a>
+                    </div>
+                  </div>
+
+                  <!-- /Register v1 -->
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END: Content-->
+
+    <%-include('../../common/script')%>
+
+    <script>
+      $(window).on("load", function () {
+        if (feather) {
+          feather.replace({
+            width: 14,
+            height: 14,
+          });
+        }
+      });
+    </script>
+  </body>
+  <!-- END: Body-->
+</html>

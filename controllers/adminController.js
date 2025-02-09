@@ -53,9 +53,15 @@ module.exports = {
       let user = await Models.userModel.count({
         where: { role: 1 },
       });
-      let churches = 0;
-      let business = 0;
-      let nonprofit = 0;
+      let churches = await Models.userModel.count({
+        where: { role: 2 },
+      });
+      let business = await Models.userModel.count({
+        where: { role: 3 },
+      });
+      let nonprofit = await Models.userModel.count({
+        where: { role: 4 },
+      });
 
       const currentYear1 = moment().year();
 
@@ -250,7 +256,7 @@ module.exports = {
         where: { id: userId },
       });
       res.render("admin/users/userView", {
-        title: "Users View",
+        title: "Users",
         data,
         session: req.session.user,
         msg: req.flash("msg"),
@@ -308,6 +314,268 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Failed to delete user " });
+    }
+  },
+
+
+
+
+  churches_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let church_data = await Models.userModel.findAll({
+        where: {
+          role: 2,
+        },
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/churches/churchListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "churches",
+        church_data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  church_view: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+
+      let churchId = req.params.id;
+
+      // Find user details
+      let data = await Models.userModel.findOne({
+        where: { id: churchId },
+      });
+      res.render("admin/churches/churchView", {
+        title: "churches",
+        data,
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  church_status: async (req, res) => {
+    try {
+      const { id, status } = req.body;
+
+      const [updatedRows] = await Models.userModel.update(
+        { status },
+        { where: { id } }
+      );
+
+      if (updatedRows === 0) {
+        return res
+          .status(404)
+          .json({
+            success: false,
+            message: "Church not found or status unchanged",
+          });
+      }
+
+      res.json({
+        success: true,
+        message: "Status changed successfully",
+        status,
+      });
+    } catch (error) {
+      console.log("Error updating church status:", error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal server error" });
+    }
+  },
+
+  church_delete: async (req, res) => {
+    try {
+      const churchId = req.body.id;
+      await Models.userModel.destroy({ where: { id: churchId } });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete church " });
+    }
+  },
+
+
+
+  business_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let business_data = await Models.userModel.findAll({
+        where: {
+          role: 3,
+        },
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/business/businessListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "businesses",
+        business_data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  business_view: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+
+      let businessId = req.params.id;
+
+      // Find user details
+      let data = await Models.userModel.findOne({
+        where: { id: businessId },
+      });
+      res.render("admin/businesses/businessView", {
+        title: "businesses",
+        data,
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  business_status: async (req, res) => {
+    try {
+      const { id, status } = req.body;
+
+      const [updatedRows] = await Models.userModel.update(
+        { status },
+        { where: { id } }
+      );
+
+      if (updatedRows === 0) {
+        return res
+          .status(404)
+          .json({
+            success: false,
+            message: "business not found or status unchanged",
+          });
+      }
+
+      res.json({
+        success: true,
+        message: "Status changed successfully",
+        status,
+      });
+    } catch (error) {
+      console.log("Error updating business status:", error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal server error" });
+    }
+  },
+
+  business_delete: async (req, res) => {
+    try {
+      const businessId = req.body.id;
+      await Models.userModel.destroy({ where: { id: businessId } });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete business " });
+    }
+  },
+
+
+
+  nonprofit_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let nonprofit_data = await Models.userModel.findAll({
+        where: {
+          role: 3,
+        },
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/nonprofit/nonprofitListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "nonprofit",
+        nonprofit_data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  nonprofit_view: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+
+      let nonprofitId = req.params.id;
+
+      // Find user details
+      let data = await Models.userModel.findOne({
+        where: { id: nonprofitId },
+      });
+      res.render("admin/nonprofit/nonprofitView", {
+        title: "nonprofit",
+        data,
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  nonprofit_status: async (req, res) => {
+    try {
+      const { id, status } = req.body;
+
+      const [updatedRows] = await Models.userModel.update(
+        { status },
+        { where: { id } }
+      );
+
+      if (updatedRows === 0) {
+        return res
+          .status(404)
+          .json({
+            success: false,
+            message: "nonprofit not found or status unchanged",
+          });
+      }
+
+      res.json({
+        success: true,
+        message: "Status changed successfully",
+        status,
+      });
+    } catch (error) {
+      console.log("Error updating nonprofit status:", error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal server error" });
+    }
+  },
+
+  nonprofit_delete: async (req, res) => {
+    try {
+      const nonprofitId = req.body.id;
+      await Models.userModel.destroy({ where: { id: nonprofitId } });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete nonprofit " });
     }
   },
 
