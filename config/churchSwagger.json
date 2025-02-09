@@ -367,23 +367,6 @@
                 ],
                 "responses": {}
             }
-        },
-        "/church/cms": {
-            "get": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "church-cms-post",
-                "tags": ["Application User"],
-                "description": "",
-                "security": [
-					{
-						"Bearer": []
-					}
-				],
-				"parameters": [
-                  
-				],
-                "responses": {}
-            }
         }
     },
     "definitions": {
