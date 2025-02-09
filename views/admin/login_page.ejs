@@ -77,8 +77,8 @@
       width: 100%;
       max-width: 400px;
       box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-      transform: translateX(-100%);
-      animation: slideInLeft 0.6s ease-in-out forwards;
+      transform: translateX(-50px);
+      animation: fadeInRight 1s ease-in-out forwards;
       margin-left: 50px;
       transition: transform 0.3s ease-in-out;
     }
@@ -101,7 +101,6 @@
       background: white;
       border: 1px solid rgba(255, 255, 255, 0.5);
       outline: none;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
     }
 
     .input-group-text {
@@ -138,7 +137,7 @@
       max-width: 500px;
       text-align: left;
       opacity: 0;
-      animation: fadeInRight 0.8s ease-in-out 0.4s forwards;
+      animation: fadeInLeft 1s ease-in-out 0.5s forwards;
       margin-right: 50px;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     }
@@ -168,10 +167,10 @@
       letter-spacing: 0.5px;
     }
 
-    @keyframes slideInLeft {
+    @keyframes fadeInRight {
       from {
         opacity: 0;
-        transform: translateX(-100%);
+        transform: translateX(-50px);
       }
       to {
         opacity: 1;
@@ -179,10 +178,10 @@
       }
     }
 
-    @keyframes fadeInRight {
+    @keyframes fadeInLeft {
       from {
         opacity: 0;
-        transform: translateX(100%);
+        transform: translateX(50px);
       }
       to {
         opacity: 1;
@@ -260,11 +259,9 @@
                     <div class="d-flex justify-content-between">
                       <label class="form-label" for="password">Password</label>
                     </div>
-                    <div
-                      class="input-group input-group-merge form-password-toggle"
-                    >
+                    <div class="position-relative">
                       <input
-                        class="form-control"
+                        class="form-control pe-4"
                         id="password"
                         type="password"
                         name="password"
@@ -273,9 +270,12 @@
                         autofocus=""
                         tabindex="2"
                       />
-                      <span class="input-group-text cursor-pointer"
-                        ><i data-feather="eye"></i
-                      ></span>
+                      <span
+                        class="position-absolute end-0 top-50 translate-middle-y me-2 cursor-pointer"
+                        onclick="togglePassword()"
+                      >
+                        <i id="toggleEye" data-feather="eye"></i>
+                      </span>
                     </div>
                   </div>
                   <button class="btn w-100 custom-btn" tabindex="4">
@@ -359,6 +359,46 @@
         }
       });
     </script>
+
+    <script>
+      $(document).ready(function () {
+        // Quote Array
+        const quotes = [
+          "Edify Lives: Empowering minds, enriching futures, and creating endless possibilities for growth and success.",
+          "Building brighter tomorrows, today—because every step toward learning is a step toward a better future.",
+          "Igniting potential, transforming lives, and shaping a world where dreams turn into reality through knowledge.",
+          "Guiding growth, inspiring change, and leading individuals toward excellence with purpose and passion.",
+          "Where knowledge meets purpose, and education becomes the foundation for innovation and transformation.",
+          "Shaping lives, one step at a time—fostering resilience, curiosity, and the drive to achieve greatness.",
+          "Nurturing wisdom, creating impact, and building a community where learning empowers and inspires.",
+          "Empowering every journey to success by fostering knowledge, determination, and the courage to excel.",
+          "Elevate, educate, and edify—because learning is the bridge that connects ambition with achievement.",
+          "Bringing light to learning and life, one lesson at a time, to build a future filled with hope and possibilities.",
+        ];
+
+        // Random Quote Selection
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        $(".welcome_quote").text(randomQuote);
+      });
+    </script>
+
+    <script>
+      function togglePassword() {
+        let passwordInput = document.getElementById("password");
+        let toggleEye = document.getElementById("toggleEye");
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          toggleEye.setAttribute("data-feather", "eye-off");
+        } else {
+          passwordInput.type = "password";
+          toggleEye.setAttribute("data-feather", "eye");
+        }
+
+        feather.replace(); // Refresh Feather icons
+      }
+    </script>
+
     <!-- END: Scripts -->
   </body>
 </html>
