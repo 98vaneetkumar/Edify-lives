@@ -50,7 +50,9 @@ module.exports = {
   dashboard: async (req, res) => {
     try {
       if (!req.session.user) return res.redirect("/admin/login");
-      let user = await Models.userModel.count();
+      let user = await Models.userModel.count({
+        where: { role: 1 },
+      });
       let churches = 0;
       let business = 0;
       let nonprofit = 0;
@@ -213,6 +215,99 @@ module.exports = {
       res.redirect("back");
     } catch (error) {
       console.log(error);
+    }
+  },
+
+  users_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let user_data = await Models.userModel.findAll({
+        where: {
+          role: 1,
+        },
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/users/usersListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Users",
+        user_data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  user_view: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+
+      let userId = req.params.id;
+
+      // Find user details
+      let data = await Models.userModel.findOne({
+        where: { id: userId },
+      });
+      res.render("admin/users/userView", {
+        title: "Users View",
+        data,
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  user_status: async (req, res) => {
+    try {
+      const { id, status } = req.body;
+      console.log(`Updating user ${id} to status: ${status}`); // Debugging
+
+      if (!id || status === undefined) {
+        return res
+          .status(400)
+          .json({ success: false, message: "Invalid data provided" });
+      }
+
+      const [updatedRows] = await Models.userModel.update(
+        { status },
+        { where: { id } }
+      );
+
+      if (updatedRows === 0) {
+        return res
+          .status(404)
+          .json({
+            success: false,
+            message: "User not found or status unchanged",
+          });
+      }
+
+      res.json({
+        success: true,
+        message: "Status changed successfully",
+        status,
+      });
+    } catch (error) {
+      console.log("Error updating user status:", error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal server error" });
+    }
+  },
+
+  user_delete: async (req, res) => {
+    try {
+      const userId = req.body.id;
+      // Delete user
+      await Models.userModel.destroy({ where: { id: userId } });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete user " });
     }
   },
 

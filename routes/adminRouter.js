@@ -15,14 +15,27 @@ module.exports = function () {
   router.get("/aboutUs", session, controller.adminController.aboutUs);
   router.post("/about_post", controller.adminController.about_post);
 
-  router.get("/privacyPolicy", session, controller.adminController.privacyPolicy);
+  router.get(
+    "/privacyPolicy",
+    session,
+    controller.adminController.privacyPolicy
+  );
   router.post("/privacy_post", controller.adminController.privacy_post);
 
-  router.get("/termsConditions", session, controller.adminController.termsConditions);
+  router.get(
+    "/termsConditions",
+    session,
+    controller.adminController.termsConditions
+  );
   router.post(
     "/termsConditionsPost",
     controller.adminController.termsConditionsPost
   );
+
+  router.get("/users_listing", controller.adminController.users_listing);
+  router.get("/user_view/:id", controller.adminController.user_view);
+  router.post("/user_status", controller.adminController.user_status);
+  router.post("/user_delete", controller.adminController.user_delete);
 
   router.post("/test", controller.adminController.test);
 
