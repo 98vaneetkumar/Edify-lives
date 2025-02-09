@@ -15,7 +15,7 @@ const Response = require("../config/responses.js");
 module.exports = {
   login_page: async (req, res) => {
     if (req.session.user) return res.redirect("/admin/dashboard");
-    res.render("Admin/login_page", { layout: false, msg: req.flash("msg") });
+    res.render("admin/login_page", { layout: false, msg: req.flash("msg") });
   }, 
 
   login: async (req, res) => {
