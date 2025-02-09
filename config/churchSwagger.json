@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "project name",
+        "title": "Edify lives",
         "description": "project description",
         "version": "1.0"
     },
@@ -71,9 +71,41 @@
                         "value": "123456"
                     },
                     {
-                        "name": "profilePicture",
+                        "name": "churchName",
                         "in": "formData",
-                        "description": "Profile picture to upload",
+                        "description": "Enter church Name",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "churchWebsite",
+                        "in": "formData",
+                        "description": "Enter church website link",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "churchAccessCode",
+                        "in": "formData",
+                        "description": "Enter church access code",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "numberOfMembers",
+                        "in": "formData",
+                        "description": "Enter how many members in church",
+                        "required": false,
+                        "type": "number",
+                        "value": ""
+                    },
+                    {
+                        "name": "visionStatement",
+                        "in": "formData",
+                        "description": "Enter vision statement picture to upload",
                         "required": false,
                         "type": "file",
                         "format": "binary",
@@ -82,6 +114,28 @@
                           "image/jpeg",
                           "image/png"
                         ]
+                    },
+                    {
+                        "name": "valueStatement",
+                        "in": "formData",
+                        "description": "Enter value statement picture to upload",
+                        "required": false,
+                        "type": "file",
+                        "format": "binary",
+                        "maxLength": 5242880,
+                        "allowedMimeTypes": [
+                          "image/jpeg",
+                          "image/png"
+                        ]
+                    },
+                    {
+                        "name": "maritalStatus",
+                        "in": "formData",
+                        "description": "Enter your married Status 0 for not married or 1 for married",
+                        "required": false,
+                        "enum":[0,1],
+                        "type": "number",
+                        "value": 0
                     },
                     {
                         "name": "location",
@@ -115,30 +169,7 @@
                         "type": "string",
                         "value": ""
                     },
-                    {
-                        "name": "traitAndExperience",
-                        "in": "formData",
-                        "description": "Enter trait And Experience",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "postEmpSeekingSection",
-                        "in": "formData",
-                        "description": "Would you like to profile posted  on the employment seeking section",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "hartOfService",
-                        "in": "formData",
-                        "description": "Who do you have the heart of service",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
+                  
                     {
                         "name": "deviceType",
                         "in": "formData",
@@ -146,7 +177,7 @@
                         "enum": [1,2],
                         "required": false,
                         "type": "number",
-                        "value": "1"
+                        "value": 1
                     },
                     {
                         "name": "deviceToken",
@@ -155,21 +186,11 @@
                         "required": false,
                         "type": "string",
                         "value": ""
-                    },
-                    {
-                        "name": "deviceType",
-                        "in": "formData",
-                        "description": "Enter deviceType",
-                        "enum": [1,2],
-                        "required": false,
-                        "type": "number",
-                        "value": "1"
                     }
                 ],
                 "responses": {}
             }
         },
-        
         "/church/login": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
@@ -214,7 +235,6 @@
                 "responses": {}
             }
         },
-
         "/church/logout": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
@@ -232,7 +252,6 @@
                 "responses": {}
             }
         },
-
         "/church/changePassword": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
@@ -265,7 +284,6 @@
                 "responses": {}
             }
         },
-
         "/church/forgotPassword": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
@@ -304,7 +322,6 @@
                 "responses": {}
             }
         },
-    
         "/church/otpVerify": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
@@ -340,7 +357,6 @@
                 "responses": {}
             }
         },
-
         "/church/resendOtp": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",

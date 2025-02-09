@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "project name",
+        "title": "Edify lives",
         "description": "project description",
         "version": "1.0"
     },
@@ -84,6 +84,15 @@
                         ]
                     },
                     {
+                        "name": "maritalStatus",
+                        "in": "formData",
+                        "description": "Enter your married Status 0 for not married or 1 for married",
+                        "required": false,
+                        "enum":[0,1],
+                        "type": "string",
+                        "value": 0
+                    },
+                    {
                         "name": "location",
                         "in": "formData",
                         "description": "Enter your location",
@@ -155,21 +164,11 @@
                         "required": false,
                         "type": "string",
                         "value": ""
-                    },
-                    {
-                        "name": "deviceType",
-                        "in": "formData",
-                        "description": "Enter deviceType",
-                        "enum": [1,2],
-                        "required": false,
-                        "type": "number",
-                        "value": "1"
                     }
                 ],
                 "responses": {}
             }
         },
-        
         "/users/login": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
@@ -208,13 +207,12 @@
                         "enum": [1,2],
                         "required": false,
                         "type": "number",
-                        "value": "1"
+                        "value": 1
                     }
                 ],
                 "responses": {}
             }
         },
-
         "/users/logout": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
@@ -232,7 +230,6 @@
                 "responses": {}
             }
         },
-
         "/users/changePassword": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
@@ -265,7 +262,6 @@
                 "responses": {}
             }
         },
-
         "/users/forgotPassword": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
@@ -304,7 +300,6 @@
                 "responses": {}
             }
         },
-    
         "/users/otpVerify": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
@@ -340,7 +335,6 @@
                 "responses": {}
             }
         },
-
         "/users/resendOtp": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
@@ -372,6 +366,23 @@
             "get": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "users-cms-post",
+                "tags": ["Application User"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": [
+                  
+				],
+                "responses": {}
+            }
+        },
+        "/users/notificationsList": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "users-notificationsList-post",
                 "tags": ["Application User"],
                 "description": "",
                 "security": [

@@ -18,6 +18,7 @@ var success_msg = {
   otpVerify: "Otp verified successfully",
 
   otpResend: "OTP resent successfully",
+  notificationList: "Notification list fetched successfully",
 };
 
 var failed_msg = {
@@ -66,6 +67,7 @@ var error_msg = {
   otpVerErr: "Error while verifying the otp",
 
   otpResErr: "Failed to resend OTP",
+  invalidPhoneNumber: "Invalid phone number",
 };
 
 module.exports = {

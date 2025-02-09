@@ -1,13 +1,13 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Edify",
+        "title": "Edify lives",
         "description": "project description",
         "version": "1.0"
     },
     "produces": ["application/json"],
     "basePath": "/",
-    "securityDefinitions": {
+    "securityDefinitions": { 
         "Bearer": {
             "type": "apiKey",
             "name": "authorization",
@@ -19,24 +19,24 @@
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "nonProfit-signUp-post",
-                "tags": ["Application Non Profile"],
+                "tags": ["Application User"],
                 "description": "",
                 "parameters": [
                     {
-                        "name": "firstName",
+                        "name": "nameNonProfit",
                         "in": "formData",
-                        "description": "Enter the firstName",
+                        "description": "Enter the nameNonProfit",
                         "required": true,
                         "type": "string",
-                        "value": "test"
+                        "value": "vaneet"
                     },
                     {
-                        "name": "lastName",
+                        "name": "addressNonProfit",
                         "in": "formData",
-                        "description": "Enter lastName ",
+                        "description": "Enter the address of NonProfit",
                         "required": true,
                         "type": "string",
-                        "value": "test"
+                        "value": "Mohali"
                     },
                     {
                         "name": "email",
@@ -44,7 +44,15 @@
                         "description": "Enter the email",
                         "required": true,
                         "type": "string",
-                        "value": "test@gmail.com"
+                        "value": "vaneet@gmail.com"
+                    },
+                    {
+                        "name": "countryCode",
+                        "in": "formData",
+                        "description": "Enter country code",
+                        "required": true,
+                        "type": "string",
+                        "value": "+91"
                     },
                     {
                         "name": "phoneNumber",
@@ -52,7 +60,7 @@
                         "description": "Enter phone number",
                         "required": true,
                         "type": "string",
-                        "value": "+911010101010"
+                        "value": "8628023157"
                     },
                     {
                         "name": "password",
@@ -63,9 +71,41 @@
                         "value": "123456"
                     },
                     {
-                        "name": "profilePicture",
+                        "name": "webSiteNonProfile",
                         "in": "formData",
-                        "description": "Profile picture to upload",
+                        "description": "Enter webSite NonProfile link",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "nonProfitServe",
+                        "in": "formData",
+                        "description": "Enter non Profit Serve",
+                        "required": false, 
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "nonPorfitOrganization",
+                        "in": "formData",
+                        "description": "Enter non Porfit Organization text",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "chruchAttendAddress",
+                        "in": "formData",
+                        "description": "Enter chruch Attend Address",
+                        "required": false,
+                        "type": "number",
+                        "value": ""
+                    },
+                    {
+                        "name": "companyLogo",
+                        "in": "formData",
+                        "description": "Enter company Logo to upload",
                         "required": false,
                         "type": "file",
                         "format": "binary",
@@ -76,12 +116,68 @@
                         ]
                     },
                     {
-                        "name": "bio",
+                        "name": "valueStatement",
                         "in": "formData",
-                        "description": "Enter bio",
+                        "description": "Enter value statement picture to upload",
+                        "required": false,
+                        "type": "file",
+                        "format": "binary",
+                        "maxLength": 5242880,
+                        "allowedMimeTypes": [
+                          "image/jpeg",
+                          "image/png"
+                        ]
+                    },
+                    {
+                        "name": "maritalStatus",
+                        "in": "formData",
+                        "description": "Enter your married Status 0 for not married or 1 for married",
+                        "required": false,
+                        "enum":[0,1],
+                        "type": "number",
+                        "value": 0
+                    },
+                    {
+                        "name": "location",
+                        "in": "formData",
+                        "description": "Enter your location",
+                        "required": false,
+                        "type": "string",
+                        "value": "Mohali "
+                    },
+                    {
+                        "name": "latitude",
+                        "in": "formData",
+                        "description": "Enter latitude",
+                        "required": false,
+                        "type": "string",
+                        "value": "30.7046"
+                    },
+                    {
+                        "name": "longitude",
+                        "in": "formData",
+                        "description": "Enter longitude",
+                        "required": false,
+                        "type": "string",
+                        "value": "76.7179"
+                    },
+                    {
+                        "name": "donateEdifyLivers",
+                        "in": "formData",
+                        "description": "Enter donateEdifyLivers",
                         "required": false,
                         "type": "string",
                         "value": ""
+                    },
+                  
+                    {
+                        "name": "deviceType",
+                        "in": "formData",
+                        "description": "Enter deviceType",
+                        "enum": [1,2],
+                        "required": false,
+                        "type": "number",
+                        "value": 1
                     },
                     {
                         "name": "deviceToken",
@@ -90,26 +186,16 @@
                         "required": false,
                         "type": "string",
                         "value": ""
-                    },
-                    {
-                        "name": "deviceType",
-                        "in": "formData",
-                        "description": "Enter deviceType",
-                        "enum": [1,2],
-                        "required": false,
-                        "type": "number",
-                        "value": "1"
                     }
                 ],
                 "responses": {}
             }
         },
-        
         "/nonProfit/login": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "nonProfit-login-post",
-                "tags": ["Application Non Profile"],
+                "tags": ["Application User"],
                 "description": "",
                 "parameters": [
                     {
@@ -118,7 +204,7 @@
                         "description": "Enter the email",
                         "required": true,
                         "type": "string",
-                        "value": "test@gmail.com"
+                        "value": "vaneet@gmail.com"
                     },
                     {
                         "name": "password",
@@ -149,61 +235,11 @@
                 "responses": {}
             }
         },
-
-        "/nonProfit/updateProfile": {
-            "patch": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "nonProfit-updateProfile-post",
-                "tags": ["Application Non Profile"],
-                "description": "",
-                "security": [
-					{
-						"Bearer": []
-					}
-				],
-                "parameters": [
-                    {
-                        "name": "firstName",
-                        "in": "formData",
-                        "description": "Enter the firstName",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "lastName",
-                        "in": "formData",
-                        "description": "Enter lastName ",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "email",
-                        "in": "formData",
-                        "description": "Enter the email",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "phoneNumber",
-                        "in": "formData",
-                        "description": "Enter phone number",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    }
-                ],
-                "responses": {}
-            }
-        },
-
         "/nonProfit/logout": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "nonProfit-logout-post",
-                "tags": ["Application Non Profile"],
+                "tags": ["Application User"],
                 "description": "",
                 "security": [
 					{
@@ -216,12 +252,11 @@
                 "responses": {}
             }
         },
-
         "/nonProfit/changePassword": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "nonProfit-changePassword-post",
-                "tags": ["Application Non Profile"],
+                "tags": ["Application User"],
                 "description": "",
                 "security": [
 					{
@@ -249,12 +284,11 @@
                 "responses": {}
             }
         },
-
         "/nonProfit/forgotPassword": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "nonProfit-forgotPassword-post",
-                "tags": ["Application Non Profile"],
+                "tags": ["Application User"],
                 "description": "",
                 "parameters": [
                     {
@@ -269,68 +303,75 @@
                 "responses": {}
             }
         },
-
-        "/nonProfit/sidIdGenerate": {
-            "get": {
+        "/nonProfit/resendForgotPasswordLink": {
+            "post": {
                 "x-swagger-router-controller": "middleware-name1",
-                "operationId": "nonProfit-otsidIdGeneratepSend-post",
-                "tags": ["Application Non Profile"],
+                "operationId": "nonProfit-resendForgotPasswordLink-post",
+                "tags": ["Application User"],
                 "description": "",
                 "parameters": [
-                
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Enter the email",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
                 ],
                 "responses": {}
             }
         },
-
-
-        "/nonProfit/otpSend": {
+        "/nonProfit/otpVerify": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
-                "operationId": "nonProfit-otpSend-post",
-                "tags": ["Application Non Profile"],
+                "operationId": "nonProfit-otpVerify-post",
+                "tags": ["Application User"],
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "countryCode",
+                        "in": "formData",
+                        "description": "Enter the phoneNumber",
+                        "required": false,
+                        "type": "string",
+                        "value": "+91"
+                    },
                     {
                         "name": "phoneNumber",
                         "in": "formData",
                         "description": "Enter the phoneNumber",
                         "required": false,
                         "type": "string",
-                        "value": "1010101010"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-
-        "/nonProfit/otpVerify": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "nonProfit-otpVerify-post",
-                "tags": ["Application Non Profile"],
-                "description": "",
-                "parameters": [
+                        "value": "8628023157"
+                    },
                     {
                         "name": "otp",
                         "in": "formData",
                         "description": "Enter the otp",
                         "required": false,
                         "type": "string",
-                        "value": "1414"
+                        "value": "1111"
                     }
                 ],
                 "responses": {}
             }
         },
-
         "/nonProfit/resendOtp": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "nonProfit-resendOtp-post",
-                "tags": ["Application Non Profile"],
+                "tags": ["Application User"],
                 "description": "",
                 "parameters": [
+                    {
+                        "name": "countryCode",
+                        "in": "formData",
+                        "description": "Enter the phoneNumber",
+                        "required": false,
+                        "type": "string",
+                        "value": "+91"
+                    },
                     {
                         "name": "phoneNumber",
                         "in": "formData",
@@ -342,8 +383,24 @@
                 ],
                 "responses": {}
             }
+        },
+        "/nonProfit/cms": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "nonProfit-cms-post",
+                "tags": ["Application User"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": [
+                  
+				],
+                "responses": {}
+            }
         }
-
     },
     "definitions": {
     }

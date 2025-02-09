@@ -11,13 +11,13 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
       //1. Personal functions
       firstName: {
         type: DataTypes.STRING(50),
-        allowNull: true,
+        allowNull: false,
         defaultValue:''
       },
 
       lastName: {
         type: DataTypes.STRING(50),
-        allowNull: true,
+        allowNull: false,
         defaultValue:''
       },
      socialType:{
@@ -198,6 +198,11 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:''
       },
+      companyLogo:{
+        type: DataTypes.STRING(255),
+        allowNull: true,
+        defaultValue:''
+      },
       resetToken: {
         type: DataTypes.STRING(255),
         allowNull: true,
@@ -220,12 +225,6 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         type: DataTypes.STRING(255),
         allowNull: true,
         defaultValue:''
-      },
-
-      bio: {
-        type: DataTypes.TEXT("long"),
-        allowNull: true,
-        defaultValue:null
       },
 
     },

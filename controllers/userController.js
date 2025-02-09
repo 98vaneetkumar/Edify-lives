@@ -14,6 +14,8 @@ const commonHelper = require("../helpers/commonHelper.js");
 const helper = require("../helpers/validation.js");
 const Models = require("../models/index");
 const Response = require("../config/responses.js");
+Models.notificationModel.belongsTo(Models.userModel, {foreignKey: 'senderId', as: 'sender'});
+
 module.exports = {
   signUp: async (req, res) => {
     try {
@@ -24,6 +26,7 @@ module.exports = {
         countryCode: Joi.string().optional(),
         phoneNumber: Joi.string().required(),
         password: Joi.string().required(),
+        maritalStatus: Joi.number().valid(0,1).optional(),
         profilePicture: Joi.string().optional(),
         location: Joi.string().optional(),
         latitude: Joi.string().optional(),
@@ -75,6 +78,7 @@ module.exports = {
         phoneNumber: payload.phoneNumber,
         password: hashedPassword,
         role: 1,
+        maritalStatus: payload.maritalStatus,
         profilePicture: profilePicturePath ? profilePicturePath : null,
         location: payload.location,
         latitude: payload.latitude,
@@ -86,9 +90,16 @@ module.exports = {
         deviceToken: payload.deviceToken,
         deviceType: payload.deviceType,
       };
-
-      let response = await Models.userModel.create(objToSave);
-
+      try {
+        let phone=countryCode+phoneNumber; //
+        // const otpResponse = await otpManager.sendOTP(phone);
+      } catch (error) {
+        return commonHelper.failed(
+          res,
+          Response.error_msg.invalidPhoneNumber,
+        );
+      }
+      await Models.userModel.create(objToSave);
       return commonHelper.success(
         res,
         Response.success_msg.otpResend,
@@ -98,7 +109,6 @@ module.exports = {
       return commonHelper.error(res, Response.error_msg.regUser, error.message);
     }
   },
-
   login: async (req, res) => {
     try {
       const schema = Joi.object().keys({
@@ -153,7 +163,6 @@ module.exports = {
       return commonHelper.error(res, Response.error_msg.loguser, err.message);
     }
   },
-
   forgotPassword: async (req, res) => {
     try {
       const schema = Joi.object().keys({
@@ -255,7 +264,6 @@ module.exports = {
       );
     }
   },  
-
   forgotChangePassword: async (req, res) => {
     try {      
       const schema = Joi.object().keys({
@@ -305,18 +313,16 @@ module.exports = {
       );
     }
   },
-
   logout: async (req, res) => {
     try {
       const schema = Joi.object().keys({
         deviceToken: Joi.string().required(),
-        // devideToken: 'abc',
         devideType: Joi.string().optional(),
       });
 
       let payload = await helper.validationJoi(req.body, schema);
 
-      let logoutDetail = { deviceToken: payload.deviceToken };
+      let logoutDetail = { deviceToken: null };
 
       await Models.userModel.update(logoutDetail, {
         where: { id: req.user.id },
@@ -332,7 +338,6 @@ module.exports = {
       );
     }
   },
-
   changePassword: async (req, res) => {
     try {
       const schema = Joi.object().keys({
@@ -463,4 +468,22 @@ module.exports = {
       throw error
     }
   },
+  notificationsList:async(req,res)=>{
+    try {
+      let response = await Models.notificationModel.findAll({
+        where:{
+          recevierId:req.user.id
+        },
+        include:[
+          {
+            model:Models.userModel,
+            as:"sender",
+          }
+        ]
+      })
+      return commonHelper.success(res,Response.success_msg.notificationList, response);
+    } catch (error) {
+      throw error;
+    }
+  }
 };
