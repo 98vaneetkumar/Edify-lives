@@ -30,13 +30,6 @@ exports.forgetPasswordLinkHTML = function (req, link) {
     Reset Password
   </a>
 
-  <p style="font-size: 16px; color: #555; margin-top: 15px;">If the button above doesn't work, copy and paste the following link into your browser:</p>
-
-  <!-- Reset Password Link -->
-  <p style="font-size: 14px; color: #4CAF50; word-wrap: break-word;">
-    <a href="${link}" target="_blank" style="color: #4CAF50;"></a>
-  </p>
-
   <p style="font-size: 14px; color: #777; margin-top: 20px;">This link is valid for **1 hour**.</p>
   <p style="font-size: 14px; color: #777;">If you didn’t request this, please ignore this email.</p>
 
