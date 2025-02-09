@@ -21,6 +21,8 @@ var success_msg = {
 };
 
 var failed_msg = {
+  emailAlreadyExists: "Email already exists!",
+  phoneNumberAlreadyExists: "Phone number already exists!",
   userNotFound: "User not found",
 
   invalidPassword: "Invalid password",

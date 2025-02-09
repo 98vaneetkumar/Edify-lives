@@ -28,7 +28,7 @@
                         "description": "Enter the firstName",
                         "required": true,
                         "type": "string",
-                        "value": "test"
+                        "value": "Vaneet"
                     },
                     {
                         "name": "lastName",
@@ -36,7 +36,7 @@
                         "description": "Enter lastName ",
                         "required": true,
                         "type": "string",
-                        "value": "test"
+                        "value": "Kumar"
                     },
                     {
                         "name": "email",
@@ -105,7 +105,7 @@
                     {
                         "name": "traitAndExperience",
                         "in": "formData",
-                        "description": "Enter traitAndExperience",
+                        "description": "Enter trait And Experience",
                         "required": false,
                         "type": "string",
                         "value": ""
@@ -113,7 +113,7 @@
                     {
                         "name": "postEmpSeekingSection",
                         "in": "formData",
-                        "description": "Enter postEmpSeekingSection",
+                        "description": "Would you like to profile posted  on the employment seeking section",
                         "required": false,
                         "type": "string",
                         "value": ""
@@ -121,7 +121,7 @@
                     {
                         "name": "hartOfService",
                         "in": "formData",
-                        "description": "Enter hartOfService",
+                        "description": "Who do you have the heart of service",
                         "required": false,
                         "type": "string",
                         "value": ""
@@ -170,7 +170,7 @@
                         "description": "Enter the email",
                         "required": true,
                         "type": "string",
-                        "value": "test@gmail.com"
+                        "value": "vaneet@gmail.com"
                     },
                     {
                         "name": "password",
@@ -196,55 +196,6 @@
                         "required": false,
                         "type": "number",
                         "value": "1"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-
-        "/users/updateProfile": {
-            "patch": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-updateProfile-post",
-                "tags": ["Application User"],
-                "description": "",
-                "security": [
-					{
-						"Bearer": []
-					}
-				],
-                "parameters": [
-                    {
-                        "name": "firstName",
-                        "in": "formData",
-                        "description": "Enter the firstName",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "lastName",
-                        "in": "formData",
-                        "description": "Enter lastName ",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "email",
-                        "in": "formData",
-                        "description": "Enter the email",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "phoneNumber",
-                        "in": "formData",
-                        "description": "Enter phone number",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
                     }
                 ],
                 "responses": {}
@@ -321,7 +272,26 @@
                 "responses": {}
             }
         },
-
+        "/users/resendForgotPasswordLink": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "users-resendForgotPasswordLink-post",
+                "tags": ["Application User"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Enter the email",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+    
         "/users/otpVerify": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
@@ -330,12 +300,28 @@
                 "description": "",
                 "parameters": [
                     {
+                        "name": "countryCode",
+                        "in": "formData",
+                        "description": "Enter the phoneNumber",
+                        "required": false,
+                        "type": "string",
+                        "value": "+91"
+                    },
+                    {
+                        "name": "phoneNumber",
+                        "in": "formData",
+                        "description": "Enter the phoneNumber",
+                        "required": false,
+                        "type": "string",
+                        "value": "8628023157"
+                    },
+                    {
                         "name": "otp",
                         "in": "formData",
                         "description": "Enter the otp",
                         "required": false,
                         "type": "string",
-                        "value": "1414"
+                        "value": "1111"
                     }
                 ],
                 "responses": {}
@@ -350,6 +336,14 @@
                 "description": "",
                 "parameters": [
                     {
+                        "name": "countryCode",
+                        "in": "formData",
+                        "description": "Enter the phoneNumber",
+                        "required": false,
+                        "type": "string",
+                        "value": "+91"
+                    },
+                    {
                         "name": "phoneNumber",
                         "in": "formData",
                         "description": "Enter the phoneNumber",
@@ -360,8 +354,24 @@
                 ],
                 "responses": {}
             }
+        },
+        "/users/cms": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "users-cms-post",
+                "tags": ["Application User"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": [
+                  
+				],
+                "responses": {}
+            }
         }
-
     },
     "definitions": {
     }

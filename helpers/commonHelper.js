@@ -116,14 +116,12 @@ module.exports = {
   nodeMailer: async (req, res) => {
     try {
       let transporter = nodemailer.createTransport({
-        service: process.env.SERVICE,
+        host: process.env.MAIL_HOST,
+        port: process.env.MAIL_PORT,
+        secure: false, // Set to `true` for port 465, `false` for port 587
         auth: {
-          type: process.env.MAIL_TYPE,
-          user: process.env.MAIL_USERNAME,
-          pass: process.env.MAIL_PASSWORD,
-          clientId: process.env.OAUTH_CLIENTID,
-          clientSecret: process.env.OAUTH_CLIENT_SECRET,
-          refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+            user: process.env.MAIL_USERNAME,
+            pass: process.env.MAIL_PASSWORD,
         },
       });
       return transporter;
@@ -133,13 +131,13 @@ module.exports = {
     }
   },
 
-  forgetPasswordLinkHTML: async (user, resetUrl) => {
+  forgetPasswordLinkHTML: async (req,user, resetUrl,subject) => {
     try {
       let mailOptions = {
         from: process.env.MAIL_USERNAME,
         to: user.email,
-        subject: "Password Reset Request OTP",
-        html: emailTamplate.forgotPassword(resetUrl),
+        subject: subject,
+        html: await emailTamplate.forgetPasswordLinkHTML(req,resetUrl),
       };
       return mailOptions;
     } catch (error) {

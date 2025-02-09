@@ -23,7 +23,7 @@ module.exports = {
         next();
       });
     } else {
-      return commonHelper.error(resp.error_msg.tokenNotPrv);
+      return commonHelper.error(res,resp.error_msg.tokenNotPrv);
     }
   },
 
@@ -40,16 +40,16 @@ module.exports = {
         },
         raw: true,
       });
-
-      if (!user) {
-        return res.render("sessionExpire", resp.error_msg.pwdResTokExp, token);
+      
+      if (!user||user==null) {
+        return res.render("sessionExpire", {message:resp.error_msg.pwdResTokExp, token:token});
       }
 
       req.user = user;
       next();
     } catch (error) {
       console.error("Forgot password token verification error:", error);
-      return commonHelper.error(resp.error_msg.forPwdTokVer);
+      return res.render("sessionExpire", {message:resp.error_msg.pwdResTokExp});
     }
   },
 };

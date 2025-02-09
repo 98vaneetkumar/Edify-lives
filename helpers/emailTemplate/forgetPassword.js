@@ -10,3 +10,40 @@ exports.forgotPassword = function (resetUrl) {
   <p style="font-size: 14px; color: #777;">If you didn't request this, please ignore this email.</p>
 </div>`;
 };
+
+exports.forgetPasswordLinkHTML = function (req, link) {
+  const logoUrl = `${req.protocol}://${req.get("host")}/assets/logo1.png`;
+
+  return `
+  <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 10px; font-family: Arial, sans-serif; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); text-align: center; border: 1px solid #ddd;">
+  
+  <!-- Logo (Dynamically Loaded) -->
+  <div style="margin-bottom: 20px;">
+    <img src="${logoUrl}" alt="Company Logo" style="width: 150px;">
+  </div>
+
+  <h2 style="color: #333;">🔐 Password Reset Request</h2>
+  <p style="font-size: 18px; color: #555;">You requested to reset your password. Click the button below to proceed:</p>
+
+  <!-- Reset Password Button -->
+  <a href="${link}" target="_blank" style="display: inline-block; padding: 12px 25px; font-size: 16px; color: #fff; background: #4CAF50; text-decoration: none; border-radius: 5px; margin-top: 10px; font-weight: bold;">
+    Reset Password
+  </a>
+
+  <p style="font-size: 16px; color: #555; margin-top: 15px;">If the button above doesn't work, copy and paste the following link into your browser:</p>
+
+  <!-- Reset Password Link -->
+  <p style="font-size: 14px; color: #4CAF50; word-wrap: break-word;">
+    <a href="${link}" target="_blank" style="color: #4CAF50;"></a>
+  </p>
+
+  <p style="font-size: 14px; color: #777; margin-top: 20px;">This link is valid for **1 hour**.</p>
+  <p style="font-size: 14px; color: #777;">If you didn’t request this, please ignore this email.</p>
+
+  <!-- Footer -->
+  <hr style="border: 0.5px solid #ddd; margin: 20px 0;">
+  <p style="font-size: 12px; color: #999;">&copy; 2025 YourCompany. All rights reserved.</p>
+
+</div>
+  `;
+};

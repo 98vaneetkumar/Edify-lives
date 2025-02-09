@@ -14,7 +14,6 @@ const commonHelper = require("../helpers/commonHelper.js");
 const helper = require("../helpers/validation.js");
 const Models = require("../models/index");
 const Response = require("../config/responses.js");
-
 module.exports = {
   signUp: async (req, res) => {
     try {
@@ -37,6 +36,23 @@ module.exports = {
       });
 
       let payload = await helper.validationJoi(req.body, schema);
+      let checkEmailAlreadyExists =await Models.userModel.findOne({
+        where:{
+          email:payload.email
+        }
+      })
+      if(checkEmailAlreadyExists){
+        return commonHelper.failed(res, Response.failed_msg.emailAlreadyExists);
+      }
+      let checkPhoneNumberAlreadyExists =await Models.userModel.findOne({
+        where:{
+          countryCode:payload.countryCode,
+          phoneNumber:payload.phoneNumber
+        }
+      })
+      if(checkPhoneNumberAlreadyExists){
+        return commonHelper.failed(res, Response.failed_msg.phoneNumberAlreadyExists);
+      }
 
       const hashedPassword = await commonHelper.bcryptData(
         payload.password,
@@ -67,8 +83,7 @@ module.exports = {
 
       return commonHelper.success(
         res,
-        Response.success_msg.registered,
-        response
+        Response.success_msg.otpResend,
       );
     } catch (error) {
       console.error("Error during sign up:", error);
@@ -145,14 +160,25 @@ module.exports = {
         return commonHelper.failed(res, Response.failed_msg.noAccWEmail);
       }
       const resetToken = await commonHelper.randomStringGenerate(req, res);
-      await user.update({
+      await Models.userModel.update({
+        resetToken: resetToken,
         resetTokenExpires: new Date(Date.now() + 3600000), // 1 hour
-      });
-     let otp =Math.floor(1000 + Math.random() * 9000).toString();
+      },{where:{
+        email: email
+      }});
+      const resetUrl = `${req.protocol}://${await commonHelper.getHost(
+        req,
+        res
+      )}/users/resetPassword?token=${resetToken}`; // Add your URL
+      let subject="Reset Password";
+      let emailLink="forgotPassword"
       const transporter = await commonHelper.nodeMailer();
       const emailTamplate = await commonHelper.forgetPasswordLinkHTML(
+        req,
         user,
-        otp
+        resetUrl,
+        subject,
+        emailLink
       );
       await transporter.sendMail(emailTamplate);
       return commonHelper.success(res, Response.success_msg.passwordLink);
@@ -165,7 +191,113 @@ module.exports = {
       );
     }
   },
-  
+  resendForgotPasswordLink: async (req, res) => {
+    try {
+      const schema = Joi.object().keys({
+        email: Joi.string().email().required(),
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+      const { email } = payload;
+      const user = await Models.userModel.findOne({
+        where: { email: email },
+      });
+      if (!user) {
+        return commonHelper.failed(res, Response.failed_msg.noAccWEmail);
+      }
+      const resetToken = await commonHelper.randomStringGenerate(req, res);
+      await Models.userModel.update({
+        resetToken: resetToken,
+        resetTokenExpires: new Date(Date.now() + 3600000), // 1 hour
+      },{where:{
+        email: email
+      }});
+      const resetUrl = `${req.protocol}://${await commonHelper.getHost(
+        req,
+        res
+      )}/users/resetPassword?token=${resetToken}`; // Add your URL
+      let subject="Reset Password";
+      const transporter = await commonHelper.nodeMailer();
+      const emailTamplate = await commonHelper.forgetPasswordLinkHTML(
+        req,
+        user,
+        resetUrl,
+        subject
+      );
+      // await transporter.sendMail(emailTamplate);
+      return commonHelper.success(res, Response.success_msg.passwordLink);
+    } catch (error) {
+      console.error("Forgot password error:", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.forgPwdErr,
+        error.message
+      );
+    }
+  }, 
+  resetPassword: async (req, res) => {
+    try {
+      let data = req.user;      
+      res.render("changePassword", { data: data });
+    } catch (error) {
+      console.error("Reset password error:", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.resetPwdErr,
+        error.message
+      );
+    }
+  },  
+
+  forgotChangePassword: async (req, res) => {
+    try {      
+      const schema = Joi.object().keys({
+        id: Joi.string().required(),
+        newPassword: Joi.string().required(),
+        confirmPassword: Joi.string().required(),
+      });
+
+      let payload = await helper.validationJoi(req.body, schema);
+      //Destructing the data
+      const { id, newPassword, confirmPassword } = payload;
+
+      if (newPassword !== confirmPassword) {
+        return commonHelper.failed(res, Response.failed_msg.pwdNoMatch);
+    }
+
+      const user = await Models.userModel.findOne({
+        where: { id: id },
+        raw: true,
+      });
+      if (!user) {
+        return commonHelper.failed(res, Response.failed_msg.userNotFound);
+      }
+
+      const hashedNewPassword = await commonHelper.bcryptData(
+        newPassword,
+        process.env.SALT
+      );
+
+      await Models.userModel.update(
+        { password: hashedNewPassword ,
+          resetToken: null,
+          resetTokenExpires: null
+        },
+        { where: { id: id } }
+      );
+
+      return res.render("successPassword", {
+        message: Response.success_msg.passwordChange,
+      });
+    } catch (error) {
+      console.error("Error while changing the password", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.chngPwdErr,
+        error.message
+      );
+    }
+  },
+
   logout: async (req, res) => {
     try {
       const schema = Joi.object().keys({
@@ -192,51 +324,7 @@ module.exports = {
       );
     }
   },
-  updateProfile: async (req, res) => {
-    try {
-      const schema = Joi.object().keys({
-        firstName: Joi.string().optional(),
-        lastName: Joi.string().optional(),
-        email: Joi.string().optional().email(),
-        phoneNumber: Joi.string().optional(),
-      });
 
-      let payload = await helper.validationJoi(req.body, schema);
-
-      if (!req.user || !req.user.id) {
-        return commonHelper.failed(res, Response.failed_msg.userIdReq);
-      }
-
-      let updateProfile = {
-        firstName: payload.firstName,
-        lastName: payload.lastName,
-        email: payload.email,
-        phoneNumber: payload.phoneNumber,
-      };
-
-      await Models.userModel.update(updateProfile, {
-        where: { id: req.user.id },
-      });
-
-      let response = await Models.userModel.findOne({
-        where: { id: req.user.id },
-        raw: true,
-      });
-
-      return commonHelper.success(
-        res,
-        Response.success_msg.updateProfile,
-        response
-      );
-    } catch (error) {
-      console.error("Error while updating profile", error);
-      return commonHelper.error(
-        res,
-        Response.error_msg.updPrfErr,
-        error.message
-      );
-    }
-  },
   changePassword: async (req, res) => {
     try {
       const schema = Joi.object().keys({
@@ -281,15 +369,25 @@ module.exports = {
       if(req.body.otp=="1111"){
         await Models.userModel.update(
           { otpVerify: 1 },
-          { where: { id: req.user.id } }
+          { where: { countryCode:req.body.countryCode,phoneNumber:req.body.phoneNumber } }
         );
-        return commonHelper.success(res, Response.success_msg.otpVerify);
+        let user=await Models.userModel.findOne({where:{countryCode:req.body.countryCode,phoneNumber:req.body.phoneNumber},raw:true})
+        const token = jwt.sign(
+          {
+            id: user.id,
+            email: user.email,
+          },
+          secretKey
+        );
+        user.token = token;
+        return commonHelper.success(res, Response.success_msg.otpVerify,user);
       }else{
         return commonHelper.failed(res, Response.failed_msg.invalidOtp);
       }
 
-      const { phone } = req.body; //"+911010101010"; // Replace with dynamic input
+      const {countryCode ,phoneNumber } = req.body; //"+911010101010"; // Replace with dynamic input
       const OTP = "YOUR OTP"; // Replace with dynamic input
+      let phone=countryCode+phoneNumber;
       const otpResponse = await otpManager.verifyOTP(phone, OTP);
       console.log("OTP verify status:", otpResponse);
 
@@ -322,12 +420,16 @@ module.exports = {
       });
 
       if (userExist) {
+        let phone=countryCode+phoneNumber; //
         // const otpResponse = await otpManager.sendOTP(phone);
         console.log("OTP send status:");
-
+        await Models.userModel.update({otpVerify:0},{where:{
+          countryCode: req.body.countryCode,
+          phoneNumber: req.body.phoneNumber,
+        }})
         return commonHelper.success(
           res,
-          Response.success_msg.otpSend,
+          Response.success_msg.otpResend,
         );
       } else {
         console.log("User not found");

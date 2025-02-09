@@ -23,6 +23,21 @@
             color: #ffffff;
             text-align: center;
             overflow: hidden;
+            flex-direction: column;
+        }
+
+        /* Countdown Timer Overlay */
+        .countdown-timer {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 5px;
         }
 
         /* Error Box Styling */
@@ -35,6 +50,7 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             animation: fadeIn 0.8s ease-out;
             color: #333333;
+            z-index: 1;
         }
 
         .error-box h2 {
@@ -115,8 +131,39 @@
         }
 
     </style>
+    <script>
+        let timeLeft = 10; // Countdown timer (10 seconds)
+
+        // Function to update countdown timer
+        function updateCountdown() {
+            document.getElementById("countdown").innerText = `Closing in ${timeLeft} seconds...`;
+            timeLeft--;
+
+            if (timeLeft < 0) {
+                window.close(); // Close the tab
+            }
+        }
+
+        // Start countdown and close after 10 seconds
+        setInterval(updateCountdown, 1000);
+        setTimeout(() => window.close(), 10000);
+
+        // Prevent user from going back
+        history.pushState(null, null, location.href);
+        window.onpopstate = function () {
+            history.go(1);
+        };
+
+        // Disable keyboard and mouse interaction
+        document.addEventListener("keydown", (event) => event.preventDefault());
+        document.addEventListener("contextmenu", (event) => event.preventDefault());
+        document.addEventListener("click", (event) => event.preventDefault());
+    </script>
 </head>
 <body>
+
+<!-- Countdown Timer -->
+<div class="countdown-timer" id="countdown">Closing in 10 seconds...</div>
 
 <!-- Floating Bubbles -->
 <div class="bubbles">
