@@ -1,16 +1,9 @@
 "use strict";
 
-const Joi = require("joi");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const secretKey = process.env.SECRET_KEY;
 const { Op } = require("sequelize");
 const moment = require("moment");
-
-const commonHelper = require("../helpers/commonHelper.js");
-const helper = require("../helpers/validation.js");
 const Models = require("../models/index");
-const Response = require("../config/responses.js");
 
 module.exports = {
   login_page: async (req, res) => {
@@ -89,6 +82,27 @@ module.exports = {
       });
     } catch (error) {
       console.error("Dashboard Error:", error);
+    }
+  },
+  aboutUs: async (req, res) => {      
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+  
+      let about_data = await Models.cmsModel.findOne({
+        where: { type: 1 },
+      });
+  
+     // Use res.render instead of res.redirect to render the "about" page
+     return res.render("admin/cms/about", {
+      title: "About Us",
+      about_data,
+      session: req.session.user,
+      msg: req.flash("msg"),
+      error: req.flash("error"),
+  });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
     }
   },
   

@@ -16,7 +16,7 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         type: {
           type: DataTypes.INTEGER(11),
           allowNull: true,
-          defaultValue: 0,
+          defaultValue: 0,  //1 for about us 2 for privacy policy 3 for terms and conditions
         },
       },
       {
