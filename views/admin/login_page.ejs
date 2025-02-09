@@ -88,16 +88,18 @@
     }
 
     .form-control {
-      background: transparent;
-      border: none;
+      background: transparent !important;
+      border: 1px solid rgba(255, 255, 255, 0.5);
       padding: 12px;
-      color: #fff;
+      color: #fff !important;
       border-radius: 8px;
       transition: all 0.3s ease-in-out;
     }
 
-    .form-control:focus {
-      background: transparent;
+    .form-control:focus,
+    .form-control:valid {
+      background: transparent !important;
+      border: 1px solid rgba(255, 255, 255, 0.5);
       outline: none;
       box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
     }
@@ -262,12 +264,13 @@
                       class="input-group input-group-merge form-password-toggle"
                     >
                       <input
-                        class="form-control form-control-merge"
+                        class="form-control"
                         id="password"
                         type="password"
                         name="password"
                         placeholder="Enter Password"
                         aria-describedby="password"
+                        autofocus=""
                         tabindex="2"
                       />
                       <span class="input-group-text cursor-pointer"
