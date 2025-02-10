@@ -83,7 +83,7 @@
                         "in": "formData",
                         "description": "Enter business user address",
                         "required": false,
-                        "type": "number",
+                        "type": "string",
                         "value": ""
                     },
                     {

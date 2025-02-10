@@ -26,7 +26,7 @@ module.exports = {
                businessName: Joi.string().optional(),
                typeOfBusiness: Joi.string().optional(),
                businessAddress: Joi.string().optional(),
-               businessUserAddress:Joi.number().optional(),
+               businessUserAddress:Joi.string().optional(),
                businessLogo:Joi.string().optional(),
                maritalStatus: Joi.number().valid(0,1).optional(),
                location: Joi.string().optional(),
@@ -94,15 +94,15 @@ module.exports = {
                 deviceType: payload.deviceType,
 
              };
-             try {
-               let phone=countryCode+phoneNumber; //
-               // const otpResponse = await otpManager.sendOTP(phone);
-             } catch (error) {
-               return commonHelper.failed(
-                 res,
-                 Response.error_msg.invalidPhoneNumber,
-               );
-             }
+            //  try {
+            //    let phone=countryCode+phoneNumber; //
+            //    // const otpResponse = await otpManager.sendOTP(phone);
+            //  } catch (error) {
+            //    return commonHelper.failed(
+            //      res,
+            //      Response.error_msg.invalidPhoneNumber,
+            //    );
+            //  }
              await Models.userModel.create(objToSave);
              return commonHelper.success(
                res,

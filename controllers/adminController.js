@@ -432,7 +432,7 @@ module.exports = {
       let data = await Models.userModel.findOne({
         where: { id: businessId },
       });
-      res.render("admin/businesses/businessView", {
+      res.render("admin/business/businessView", {
         title: "businesses",
         data,
         session: req.session.user,
@@ -489,7 +489,7 @@ module.exports = {
       if (!req.session.user) return res.redirect("/admin/login");
       let nonprofit_data = await Models.userModel.findAll({
         where: {
-          role: 3,
+          role: 4,
         },
         order: [["createdAt", "DESC"]],
         raw: true,

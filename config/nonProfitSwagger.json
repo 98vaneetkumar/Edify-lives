@@ -99,7 +99,7 @@
                         "in": "formData",
                         "description": "Enter chruch Attend Address",
                         "required": false,
-                        "type": "number",
+                        "type": "string",
                         "value": ""
                     },
                     {

@@ -40,6 +40,63 @@
                       </a>
                       <form class="auth-register-form mt-2">
                         <div class="mb-1">
+                          <a href="#" class="brand-logo">
+                            <div
+                              style="
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                              "
+                            >
+                              <p>Vision Statement</p>
+                              <% if (!data.visionStatement) { %>
+                              <img
+                                src="../../assets/images (1).jpeg"
+                                class="profile_img"
+                                alt="avatar"
+                                height="120px"
+                                width="150px"
+                              />
+                              <% } else { %>
+                              <img
+                                src="<%= data.visionStatement %>"
+                                class="profile_img"
+                                alt="vision statement image"
+                                height="120px"
+                                width="150px"
+                              />
+                              <% } %>
+                            </div>
+                          </a>
+
+                          <a href="#" class="brand-logo">
+                            <div
+                              style="
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                              "
+                            >
+                              <p>Values Statement</p>
+                              <% if (!data.valuesStatement) { %>
+                              <img
+                                src="../../assets/images (1).jpeg"
+                                class="profile_img"
+                                alt="avatar"
+                                height="120px"
+                                width="150px"
+                              />
+                              <% } else { %>
+                              <img
+                                src="<%= data.valuesStatement %>"
+                                class="profile_img"
+                                alt="values statement image"
+                                height="120px"
+                                width="150px"
+                              />
+                              <% } %>
+                            </div>
+                          </a>
                           <label for="churchName" class="form-label"
                             >Church Name</label
                           >
@@ -118,63 +175,6 @@
                             disabled
                           />
                         </div>
-                        <a href="#" class="brand-logo">
-                          <div
-                            style="
-                              display: flex;
-                              justify-content: center;
-                              align-items: center;
-                            "
-                          >
-                            <p>Vision Statement</p>
-                            <% if (!data.visionStatement) { %>
-                            <img
-                              src="../../assets/images (1).jpeg"
-                              class="profile_img"
-                              alt="avatar"
-                              height="120px"
-                              width="150px"
-                            />
-                            <% } else { %>
-                            <img
-                              src="<%= data.visionStatement %>"
-                              class="profile_img"
-                              alt="vision statement image"
-                              height="120px"
-                              width="150px"
-                            />
-                            <% } %>
-                          </div>
-                        </a>
-
-                        <a href="#" class="brand-logo">
-                          <div
-                            style="
-                              display: flex;
-                              justify-content: center;
-                              align-items: center;
-                            "
-                          >
-                            <p>Values Statement</p>
-                            <% if (!data.valuesStatement) { %>
-                            <img
-                              src="../../assets/images (1).jpeg"
-                              class="profile_img"
-                              alt="avatar"
-                              height="120px"
-                              width="150px"
-                            />
-                            <% } else { %>
-                            <img
-                              src="<%= data.valuesStatement %>"
-                              class="profile_img"
-                              alt="values statement image"
-                              height="120px"
-                              width="150px"
-                            />
-                            <% } %>
-                          </div>
-                        </a>
                       </form>
                       <br /><br />
                     </div>
