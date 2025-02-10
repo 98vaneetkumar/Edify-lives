@@ -332,7 +332,7 @@ module.exports = {
         session: req.session.user,
         msg: req.flash("msg"),
         error: req.flash("error"),
-        title: "churches",
+        title: "Churches",
         church_data,
       });
     } catch (error) {
@@ -350,7 +350,7 @@ module.exports = {
         where: { id: churchId },
       });
       res.render("admin/churches/churchView", {
-        title: "churches",
+        title: "Churches",
         data,
         session: req.session.user,
         msg: req.flash("msg"),
@@ -415,7 +415,7 @@ module.exports = {
         session: req.session.user,
         msg: req.flash("msg"),
         error: req.flash("error"),
-        title: "businesses",
+        title: "Business",
         business_data,
       });
     } catch (error) {
@@ -433,7 +433,7 @@ module.exports = {
         where: { id: businessId },
       });
       res.render("admin/business/businessView", {
-        title: "businesses",
+        title: "Business",
         data,
         session: req.session.user,
         msg: req.flash("msg"),
@@ -498,7 +498,7 @@ module.exports = {
         session: req.session.user,
         msg: req.flash("msg"),
         error: req.flash("error"),
-        title: "nonprofit",
+        title: "Non-Profit",
         nonprofit_data,
       });
     } catch (error) {
@@ -516,7 +516,7 @@ module.exports = {
         where: { id: nonprofitId },
       });
       res.render("admin/nonprofit/nonprofitView", {
-        title: "nonprofit",
+        title: "Non-Profit",
         data,
         session: req.session.user,
         msg: req.flash("msg"),
