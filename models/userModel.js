@@ -188,7 +188,7 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:0
       },
-      nonProfitServe:{ 
+      nonPorfitOrganization:{ 
         type: DataTypes.STRING(255),
         allowNull: true,
         defaultValue:''

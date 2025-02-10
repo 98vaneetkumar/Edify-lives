@@ -49,67 +49,63 @@ module.exports = {
 
   dashboard: async (req, res) => {
     try {
-      if (!req.session.user) return res.redirect("/admin/login");
-      let user = await Models.userModel.count({
-        where: { role: 1 },
-      });
-      let churches = await Models.userModel.count({
-        where: { role: 2 },
-      });
-      let business = await Models.userModel.count({
-        where: { role: 3 },
-      });
-      let nonprofit = await Models.userModel.count({
-        where: { role: 4 },
-      });
+        if (!req.session.user) return res.redirect("/admin/login");
 
-      const currentYear1 = moment().year();
+        let user = await Models.userModel.count({ where: { role: 1 } });
+        let churches = await Models.userModel.count({ where: { role: 2 } });
+        let business = await Models.userModel.count({ where: { role: 3 } });
+        let nonprofit = await Models.userModel.count({ where: { role: 4 } });
 
-      // Count sign-ups for each month
-      const counts1 = [];
-      const months1 = [];
+        const currentYear1 = moment().year();
 
-      for (let month = 1; month <= 12; month++) {
-        const startOfMonth1 = moment(
-          `${currentYear1}-${month}-01`,
-          "YYYY-MM-DD"
-        )
-          .startOf("month")
-          .toDate();
-        const endOfMonth1 = moment(startOfMonth1).endOf("month").toDate();
-
-        const whereCondition = {
-          createdAt: {
-            [Op.between]: [startOfMonth1, endOfMonth1],
-          },
-          role: "1",
+        // Separate counts for each role
+        const counts1 = {
+            users: [],
+            churches: [],
+            business: [],
+            nonprofit: []
         };
+        const months1 = [];
 
-        const month_data1 = moment(startOfMonth1).format("MMM, YYYY");
+        for (let month = 1; month <= 12; month++) {
+            const startOfMonth1 = moment(`${currentYear1}-${month}-01`, "YYYY-MM-DD").startOf("month").toDate();
+            const endOfMonth1 = moment(startOfMonth1).endOf("month").toDate();
+            const month_data1 = moment(startOfMonth1).format("MMM, YYYY");
 
-        // Count sign-ups for each month
-        const userCount = await Models.userModel.count({
-          where: whereCondition,
+            // Store month names
+            months1.push(month_data1);
+
+            // Count for each role
+            for (let role = 1; role <= 4; role++) {
+                const count = await Models.userModel.count({
+                    where: {
+                        createdAt: { [Op.between]: [startOfMonth1, endOfMonth1] },
+                        role: role.toString(),
+                    }
+                });
+
+                if (role === 1) counts1.users.push(count);
+                else if (role === 2) counts1.churches.push(count);
+                else if (role === 3) counts1.business.push(count);
+                else if (role === 4) counts1.nonprofit.push(count);
+            }
+        }
+
+        res.render("dashboard", {
+            title: "Dashboard",
+            counts1,
+            months1,
+            user,
+            churches,
+            business,
+            nonprofit,
+            session: req.session.user,
         });
 
-        counts1.push(userCount);
-        months1.push(month_data1);
-      }
-
-      res.render("dashboard", {
-        title: "Dashboard",
-        counts1: counts1,
-        months1: months1,
-        user,
-        churches,
-        business,
-        nonprofit,
-        session: req.session.user,
-      });
     } catch (error) {
-      console.error("Dashboard Error:", error);
+        console.error("Dashboard Error:", error);
     }
-  },
+},
 
   aboutUs: async (req, res) => {
     try {

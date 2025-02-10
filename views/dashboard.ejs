@@ -112,42 +112,97 @@
               </div>
             </div>
           </div>
-          <div class="card p-4">
-            <div id="chart"></div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card p-4">
+                <h5 class="text-center text-grey">Users Growth</h5>
+                <div id="usersChart"></div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card p-4">
+                <h5 class="text-center text-grey">Churches Growth</h5>
+                <div id="churchesChart"></div>
+              </div>
+            </div>
+            <div class="col-md-6 mt-3">
+              <div class="card p-4">
+                <h5 class="text-center text-grey">Business Growth</h5>
+                <div id="businessChart"></div>
+              </div>
+            </div>
+            <div class="col-md-6 mt-3">
+              <div class="card p-4">
+                <h5 class="text-center text-grey">Non-Profits Growth</h5>
+                <div id="nonprofitChart"></div>
+              </div>
+            </div>
           </div>
+          
+          
+          
 
           <script>
-            document.addEventListener("DOMContentLoaded", function() {
-              const counts_data = JSON.parse('<%- JSON.stringify(counts1) %>');
-              const months_data = JSON.parse('<%- JSON.stringify(months1) %>').map(month => month.split(',')[0]); // Extracting only the month names
-
+            document.addEventListener("DOMContentLoaded", function () {
+              const counts_data = JSON.parse('<%- JSON.stringify(counts1 || {}) %>');
+              const months_data = JSON.parse('<%- JSON.stringify(months1 || []) %>').map(month => month.split(',')[0]);
+          
               console.log("Counts Data:", counts_data);
               console.log("Months Data:", months_data);
-
-              var options = {
-                chart: {
-                  height: 380,
-                  width: "100%",
-                  type: "area",
-                  animations: {
-                    enabled: false
+          
+              // Default to empty array if key doesn't exist
+              const usersCounts = counts_data.users || [];
+              const churchesCounts = counts_data.churches || [];
+              const businessCounts = counts_data.business || [];
+              const nonprofitCounts = counts_data.nonprofit || [];
+          
+              function renderChart(chartId, name, data, color) {
+                var options = {
+                  chart: {
+                    height: 250,
+                    width: "100%",
+                    type: "area",
+                    animations: { easing: "easeout", speed: 800 },
+                    toolbar: { show: false },
                   },
-
-                },
-                series: [{
-                  name: "Users",
-                  data: counts_data // Use counts data directly
-                }],
-                xaxis: {
-                  categories: months_data // Use months data for x-axis categories
-                }
-              };
-
-              var chart = new ApexCharts(document.querySelector("#chart"), options);
-
-              chart.render();
+                  series: [{ name: name, data: data }],
+                  colors: [color],
+                  xaxis: {
+                    categories: months_data,
+                    labels: { style: { colors: "#fff", fontSize: "12px" } }, // White labels for dark mode
+                  },
+                  yaxis: {
+                    labels: { style: { colors: "#fff", fontSize: "12px" } },
+                  },
+                  stroke: {
+                    width: 3,
+                    curve: "smooth", // Smooth curved lines
+                  },
+                  fill: {
+                    type: "gradient",
+                    gradient: {
+                      shadeIntensity: 1,
+                      opacityFrom: 0.6,
+                      opacityTo: 0.2,
+                      stops: [0, 90, 100],
+                    },
+                  },
+                  dataLabels: { enabled: false },
+                  tooltip: { theme: "dark" },
+                };
+          
+                var chart = new ApexCharts(document.querySelector(chartId), options);
+                chart.render();
+              }
+          
+              renderChart("#usersChart", "Users", usersCounts, "#1E90FF");
+              renderChart("#churchesChart", "Churches", churchesCounts, "#FF5733");
+              renderChart("#businessChart", "Business", businessCounts, "#2ECC71");
+              renderChart("#nonprofitChart", "Non-Profits", nonprofitCounts, "#F1C40F");
             });
           </script>
+          
+          
 
       </div>
       <!--/ Statistics Card -->
