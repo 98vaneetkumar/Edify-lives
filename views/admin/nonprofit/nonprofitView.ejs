@@ -32,6 +32,15 @@
                   <!-- Register v1 -->
                   <div class="card mb-0">
                     <div class="card-body">
+                      <a
+                        href="/admin/nonprofit_listing"
+                        class="btn btn-primary"
+                      >
+                        <i
+                          class="ph ph-arrow-fat-lines-left"
+                          style="font-size: 20px"
+                        ></i>
+                      </a>
                       <a href="#" class="brand-logo">
                         <div
                           style="
@@ -102,7 +111,22 @@
                           />
                         </div>
                         <div class="mb-1">
-                          <label for="nonProfitServe" class="form-label">Non-Profit Serve</label>
+                          <label for="location" class="form-label"
+                            >Location</label
+                          >
+                          <input
+                            type="location"
+                            class="form-control"
+                            id="location"
+                            name="location"
+                            value="<%=data.location ? data.location : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="nonProfitServe" class="form-label"
+                            >Non-Profit Serve</label
+                          >
                           <input
                             type="nonProfitServe"
                             class="form-control"
@@ -113,7 +137,9 @@
                           />
                         </div>
                         <div class="mb-1">
-                          <label for="nonPorfitOrganization" class="form-label">Non-Porfit Organization</label>
+                          <label for="nonPorfitOrganization" class="form-label"
+                            >Non-Porfit Organization</label
+                          >
                           <input
                             type="nonPorfitOrganization"
                             class="form-control"
@@ -124,7 +150,9 @@
                           />
                         </div>
                         <div class="mb-1">
-                          <label for="chruchAttendAddress" class="form-label">Chruch Attend Address</label>
+                          <label for="chruchAttendAddress" class="form-label"
+                            >Chruch Attend Address</label
+                          >
                           <input
                             type="chruchAttendAddress"
                             class="form-control"
@@ -136,12 +164,6 @@
                         </div>
                       </form>
                       <br /><br />
-                      <a href="/admin/nonprofit_listing" class="btn btn-primary">
-                        <i
-                          class="ph ph-arrow-fat-lines-left"
-                          style="font-size: 20px"
-                        ></i>
-                      </a>
                     </div>
                   </div>
 

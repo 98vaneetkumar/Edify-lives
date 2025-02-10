@@ -39,8 +39,8 @@
                     <th>Church Website</th>
                     <th>Access Code</th>
                     <th>Members</th>
-                    <th>Vision Statement</th>
-                    <th>Values Statement</th>
+                    <!-- <th>Vision Statement</th>
+                    <th>Values Statement</th> -->
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -53,8 +53,8 @@
                     <td><%= data.churchAccessCode ? data.churchAccessCode:"N/A"%></td>                   
                     <td><%= data.numberOfMembers ? data.numberOfMembers:"N/A"%>
                     </td>
-                    <td><%= data.visionStatement ? data.visionStatement:"N/A"%></td>
-                    <td><%= data.valuesStatement ? data.valuesStatement:"N/A"%></td>
+                    <!-- <td><%= data.visionStatement ? data.visionStatement:"N/A"%></td>
+                    <td><%= data.valuesStatement ? data.valuesStatement:"N/A"%></td> -->
                     <% if(data.status== 1){ %>
                     <td><i class="btn btn-outline-success btn-sm " onclick="changeStatus('<%=data.id%>','0')">Active</i>
                     </td>

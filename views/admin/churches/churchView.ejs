@@ -32,6 +32,12 @@
                   <!-- Register v1 -->
                   <div class="card mb-0">
                     <div class="card-body">
+                      <a href="/admin/churches_listing" class="btn btn-primary">
+                        <i
+                          class="ph ph-arrow-fat-lines-left"
+                          style="font-size: 20px"
+                        ></i>
+                      </a>
                       <form class="auth-register-form mt-2">
                         <div class="mb-1">
                           <label for="churchName" class="form-label"
@@ -74,7 +80,9 @@
                           />
                         </div>
                         <div class="mb-1">
-                          <label for="numberOfMembers" class="form-label">Number Of Members</label>
+                          <label for="numberOfMembers" class="form-label"
+                            >Number Of Members</label
+                          >
                           <input
                             type="numberOfMembers"
                             class="form-control"
@@ -85,35 +93,90 @@
                           />
                         </div>
                         <div class="mb-1">
-                          <label for="visionStatement" class="form-label">Vision of Statement</label>
+                          <label for="maritalStatus" class="form-label"
+                            >Marital Status</label
+                          >
                           <input
-                            type="visionStatement"
+                            type="maritalStatus"
                             class="form-control"
-                            id="visionStatement"
-                            name="visionStatement"
-                            value="<%=data.visionStatement ? data.visionStatement : 'N/A' %>"
+                            id="maritalStatus"
+                            name="maritalStatus"
+                            value="<%=data.maritalStatus ? data.maritalStatus : 'N/A' %>"
                             disabled
                           />
                         </div>
                         <div class="mb-1">
-                          <label for="valuesStatement" class="form-label">Values of Statement</label>
+                          <label for="donateEdifyLivers" class="form-label"
+                            >Donate Edify Live</label
+                          >
                           <input
-                            type="valuesStatement"
+                            type="donateEdifyLivers"
                             class="form-control"
-                            id="valuesStatement"
-                            name="valuesStatement"
-                            value="<%=data.valuesStatement ? data.valuesStatement : 'N/A' %>"
+                            id="donateEdifyLivers"
+                            name="donateEdifyLivers"
+                            value="<%=data.donateEdifyLivers ? data.donateEdifyLivers : 'N/A' %>"
                             disabled
                           />
                         </div>
+                        <a href="#" class="brand-logo">
+                          <div
+                            style="
+                              display: flex;
+                              justify-content: center;
+                              align-items: center;
+                            "
+                          >
+                            <p>Vision Statement</p>
+                            <% if (!data.visionStatement) { %>
+                            <img
+                              src="../../assets/images (1).jpeg"
+                              class="profile_img"
+                              alt="avatar"
+                              height="120px"
+                              width="150px"
+                            />
+                            <% } else { %>
+                            <img
+                              src="<%= data.visionStatement %>"
+                              class="profile_img"
+                              alt="vision statement image"
+                              height="120px"
+                              width="150px"
+                            />
+                            <% } %>
+                          </div>
+                        </a>
+
+                        <a href="#" class="brand-logo">
+                          <div
+                            style="
+                              display: flex;
+                              justify-content: center;
+                              align-items: center;
+                            "
+                          >
+                            <p>Values Statement</p>
+                            <% if (!data.valuesStatement) { %>
+                            <img
+                              src="../../assets/images (1).jpeg"
+                              class="profile_img"
+                              alt="avatar"
+                              height="120px"
+                              width="150px"
+                            />
+                            <% } else { %>
+                            <img
+                              src="<%= data.valuesStatement %>"
+                              class="profile_img"
+                              alt="values statement image"
+                              height="120px"
+                              width="150px"
+                            />
+                            <% } %>
+                          </div>
+                        </a>
                       </form>
                       <br /><br />
-                      <a href="/admin/churches_listing" class="btn btn-primary">
-                        <i
-                          class="ph ph-arrow-fat-lines-left"
-                          style="font-size: 20px"
-                        ></i>
-                      </a>
                     </div>
                   </div>
 

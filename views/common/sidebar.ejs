@@ -6,7 +6,7 @@
   <div class="navbar-header">
     <ul class="nav navbar-nav flex-row">
       <li class="nav-item mx-auto w-100">
-        <a class="navbar-brand me-0 w-100" href="#"
+        <a class="navbar-brand me-0 w-100" href="/admin/dashboard"
           ><span class="brand-logo w-100">
             <img src="../../assets/logo1.png" alt=""
           /></span>
@@ -59,7 +59,9 @@
           >
         </a>
       </li>
-      <li class="<% if(title =='businesses'){ %> nav-item dropdown active <% }%>">
+      <li
+        class="<% if(title =='businesses'){ %> nav-item dropdown active <% }%>"
+      >
         <a class="d-flex align-items-center" href="/admin/business_listing">
           <i class="fas fa-briefcase"></i>
           <span class="menu-title text-truncate" data-i18n="Business"

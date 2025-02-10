@@ -47,6 +47,15 @@
                         "value": "vaneet@gmail.com"
                     },
                     {
+                        "name": "gender",
+                        "in": "formData",
+                        "description": "Enter the gender",
+                        "required": false,
+                        "enum":[0,1],
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
                         "name": "countryCode",
                         "in": "formData",
                         "description": "Enter country code",

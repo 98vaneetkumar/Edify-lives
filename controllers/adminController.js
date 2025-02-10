@@ -1,5 +1,8 @@
 "use strict";
 
+/* RENDER: when displaying views/templates with data (forms/errors/user-data) [URL stays same]
+ REDIRECT: after successful actions to prevent resubmission (form-success/logout/cancel) [URL changes]*/
+
 const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 const moment = require("moment");
@@ -49,63 +52,67 @@ module.exports = {
 
   dashboard: async (req, res) => {
     try {
-        if (!req.session.user) return res.redirect("/admin/login");
+      if (!req.session.user) return res.redirect("/admin/login");
 
-        let user = await Models.userModel.count({ where: { role: 1 } });
-        let churches = await Models.userModel.count({ where: { role: 2 } });
-        let business = await Models.userModel.count({ where: { role: 3 } });
-        let nonprofit = await Models.userModel.count({ where: { role: 4 } });
+      let user = await Models.userModel.count({ where: { role: 1 } });
+      let churches = await Models.userModel.count({ where: { role: 2 } });
+      let business = await Models.userModel.count({ where: { role: 3 } });
+      let nonprofit = await Models.userModel.count({ where: { role: 4 } });
 
-        const currentYear1 = moment().year();
+      const currentYear1 = moment().year();
 
-        // Separate counts for each role
-        const counts1 = {
-            users: [],
-            churches: [],
-            business: [],
-            nonprofit: []
-        };
-        const months1 = [];
+      // Separate counts for each role
+      const counts1 = {
+        users: [],
+        churches: [],
+        business: [],
+        nonprofit: [],
+      };
+      const months1 = [];
 
-        for (let month = 1; month <= 12; month++) {
-            const startOfMonth1 = moment(`${currentYear1}-${month}-01`, "YYYY-MM-DD").startOf("month").toDate();
-            const endOfMonth1 = moment(startOfMonth1).endOf("month").toDate();
-            const month_data1 = moment(startOfMonth1).format("MMM, YYYY");
+      for (let month = 1; month <= 12; month++) {
+        const startOfMonth1 = moment(
+          `${currentYear1}-${month}-01`,
+          "YYYY-MM-DD"
+        )
+          .startOf("month")
+          .toDate();
+        const endOfMonth1 = moment(startOfMonth1).endOf("month").toDate();
+        const month_data1 = moment(startOfMonth1).format("MMM, YYYY");
 
-            // Store month names
-            months1.push(month_data1);
+        // Store month names
+        months1.push(month_data1);
 
-            // Count for each role
-            for (let role = 1; role <= 4; role++) {
-                const count = await Models.userModel.count({
-                    where: {
-                        createdAt: { [Op.between]: [startOfMonth1, endOfMonth1] },
-                        role: role.toString(),
-                    }
-                });
+        // Count for each role
+        for (let role = 1; role <= 4; role++) {
+          const count = await Models.userModel.count({
+            where: {
+              createdAt: { [Op.between]: [startOfMonth1, endOfMonth1] },
+              role: role.toString(),
+            },
+          });
 
-                if (role === 1) counts1.users.push(count);
-                else if (role === 2) counts1.churches.push(count);
-                else if (role === 3) counts1.business.push(count);
-                else if (role === 4) counts1.nonprofit.push(count);
-            }
+          if (role === 1) counts1.users.push(count);
+          else if (role === 2) counts1.churches.push(count);
+          else if (role === 3) counts1.business.push(count);
+          else if (role === 4) counts1.nonprofit.push(count);
         }
+      }
 
-        res.render("dashboard", {
-            title: "Dashboard",
-            counts1,
-            months1,
-            user,
-            churches,
-            business,
-            nonprofit,
-            session: req.session.user,
-        });
-
+      res.render("dashboard", {
+        title: "Dashboard",
+        counts1,
+        months1,
+        user,
+        churches,
+        business,
+        nonprofit,
+        session: req.session.user,
+      });
     } catch (error) {
-        console.error("Dashboard Error:", error);
+      console.error("Dashboard Error:", error);
     }
-},
+  },
 
   aboutUs: async (req, res) => {
     try {
@@ -137,7 +144,7 @@ module.exports = {
           description: req.body.description,
         },
         {
-          where: { type: 1 }
+          where: { type: 1 },
         }
       );
       req.flash("msg", "About Us updated successfully");
@@ -174,7 +181,7 @@ module.exports = {
           description: req.body.description,
         },
         {
-          where: { type: 2 }
+          where: { type: 2 },
         }
       );
       req.flash("msg", "Privacy Policy updated successfully");
@@ -210,7 +217,7 @@ module.exports = {
           description: req.body.description,
         },
         {
-          where: { type: 3 }
+          where: { type: 3 },
         }
       );
       req.flash("msg", "Terms and Conditions updated successfully");
@@ -280,12 +287,10 @@ module.exports = {
       );
 
       if (updatedRows === 0) {
-        return res
-          .status(404)
-          .json({
-            success: false,
-            message: "User not found or status unchanged",
-          });
+        return res.status(404).json({
+          success: false,
+          message: "User not found or status unchanged",
+        });
       }
 
       res.json({
@@ -312,9 +317,6 @@ module.exports = {
       res.status(500).json({ error: "Failed to delete user " });
     }
   },
-
-
-
 
   churches_listing: async (req, res) => {
     try {
@@ -369,12 +371,10 @@ module.exports = {
       );
 
       if (updatedRows === 0) {
-        return res
-          .status(404)
-          .json({
-            success: false,
-            message: "Church not found or status unchanged",
-          });
+        return res.status(404).json({
+          success: false,
+          message: "Church not found or status unchanged",
+        });
       }
 
       res.json({
@@ -400,8 +400,6 @@ module.exports = {
       res.status(500).json({ error: "Failed to delete church " });
     }
   },
-
-
 
   business_listing: async (req, res) => {
     try {
@@ -456,12 +454,10 @@ module.exports = {
       );
 
       if (updatedRows === 0) {
-        return res
-          .status(404)
-          .json({
-            success: false,
-            message: "business not found or status unchanged",
-          });
+        return res.status(404).json({
+          success: false,
+          message: "business not found or status unchanged",
+        });
       }
 
       res.json({
@@ -487,8 +483,6 @@ module.exports = {
       res.status(500).json({ error: "Failed to delete business " });
     }
   },
-
-
 
   nonprofit_listing: async (req, res) => {
     try {
@@ -543,12 +537,10 @@ module.exports = {
       );
 
       if (updatedRows === 0) {
-        return res
-          .status(404)
-          .json({
-            success: false,
-            message: "nonprofit not found or status unchanged",
-          });
+        return res.status(404).json({
+          success: false,
+          message: "nonprofit not found or status unchanged",
+        });
       }
 
       res.json({

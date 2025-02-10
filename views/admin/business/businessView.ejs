@@ -32,6 +32,12 @@
                   <!-- Register v1 -->
                   <div class="card mb-0">
                     <div class="card-body">
+                      <a href="/admin/business_listing" class="btn btn-primary">
+                        <i
+                          class="ph ph-arrow-fat-lines-left"
+                          style="font-size: 20px"
+                        ></i>
+                      </a>
                       <a href="#" class="brand-logo">
                         <div
                           style="
@@ -102,7 +108,9 @@
                           />
                         </div>
                         <div class="mb-1">
-                          <label for="businessUserAddress" class="form-label">Business User Address</label>
+                          <label for="businessUserAddress" class="form-label"
+                            >Business User Address</label
+                          >
                           <input
                             type="businessUserAddress"
                             class="form-control"
@@ -112,14 +120,48 @@
                             disabled
                           />
                         </div>
+
+                        <div class="mb-1">
+                          <label for="maritalStatus" class="form-label"
+                            >Marital Status</label
+                          >
+                          <input
+                            type="maritalStatus"
+                            class="form-control"
+                            id="maritalStatus"
+                            name="maritalStatus"
+                            value="<%=data.maritalStatus ? data.maritalStatus : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="location" class="form-label"
+                            >Location</label
+                          >
+                          <input
+                            type="location"
+                            class="form-control"
+                            id="location"
+                            name="location"
+                            value="<%=data.location ? data.location : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
+                        <div class="mb-1">
+                          <label for="donateEdifyLivers" class="form-label"
+                            >Donate Edify Live</label
+                          >
+                          <input
+                            type="donateEdifyLivers"
+                            class="form-control"
+                            id="donateEdifyLivers"
+                            name="donateEdifyLivers"
+                            value="<%=data.donateEdifyLivers ? data.donateEdifyLivers : 'N/A' %>"
+                            disabled
+                          />
+                        </div>
                       </form>
                       <br /><br />
-                      <a href="/admin/business_listing" class="btn btn-primary">
-                        <i
-                          class="ph ph-arrow-fat-lines-left"
-                          style="font-size: 20px"
-                        ></i>
-                      </a>
                     </div>
                   </div>
 
