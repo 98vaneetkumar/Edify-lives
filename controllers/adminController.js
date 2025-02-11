@@ -7,6 +7,7 @@ const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 const moment = require("moment");
 const Models = require("../models/index");
+const helper = require("../helpers/commonHelper");
 
 module.exports = {
   login_page: async (req, res) => {
@@ -44,6 +45,126 @@ module.exports = {
     try {
       req.session.destroy(() => {
         res.json({ success: true });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  profile: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/login");
+      res.render("admin/profile", {
+        title: "Profile",
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  profile_update: async (req, res) => {
+    try {
+      let fileImage = "";
+
+      if (req.files && req.files.profilePicture) {
+        fileImage = await helper.fileUpload(req.files.profilePicture, "images");
+      } else {
+        let user = await Models.userModel.findOne({
+          where: { id: req.params.id },
+        });
+
+        fileImage = user.profilePicture;
+      }
+
+      // Update user profile
+      await Models.userModel.update(
+        {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          profilePicture: fileImage,
+        },
+        { where: { id: req.params.id } }
+      );
+
+      // Fetch updated user
+      let updatedUser = await Models.userModel.findOne({
+        where: { id: req.params.id },
+      });
+      if (updatedUser) {
+        req.session.user = updatedUser;
+      }
+
+      req.flash("msg", "Profile updated successfully");
+      res.redirect("/admin/dashboard");
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  change_password: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/login");
+      res.render("admin/changePassword", {
+        title: "Reset Password",
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+  change_password_post: async (req, res) => {
+    try {
+      if (!req.session) {
+        console.error("Session is not initialized!");
+        return res.status(500).json({ error: "Session not initialized." });
+      }
+
+      const { password, new_password, confirm_new_password } = req.body;
+      const userId = req.session.user?.id;
+
+      if (!userId) {
+        return res
+          .status(401)
+          .json({ error: "User not found. Please log in again." });
+      }
+
+      const user = await Models.userModel.findOne({ where: { id: userId } });
+
+      if (!user) {
+        return res
+          .status(401)
+          .json({ error: "User not found. Please log in again." });
+      }
+
+      const isPasswordMatch = await bcrypt.compare(password, user.password);
+
+      if (!isPasswordMatch) {
+        return res
+          .status(400)
+          .json({ error: "Your old password is incorrect." });
+      }
+
+      if (new_password !== confirm_new_password) {
+        return res
+          .status(400)
+          .json({ error: "New password and confirm password do not match." });
+      }
+
+      const hashedPassword = await bcrypt.hash(new_password, 10);
+      await Models.userModel.update(
+        { password: hashedPassword },
+        { where: { id: userId } }
+      );
+
+      // Destroy session and send a success response
+      req.session.destroy();
+      return res.json({
+        success: true,
+        message:
+          "Your password has been updated successfully! You will be redirected to the login page to log in again.",
       });
     } catch (error) {
       console.log(error);

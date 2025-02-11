@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+  <!-- BEGIN: Head-->
+
+  <%- include('../common/header') %>
+  <style>
+    .profile label.error {
+      color: red;
+      font-size: 12px;
+      position: relative;
+      bottom: auto;
+    }
+  </style>
+
+  <!-- BEGIN: Body-->
+
+  <body
+    class="vertical-layout vertical-menu-modern navbar-floating footer-static"
+    data-open="click"
+    data-menu="vertical-menu-modern"
+    data-col=""
+  >
+    <!-- sidebar -->
+    <%- include('../common/sidebar') %>
+    <!-- navbar -->
+    <%- include('../common/navbar') %>
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+      <div class="content-overlay"></div>
+      <div class="header-navbar-shadow"></div>
+      <div class="content-wrapper container-xxl p-0">
+        <div class="content-body">
+          <div class="row justify-content-center">
+            <div class="col-md-10 mx-auto">
+              <div class="auth-wrapper auth-v1 px-2">
+                <div class="auth-inner py-2">
+                  <!-- Register v1 -->
+                  <div class="card mb-0">
+                    <div class="card-body profile">
+                      <a href="#" class="">
+                        <div
+                          style="
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                          "
+                        >
+                          <% if(session.profilePicture == null ||
+                          session.profilePicture == '' || session.profilePicture
+                          == undefined) { %>
+                          <img
+                            src="../../assets/images (1).jpeg"
+                            class="profile_img"
+                            alt="avatar"
+                            height="120px"
+                            width="120px"
+                            style="align-items: center"
+                          />
+                          <% } else { %>
+                          <img
+                            src="<%= session.profilePicture %>"
+                            class="profile_img"
+                            alt="admin image"
+                            height="120px"
+                            width="120px"
+                          />
+                          <% } %>
+                        </div>
+                      </a>
+
+                      <form
+                        class="auth-register-form mt-2"
+                        action="/admin/profile_update/<%= session.id %>"
+                        method="POST"
+                        enctype="multipart/form-data"
+                      >
+                        <div class="row">
+                          <div class="col-md-6">
+                            <div class="mb-1">
+                              <label for="firstName" class="form-label"
+                                >First Name</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="firstName"
+                                name="firstName"
+                                aria-describedby="firstName"
+                                value="<%= session.firstName %>"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="mb-1">
+                              <label for="lastName" class="form-label"
+                                >Last Name</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="lastName"
+                                name="lastName"
+                                aria-describedby="lastName"
+                                value="<%= session.lastName %>"
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="mb-1">
+                              <label for="email" class="form-label"
+                                >Email</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="email"
+                                name="email"
+                                value="<%= session.email %>"
+                                disabled
+                              />
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="mb-1">
+                              <label for="phoneNumber" class="form-label"
+                                >Phone Number</label
+                              >
+                              <input
+                                type="text"
+                                class="form-control"
+                                id="phoneNumber"
+                                name="phoneNumber"
+                                value="<%= session.phoneNumber%>"
+                                disabled
+                              />
+                            </div>
+                          </div>
+
+                          <div class="mb-1">
+                            <label for="profilePicture" class="form-label"
+                              >Profile pic</label
+                            >
+                            <input
+                              class="form-control"
+                              type="file"
+                              id="profilePicture"
+                              name="profilePicture"
+                            />
+                          </div>
+
+                          <div class="col-md-7 mx-auto mt-4">
+                            <button class="btn btn-primary w-100" tabindex="5">
+                              Update Profile
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                  <!-- /Register v1 -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END: Content-->
+
+    <%- include('../common/script') %>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+      integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+
+    <script>
+      $(document).ready(function () {
+        function isSpecialCharacter(key) {
+          var specialCharacters = /^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+          return specialCharacters.test(key);
+        }
+
+        // Custom validation method for no special characters
+        $.validator.addMethod(
+          "noSpecialChars",
+          function (value, element) {
+            return this.optional(element) || /^[a-zA-Z0-9]*$/i.test(value);
+          },
+          "Special characters are not allowed"
+        );
+
+        // Listen for keypress events on the name fields
+        $(
+          ".auth-register-form input[name='firstName'], .auth-register-form input[name='lastName']"
+        ).keypress(function (event) {
+          var key = String.fromCharCode(event.which);
+          if (isSpecialCharacter(key)) {
+            event.preventDefault();
+          }
+        });
+
+        $(".auth-register-form").validate({
+          // Specify validation rules
+          rules: {
+            firstName: {
+              required: true,
+              minlength: 2,
+              maxlength: 10,
+              noSpecialChars: true,
+            },
+            lastName: {
+              required: true,
+              minlength: 2,
+              maxlength: 10,
+              noSpecialChars: true,
+            },
+            email: {
+              required: true,
+              email: true,
+            },
+          },
+          // Specify validation error messages
+          messages: {
+            firstName: {
+              required: "Please enter your first name",
+              minlength: "Your first name must be at least 2 characters long",
+              maxlength: "Your first name must be less than 10 characters",
+              noSpecialChars: "Special characters are not allowed",
+            },
+            lastName: {
+              required: "Please enter your last name",
+              minlength: "Your last name must be at least 2 characters long",
+              maxlength: "Your last name must be less than 10 characters",
+              noSpecialChars: "Special characters are not allowed",
+            },
+            email: {
+              required: "Please enter your email",
+              email: "Please enter a valid email address",
+            },
+          },
+        });
+      });
+    </script>
+
+    <script>
+      $(window).on("load", function () {
+        if (feather) {
+          feather.replace({
+            width: 14,
+            height: 14,
+          });
+        }
+      });
+    </script>
+  </body>
+  <!-- END: Body-->
+</html>
