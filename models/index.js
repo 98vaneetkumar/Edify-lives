@@ -6,5 +6,6 @@ module.exports = {
   cmsModel: require("./cmsModel")(Sequelize, sequelize, Sequelize.DataTypes),
   notificationModel:require("./notificationModels")(Sequelize, sequelize, Sequelize.DataTypes),
   contactUsModel:require("./contactUs")(Sequelize, sequelize, Sequelize.DataTypes),
+  subscriptionModel:require("./subscriptionModel")(Sequelize, sequelize, Sequelize.DataTypes),
 };
  

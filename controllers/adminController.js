@@ -53,7 +53,7 @@ module.exports = {
 
   profile: async (req, res) => {
     try {
-      if (!req.session.user) return res.redirect("/login");
+      if (!req.session.user) return res.redirect("/admin/login");
       res.render("admin/profile", {
         title: "Profile",
         session: req.session.user,
@@ -179,6 +179,7 @@ module.exports = {
       let churches = await Models.userModel.count({ where: { role: 2 } });
       let business = await Models.userModel.count({ where: { role: 3 } });
       let nonprofit = await Models.userModel.count({ where: { role: 4 } });
+      let subscription = await Models.subscriptionModel.count();
 
       const currentYear1 = moment().year();
 
@@ -228,6 +229,7 @@ module.exports = {
         churches,
         business,
         nonprofit,
+        subscription,
         session: req.session.user,
       });
     } catch (error) {
@@ -685,6 +687,143 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Failed to delete nonprofit " });
+    }
+  },
+
+  subscription_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let subscription_data = await Models.subscriptionModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/subscription/subscriptionListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "subscription",
+        subscription_data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  subscription_add: async (req, res) => {
+    try {
+      let title = "subscription";
+      res.render("admin/subscription/subscriptionAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+    }
+  },
+
+  subscription_create: async (req, res) => {
+    try {
+      const { type, description, period, amount } = req.body;
+      let objToSave = {
+        amount: amount,
+        description: description,
+        type: type,
+        period: period,
+      };
+      await Models.subscriptionModel.create(objToSave);
+
+      req.flash("msg", "Challenge added successfully.");
+      return res.redirect("/admin/subscriptionListing");
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+    }
+  },
+
+  subscription_status: async (req, res) => {
+    try {
+      const { id, status } = req.body;
+
+      const [updatedRows] = await Models.subscriptionModel.update(
+        { status },
+        { where: { id } }
+      );
+
+      if (updatedRows === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "subscription not found or status unchanged",
+        });
+      }
+
+      res.json({
+        success: true,
+        message: "Status changed successfully",
+        status,
+      });
+    } catch (error) {
+      console.log("Error updating subscription status:", error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal server error" });
+    }
+  },
+
+  subscription_delete: async (req, res) => {
+    try {
+      const subscriptionId = req.body.id;
+      await Models.subscriptionModel.destroy({ where: { id: subscriptionId } });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete subscription " });
+    }
+  },
+
+  subscription_edit: async (req, res) => {
+    try {
+      let title = "Subscription Edit";
+      const { id } = req.params;
+      const subscription = await Models.subscriptionModel.findOne({
+        where: { id: id },
+      });
+
+      res.render("admin/subscription/subscriptionEdit", {
+        subscription,
+        title,
+        session: req.session.user,
+      });
+    } catch (error) {
+      console.error("Error fetching subscription:", error);
+      req.flash("msg", "Error fetching subscription details.");
+      res.redirect("/admin/subscriptionListing");
+    }
+  },
+
+  subscription_update: async (req, res) => {
+    try {
+      const { id, description, type, period, amount } = req.body;
+
+      await Models.subscriptionModel.update(
+        { description, type, period, amount },
+        { where: { id: id } }
+      );
+
+      return res.json({
+        success: true,
+        message: "Subscription updated successfully.",
+      });
+    } catch (error) {
+      console.error("Error updating subscription:", error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
     }
   },
 

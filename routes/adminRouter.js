@@ -70,6 +70,21 @@ module.exports = function () {
   router.post("/nonprofit_status", controller.adminController.nonprofit_status);
   router.post("/nonprofit_delete", controller.adminController.nonprofit_delete);
 
+
+
+  router.get("/subscription_listing", controller.adminController.subscription_listing);
+  router.get("/subscription_add", controller.adminController.subscription_add);
+  router.post("/subscription_create", controller.adminController.subscription_create);
+  router.post("/subscription_status", controller.adminController.subscription_status);
+  router.post("/subscription_delete", controller.adminController.subscription_delete);
+  router.get("/subscription_edit/:id", controller.adminController.subscription_edit);
+  router.post("/subscription_update", controller.adminController.subscription_update);
+
+
+
+
+
+
   router.post("/test", controller.adminController.test);
 
   return router;

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+
+<%- include('../../common/header') %>
+
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
+  
+  <%- include('../../common/navbar') %>
+  <%- include('../../common/sidebar') %>
+
+  <div class="app-content content">
+    <div class="content-wrapper container-xxl p-0">
+      <div class="content-body">
+        <div class="row">
+          <div class="col-md-8 offset-md-2">
+            <div class="card">
+              <div class="card-header">
+                <h4>Edit Subscription</h4>
+              </div>
+              <div class="card-body">
+                <form id="subscriptionForm">
+                  <input type="hidden" name="id" value="<%= subscription.id %>">
+
+                  <div class="mb-2">
+                    <label>Description</label>
+                    <input type="text" name="description" class="form-control" value="<%= subscription.description %>" required>
+                  </div>
+
+                  <div class="mb-2">
+                    <label>Type</label>
+                    <select name="type" class="form-control" required>
+                      <option value="0" <%= subscription.type == 0 ? "selected" : "" %>>Basic</option>
+                      <option value="1" <%= subscription.type == 1 ? "selected" : "" %>>Premium</option>
+                    </select>
+                  </div>
+
+                  <div class="mb-2">
+                    <label>Period (e.g., Monthly, Yearly)</label>
+                    <input type="text" name="period" class="form-control" value="<%= subscription.period %>" required>
+                  </div>
+
+                  <div class="mb-2">
+                    <label>Amount</label>
+                    <input type="number" name="amount" class="form-control" step="0.01" value="<%= subscription.amount %>" required>
+                  </div>                  
+                  
+                  <button type="submit" class="btn text-white" style="background: linear-gradient(to right, #e3a8d8, #8ea8d9); border: none;">
+                    Update
+                  </button>
+                  <a href="/admin/subscription_listing" class="btn text-white" style="background: #e76c65; border: none;">
+                    Cancel
+                  </a>
+                  
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../../common/footer') %>
+  <%- include('../../common/script') %>
+
+  <script>
+    $("#subscriptionForm").on("submit", function(event) {
+      event.preventDefault();
+      $.ajax({
+        url: "/admin/subscription_update",
+        method: "POST",
+        data: $(this).serialize(),
+        success: function(res) {
+          if (res.success) {
+            Swal.fire({
+              title: "Updated!",
+              text: "Subscription updated successfully.",
+              icon: "success",
+              timer: 2000,
+              showConfirmButton: false
+            });
+            setTimeout(() => { window.location.href = "/admin/subscription_listing"; }, 2000);
+          }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
