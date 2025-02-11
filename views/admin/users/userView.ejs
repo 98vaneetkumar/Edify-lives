@@ -114,9 +114,10 @@
                             class="form-control"
                             id="phone_number"
                             name="phone_number"
-                            value="<%=data.phoneNumber ? data.phoneNumber : 'N/A' %>"
+                            value="<%= data.countryCode ? data.countryCode : '' %><%= data.phoneNumber ? data.phoneNumber : 'N/A' %>"
                             disabled
-                          />
+                        />
+
                         </div>
                         <div class="mb-1">
                           <label for="email" class="form-label">Email</label>
