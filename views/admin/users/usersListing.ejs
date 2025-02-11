@@ -59,7 +59,7 @@
                     </td>                    
                     <td><%= data.email ? data.email:"N/A"%>
                     </td>
-                    <td><%= data.countryCode ? data.countryCode : '' %><%= data.phoneNumber ? data.phoneNumber : 'N/A' %></td>
+                    <td><%= data.countryCode ? data.countryCode + ' ' : '' %><%= data.phoneNumber ? data.phoneNumber : 'N/A' %></td>
                     <% if(data.status== 1){ %>
                     <td><i class="btn btn-outline-success btn-sm " onclick="changeStatus('<%=data.id%>','0')">Active</i>
                     </td>
