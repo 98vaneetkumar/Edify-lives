@@ -100,9 +100,15 @@ module.exports = {
         deviceType: payload.deviceType || null,
       };
   
-      // Save user
-      await Models.userModel.create(objToSave);
-      return commonHelper.success(res, Response.success_msg.otpResend);
+
+       try {
+        // const otpResponse = await otpManager.sendOTP(phone);
+            // Save user
+           await Models.userModel.create(objToSave);
+           return commonHelper.success(res, Response.success_msg.otpResend);
+       } catch (error) {
+         return commonHelper.error(res, Response.error_msg.otpResErr, error.message);
+       }
   
     } catch (error) {
       console.error("Error during sign-up:", error);

@@ -122,10 +122,14 @@ module.exports = {
         deviceToken: payload.deviceToken || null,
         deviceType: payload.deviceType || null,
       };
+       try {
+        // const otpResponse = await otpManager.sendOTP(phone);
+        await Models.userModel.create(objToSave);
+        return commonHelper.success(res, Response.success_msg.otpResend);
+       } catch (error) {
+         return commonHelper.error(res, Response.error_msg.otpResErr, error.message);
+       }
 
-      // Save user
-      await Models.userModel.create(objToSave);
-      return commonHelper.success(res, Response.success_msg.otpResend);
     } catch (error) {
       console.error("Error during sign-up:", error);
       return commonHelper.error(res, Response.error_msg.regUser, error.message);

@@ -78,7 +78,16 @@ module.exports = {
           req.files.valuesStatement
         );
       }
+ // Ensure countryCode is properly formatted
+      let countryCode = payload.countryCode
+        ? payload.countryCode.replace(/\s+/g, "")
+        : "";
+      let phone = countryCode + payload.phoneNumber;
 
+      // Validate phone number format (allow numbers with optional + sign)
+      if (!/^\+?\d+$/.test(phone)) {
+        return commonHelper.failed(res, Response.error_msg.invalidPhoneNumber);
+      }
       let objToSave = {
         nameNonProfit: payload.nameNonProfit,
         addressNonProfit: payload.addressNonProfit,
@@ -102,9 +111,14 @@ module.exports = {
         deviceType: payload.deviceType,
       };
 
-      console.log(objToSave);
-      await Models.userModel.create(objToSave);
-      return commonHelper.success(res, Response.success_msg.otpResend);
+    try {
+           // const otpResponse = await otpManager.sendOTP(phone);
+           await Models.userModel.create(objToSave);
+           return commonHelper.success(res, Response.success_msg.otpResend);
+          } catch (error) {
+            return commonHelper.error(res, Response.error_msg.otpResErr, error.message);
+          }
+   
     } catch (error) {
       console.error("Error during sign up:", error);
       return commonHelper.error(res, Response.error_msg.regUser, error.message);
