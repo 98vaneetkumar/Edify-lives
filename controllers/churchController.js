@@ -29,8 +29,8 @@ module.exports = {
         churchWebsite: Joi.string().optional(),
         churchAccessCode: Joi.string().optional(),
         numberOfMembers: Joi.number().optional(),
-        visionStatement: Joi.string().optional(),
-        valuesStatement: Joi.string().optional(),
+        visionStatement: Joi.any().optional(),
+        valuesStatement: Joi.any().optional(),
         maritalStatus: Joi.number().valid(0, 1).optional(),
         location: Joi.string().optional(),
         latitude: Joi.string().optional(),
@@ -41,14 +41,16 @@ module.exports = {
       });
 
       let payload = await helper.validationJoi(req.body, schema);
+
+      // Check if email already exists
       let checkEmailAlreadyExists = await Models.userModel.findOne({
-        where: {
-          email: payload.email,
-        },
+        where: { email: payload.email },
       });
       if (checkEmailAlreadyExists) {
         return commonHelper.failed(res, Response.failed_msg.emailAlreadyExists);
       }
+
+      // Check if phone number already exists
       let checkPhoneNumberAlreadyExists = await Models.userModel.findOne({
         where: {
           countryCode: payload.countryCode,
@@ -62,56 +64,70 @@ module.exports = {
         );
       }
 
+      // Hash password
       const hashedPassword = await commonHelper.bcryptData(
         payload.password,
         process.env.SALT
       );
 
+      // Handle vision statement upload
       let visionStatementPath = null;
-      if (req.files && req.files.visionStatement) {
+      if (req.files?.visionStatement) {
         visionStatementPath = await commonHelper.fileUpload(
-          req.files.visionStatement
-        );
-      }
-      let valuesStatementPath = null;
-      if (req.files && req.files.valueStatement) {
-        valuesStatementPath = await commonHelper.fileUpload(
-          req.files.valueStatement
+          req.files.visionStatement,
+          "images"
         );
       }
 
+      // Handle values statement upload
+      let valuesStatementPath = null;
+      if (req.files?.valueStatement) {
+        valuesStatementPath = await commonHelper.fileUpload(
+          req.files.valueStatement,
+          "images"
+        );
+      }
+
+      // Ensure countryCode is properly formatted
+      let countryCode = payload.countryCode
+        ? payload.countryCode.replace(/\s+/g, "")
+        : "";
+      let phone = countryCode + payload.phoneNumber;
+
+      // Validate phone number format (allow numbers with optional + sign)
+      if (!/^\+?\d+$/.test(phone)) {
+        return commonHelper.failed(res, Response.error_msg.invalidPhoneNumber);
+      }
+
+      // Object to save
       let objToSave = {
         firstName: payload.firstName,
         lastName: payload.lastName,
         email: payload.email,
         role: 2,
-        countryCode: payload.countryCode,
+        countryCode,
         phoneNumber: payload.phoneNumber,
         password: hashedPassword,
-        churchName: payload.churchName,
-        churchWebsite: payload.churchWebsite,
-        churchAccessCode: payload.churchAccessCode,
-        numberOfMembers: payload.numberOfMembers,
-        visionStatement: payload.visionStatementPath,
-        valuesStatement: payload.valuesStatementPath,
-        maritalStatus: payload.maritalStatus,
-        location: payload.location,
-        latitude: payload.latitude,
-        longitude: payload.longitude,
-        donateEdifyLivers: payload.donateEdifyLivers,
-        deviceToken: payload.deviceToken,
-        deviceType: payload.deviceType,
+        churchName: payload.churchName || null,
+        churchWebsite: payload.churchWebsite || null,
+        churchAccessCode: payload.churchAccessCode || null,
+        numberOfMembers: payload.numberOfMembers || null,
+        visionStatement: visionStatementPath || null,
+        valuesStatement: valuesStatementPath || null,
+        maritalStatus: payload.maritalStatus || null,
+        location: payload.location || null,
+        latitude: payload.latitude || null,
+        longitude: payload.longitude || null,
+        donateEdifyLivers: payload.donateEdifyLivers || null,
+        deviceToken: payload.deviceToken || null,
+        deviceType: payload.deviceType || null,
       };
-      try {
-        let phone = countryCode + phoneNumber; //
-        // const otpResponse = await otpManager.sendOTP(phone);
-        await Models.userModel.create(objToSave);
-        return commonHelper.success(res, Response.success_msg.otpResend);
-      } catch (error) {
-        return commonHelper.failed(res, Response.error_msg.invalidPhoneNumber);
-      }
+
+      // Save user
+      await Models.userModel.create(objToSave);
+      return commonHelper.success(res, Response.success_msg.otpResend);
     } catch (error) {
-      console.error("Error during sign up:", error);
+      console.error("Error during sign-up:", error);
       return commonHelper.error(res, Response.error_msg.regUser, error.message);
     }
   },

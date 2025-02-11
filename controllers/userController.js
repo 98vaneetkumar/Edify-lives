@@ -31,7 +31,7 @@ module.exports = {
         phoneNumber: Joi.string().required(),
         password: Joi.string().required(),
         maritalStatus: Joi.number().valid(0, 1).optional(),
-        profilePicture: Joi.string().optional(),
+        profilePicture: Joi.any().optional(),
         location: Joi.string().optional(),
         latitude: Joi.string().optional(),
         longitude: Joi.string().optional(),
@@ -44,14 +44,16 @@ module.exports = {
       });
 
       let payload = await helper.validationJoi(req.body, schema);
+
+      // Check if email already exists
       let checkEmailAlreadyExists = await Models.userModel.findOne({
-        where: {
-          email: payload.email,
-        },
+        where: { email: payload.email },
       });
       if (checkEmailAlreadyExists) {
         return commonHelper.failed(res, Response.failed_msg.emailAlreadyExists);
       }
+
+      // Check if phone number already exists
       let checkPhoneNumberAlreadyExists = await Models.userModel.findOne({
         where: {
           countryCode: payload.countryCode,
@@ -65,52 +67,64 @@ module.exports = {
         );
       }
 
+      // Hash password
       const hashedPassword = await commonHelper.bcryptData(
         payload.password,
         process.env.SALT
       );
 
+      // Handle profile picture upload
       let profilePicturePath = null;
-      if (req.files && req.files.profilePicture) {
+      if (req.files?.profilePicture) {
         profilePicturePath = await commonHelper.fileUpload(
-          req.files.profilePicture
+          req.files.profilePicture,
+          "images"
         );
       }
 
+      // Ensure countryCode is properly formatted
+      let countryCode = payload.countryCode
+        ? payload.countryCode.replace(/\s+/g, "")
+        : "";
+      let phone = countryCode + payload.phoneNumber;
+
+      // Validate phone number format (allow numbers with optional + sign)
+      if (!/^\+?\d+$/.test(phone)) {
+        return commonHelper.failed(res, Response.error_msg.invalidPhoneNumber);
+      }
+
+      // Object to save
       let objToSave = {
         firstName: payload.firstName,
         lastName: payload.lastName,
         email: payload.email,
-        countryCode: payload.countryCode,
+        countryCode,
         phoneNumber: payload.phoneNumber,
         password: hashedPassword,
         role: 1,
-        maritalStatus: payload.maritalStatus,
-        gender: payload.gender,
-        profilePicture: profilePicturePath ? profilePicturePath : null,
-        location: payload.location,
-        latitude: payload.latitude,
-        longitude: payload.longitude,
-        donateEdifyLivers: payload.donateEdifyLivers,
-        traitAndExperience: payload.traitAndExperience,
-        postEmpSeekingSection: payload.postEmpSeekingSection,
-        hartOfService: payload.hartOfService,
-        deviceToken: payload.deviceToken,
-        deviceType: payload.deviceType,
+        maritalStatus: payload.maritalStatus || null,
+        gender: payload.gender || null,
+        profilePicture: profilePicturePath || null,
+        location: payload.location || null,
+        latitude: payload.latitude || null,
+        longitude: payload.longitude || null,
+        donateEdifyLivers: payload.donateEdifyLivers || null,
+        traitAndExperience: payload.traitAndExperience || null,
+        postEmpSeekingSection: payload.postEmpSeekingSection || null,
+        hartOfService: payload.hartOfService || null,
+        deviceToken: payload.deviceToken || null,
+        deviceType: payload.deviceType || null,
       };
-      try {
-        let phone = countryCode + phoneNumber; //
-        // const otpResponse = await otpManager.sendOTP(phone);
-        await Models.userModel.create(objToSave);
-        return commonHelper.success(res, Response.success_msg.otpResend);
-      } catch (error) {
-        return commonHelper.failed(res, Response.error_msg.invalidPhoneNumber);
-      }
+
+      // Save user
+      await Models.userModel.create(objToSave);
+      return commonHelper.success(res, Response.success_msg.otpResend);
     } catch (error) {
-      console.error("Error during sign up:", error);
+      console.error("Error during sign-up:", error);
       return commonHelper.error(res, Response.error_msg.regUser, error.message);
     }
   },
+
   login: async (req, res) => {
     try {
       const schema = Joi.object().keys({

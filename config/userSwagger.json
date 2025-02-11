@@ -95,12 +95,12 @@
                     {
                         "name": "maritalStatus",
                         "in": "formData",
-                        "description": "Enter your married Status 0 for not married or 1 for married",
+                        "description": "Enter your married status (0 = Not Married, 1 = Married)",
                         "required": false,
-                        "enum":[0,1],
-                        "type": "string",
+                        "type": "number",
+                        "enum": [0,1],
                         "value": 0
-                    },
+                     },                     
                     {
                         "name": "location",
                         "in": "formData",
@@ -160,12 +160,12 @@
                     {
                         "name": "deviceType",
                         "in": "formData",
-                        "description": "Enter deviceType",
-                        "enum": [1,2],
+                        "description": "Enter deviceType (1 = Android, 2 = iOS)",
                         "required": false,
                         "type": "number",
-                        "value": "1"
-                    },
+                        "enum": [1, 2],
+                        "value": 1
+                     },                     
                     {
                         "name": "deviceToken",
                         "in": "formData",

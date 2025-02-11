@@ -25,10 +25,10 @@ module.exports = {
         countryCode: Joi.string().optional(),
         phoneNumber: Joi.string().required(),
         password: Joi.string().required(),
-        webSiteNonProfile: Joi.string().optional(),
+        websiteNonProfit: Joi.string().optional(),
         nonProfitServe: Joi.string().optional(),
-        nonPorfitOrganization: Joi.string().optional(),
-        chruchAttendAddress: Joi.string().optional(),
+        nonProfitOrganization: Joi.string().optional(),
+        churchAttendAddress: Joi.string().optional(),
         maritalStatus: Joi.number().valid(0, 1).optional(),
         location: Joi.string().optional(),
         latitude: Joi.string().optional(),
@@ -36,17 +36,19 @@ module.exports = {
         donateEdifyLivers: Joi.string().optional(),
         deviceToken: Joi.string().optional(),
         deviceType: Joi.number().valid(1, 2).optional(),
+        companyLogo: Joi.string().optional(),
+        valuesStatement: Joi.string().optional(),
       });
 
       let payload = await helper.validationJoi(req.body, schema);
+
       let checkEmailAlreadyExists = await Models.userModel.findOne({
-        where: {
-          email: payload.email,
-        },
+        where: { email: payload.email },
       });
       if (checkEmailAlreadyExists) {
         return commonHelper.failed(res, Response.failed_msg.emailAlreadyExists);
       }
+
       let checkPhoneNumberAlreadyExists = await Models.userModel.findOne({
         where: {
           countryCode: payload.countryCode,
@@ -69,10 +71,11 @@ module.exports = {
       if (req.files && req.files.companyLogo) {
         companyLogoPath = await commonHelper.fileUpload(req.files.companyLogo);
       }
+
       let valuesStatementPath = null;
-      if (req.files && req.files.valueStatement) {
+      if (req.files && req.files.valuesStatement) {
         valuesStatementPath = await commonHelper.fileUpload(
-          req.files.valueStatement
+          req.files.valuesStatement
         );
       }
 
@@ -84,13 +87,13 @@ module.exports = {
         countryCode: payload.countryCode,
         phoneNumber: payload.phoneNumber,
         password: hashedPassword,
-        webSiteNonProfile: payload.webSiteNonProfile,
+        websiteNonProfit: payload.websiteNonProfit,
         nonProfitServe: payload.nonProfitServe,
-        nonPorfitOrganization: payload.nonPorfitOrganization,
-        chruchAttendAddress: payload.chruchAttendAddress,
+        nonProfitOrganization: payload.nonProfitOrganization,
+        churchAttendAddress: payload.churchAttendAddress,
         maritalStatus: payload.maritalStatus,
-        companyLogoPath: companyLogoPath,
-        valuesStatementPath: valuesStatementPath,
+        companyLogo: companyLogoPath,
+        valuesStatement: valuesStatementPath,
         location: payload.location,
         latitude: payload.latitude,
         longitude: payload.longitude,
@@ -98,15 +101,7 @@ module.exports = {
         deviceToken: payload.deviceToken,
         deviceType: payload.deviceType,
       };
-      //  try {
-      //    let phone=countryCode+phoneNumber; //
-      //    // const otpResponse = await otpManager.sendOTP(phone);
-      //  } catch (error) {
-      //    return commonHelper.failed(
-      //      res,
-      //      Response.error_msg.invalidPhoneNumber,
-      //    );
-      //  }
+
       console.log(objToSave);
       await Models.userModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.otpResend);
