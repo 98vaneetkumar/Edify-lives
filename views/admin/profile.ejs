@@ -138,17 +138,62 @@
 
                           <div class="mb-1">
                             <label for="profilePicture" class="form-label"
-                              >Profile pic</label
+                              >Profile Picture</label
                             >
                             <input
                               class="form-control"
                               type="file"
                               id="profilePicture"
                               name="profilePicture"
+                              accept="image/*"
                             />
+
+                            <!-- Image preview container -->
+                            <div
+                              id="imagePreviewContainer"
+                              style="
+                                position: relative;
+                                display: none;
+                                margin-top: 10px;
+                              "
+                            >
+                              <img
+                                id="imagePreview"
+                                src=""
+                                alt="Selected Image"
+                                style="max-width: 150px; border-radius: 5px"
+                              />
+
+                              <!-- "X" button inside the image preview -->
+                              <button
+                                id="removeImage"
+                                type="button"
+                                style="
+                                  position: absolute;
+                                  top: 5px;
+                                  left: 5px;
+                                  background: rgba(255, 0, 0, 0.8);
+                                  color: white;
+                                  border: none;
+                                  border-radius: 50%;
+                                  width: 24px;
+                                  height: 24px;
+                                  cursor: pointer;
+                                  font-size: 16px;
+                                  line-height: 24px;
+                                  text-align: center;
+                                  display: flex;
+                                  justify-content: center;
+                                  align-items: center;
+                                  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                                "
+                              >
+                                ✖
+                              </button>
+                            </div>
                           </div>
 
-                          <div class="col-md-7 mx-auto mt-4">
+                          <div class="col-md-7 mx-auto mt-0">
                             <button class="btn btn-primary w-100" tabindex="5">
                               Update Profile
                             </button>
@@ -252,6 +297,30 @@
             height: 14,
           });
         }
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        $("#profilePicture").change(function (event) {
+          let input = event.target;
+          let file = input.files[0];
+
+          if (file) {
+            let reader = new FileReader();
+            reader.onload = function (e) {
+              $("#imagePreview").attr("src", e.target.result);
+              $("#imagePreviewContainer").show(); // Show preview with "X" button
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+
+        // Remove selected image when clicking the "X" button
+        $("#removeImage").click(function () {
+          $("#profilePicture").val(""); // Clear the file input
+          $("#imagePreviewContainer").hide(); // Hide the preview
+        });
       });
     </script>
   </body>
