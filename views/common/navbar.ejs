@@ -11,11 +11,18 @@
     </div>
 
     <ul class="nav navbar-nav align-items-center ms-auto">
+      <li class="nav-item">
+         <!-- Dark Mode Toggle Button -->
+         <button id="themeToggle" class="btn btn-sm btn-dark ms-2">
+          <i id="themeIcon" class="fas fa-moon"></i>
+        </button>
+        
+        <span class="user-name fw-bolder"><%= session.first_name%></span>
+        <span class="user-status">Admin</span>
+      </li>
+
       <li class="nav-item dropdown dropdown-user">
         <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <div class="user-nav d-sm-flex d-none">
-            <span class="user-name fw-bolder"><%= session.first_name%></span><span class="user-status">Admin</span>
-          </div>
           <span class="avatar">
             <%if(!session.profilePicture) {%>
             <img class="round" src="../../assets/images (1).jpeg" alt="avatar" height="40" width="40" />
@@ -32,6 +39,7 @@
     </ul>
   </div>
 </nav>
+
 <script>
   function logoutUser(id) {
   Swal.fire({
@@ -68,3 +76,193 @@
 }
 
 </script>
+
+
+<script>
+  $(document).ready(function () {
+    if (localStorage.getItem("darkMode") === "enabled") {
+      enableDarkMode();
+    }
+
+    $("#themeToggle").click(function () {
+      if ($("body").hasClass("dark-mode")) {
+        disableDarkMode();
+      } else {
+        enableDarkMode();
+      }
+    });
+
+    function enableDarkMode() {
+      $("body").addClass("dark-mode");
+      $("*").addClass("dark-mode-elements"); // Apply to all elements
+      $("#themeIcon").removeClass("fa-moon").addClass("fa-sun");
+      localStorage.setItem("darkMode", "enabled");
+    }
+
+    function disableDarkMode() {
+      $("body").removeClass("dark-mode");
+      $("*").removeClass("dark-mode-elements");
+      $("#themeIcon").removeClass("fa-sun").addClass("fa-moon");
+      localStorage.setItem("darkMode", "disabled");
+    }
+  });
+</script>
+
+
+
+
+
+<style>
+  .dark-mode .btn-outline-primary {
+  border-color: #007bff !important;
+  color: #007bff !important;
+}
+
+.dark-mode .btn-outline-primary:hover {
+  background-color: #007bff !important;
+  color: white !important;
+}
+
+.dark-mode {
+  background-color: #27293D !important;
+  color: #ffffff !important;
+}
+
+.dark-mode .dashboard-container,
+.dark-mode .modal-content,
+.dark-mode .card,
+.dark-mode table,
+.dark-mode .dropdown-menu,
+.dark-mode .alert {
+  background-color: #1E1E2E !important;
+  color: white !important;
+  border: 1px solid #333 !important;
+}
+
+.dark-mode tbody tr {
+  background-color: #2A2A3A !important;
+}
+
+.dark-mode input,
+.dark-mode textarea,
+.dark-mode select {
+  background-color: #282838 !important;
+  color: white !important;
+  border: 1px solid #444 !important;
+}
+
+.dark-mode input::placeholder,
+.dark-mode textarea::placeholder {
+  color: #bbb !important;
+}
+
+.dark-mode .input-group-text {
+  background-color: black !important;
+  color: white !important;
+  border: none !important;
+}
+
+.dark-mode .toggle-password {
+  background-color: #444 !important;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.dark-mode .toggle-password i {
+  color: white !important;
+}
+
+.dark-mode .swal2-popup {
+  background-color: #222 !important;
+  color: white !important;
+}
+
+.dark-mode .swal2-title,
+.dark-mode .swal2-content {
+  color: white !important;
+}
+
+.dark-mode .swal2-confirm,
+.dark-mode .swal2-cancel {
+  color: white !important;
+}
+
+.dark-mode .swal2-success {
+  border-color: #28a745 !important;
+}
+
+.dark-mode .swal2-success-line-tip,
+.dark-mode .swal2-success-line-long {
+  background-color: #28a745 !important;
+}
+
+.dark-mode .swal2-success-ring {
+  border-color: #28a745 !important;
+}
+
+.dark-mode .swal2-success-circular-line-left,
+.dark-mode .swal2-success-circular-line-right {
+  background-color: transparent !important;
+}
+
+#themeToggle {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.user-status {
+  color: white !important;
+}
+
+.dark-mode .btn {
+  background-color: #444 !important;
+  color: white !important;
+}
+
+.dark-mode .btn:hover {
+  background-color: #555 !important;
+}
+
+.dark-mode table {
+  background-color: #27293D !important;
+  color: white !important;
+}
+
+.dark-mode .table:not(.table-dark):not(.table-light) thead:not(.table-dark) th, 
+.dark-mode .table:not(.table-dark):not(.table-light) tfoot:not(.table-dark) th {
+  background-color: #333 !important;
+  color: white !important;
+}
+
+.dark-mode .modal-content {
+  background-color: #27293D !important;
+  color: white !important;
+}
+
+.dark-mode .dropdown-item {
+  color: white !important;
+}
+
+.dark-mode .dropdown-item:hover {
+  background-color: #444 !important;
+}
+
+.dark-mode ::-webkit-scrollbar {
+  width: 8px;
+}
+
+.dark-mode ::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 10px;
+}
+
+.dark-mode ::-webkit-scrollbar-track {
+  background: #27293D;
+}
+
+.dark-mode * {
+  color: white !important;
+}
+
+</style>

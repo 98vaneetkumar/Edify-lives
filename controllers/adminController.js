@@ -4,7 +4,7 @@
  REDIRECT: after successful actions to prevent resubmission (form-success/logout/cancel) [URL changes]*/
 
 const bcrypt = require("bcrypt");
-const { Op } = require("sequelize");
+const { Op, fn, col } = require("sequelize");
 const moment = require("moment");
 const Models = require("../models/index");
 const helper = require("../helpers/commonHelper");
@@ -175,63 +175,64 @@ module.exports = {
     try {
       if (!req.session.user) return res.redirect("/admin/login");
 
-      let user = await Models.userModel.count({ where: { role: 1 } });
-      let churches = await Models.userModel.count({ where: { role: 2 } });
-      let business = await Models.userModel.count({ where: { role: 3 } });
-      let nonprofit = await Models.userModel.count({ where: { role: 4 } });
-      let subscription = await Models.subscriptionModel.count();
+    // Fetch all counts in parallel
+    const [user, churches, business, nonprofit, subscription] = await Promise.all([
+        Models.userModel.count({ where: { role: 1 } }),
+        Models.userModel.count({ where: { role: 2 } }),
+        Models.userModel.count({ where: { role: 3 } }),
+        Models.userModel.count({ where: { role: 4 } }),
+        Models.subscriptionModel.count(),
+    ]);
 
-      const currentYear1 = moment().year();
+    const currentYear = moment().year();
+    const months = [];
+    const counts = { users: [], churches: [], business: [], nonprofit: [] };
 
-      // Separate counts for each role
-      const counts1 = {
-        users: [],
-        churches: [],
-        business: [],
-        nonprofit: [],
-      };
-      const months1 = [];
+    const startOfYear = moment(`${currentYear}-01-01`, "YYYY-MM-DD").startOf("year").toDate();
+    const endOfYear = moment(startOfYear).endOf("year").toDate();
 
-      for (let month = 1; month <= 12; month++) {
-        const startOfMonth1 = moment(
-          `${currentYear1}-${month}-01`,
-          "YYYY-MM-DD"
-        )
-          .startOf("month")
-          .toDate();
-        const endOfMonth1 = moment(startOfMonth1).endOf("month").toDate();
-        const month_data1 = moment(startOfMonth1).format("MMM, YYYY");
+    // Single query to get counts for all months and roles
+    const monthlyCounts = await Models.userModel.findAll({
+        attributes: [
+            [fn("MONTH", col("createdAt")), "month"],
+            "role",
+            [fn("COUNT", col("id")), "count"],
+        ],
+        where: {
+            createdAt: { [Op.between]: [startOfYear, endOfYear] },
+        },
+        group: ["month", "role"],
+        raw: true,
+    });
 
-        // Store month names
-        months1.push(month_data1);
+    // Initialize counts with 0 for all months
+    for (let month = 1; month <= 12; month++) {
+        months.push(moment(`${currentYear}-${month}-01`, "YYYY-MM-DD").format("MMM, YYYY"));
+        counts.users.push(0);
+        counts.churches.push(0);
+        counts.business.push(0);
+        counts.nonprofit.push(0);
+    }
 
-        // Count for each role
-        for (let role = 1; role <= 4; role++) {
-          const count = await Models.userModel.count({
-            where: {
-              createdAt: { [Op.between]: [startOfMonth1, endOfMonth1] },
-              role: role.toString(),
-            },
-          });
+    // Populate counts from query result
+    monthlyCounts.forEach(({ month, role, count }) => {
+        if (role == 1) counts.users[month - 1] = count;
+        else if (role == 2) counts.churches[month - 1] = count;
+        else if (role == 3) counts.business[month - 1] = count;
+        else if (role == 4) counts.nonprofit[month - 1] = count;
+    });
 
-          if (role === 1) counts1.users.push(count);
-          else if (role === 2) counts1.churches.push(count);
-          else if (role === 3) counts1.business.push(count);
-          else if (role === 4) counts1.nonprofit.push(count);
-        }
-      }
-
-      res.render("dashboard", {
+    res.render("dashboard", {
         title: "Dashboard",
-        counts1,
-        months1,
+        counts1: counts,
+        months1: months,
         user,
         churches,
         business,
         nonprofit,
         subscription,
         session: req.session.user,
-      });
+    });
     } catch (error) {
       console.error("Dashboard Error:", error);
     }
