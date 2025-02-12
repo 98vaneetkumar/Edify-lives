@@ -37,7 +37,7 @@ module.exports = {
       return res.redirect("/admin/dashboard");
     } catch (error) {
       console.error("Login Error:", error);
-      res.redirect("/admin/login");
+      return res.redirect("/admin/login");
     }
   },
 
@@ -48,6 +48,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
 
@@ -62,6 +63,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
   profile_update: async (req, res) => {
@@ -100,6 +102,7 @@ module.exports = {
       res.redirect("/admin/dashboard");
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
   change_password: async (req, res) => {
@@ -113,6 +116,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
   change_password_post: async (req, res) => {
@@ -168,6 +172,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
 
@@ -175,54 +180,59 @@ module.exports = {
     try {
       if (!req.session.user) return res.redirect("/admin/login");
 
-    // Fetch all counts in parallel
-    const [user, churches, business, nonprofit, subscription] = await Promise.all([
-        Models.userModel.count({ where: { role: 1 } }),
-        Models.userModel.count({ where: { role: 2 } }),
-        Models.userModel.count({ where: { role: 3 } }),
-        Models.userModel.count({ where: { role: 4 } }),
-        Models.subscriptionModel.count(),
-    ]);
+      // Fetch all counts in parallel
+      const [user, churches, business, nonprofit, subscription] =
+        await Promise.all([
+          Models.userModel.count({ where: { role: 1 } }),
+          Models.userModel.count({ where: { role: 2 } }),
+          Models.userModel.count({ where: { role: 3 } }),
+          Models.userModel.count({ where: { role: 4 } }),
+          Models.subscriptionModel.count(),
+        ]);
 
-    const currentYear = moment().year();
-    const months = [];
-    const counts = { users: [], churches: [], business: [], nonprofit: [] };
+      const currentYear = moment().year();
+      const months = [];
+      const counts = { users: [], churches: [], business: [], nonprofit: [] };
 
-    const startOfYear = moment(`${currentYear}-01-01`, "YYYY-MM-DD").startOf("year").toDate();
-    const endOfYear = moment(startOfYear).endOf("year").toDate();
+      const startOfYear = moment(`${currentYear}-01-01`, "YYYY-MM-DD")
+        .startOf("year")
+        .toDate();
+      const endOfYear = moment(startOfYear).endOf("year").toDate();
 
-    // Single query to get counts for all months and roles
-    const monthlyCounts = await Models.userModel.findAll({
+      // Single query to get counts for all months and roles
+      const monthlyCounts = await Models.userModel.findAll({
         attributes: [
-            [fn("MONTH", col("createdAt")), "month"],
-            "role",
-            [fn("COUNT", col("id")), "count"],
+          [fn("MONTH", col("createdAt")), "month"],
+          "role",
+          [fn("COUNT", col("id")), "count"],
         ],
         where: {
-            createdAt: { [Op.between]: [startOfYear, endOfYear] },
+          createdAt: { [Op.between]: [startOfYear, endOfYear] },
         },
         group: ["month", "role"],
         raw: true,
-    });
+      });
 
-    // Initialize counts with 0 for all months
-    for (let month = 1; month <= 12; month++) {
-        months.push(moment(`${currentYear}-${month}-01`, "YYYY-MM-DD").format("MMM, YYYY"));
+      // Initialize counts with 0 for all months
+      for (let month = 1; month <= 12; month++) {
+        months.push(
+          moment(`${currentYear}-${month}-01`, "YYYY-MM-DD").format("MMM, YYYY")
+        );
         counts.users.push(0);
         counts.churches.push(0);
         counts.business.push(0);
         counts.nonprofit.push(0);
-    }
+      }
 
-    // Populate counts from query result
-    monthlyCounts.forEach(({ month, role, count }) => {
+      // Populate counts from query result
+      monthlyCounts.forEach(({ month, role, count }) => {
         if (role == 1) counts.users[month - 1] = count;
         else if (role == 2) counts.churches[month - 1] = count;
         else if (role == 3) counts.business[month - 1] = count;
         else if (role == 4) counts.nonprofit[month - 1] = count;
-    });
+      });
 
-    res.render("dashboard", {
+      res.render("dashboard", {
         title: "Dashboard",
         counts1: counts,
         months1: months,
@@ -232,9 +242,10 @@ module.exports = {
         nonprofit,
         subscription,
         session: req.session.user,
-    });
+      });
     } catch (error) {
       console.error("Dashboard Error:", error);
+      return res.redirect("/admin/login");
     }
   },
 
@@ -275,6 +286,7 @@ module.exports = {
       res.redirect("back");
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
 
@@ -312,6 +324,7 @@ module.exports = {
       res.redirect("back");
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
 
@@ -330,6 +343,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
 
@@ -348,6 +362,7 @@ module.exports = {
       res.redirect("back");
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
 
@@ -370,6 +385,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
   user_view: async (req, res) => {
@@ -391,6 +407,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
 
@@ -427,6 +444,7 @@ module.exports = {
       res
         .status(500)
         .json({ success: false, message: "Internal server error" });
+      return res.redirect("/admin/login");
     }
   },
 
@@ -439,6 +457,7 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Failed to delete user " });
+      return res.redirect("/admin/login");
     }
   },
 
@@ -461,6 +480,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
   church_view: async (req, res) => {
@@ -482,6 +502,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
 
@@ -511,6 +532,7 @@ module.exports = {
       res
         .status(500)
         .json({ success: false, message: "Internal server error" });
+      return res.redirect("/admin/login");
     }
   },
 
@@ -522,6 +544,7 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Failed to delete church " });
+      return res.redirect("/admin/login");
     }
   },
 
@@ -544,6 +567,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
   business_view: async (req, res) => {
@@ -565,6 +589,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
 
@@ -594,6 +619,7 @@ module.exports = {
       res
         .status(500)
         .json({ success: false, message: "Internal server error" });
+      return res.redirect("/admin/login");
     }
   },
 
@@ -605,6 +631,7 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Failed to delete business " });
+      return res.redirect("/admin/login");
     }
   },
 
@@ -627,6 +654,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
   nonprofit_view: async (req, res) => {
@@ -648,6 +676,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
 
@@ -677,6 +706,7 @@ module.exports = {
       res
         .status(500)
         .json({ success: false, message: "Internal server error" });
+      return res.redirect("/admin/login");
     }
   },
 
@@ -688,6 +718,7 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Failed to delete nonprofit " });
+      return res.redirect("/admin/login");
     }
   },
 
@@ -707,6 +738,7 @@ module.exports = {
       });
     } catch (error) {
       console.log(error);
+      return res.redirect("/admin/login");
     }
   },
 
@@ -723,6 +755,7 @@ module.exports = {
       res
         .status(500)
         .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
     }
   },
 
@@ -744,6 +777,7 @@ module.exports = {
       res
         .status(500)
         .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
     }
   },
 
@@ -773,6 +807,7 @@ module.exports = {
       res
         .status(500)
         .json({ success: false, message: "Internal server error" });
+      return res.redirect("/admin/login");
     }
   },
 
@@ -784,12 +819,13 @@ module.exports = {
     } catch (error) {
       console.log(error);
       res.status(500).json({ error: "Failed to delete subscription " });
+      return res.redirect("/admin/login");
     }
   },
 
   subscription_edit: async (req, res) => {
     try {
-      let title = "Subscription Edit";
+      let title = "subscription";
       const { id } = req.params;
       const subscription = await Models.subscriptionModel.findOne({
         where: { id: id },
@@ -825,6 +861,7 @@ module.exports = {
       res
         .status(500)
         .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
     }
   },
 

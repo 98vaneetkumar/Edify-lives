@@ -4375,7 +4375,7 @@ span.user-status {
   width: 100%;
   padding: 20px 10px;
   border-radius: 10px;
-  box-shadow: 0px 0px 15px #d1cece;
+  /* box-shadow: 0px 0px 15px #d1cece; */
   background: linear-gradient(to right, #e3a8d8, #8ea8d9);
 }
 .header-navbar .navbar-container ul.navbar-nav li.dropdown-user .dropdown-menu {
