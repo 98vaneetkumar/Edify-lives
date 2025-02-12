@@ -13,9 +13,9 @@
     <ul class="nav navbar-nav align-items-center ms-auto">
       <li class="nav-item">
          <!-- Dark Mode Toggle Button -->
-         <button id="themeToggle" class="btn btn-sm btn-dark ms-2">
+         <button id="themeToggle" class="btn btn-sm btn-dark ms-2" data-tooltip="Turn on Dark Mode">
           <i id="themeIcon" class="fas fa-moon"></i>
-        </button>
+        </button>               
         
         <span class="user-name fw-bolder"><%= session.first_name%></span>
         <span class="user-status">Admin</span>
@@ -79,33 +79,41 @@
 
 
 <script>
-  $(document).ready(function () {
-    if (localStorage.getItem("darkMode") === "enabled") {
+ $(document).ready(function () {
+  if (localStorage.getItem("darkMode") === "enabled") {
+    enableDarkMode();
+  }
+
+  $("#themeToggle").click(function () {
+    if ($("body").hasClass("dark-mode")) {
+      disableDarkMode();
+    } else {
       enableDarkMode();
     }
-
-    $("#themeToggle").click(function () {
-      if ($("body").hasClass("dark-mode")) {
-        disableDarkMode();
-      } else {
-        enableDarkMode();
-      }
-    });
-
-    function enableDarkMode() {
-      $("body").addClass("dark-mode");
-      $("*").addClass("dark-mode-elements"); // Apply to all elements
-      $("#themeIcon").removeClass("fa-moon").addClass("fa-sun");
-      localStorage.setItem("darkMode", "enabled");
-    }
-
-    function disableDarkMode() {
-      $("body").removeClass("dark-mode");
-      $("*").removeClass("dark-mode-elements");
-      $("#themeIcon").removeClass("fa-sun").addClass("fa-moon");
-      localStorage.setItem("darkMode", "disabled");
-    }
   });
+
+  $("#themeToggle").on("mouseenter", function () {
+    let tooltipText = $("body").hasClass("dark-mode") ? "Turn on Light Mode" : "Turn on Dark Mode";
+    $(this).attr("data-tooltip", tooltipText);
+  });
+
+  function enableDarkMode() {
+    $("body").addClass("dark-mode");
+    $("*").addClass("dark-mode-elements");
+    $("#themeIcon").removeClass("fa-moon").addClass("fa-sun");
+    $("#themeToggle").attr("data-tooltip", "Turn on Light Mode");
+    localStorage.setItem("darkMode", "enabled");
+  }
+
+  function disableDarkMode() {
+    $("body").removeClass("dark-mode");
+    $("*").removeClass("dark-mode-elements");
+    $("#themeIcon").removeClass("fa-sun").addClass("fa-moon");
+    $("#themeToggle").attr("data-tooltip", "Turn on Dark Mode");
+    localStorage.setItem("darkMode", "disabled");
+  }
+});
+
 </script>
 
 
@@ -209,7 +217,34 @@
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
+  position: relative;
+  overflow: visible;
 }
+
+#themeToggle::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  color: white;
+  padding: 6px 12px;
+  font-size: 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, transform 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+#themeToggle:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(5px);
+}
+
 
 .user-status {
   color: white !important;
