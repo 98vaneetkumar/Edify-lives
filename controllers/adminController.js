@@ -181,13 +181,14 @@ module.exports = {
       if (!req.session.user) return res.redirect("/admin/login");
 
       // Fetch all counts in parallel
-      const [user, churches, business, nonprofit, subscription] =
+      const [user, churches, business, nonprofit, subscription, banner] =
         await Promise.all([
           Models.userModel.count({ where: { role: 1 } }),
           Models.userModel.count({ where: { role: 2 } }),
           Models.userModel.count({ where: { role: 3 } }),
           Models.userModel.count({ where: { role: 4 } }),
           Models.subscriptionModel.count(),
+          Models.bannerModel.count(),
         ]);
 
       const currentYear = moment().year();
@@ -241,6 +242,7 @@ module.exports = {
         business,
         nonprofit,
         subscription,
+        banner,
         session: req.session.user,
       });
     } catch (error) {
@@ -862,6 +864,133 @@ module.exports = {
         .status(500)
         .json({ success: false, message: "Internal Server Error" });
       return res.redirect("/admin/login");
+    }
+  },
+
+  banner_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let banner_data = await Models.bannerModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/banner/bannerListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "banner",
+        banner_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  banner_add: async (req, res) => {
+    try {
+      let title = "banner";
+      res.render("admin/banner/bannerAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  banner_create: async (req, res) => {
+    try {
+      let bannerImage = "";
+
+      if (req.files && req.files.bannerImage) {
+        bannerImage = await helper.fileUpload(req.files.bannerImage, "images");
+      } else {
+        return res.json({
+          success: false,
+          message: "Banner image is required.",
+        });
+      }
+
+      let objToSave = {
+        title: req.body.title,
+        bannerImage: bannerImage,
+      };
+
+      await Models.bannerModel.create(objToSave);
+
+      return res.json({ success: true, message: "Banner added successfully." });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+  banner_delete: async (req, res) => {
+    try {
+      const bannerId = req.body.id;
+      await Models.bannerModel.destroy({ where: { id: bannerId } });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete banner " });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  banner_edit: async (req, res) => {
+    try {
+      let title = "banner";
+      const { id } = req.params;
+      const banner = await Models.bannerModel.findOne({
+        where: { id: id },
+      });
+
+      res.render("admin/banner/bannerEdit", {
+        banner,
+        title,
+        session: req.session.user,
+      });
+    } catch (error) {
+      console.error("Error fetching banner:", error);
+      req.flash("msg", "Error fetching banner details.");
+      res.redirect("/admin/bannerListing");
+    }
+  },
+
+  banner_update: async (req, res) => {
+    try {
+      const { id, title } = req.body;
+      let bannerImage = "";
+
+      if (req.files && req.files.bannerImage) {
+        bannerImage = await helper.fileUpload(req.files.bannerImage, "images");
+      } else {
+        let existingBanner = await Models.bannerModel.findOne({
+          where: { id },
+        });
+        bannerImage = existingBanner ? existingBanner.bannerImage : "";
+      }
+
+      await Models.bannerModel.update(
+        { title, bannerImage },
+        { where: { id } }
+      );
+
+      return res.json({
+        success: true,
+        message: "Banner updated successfully.",
+      });
+    } catch (error) {
+      console.error("Error updating banner:", error);
+      return res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
     }
   },
 

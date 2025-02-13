@@ -1,0 +1,179 @@
+<%- include('../../common/header') %>
+
+<body
+  class="vertical-layout vertical-menu-modern navbar-floating footer-static"
+  data-open="click"
+  data-menu="vertical-menu-modern"
+  data-col=""
+>
+  <%- include('../../common/navbar') %> <%- include('../../common/sidebar') %>
+
+  <div class="app-content content">
+    <div class="content-wrapper container-xxl p-0">
+      <div class="content-body">
+        <div class="row">
+          <div class="col-md-8 offset-md-2">
+            <div class="card">
+              <div class="card-header">
+                <h4>Edit Banner</h4>
+              </div>
+              <div class="card-body">
+                <form id="bannerForm" enctype="multipart/form-data">
+                  <input type="hidden" name="id" value="<%= banner.id %>" />
+
+                  <div class="mb-2">
+                    <label>Title</label>
+                    <input
+                      type="text"
+                      name="title"
+                      class="form-control"
+                      value="<%= banner.title %>"
+                      required
+                    />
+                  </div>
+
+                  <div class="mb-2">
+                    <label>Current Banner Image</label>
+                    <br />
+                    <img
+                      src="<%= banner.bannerImage %>"
+                      alt="Banner Image"
+                      class="img-fluid rounded"
+                      style="max-height: 100px"
+                    />
+                  </div>
+
+                  <div class="mb-2">
+                    <label>Upload New Banner Image</label>
+                    <input
+                      type="file"
+                      id="bannerImage"
+                      name="bannerImage"
+                      class="form-control"
+                      accept="image/*"
+                    />
+
+                    <!-- Image Preview Container -->
+                    <div
+                      id="imagePreviewContainer"
+                      style="
+                        position: relative;
+                        display: none;
+                        margin-top: 10px;
+                      "
+                    >
+                      <img
+                        id="imagePreview"
+                        src=""
+                        alt="Selected Image"
+                        style="max-width: 200px; border-radius: 5px"
+                      />
+
+                      <!-- "X" button inside the image preview -->
+                      <button
+                        id="removeImage"
+                        type="button"
+                        style="
+                          position: absolute;
+                          top: 5px;
+                          left: 5px;
+                          background: rgba(255, 0, 0, 0.8);
+                          color: white;
+                          border: none;
+                          border-radius: 50%;
+                          width: 24px;
+                          height: 24px;
+                          cursor: pointer;
+                          font-size: 16px;
+                          line-height: 24px;
+                          text-align: center;
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+                        "
+                      >
+                        ✖
+                      </button>
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="btn text-white"
+                    style="
+                      background: linear-gradient(to right, #e3a8d8, #8ea8d9);
+                      border: none;
+                    "
+                  >
+                    Update
+                  </button>
+                  <a
+                    href="/admin/banner_listing"
+                    class="btn text-white"
+                    style="background: #e76c65; border: none"
+                  >
+                    Cancel
+                  </a>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../../common/footer') %> <%- include('../../common/script') %>
+
+  <script>
+    $(document).ready(function () {
+      $("#bannerImage").change(function (event) {
+        let input = event.target;
+        if (input.files && input.files[0]) {
+          let reader = new FileReader();
+          reader.onload = function (e) {
+            $("#imagePreview").attr("src", e.target.result);
+            $("#imagePreviewContainer").show();
+          };
+          reader.readAsDataURL(input.files[0]);
+        }
+      });
+
+      // Remove selected image preview
+      $("#removeImage").click(function () {
+        $("#bannerImage").val(""); // Clear file input
+        $("#imagePreviewContainer").hide(); // Hide preview
+        $("#imagePreview").attr("src", ""); // Remove src
+      });
+    });
+  </script>
+
+  <script>
+    $("#bannerForm").on("submit", function (event) {
+      event.preventDefault();
+      var formData = new FormData(this);
+      $.ajax({
+        url: "/admin/banner_update",
+        method: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (res) {
+          if (res.success) {
+            Swal.fire({
+              title: "Updated!",
+              text: "Banner updated successfully.",
+              icon: "success",
+              timer: 2000,
+              showConfirmButton: false,
+            });
+            setTimeout(() => {
+              window.location.href = "/admin/banner_listing";
+            }, 2000);
+          }
+        },
+      });
+    });
+  </script>
+</body>

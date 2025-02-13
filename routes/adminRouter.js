@@ -81,7 +81,12 @@ module.exports = function () {
   router.post("/subscription_update", controller.adminController.subscription_update);
 
 
-
+  router.get("/banner_listing", controller.adminController.banner_listing);
+  router.get("/banner_add", controller.adminController.banner_add);
+  router.post("/banner_create", controller.adminController.banner_create);
+  router.post("/banner_delete", controller.adminController.banner_delete);
+  router.get("/banner_edit/:id", controller.adminController.banner_edit);
+  router.post("/banner_update", controller.adminController.banner_update);
 
 
 
