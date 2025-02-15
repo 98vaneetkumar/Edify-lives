@@ -9,8 +9,7 @@ module.exports = function () {
   router.post("/Login", controller.adminController.login);
   router.post("/logout", controller.adminController.logout);
   router.get("/dashboard", session, controller.adminController.dashboard);
-
-  router.get('/dashboard-data', session, controller.adminController.getDashboardData);
+  router.get('/getDashboardData', session, controller.adminController.getDashboardData);
 
 
   router.get("/profile", controller.adminController.profile);

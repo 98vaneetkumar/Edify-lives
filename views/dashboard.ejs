@@ -1,3 +1,6 @@
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+
 <!-- BEGIN: Head-->
 <%-include('./common/header')%>
   <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -151,7 +154,6 @@
                 </div>
 
 
-
                 <div class="row">
                   <div class="col-md-6">
                     <div class="card p-4">
@@ -160,9 +162,11 @@
                         <div class="form-group m-0" style="width: 120px">
                           <select class="form-select year-select" data-chart="users">
                             <% for(let year=Math.max(2025, currentYear); year>= 2025; year--) { %>
-                              <option value="<%= year %>" <%= year === currentYear ? 'selected' : '' %>><%= year %></option>
-                            <% } %>
+                              <option value="<%= year %>" <%=year===currentYear ? 'selected' : '' %>><%= year %>
+                              </option>
+                              <% } %>
                           </select>
+
                         </div>
                       </div>
                       <div id="usersChart"></div>
@@ -175,8 +179,9 @@
                         <div class="form-group m-0" style="width: 120px">
                           <select class="form-select year-select" data-chart="churches">
                             <% for(let year=Math.max(2025, currentYear); year>= 2025; year--) { %>
-                              <option value="<%= year %>" <%= year === currentYear ? 'selected' : '' %>><%= year %></option>
-                            <% } %>
+                              <option value="<%= year %>" <%=year===currentYear ? 'selected' : '' %>><%= year %>
+                              </option>
+                              <% } %>
                           </select>
                         </div>
                       </div>
@@ -190,8 +195,9 @@
                         <div class="form-group m-0" style="width: 120px">
                           <select class="form-select year-select" data-chart="business">
                             <% for(let year=Math.max(2025, currentYear); year>= 2025; year--) { %>
-                              <option value="<%= year %>" <%= year === currentYear ? 'selected' : '' %>><%= year %></option>
-                            <% } %>
+                              <option value="<%= year %>" <%=year===currentYear ? 'selected' : '' %>><%= year %>
+                              </option>
+                              <% } %>
                           </select>
                         </div>
                       </div>
@@ -205,8 +211,9 @@
                         <div class="form-group m-0" style="width: 120px">
                           <select class="form-select year-select" data-chart="nonprofit">
                             <% for(let year=Math.max(2025, currentYear); year>= 2025; year--) { %>
-                              <option value="<%= year %>" <%= year === currentYear ? 'selected' : '' %>><%= year %></option>
-                            <% } %>
+                              <option value="<%= year %>" <%=year===currentYear ? 'selected' : '' %>><%= year %>
+                              </option>
+                              <% } %>
                           </select>
                         </div>
                       </div>
@@ -215,86 +222,145 @@
                   </div>
                 </div>
 
-
-
-
-                <script>
-                  document.addEventListener("DOMContentLoaded", function () {
-                    // Ensure ApexCharts is loaded
-                    if (typeof ApexCharts === "undefined") {
-                      console.error("ApexCharts is not loaded. Please check the script source.");
-                      return;
-                    }
-                
-                    let charts = {};
-                
-                    function createChartConfig(name, data, color) {
-                      return {
-                        chart: {
-                          height: 250,
-                          width: "100%",
-                          type: "area",
-                          animations: { easing: "easeout", speed: 800 },
-                          toolbar: { show: false },
-                          background: 'transparent'
-                        },
-                        series: [{ name: name, data: data.values || [] }],
-                        colors: [color],
-                        xaxis: {
-                          categories: data.months || [],
-                          labels: { style: { colors: "#fff", fontSize: "12px" } }
-                        },
-                        yaxis: {
-                          labels: { style: { colors: "#fff", fontSize: "12px" } }
-                        },
-                        stroke: {
-                          width: 3,
-                          curve: "smooth"
-                        },
-                        fill: {
-                          type: "gradient",
-                          gradient: {
-                            shadeIntensity: 1,
-                            opacityFrom: 0.6,
-                            opacityTo: 0.2,
-                            stops: [0, 90, 100]
-                          }
-                        },
-                        dataLabels: { enabled: false },
-                        tooltip: { theme: "dark" }
-                      };
-                    }
-                
-                    // Convert JSON data
-                    try {
-                      const countsData = JSON.parse('<%- JSON.stringify(counts1 || {}) %>');
-                      const monthsData = JSON.parse('<%- JSON.stringify(months1 || []) %>').map(month => month.split(',')[0]);
-                
-                      const chartConfigs = [
-                        { id: "#usersChart", name: "Users", color: "#1E90FF", type: "users" },
-                        { id: "#churchesChart", name: "Churches", color: "#FF5733", type: "churches" },
-                        { id: "#businessChart", name: "Business", color: "#2ECC71", type: "business" },
-                        { id: "#nonprofitChart", name: "Non-Profits", color: "#F1C40F", type: "nonprofit" }
-                      ];
-                
-                      chartConfigs.forEach(config => {
-                        if (document.querySelector(config.id)) {
-                          let chartData = { months: monthsData, values: countsData[config.type] || [] };
-                          let options = createChartConfig(config.name, chartData, config.color);
-                          charts[config.id] = new ApexCharts(document.querySelector(config.id), options);
-                          charts[config.id].render();
-                        } else {
-                          console.warn(`Chart container ${config.id} not found.`);
-                        }
-                      });
-                    } catch (error) {
-                      console.error("Error parsing JSON data:", error);
-                    }
+              <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                  document.querySelectorAll(".year-select").forEach(select => {
+                    select.addEventListener("change", function () {
+                      const selectedYear = this.value;
+                      const chartType = this.dataset.chart;
+                      fetchChartData(chartType, selectedYear);
+                    });
                   });
-                </script>
-                
 
+                  function fetchChartData(chartType, year) {
+                    fetch(`/admin/getDashboardData?year=${year}&chartType=${chartType}`)
+                      .then(response => response.json())
+                      .then(data => {
+                        if (data.success) {
+                          updateChart(chartType, data.counts[chartType], data.months);
+                        } else {
+                          console.error("Error fetching data:", data.error);
+                        }
+                      })
+                      .catch(error => console.error("Fetch error:", error));
+                  }
 
+                  function updateChart(chartType, values, months) {
+                    if (charts[`#${chartType}Chart`]) {
+                      charts[`#${chartType}Chart`].updateSeries([{ data: values }]);
+                      charts[`#${chartType}Chart`].updateOptions({ xaxis: { categories: months } });
+                    }
+                  }
+                });
+
+              </script>
+
+              <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+              <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                  // Ensure ApexCharts is loaded
+                  if (typeof ApexCharts === "undefined") {
+                    console.error("ApexCharts is not loaded. Please check the script source.");
+                    return;
+                  }
+
+                  let charts = {};
+
+                  function createChartConfig(name, data, color) {
+                    return {
+                      chart: {
+                        height: 250,
+                        width: "100%",
+                        type: "area",
+                        animations: { easing: "easeout", speed: 800 },
+                        toolbar: { show: false },
+                        background: "transparent",
+                      },
+                      series: [{ name: name, data: data.values || [] }],
+                      colors: [color],
+                      xaxis: {
+                        categories: data.months || [],
+                        labels: { style: { colors: "#fff", fontSize: "12px" } },
+                      },
+                      yaxis: {
+                        labels: { style: { colors: "#fff", fontSize: "12px" } },
+                      },
+                      stroke: {
+                        width: 3,
+                        curve: "smooth",
+                      },
+                      fill: {
+                        type: "gradient",
+                        gradient: {
+                          shadeIntensity: 1,
+                          opacityFrom: 0.6,
+                          opacityTo: 0.2,
+                          stops: [0, 90, 100],
+                        },
+                      },
+                      dataLabels: { enabled: false },
+                      tooltip: { theme: "dark" },
+                    };
+                  }
+
+                  function fetchChartData(chartType, year) {
+                    fetch(`/admin/getDashboardData?year=${year}&chartType=${chartType}`)
+                      .then((response) => response.json())
+                      .then((data) => {
+                        if (data.success) {
+                          updateChart(chartType, data.counts[chartType], data.months);
+                        } else {
+                          console.error("Error fetching data:", data.error);
+                        }
+                      })
+                      .catch((error) => console.error("Fetch error:", error));
+                  }
+
+                  function updateChart(chartType, values, months) {
+                    const chartId = `#${chartType}Chart`;
+
+                    if (charts[chartId]) {
+                      charts[chartId].updateSeries([{ data: values }]);
+                      charts[chartId].updateOptions({ xaxis: { categories: months } });
+                    }
+                  }
+
+                  try {
+                    const countsData = JSON.parse('<%- JSON.stringify(counts1 || {}) %>');
+                    const monthsData = JSON.parse('<%- JSON.stringify(months1 || []) %>').map(
+                      (month) => month.split(",")[0]
+                    );
+
+                    const chartConfigs = [
+                      { id: "#usersChart", name: "Users", color: "#1E90FF", type: "users" },
+                      { id: "#churchesChart", name: "Churches", color: "#FF5733", type: "churches" },
+                      { id: "#businessChart", name: "Business", color: "#2ECC71", type: "business" },
+                      { id: "#nonprofitChart", name: "Non-Profits", color: "#F1C40F", type: "nonprofit" },
+                    ];
+
+                    chartConfigs.forEach((config) => {
+                      if (document.querySelector(config.id)) {
+                        let chartData = { months: monthsData, values: countsData[config.type] || [] };
+                        let options = createChartConfig(config.name, chartData, config.color);
+                        charts[config.id] = new ApexCharts(document.querySelector(config.id), options);
+                        charts[config.id].render();
+                      } else {
+                        console.warn(`Chart container ${config.id} not found.`);
+                      }
+                    });
+
+                    // Initialize year dropdown events
+                    document.querySelectorAll(".year-select").forEach((select) => {
+                      const chartType = select.dataset.chart;
+                      select.addEventListener("change", function () {
+                        fetchChartData(chartType, this.value);
+                      });
+                    });
+                  } catch (error) {
+                    console.error("Error parsing JSON data:", error);
+                  }
+                });
+              </script>
 
 
             </div>

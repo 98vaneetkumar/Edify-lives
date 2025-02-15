@@ -250,10 +250,11 @@ module.exports = {
       const year = parseInt(req.query.year) || moment().year();
       const chartType = req.query.chartType;
 
-      if (year < 2025) {
+      // Ensure the requested year is within the valid range
+      if (year < 2024) {
         return res.status(400).json({
           success: false,
-          error: "Year must be 2025 or later",
+          error: "Year must be 2024 or later",
         });
       }
 
@@ -291,30 +292,29 @@ module.exports = {
         raw: true,
       };
 
-      // Add role filter if specific chart type is requested
+      // Apply role filter if chartType is specified
       if (role) {
         query.where.role = role;
       }
 
       const monthlyCounts = await Models.userModel.findAll(query);
 
-      // Initialize counts array with zeros
-      const counts = {
-        [chartType]: new Array(12).fill(0),
-      };
+      // Initialize an array with 12 months set to zero
+      const counts = new Array(12).fill(0);
 
-      // Populate counts for the requested chart type
+      // Populate counts where data is available
       monthlyCounts.forEach(({ month, count }) => {
-        counts[chartType][month - 1] = parseInt(count);
+        counts[month - 1] = parseInt(count);
       });
 
+      // Generate months labels
       const months = Array.from({ length: 12 }, (_, i) =>
-        moment(`${year}-${i + 1}-01`).format("MMM, YYYY")
+        moment(`${year}-${i + 1}-01`).format("MMM")
       );
 
       res.json({
         success: true,
-        counts,
+        counts: { [chartType]: counts },
         months,
       });
     } catch (error) {
