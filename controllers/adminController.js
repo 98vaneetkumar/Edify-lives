@@ -180,7 +180,6 @@ module.exports = {
     try {
       if (!req.session.user) return res.redirect("/admin/login");
 
-      // Fetch all counts in parallel
       const [user, churches, business, nonprofit, subscription, banner] =
         await Promise.all([
           Models.userModel.count({ where: { role: 1 } }),
@@ -191,16 +190,15 @@ module.exports = {
           Models.bannerModel.count(),
         ]);
 
-      const currentYear = moment().year();
+      const currentYear = Math.max(2025, moment().year());
       const months = [];
       const counts = { users: [], churches: [], business: [], nonprofit: [] };
 
-      const startOfYear = moment(`${currentYear}-01-01`, "YYYY-MM-DD")
+      const startOfYear = moment(`${currentYear}-01-01`)
         .startOf("year")
         .toDate();
       const endOfYear = moment(startOfYear).endOf("year").toDate();
 
-      // Single query to get counts for all months and roles
       const monthlyCounts = await Models.userModel.findAll({
         attributes: [
           [fn("MONTH", col("createdAt")), "month"],
@@ -214,23 +212,19 @@ module.exports = {
         raw: true,
       });
 
-      // Initialize counts with 0 for all months
       for (let month = 1; month <= 12; month++) {
-        months.push(
-          moment(`${currentYear}-${month}-01`, "YYYY-MM-DD").format("MMM, YYYY")
-        );
+        months.push(moment(`${currentYear}-${month}-01`).format("MMM, YYYY"));
         counts.users.push(0);
         counts.churches.push(0);
         counts.business.push(0);
         counts.nonprofit.push(0);
       }
 
-      // Populate counts from query result
       monthlyCounts.forEach(({ month, role, count }) => {
-        if (role == 1) counts.users[month - 1] = count;
-        else if (role == 2) counts.churches[month - 1] = count;
-        else if (role == 3) counts.business[month - 1] = count;
-        else if (role == 4) counts.nonprofit[month - 1] = count;
+        if (role == 1) counts.users[month - 1] = parseInt(count);
+        else if (role == 2) counts.churches[month - 1] = parseInt(count);
+        else if (role == 3) counts.business[month - 1] = parseInt(count);
+        else if (role == 4) counts.nonprofit[month - 1] = parseInt(count);
       });
 
       res.render("dashboard", {
@@ -248,6 +242,87 @@ module.exports = {
     } catch (error) {
       console.error("Dashboard Error:", error);
       return res.redirect("/admin/login");
+    }
+  },
+
+  getDashboardData: async (req, res) => {
+    try {
+      const year = parseInt(req.query.year) || moment().year();
+      const chartType = req.query.chartType;
+
+      if (year < 2025) {
+        return res.status(400).json({
+          success: false,
+          error: "Year must be 2025 or later",
+        });
+      }
+
+      const startOfYear = moment(`${year}-01-01`).startOf("year").toDate();
+      const endOfYear = moment(startOfYear).endOf("year").toDate();
+
+      // Define role based on chart type
+      let role;
+      switch (chartType) {
+        case "users":
+          role = 1;
+          break;
+        case "churches":
+          role = 2;
+          break;
+        case "business":
+          role = 3;
+          break;
+        case "nonprofit":
+          role = 4;
+          break;
+        default:
+          role = null;
+      }
+
+      let query = {
+        attributes: [
+          [fn("MONTH", col("createdAt")), "month"],
+          [fn("COUNT", col("id")), "count"],
+        ],
+        where: {
+          createdAt: { [Op.between]: [startOfYear, endOfYear] },
+        },
+        group: ["month"],
+        raw: true,
+      };
+
+      // Add role filter if specific chart type is requested
+      if (role) {
+        query.where.role = role;
+      }
+
+      const monthlyCounts = await Models.userModel.findAll(query);
+
+      // Initialize counts array with zeros
+      const counts = {
+        [chartType]: new Array(12).fill(0),
+      };
+
+      // Populate counts for the requested chart type
+      monthlyCounts.forEach(({ month, count }) => {
+        counts[chartType][month - 1] = parseInt(count);
+      });
+
+      const months = Array.from({ length: 12 }, (_, i) =>
+        moment(`${year}-${i + 1}-01`).format("MMM, YYYY")
+      );
+
+      res.json({
+        success: true,
+        counts,
+        months,
+      });
+    } catch (error) {
+      console.error("Dashboard Data Error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Internal server error",
+      });
     }
   },
 

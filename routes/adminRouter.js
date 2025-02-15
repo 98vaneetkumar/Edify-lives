@@ -10,6 +10,9 @@ module.exports = function () {
   router.post("/logout", controller.adminController.logout);
   router.get("/dashboard", session, controller.adminController.dashboard);
 
+  router.get('/dashboard-data', session, controller.adminController.getDashboardData);
+
+
   router.get("/profile", controller.adminController.profile);
   router.post("/profile_update/:id", controller.adminController.profile_update);
   router.get("/change_password", controller.adminController.change_password);

@@ -1,284 +1,342 @@
 <!-- BEGIN: Head-->
 <%-include('./common/header')%>
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<!-- END: Head-->
+  <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+  <!-- END: Head-->
 
-<!-- BEGIN: Body-->
+  <!-- BEGIN: Body-->
 
-<body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click" data-menu="vertical-menu-modern" data-col="">
+  <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static  " data-open="click"
+    data-menu="vertical-menu-modern" data-col="">
 
-  <!-- BEGIN: Header-->
-  <%-include('./common/navbar')%>
+    <!-- BEGIN: Header-->
+    <%-include('./common/navbar')%>
 
-  <!-- END: Header-->
-
-
-  <!-- BEGIN: Main Menu-->
-  <%-include('./common/sidebar')%>
-  <!-- END: Main Menu-->
-
-  <!-- BEGIN: Content-->
-  <div class="app-content content ">
-    <div class="content-overlay"></div>
-    <div class="header-navbar-shadow"></div>
-    <div class="content-wrapper container-xxl p-0">
-      <div class="content-header row">
-      </div>
-      <div class="content-body">
-        <!-- Dashboard Ecommerce Starts -->
-        <section id="dashboard-ecommerce">
-          <div class="row match-height">
+      <!-- END: Header-->
 
 
-            <!-- Statistics Card -->
-            <div class="col-xl-12 col-md-6 col-12">
-              <div class="card card-statistics">
-                <div class="card-header">
+      <!-- BEGIN: Main Menu-->
+      <%-include('./common/sidebar')%>
+        <!-- END: Main Menu-->
+        <% const currentYear = new Date().getFullYear(); %>
 
-                </div>
-                <div class="card-body statistics-body">
-                  <div class="row">
-                    
-                    <!-- Users -->
-                    <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
-                      <a href="/admin/users_listing">
-                        <div class="d-flex flex-row">
-                          <div class="avatar bg-light-primary me-2">
-                            <div class="avatar-content">
-                              <i data-feather="users" class="avatar-icon"></i>
-                            </div>
+
+        <!-- BEGIN: Content-->
+        <div class="app-content content ">
+          <div class="content-overlay"></div>
+          <div class="header-navbar-shadow"></div>
+          <div class="content-wrapper container-xxl p-0">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+              <!-- Dashboard Ecommerce Starts -->
+              <section id="dashboard-ecommerce">
+                <div class="row match-height">
+
+
+                  <!-- Statistics Card -->
+                  <div class="col-xl-12 col-md-6 col-12">
+                    <div class="card card-statistics">
+                      <div class="card-header">
+
+                      </div>
+                      <div class="card-body statistics-body">
+                        <div class="row">
+
+                          <!-- Users -->
+                          <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                            <a href="/admin/users_listing">
+                              <div class="d-flex flex-row">
+                                <div class="avatar bg-light-primary me-2">
+                                  <div class="avatar-content">
+                                    <i data-feather="users" class="avatar-icon"></i>
+                                  </div>
+                                </div>
+                                <div class="my-auto text-white">
+                                  <h4 class="fw-bolder mb-0 text-white"><%- user %></h4>
+                                  <p class="card-text font-small-3 mb-0">Users</p>
+                                </div>
+                              </div>
+                            </a>
                           </div>
-                          <div class="my-auto text-white">
-                            <h4 class="fw-bolder mb-0 text-white"><%- user %></h4>
-                            <p class="card-text font-small-3 mb-0">Users</p>
+
+                          <!-- Churches -->
+                          <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                            <a href="/admin/churches_listing">
+                              <div class="d-flex flex-row">
+                                <div class="avatar bg-light-danger me-2">
+                                  <div class="avatar-content">
+                                    <i data-feather="cross" class="fas fa-church text-white"></i>
+                                  </div>
+                                </div>
+                                <div class="my-auto text-white">
+                                  <h4 class="fw-bolder mb-0 text-white"><%- churches %></h4>
+                                  <p class="card-text font-small-3 mb-0">Churches</p>
+                                </div>
+                              </div>
+                            </a>
                           </div>
+
+                          <!-- Business -->
+                          <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                            <a href="/admin/business_listing">
+                              <div class="d-flex flex-row">
+                                <div class="avatar bg-light-success me-2">
+                                  <div class="avatar-content">
+                                    <i data-feather="briefcase" class="fas fa-briefcase text-white"></i>
+                                  </div>
+                                </div>
+                                <div class="my-auto text-white">
+                                  <h4 class="fw-bolder mb-0 text-white"><%- business %></h4>
+                                  <p class="card-text font-small-3 mb-0">Business</p>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+
+                          <!-- Non-Profit -->
+                          <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
+                            <a href="/admin/nonprofit_listing">
+                              <div class="d-flex flex-row">
+                                <div class="avatar bg-light-warning me-2">
+                                  <div class="avatar-content">
+                                    <i class="fas fa-hand-holding-heart text-white"></i>
+                                  </div>
+                                </div>
+                                <div class="my-auto text-white">
+                                  <h4 class="fw-bolder mb-0 text-white"><%- nonprofit %></h4>
+                                  <p class="card-text font-small-3 mb-0">Non-Profit</p>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+
+                          <!-- Subscription -->
+                          <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0 mt-2">
+                            <a href="/admin/subscription_listing">
+                              <div class="d-flex flex-row">
+                                <div class="avatar bg-light-primary me-2">
+                                  <div class="avatar-content">
+                                    <i class="fas fa-credit-card text-white"></i>
+                                  </div>
+                                </div>
+                                <div class="my-auto text-white">
+                                  <h4 class="fw-bolder mb-0 text-white"><%- subscription %></h4>
+                                  <p class="card-text font-small-3 mb-0">Subscription</p>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+
+                          <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0 mt-2">
+                            <a href="/admin/banner_listing">
+                              <div class="d-flex flex-row">
+                                <div class="avatar bg-light-primary me-2">
+                                  <div class="avatar-content">
+                                    <i class="fas fa-image text-white"></i>
+                                  </div>
+                                </div>
+                                <div class="my-auto text-white">
+                                  <h4 class="fw-bolder mb-0 text-white"><%- banner %></h4>
+                                  <p class="card-text font-small-3 mb-0">Banner</p>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+
                         </div>
-                      </a>
-                    </div>
+                      </div>
 
-                    <!-- Churches -->
-                    <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
-                      <a href="/admin/churches_listing">
-                        <div class="d-flex flex-row">
-                          <div class="avatar bg-light-danger me-2">
-                            <div class="avatar-content">
-                              <i data-feather="cross" class="fas fa-church text-white"></i>
-                            </div>
-                          </div>
-                          <div class="my-auto text-white">
-                            <h4 class="fw-bolder mb-0 text-white"><%- churches %></h4>
-                            <p class="card-text font-small-3 mb-0">Churches</p>
-                          </div>
-                        </div>
-                      </a>
                     </div>
-                
-                    <!-- Business -->
-                    <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
-                      <a href="/admin/business_listing">
-                        <div class="d-flex flex-row">
-                          <div class="avatar bg-light-success me-2">
-                            <div class="avatar-content">
-                              <i data-feather="briefcase" class="fas fa-briefcase text-white"></i>
-                            </div>
-                          </div>
-                          <div class="my-auto text-white">
-                            <h4 class="fw-bolder mb-0 text-white"><%- business %></h4>
-                            <p class="card-text font-small-3 mb-0">Business</p>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                
-                    <!-- Non-Profit -->
-                    <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0">
-                      <a href="/admin/nonprofit_listing">
-                        <div class="d-flex flex-row">
-                          <div class="avatar bg-light-warning me-2">
-                            <div class="avatar-content">
-                              <i class="fas fa-hand-holding-heart text-white"></i>
-                            </div>
-                          </div>
-                          <div class="my-auto text-white">
-                            <h4 class="fw-bolder mb-0 text-white"><%- nonprofit %></h4>
-                            <p class="card-text font-small-3 mb-0">Non-Profit</p>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-
-                   <!-- Subscription -->
-                    <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0 mt-2">
-                      <a href="/admin/subscription_listing">
-                        <div class="d-flex flex-row">
-                          <div class="avatar bg-light-primary me-2">
-                            <div class="avatar-content">
-                              <i class="fas fa-credit-card text-white"></i>
-                            </div>
-                          </div>
-                          <div class="my-auto text-white">
-                            <h4 class="fw-bolder mb-0 text-white"><%- subscription %></h4>
-                            <p class="card-text font-small-3 mb-0">Subscription</p>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-
-                    <div class="col-xl-3 col-sm-6 col-12 mb-2 mb-xl-0 mt-2">
-                      <a href="/admin/banner_listing">
-                        <div class="d-flex flex-row">
-                          <div class="avatar bg-light-primary me-2">
-                            <div class="avatar-content">
-                              <i class="fas fa-image text-white"></i>
-                            </div>
-                          </div>
-                          <div class="my-auto text-white">
-                            <h4 class="fw-bolder mb-0 text-white"><%- banner %></h4>
-                            <p class="card-text font-small-3 mb-0">Banner</p>
-                          </div>
-                        </div>
-                      </a>
-                    </div>
-                    
                   </div>
                 </div>
+
+
+
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="card p-4">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="text-grey mb-0">Users Growth</h5>
+                        <div class="form-group m-0" style="width: 120px">
+                          <select class="form-select year-select" data-chart="users">
+                            <% for(let year=Math.max(2025, currentYear); year>= 2025; year--) { %>
+                              <option value="<%= year %>" <%= year === currentYear ? 'selected' : '' %>><%= year %></option>
+                            <% } %>
+                          </select>
+                        </div>
+                      </div>
+                      <div id="usersChart"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="card p-4">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="text-grey mb-0">Churches Growth</h5>
+                        <div class="form-group m-0" style="width: 120px">
+                          <select class="form-select year-select" data-chart="churches">
+                            <% for(let year=Math.max(2025, currentYear); year>= 2025; year--) { %>
+                              <option value="<%= year %>" <%= year === currentYear ? 'selected' : '' %>><%= year %></option>
+                            <% } %>
+                          </select>
+                        </div>
+                      </div>
+                      <div id="churchesChart"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="card p-4">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="text-grey mb-0">Business Growth</h5>
+                        <div class="form-group m-0" style="width: 120px">
+                          <select class="form-select year-select" data-chart="business">
+                            <% for(let year=Math.max(2025, currentYear); year>= 2025; year--) { %>
+                              <option value="<%= year %>" <%= year === currentYear ? 'selected' : '' %>><%= year %></option>
+                            <% } %>
+                          </select>
+                        </div>
+                      </div>
+                      <div id="businessChart"></div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="card p-4">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="text-grey mb-0">Non-Profits Growth</h5>
+                        <div class="form-group m-0" style="width: 120px">
+                          <select class="form-select year-select" data-chart="nonprofit">
+                            <% for(let year=Math.max(2025, currentYear); year>= 2025; year--) { %>
+                              <option value="<%= year %>" <%= year === currentYear ? 'selected' : '' %>><%= year %></option>
+                            <% } %>
+                          </select>
+                        </div>
+                      </div>
+                      <div id="nonprofitChart"></div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+                <script>
+                  document.addEventListener("DOMContentLoaded", function () {
+                    // Ensure ApexCharts is loaded
+                    if (typeof ApexCharts === "undefined") {
+                      console.error("ApexCharts is not loaded. Please check the script source.");
+                      return;
+                    }
                 
-              </div>
+                    let charts = {};
+                
+                    function createChartConfig(name, data, color) {
+                      return {
+                        chart: {
+                          height: 250,
+                          width: "100%",
+                          type: "area",
+                          animations: { easing: "easeout", speed: 800 },
+                          toolbar: { show: false },
+                          background: 'transparent'
+                        },
+                        series: [{ name: name, data: data.values || [] }],
+                        colors: [color],
+                        xaxis: {
+                          categories: data.months || [],
+                          labels: { style: { colors: "#fff", fontSize: "12px" } }
+                        },
+                        yaxis: {
+                          labels: { style: { colors: "#fff", fontSize: "12px" } }
+                        },
+                        stroke: {
+                          width: 3,
+                          curve: "smooth"
+                        },
+                        fill: {
+                          type: "gradient",
+                          gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.6,
+                            opacityTo: 0.2,
+                            stops: [0, 90, 100]
+                          }
+                        },
+                        dataLabels: { enabled: false },
+                        tooltip: { theme: "dark" }
+                      };
+                    }
+                
+                    // Convert JSON data
+                    try {
+                      const countsData = JSON.parse('<%- JSON.stringify(counts1 || {}) %>');
+                      const monthsData = JSON.parse('<%- JSON.stringify(months1 || []) %>').map(month => month.split(',')[0]);
+                
+                      const chartConfigs = [
+                        { id: "#usersChart", name: "Users", color: "#1E90FF", type: "users" },
+                        { id: "#churchesChart", name: "Churches", color: "#FF5733", type: "churches" },
+                        { id: "#businessChart", name: "Business", color: "#2ECC71", type: "business" },
+                        { id: "#nonprofitChart", name: "Non-Profits", color: "#F1C40F", type: "nonprofit" }
+                      ];
+                
+                      chartConfigs.forEach(config => {
+                        if (document.querySelector(config.id)) {
+                          let chartData = { months: monthsData, values: countsData[config.type] || [] };
+                          let options = createChartConfig(config.name, chartData, config.color);
+                          charts[config.id] = new ApexCharts(document.querySelector(config.id), options);
+                          charts[config.id].render();
+                        } else {
+                          console.warn(`Chart container ${config.id} not found.`);
+                        }
+                      });
+                    } catch (error) {
+                      console.error("Error parsing JSON data:", error);
+                    }
+                  });
+                </script>
+                
+
+
+
+
             </div>
+            <!--/ Statistics Card -->
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="card p-4">
-                <h5 class="text-center text-grey">Users Growth</h5>
-                <div id="usersChart"></div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="card p-4">
-                <h5 class="text-center text-grey">Churches Growth</h5>
-                <div id="churchesChart"></div>
-              </div>
-            </div>
-            <div class="col-md-6 mt-3">
-              <div class="card p-4">
-                <h5 class="text-center text-grey">Business Growth</h5>
-                <div id="businessChart"></div>
-              </div>
-            </div>
-            <div class="col-md-6 mt-3">
-              <div class="card p-4">
-                <h5 class="text-center text-grey">Non-Profits Growth</h5>
-                <div id="nonprofitChart"></div>
-              </div>
-            </div>
-          </div>
-          
-          
-          
-
-          <script>
-            document.addEventListener("DOMContentLoaded", function () {
-              const counts_data = JSON.parse('<%- JSON.stringify(counts1 || {}) %>');
-              const months_data = JSON.parse('<%- JSON.stringify(months1 || []) %>').map(month => month.split(',')[0]);
-          
-              console.log("Counts Data:", counts_data);
-              console.log("Months Data:", months_data);
-          
-              // Default to empty array if key doesn't exist
-              const usersCounts = counts_data.users || [];
-              const churchesCounts = counts_data.churches || [];
-              const businessCounts = counts_data.business || [];
-              const nonprofitCounts = counts_data.nonprofit || [];
-          
-              function renderChart(chartId, name, data, color) {
-                var options = {
-                  chart: {
-                    height: 250,
-                    width: "100%",
-                    type: "area",
-                    animations: { easing: "easeout", speed: 800 },
-                    toolbar: { show: false },
-                  },
-                  series: [{ name: name, data: data }],
-                  colors: [color],
-                  xaxis: {
-                    categories: months_data,
-                    labels: { style: { colors: "#fff", fontSize: "12px" } }, // White labels for dark mode
-                  },
-                  yaxis: {
-                    labels: { style: { colors: "#fff", fontSize: "12px" } },
-                  },
-                  stroke: {
-                    width: 3,
-                    curve: "smooth", // Smooth curved lines
-                  },
-                  fill: {
-                    type: "gradient",
-                    gradient: {
-                      shadeIntensity: 1,
-                      opacityFrom: 0.6,
-                      opacityTo: 0.2,
-                      stops: [0, 90, 100],
-                    },
-                  },
-                  dataLabels: { enabled: false },
-                  tooltip: { theme: "dark" },
-                };
-          
-                var chart = new ApexCharts(document.querySelector(chartId), options);
-                chart.render();
-              }
-          
-              renderChart("#usersChart", "Users", usersCounts, "#1E90FF");
-              renderChart("#churchesChart", "Churches", churchesCounts, "#FF5733");
-              renderChart("#businessChart", "Business", businessCounts, "#2ECC71");
-              renderChart("#nonprofitChart", "Non-Profits", nonprofitCounts, "#F1C40F");
-            });
-          </script>
-          
-          
-
-      </div>
-      <!--/ Statistics Card -->
-    </div>
 
 
-  </div>
-  </section>
-  <!-- Dashboard Ecommerce ends -->
+        </div>
+        </section>
+        <!-- Dashboard Ecommerce ends -->
 
-  </div>
-  </div>
-  </div>
-  <!-- END: Content-->
+        </div>
+        </div>
+        </div>
+        <!-- END: Content-->
 
-  <div class="sidenav-overlay"></div>
-  <div class="drag-target"></div>
-
-
-  </section>
-  <!-- Dashboard Ecommerce ends -->
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div>
 
 
-  <!-- END: Content-->
-
-  <div class="sidenav-overlay"></div>
-  <div class="drag-target"></div>
-  <!-- script -->
-  <%-include('./common/script')%>
-  <!-- BEGIN: Footer-->
-  <%-include('./common/footer')%>
-  <!-- END: Footer-->
+        </section>
+        <!-- Dashboard Ecommerce ends -->
 
 
-  <script>
-    $(window).on('load', function() {
-      if (feather) {
-        feather.replace({
-          width: 14,
-          height: 14
-        });
-      }
-    })
-  </script>
+        <!-- END: Content-->
 
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div>
+        <!-- script -->
+        <%-include('./common/script')%>
+          <!-- BEGIN: Footer-->
+          <%-include('./common/footer')%>
+            <!-- END: Footer-->
+
+
+            <script>
+              $(window).on('load', function () {
+                if (feather) {
+                  feather.replace({
+                    width: 14,
+                    height: 14
+                  });
+                }
+              })
+            </script>
