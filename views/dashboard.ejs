@@ -259,7 +259,10 @@
                       document.body.insertAdjacentHTML('beforeend', modalHTML);
 
                       // Initialize modal
-                      const yearHelpModal = new bootstrap.Modal(document.getElementById("yearHelpModal"));
+                      const yearHelpModal = new bootstrap.Modal(document.getElementById("yearHelpModal"), {
+                        backdrop: "static",
+                        keyboard: false 
+                      });
                       const showGuideAgain = document.getElementById("showGuideAgain");
                       const confirmButton = document.getElementById("confirmYearHelp");
 
@@ -342,7 +345,7 @@
                       document.head.appendChild(styleSheet);
                     });
 
-                  </script>
+                </script>
                   
                 
                 

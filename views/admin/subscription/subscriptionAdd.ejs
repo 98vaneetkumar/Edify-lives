@@ -31,10 +31,14 @@
                     </div>
                     <div class="mb-2">
                       <label>Type</label>
-                      <select name="type" class="form-control" required>
+                      <select name="type" id="subscriptionType" class="form-control" required>
+                        <option value="">Select an option</option>
                         <option value="0">Basic</option>
                         <option value="1">Premium</option>
                       </select>
+                      <p id="typeError" class="text-danger" style="display: none;">
+                        Select an option first
+                      </p>
                     </div>
                     <div class="mb-2">
                       <label>Period (e.g., Monthly, Yearly)</label>

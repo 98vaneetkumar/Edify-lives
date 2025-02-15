@@ -848,7 +848,10 @@ module.exports = {
       await Models.subscriptionModel.create(objToSave);
 
       req.flash("msg", "Challenge added successfully.");
-      return res.redirect("/admin/subscriptionListing");
+      return res.json({
+        success: true,
+        redirect: "/admin/subscription_listing",
+      });
     } catch (error) {
       console.error(error);
       res
@@ -1083,3 +1086,4 @@ module.exports = {
     }
   },
 };
+
