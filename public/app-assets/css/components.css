@@ -1307,6 +1307,7 @@ body.menu-collapsed .main-menu.expanded .main-menu-content {
   position: relative;
   white-space: nowrap;
   margin: 13px 0;
+  display: block;
 }
 
 .navigation li a {
