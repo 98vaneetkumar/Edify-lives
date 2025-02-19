@@ -9,7 +9,7 @@ const swaggerUi = require("swagger-ui-express");
 const session = require("express-session");
 const flash = require("connect-flash");
 
-const HOST = process.env.SERVER_HOST || "0.0.0.0";
+const HOST = "0.0.0.0";
 const PORT = process.env.PORT || 3000;
 
 const indexRouter = require("./routes/index");
