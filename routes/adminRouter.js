@@ -39,6 +39,7 @@ module.exports = function () {
     session,
     controller.adminController.termsConditions
   );
+
   router.post(
     "/termsConditionsPost",
     session,
@@ -96,3 +97,4 @@ module.exports = function () {
 
   return router;
 };
+
