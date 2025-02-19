@@ -1,408 +1,445 @@
-  <!-- BEGIN: Head-->
-  <%-include('../common/header')%>
-  <!-- END: Head-->
-  <style>
-    
-    input::-ms-reveal,
-    input::-ms-clear {
-      display: none;
-    }
+<!-- BEGIN: Head-->
+<%-include('../common/header')%>
+<!-- END: Head-->
+<style>
+  input::-ms-reveal,
+  input::-ms-clear {
+    display: none;
+  }
 
-    label.error {
-      color: red;
-      font-size: 13px;
-      font-weight: 500;
-      margin-top: 5px;
-      display: block;
-    }
+  label.error {
+    color: red;
+    font-size: 13px;
+    font-weight: 500;
+    margin-top: 5px;
+    display: block;
+  }
 
-    .input-group:has(#password-error) {
-      margin-bottom: 30px;
-    }
+  .input-group:has(#password-error) {
+    margin-bottom: 30px;
+  }
 
-    #password-error {
-      bottom: -24px;
-      position: absolute;
-      font-weight: 500;
-      left: 0;
-      font-size: 13px;
-      margin-bottom: 3px;
-    }
+  #password-error {
+    bottom: -24px;
+    position: absolute;
+    font-weight: 500;
+    left: 0;
+    font-size: 13px;
+    margin-bottom: 3px;
+  }
 
-    .login_area {
-      background: url(/assets/logo2.jpg) no-repeat center/cover;
-      min-height: 100vh;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      position: relative;
-      z-index: 0;
-    }
+  .login_area {
+    background: url(/assets/logo2.jpg) no-repeat center/cover;
+    min-height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+    z-index: 0;
+  }
 
-    .login_area::before {
-      content: "";
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      z-index: -1;
-      top: 0;
-      left: 0;
-      background-color: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(10px);
-      opacity: 0.4;
-    }
+  .login_area::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+    opacity: 0.4;
+  }
 
-    .login-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      padding: 0 5%;
-    }
+  .login-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0 5%;
+  }
 
-    .auth-bg img {
-      width: 100px;
-      margin-bottom: 20px;
-      animation: fadeIn 1s ease-in-out;
-    }
+  .auth-bg img {
+    width: 100px;
+    margin-bottom: 20px;
+    animation: fadeIn 1s ease-in-out;
+  }
 
-    .auth-login-form label {
-      color: #fff;
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 6px;
-      display: block;
-    }
+  .auth-login-form label {
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+  }
 
-    .login_card {
-      border-radius: 12px;
-      padding: 50px 30px;
-      backdrop-filter: blur(18px);
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-      transform: translateX(-50px);
-      animation: fadeInRight 1s ease-in-out forwards;
-      margin-left: 50px;
-      transition: transform 0.3s ease-in-out;
-    }
+  .login_card {
+    border-radius: 12px;
+    padding: 50px 30px;
+    backdrop-filter: blur(18px);
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translateX(-50px);
+    animation: fadeInRight 1s ease-in-out forwards;
+    margin-left: 50px;
+    transition: transform 0.3s ease-in-out;
+  }
 
-    .login_card:hover {
-      transform: scale(1.02);
-    }
+  .login_card:hover {
+    transform: scale(1.02);
+  }
 
-    .form-control {
-      background: white;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      padding: 12px;
-      color: grey !important;
-      border-radius: 8px;
-      transition: all 0.3s ease-in-out;
-    }
+  .form-control {
+    background: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 12px;
+    color: grey !important;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+  }
 
-    .form-control:focus,
-    .form-control:valid {
-      background: white;
-      color: black;
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      outline: none;
-    }
+  .form-control:focus,
+  .form-control:valid {
+    background: white;
+    color: black;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    outline: none;
+  }
 
-    .input-group-text {
-      background: white;
-      border: none;
-      color: black;
-      cursor: pointer;
-      transition: all 0.3s ease-in-out;
-    }
+  .input-group-text {
+    background: white;
+    border: none;
+    color: black;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
 
-    .custom-btn {
-      background: linear-gradient(to right, #a0e9ff, #b19cd9);
-      color: white;
-      border: none;
-      padding: 12px;
-      font-size: 17px;
-      font-weight: bold;
-      border-radius: 8px;
-      box-shadow: 0px 4px 8px rgba(160, 233, 255, 0.4);
-      transition: all 0.3s ease-in-out;
-      width: 100%;
-      margin-top: 15px;
-    }
+  .custom-btn {
+    background: linear-gradient(to right, #a0e9ff, #b19cd9);
+    color: white;
+    border: none;
+    padding: 12px;
+    font-size: 17px;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(160, 233, 255, 0.4);
+    transition: all 0.3s ease-in-out;
+    width: 100%;
+    margin-top: 15px;
+  }
 
-    .custom-btn:hover {
-      filter: brightness(1.08);
-      transform: translateY(-3px);
-      box-shadow: 0px 6px 12px rgba(160, 233, 255, 0.5);
-      color: white;
-    }
+  .custom-btn:hover {
+    filter: brightness(1.08);
+    transform: translateY(-3px);
+    box-shadow: 0px 6px 12px rgba(160, 233, 255, 0.5);
+    color: white;
+  }
 
-    .welcome_text {
-      color: #fff;
-      max-width: 500px;
-      text-align: left;
+  .welcome_text {
+    color: #fff;
+    max-width: 500px;
+    text-align: left;
+    opacity: 0;
+    animation: fadeInLeft 1s ease-in-out 0.5s forwards;
+    margin-right: 50px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .welcome_quote {
+    font-size: 24px;
+    font-style: italic;
+    margin-top: 30px;
+    padding-left: 80px;
+    font-family: "Playfair Display", Georgia, serif;
+    animation: quoteGlow 3s ease-in-out infinite;
+  }
+
+  .quote_author {
+    font-size: 16px;
+    margin-top: 10px;
+    text-align: right;
+    font-style: normal;
+    opacity: 0.8;
+  }
+
+  .welcome_description {
+    font-size: 18px;
+    line-height: 1.6;
+    margin-top: 20px;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  @keyframes fadeInRight {
+    from {
       opacity: 0;
-      animation: fadeInLeft 1s ease-in-out 0.5s forwards;
-      margin-right: 50px;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      transform: translateX(-50px);
     }
-
-    .welcome_quote {
-      font-size: 24px;
-      font-style: italic;
-      margin-top: 30px;
-      padding-left: 80px;
-      font-family: "Playfair Display", Georgia, serif;
-      animation: quoteGlow 3s ease-in-out infinite;
+    to {
+      opacity: 1;
+      transform: translateX(0);
     }
+  }
 
-    .quote_author {
-      font-size: 16px;
-      margin-top: 10px;
-      text-align: right;
-      font-style: normal;
-      opacity: 0.8;
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
     }
-
-    .welcome_description {
-      font-size: 18px;
-      line-height: 1.6;
-      margin-top: 20px;
-      font-weight: 300;
-      letter-spacing: 0.5px;
+    to {
+      opacity: 1;
+      transform: translateX(0);
     }
+  }
 
-    @keyframes fadeInRight {
-      from {
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
     }
-
-    @keyframes fadeInLeft {
-      from {
-        opacity: 0;
-        transform: translateX(50px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
+    to {
+      opacity: 1;
     }
+  }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+  @keyframes quoteGlow {
+    0% {
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.1);
     }
-
-    @keyframes quoteGlow {
-      0% {
-        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.1);
-      }
-      50% {
-        text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.2);
-      }
-      100% {
-        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.1);
-      }
+    50% {
+      text-shadow: 2px 2px 8px rgba(255, 255, 255, 0.2);
     }
-  </style>
+    100% {
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.1);
+    }
+  }
+</style>
 
-  <!-- BEGIN: Body-->
-  <body
-    class="login_page vertical-layout vertical-menu-modern blank-page navbar-floating footer-static"
-    data-open="click"
-    data-menu="vertical-menu-modern"
-    data-col="blank-page"
-  >
-    <!-- BEGIN: Content-->
-    <div class="app-content content">
-      <div class="content-overlay"></div>
-      <div class="header-navbar-shadow"></div>
-      <div class="content-wrapper">
-        <div class="content-header row"></div>
-        <div class="content-body">
-          <div class="login_area">
-            <div class="login-container">
-              <div class="login_card">
-                <div class="text-center">
-                  <img
-                    class="mx-auto"
-                    src="../../assets/logo1.png"
-                    width="120"
-                    alt=""
+<!-- BEGIN: Body-->
+<body
+  class="login_page vertical-layout vertical-menu-modern blank-page navbar-floating footer-static"
+  data-open="click"
+  data-menu="vertical-menu-modern"
+  data-col="blank-page"
+>
+  <!-- BEGIN: Content-->
+  <div class="app-content content">
+    <div class="content-overlay"></div>
+    <div class="header-navbar-shadow"></div>
+    <div class="content-wrapper">
+      <div class="content-header row"></div>
+      <div class="content-body">
+        <div class="login_area">
+          <div class="login-container">
+            <div class="login_card">
+              <div class="text-center">
+                <img
+                  class="mx-auto"
+                  src="../../assets/logo1.png"
+                  width="120"
+                  alt=""
+                />
+              </div>
+              <form
+                class="auth-login-form mt-2"
+                action="/admin/login"
+                id="login_form"
+                method="POST"
+              >
+                <div class="mb-1">
+                  <label class="form-label" for="email">Email</label>
+                  <input
+                    class="form-control"
+                    id="email"
+                    type="text"
+                    name="email"
+                    placeholder="Enter Email"
+                    aria-describedby="email"
+                    autofocus=""
+                    tabindex="1"
                   />
                 </div>
-                <form
-                  class="auth-login-form mt-2"
-                  action="/admin/login"
-                  id="login_form"
-                  method="POST"
-                >
-                  <div class="mb-1">
-                    <label class="form-label" for="email">Email</label>
+                <div class="mb-1">
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label" for="password">Password</label>
+                  </div>
+                  <div class="position-relative">
                     <input
-                      class="form-control"
-                      id="email"
-                      type="text"
-                      name="email"
-                      placeholder="Enter Email"
-                      aria-describedby="email"
+                      class="form-control pe-4"
+                      id="password"
+                      type="password"
+                      name="password"
+                      placeholder="Enter Password"
+                      aria-describedby="password"
                       autofocus=""
-                      tabindex="1"
+                      tabindex="2"
                     />
+                    <span
+                      class="position-absolute end-0 top-50 translate-middle-y me-2 cursor-pointer"
+                      onclick="togglePassword()"
+                    >
+                      <i id="toggleEye" data-feather="eye"></i>
+                    </span>
                   </div>
-                  <div class="mb-1">
-                    <div class="d-flex justify-content-between">
-                      <label class="form-label" for="password">Password</label>
-                    </div>
-                    <div class="position-relative">
-                      <input
-                        class="form-control pe-4"
-                        id="password"
-                        type="password"
-                        name="password"
-                        placeholder="Enter Password"
-                        aria-describedby="password"
-                        autofocus=""
-                        tabindex="2"
-                      />
-                      <span
-                        class="position-absolute end-0 top-50 translate-middle-y me-2 cursor-pointer"
-                        onclick="togglePassword()"
-                      >
-                        <i id="toggleEye" data-feather="eye"></i>
-                      </span>
-                    </div>
-                  </div>
-                  <button class="btn w-100 custom-btn" tabindex="4">
-                    Sign in
-                  </button>
-                </form>
-              </div>
-              <div class="welcome_text">
-                <div class="welcome_quote">
-                  "Encourage one another and build each other up,<br />
-                  for together we are stronger than we are alone."
-                  <div class="quote_author">— Community Values</div>
                 </div>
+                <button class="btn w-100 custom-btn" tabindex="4">
+                  Sign in
+                </button>
+              </form>
+            </div>
+            <div class="welcome_text">
+              <div class="welcome_quote">
+                "Encourage one another and build each other up,<br />
+                for together we are stronger than we are alone."
+                <div class="quote_author">— Community Values</div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <!-- END: Content-->
+  </div>
+  <!-- END: Content-->
 
-    <!-- BEGIN: Scripts -->
-    <%-include('../common/script')%>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
-      integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script>
-      $(document).ready(function () {
-        // Custom method to disallow spaces in the email field
-        $.validator.addMethod(
-          "noSpace",
-          function (value, element) {
-            return value.indexOf(" ") < 0 && value != "";
-          },
-          "Spaces are not allowed"
-        );
+  <!-- BEGIN: Scripts -->
+  <%-include('../common/script')%>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js"
+    integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script>
+    $(document).ready(function () {
+      // Custom method to disallow spaces in the email field
+      $.validator.addMethod(
+        "noSpace",
+        function (value, element) {
+          return value.indexOf(" ") < 0 && value != "";
+        },
+        "Spaces are not allowed"
+      );
 
-        // Disable space key for the email field
-        $("#email").keypress(function (e) {
-          if (e.keyCode == 32) {
-            return false;
-          }
-        });
-
-        $("#login_form").validate({
-          rules: {
-            email: {
-              required: true,
-              email: true,
-              noSpace: true,
-            },
-            password: {
-              required: true,
-              minlength: 6,
-            },
-          },
-          messages: {
-            email: {
-              required: "Please enter your email",
-              email: "Please enter a valid email",
-            },
-            password: {
-              required: "Please enter your password",
-              minlength: "Your password must be at least 6 characters long",
-            },
-          },
-        });
-      });
-    </script>
-
-    <script>
-      $(window).on("load", function () {
-        if (feather) {
-          feather.replace({
-            width: 14,
-            height: 14,
-          });
+      // Disable space key for the email field
+      $("#email").keypress(function (e) {
+        if (e.keyCode == 32) {
+          return false;
         }
       });
-    </script>
 
-    <script>
-      $(document).ready(function () {
-        // Quote Array
-        const quotes = [
-          "Edify Lives: Empowering minds, enriching futures, and creating endless possibilities for growth and success.",
-          "Building brighter tomorrows, today—because every step toward learning is a step toward a better future.",
-          "Igniting potential, transforming lives, and shaping a world where dreams turn into reality through knowledge.",
-          "Guiding growth, inspiring change, and leading individuals toward excellence with purpose and passion.",
-          "Where knowledge meets purpose, and education becomes the foundation for innovation and transformation.",
-          "Shaping lives, one step at a time—fostering resilience, curiosity, and the drive to achieve greatness.",
-          "Nurturing wisdom, creating impact, and building a community where learning empowers and inspires.",
-          "Empowering every journey to success by fostering knowledge, determination, and the courage to excel.",
-          "Elevate, educate, and edify—because learning is the bridge that connects ambition with achievement.",
-          "Bringing light to learning and life, one lesson at a time, to build a future filled with hope and possibilities.",
-        ];
-
-        // Random Quote Selection
-        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-        $(".welcome_quote").text(randomQuote);
+      $("#login_form").validate({
+        rules: {
+          email: {
+            required: true,
+            email: true,
+            noSpace: true,
+          },
+          password: {
+            required: true,
+            minlength: 6,
+          },
+        },
+        messages: {
+          email: {
+            required: "Please enter your email",
+            email: "Please enter a valid email",
+          },
+          password: {
+            required: "Please enter your password",
+            minlength: "Your password must be at least 6 characters long",
+          },
+        },
       });
-    </script>
+    });
+  </script>
 
-    <script>
-      function togglePassword() {
-        let passwordInput = document.getElementById("password");
-        let toggleEye = document.getElementById("toggleEye");
-
-        if (passwordInput.type === "password") {
-          passwordInput.type = "text";
-          toggleEye.setAttribute("data-feather", "eye-off");
-        } else {
-          passwordInput.type = "password";
-          toggleEye.setAttribute("data-feather", "eye");
-        }
-
-        feather.replace(); // Refresh Feather icons
+  <script>
+    $(window).on("load", function () {
+      if (feather) {
+        feather.replace({
+          width: 14,
+          height: 14,
+        });
       }
-    </script>
+    });
+  </script>
 
-    <!-- END: Scripts -->
-  </body>
+  <!-- Include SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    $(document).ready(function () {
+      $("#login_form").submit(function (e) {
+        e.preventDefault(); // Prevent default form submission
+
+        $.ajax({
+          url: "/admin/login",
+          type: "POST",
+          data: $(this).serialize(),
+          success: function (response) {
+            if (response.success) {
+              window.location.href = "/admin/dashboard"; // Redirect on success
+            } else {
+              showErrorAlert(); // Show alert on failure
+            }
+          },
+          error: function () {
+            showErrorAlert(); // Show alert on server error
+          },
+        });
+      });
+
+      function showErrorAlert() {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Incorrect email or password",
+          showConfirmButton: false,
+          timer: 3000,
+          toast: true,
+        });
+      }
+    });
+  </script>
+
+  <script>
+    $(document).ready(function () {
+      // Quote Array
+      const quotes = [
+        "Edify Lives: Empowering minds, enriching futures, and creating endless possibilities for growth and success.",
+        "Building brighter tomorrows, today—because every step toward learning is a step toward a better future.",
+        "Igniting potential, transforming lives, and shaping a world where dreams turn into reality through knowledge.",
+        "Guiding growth, inspiring change, and leading individuals toward excellence with purpose and passion.",
+        "Where knowledge meets purpose, and education becomes the foundation for innovation and transformation.",
+        "Shaping lives, one step at a time—fostering resilience, curiosity, and the drive to achieve greatness.",
+        "Nurturing wisdom, creating impact, and building a community where learning empowers and inspires.",
+        "Empowering every journey to success by fostering knowledge, determination, and the courage to excel.",
+        "Elevate, educate, and edify—because learning is the bridge that connects ambition with achievement.",
+        "Bringing light to learning and life, one lesson at a time, to build a future filled with hope and possibilities.",
+      ];
+
+      // Random Quote Selection
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      $(".welcome_quote").text(randomQuote);
+    });
+  </script>
+
+  <script>
+    function togglePassword() {
+      let passwordInput = document.getElementById("password");
+      let toggleEye = document.getElementById("toggleEye");
+
+      if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleEye.setAttribute("data-feather", "eye-off");
+      } else {
+        passwordInput.type = "password";
+        toggleEye.setAttribute("data-feather", "eye");
+      }
+
+      feather.replace(); // Refresh Feather icons
+    }
+  </script>
+
+  <!-- END: Scripts -->
+</body>

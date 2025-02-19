@@ -14,27 +14,35 @@ module.exports = {
     if (req.session.user) return res.redirect("/admin/dashboard");
     res.render("admin/login_page", { layout: false, msg: req.flash("msg") });
   },
-
   login: async (req, res) => {
     try {
       const { email, password } = req.body;
+
       const login_data = await Models.userModel.findOne({
         where: { email: email },
       });
 
       if (!login_data || !bcrypt.compareSync(password, login_data.password)) {
-        req.flash("error", "Invalid email or password");
-        return res.redirect("/admin/login");
+        return res.json({
+          success: false,
+          message: "Invalid email or password",
+        });
       }
 
       if (login_data.role !== 0) {
-        req.flash("error", "Please enter valid credentials");
-        return res.redirect("/admin/login");
+        return res.json({
+          success: false,
+          message: "Please enter valid credentials",
+        });
       }
 
       req.session.user = login_data;
       req.flash("msg", "You are logged in successfully");
-      return res.redirect("/admin/dashboard");
+
+      return res.json({
+        success: true,
+        message: "You are logged in successfully",
+      });
     } catch (error) {
       console.error("Login Error:", error);
       return res.redirect("/admin/login");
@@ -167,8 +175,7 @@ module.exports = {
       req.session.destroy();
       return res.json({
         success: true,
-        message:
-          "Your password has been updated successfully!",
+        message: "Your password has been updated successfully!",
       });
     } catch (error) {
       console.log(error);
@@ -1086,4 +1093,3 @@ module.exports = {
     }
   },
 };
-
