@@ -168,7 +168,7 @@ module.exports = {
       return res.json({
         success: true,
         message:
-          "Your password has been updated successfully! You will be redirected to the login page to log in again.",
+          "Your password has been updated successfully!",
       });
     } catch (error) {
       console.log(error);

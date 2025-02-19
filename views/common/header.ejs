@@ -46,26 +46,46 @@
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <!-- END: Custom CSS-->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <% if(msg != '' || error !='' ) { %>
-  <div class="alert alert-success msg" style="position: absolute; z-index: 9999; color:black; background-color: white;top: 8%; left: 50%;text-align: center;">
-    <% if(msg !='' ) { %>
-    <span style="font-size: 15px; color: white; background-color:  #40bf40
-            ; padding: 10px;">
-      <%= msg %>
-    </span>
-    <% } else { %>
-    <span style="font-size: 15px; color: white; background-color:  red
-            ; padding: 10px; ">
-      <%= error %>
-    </span>
+    <% if (msg && (msg.includes('You are logged in successfully') ||
+    msg.includes('Profile updated successfully'))) { %>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "<%= msg %>",
+          showConfirmButton: false,
+          timer: 3000,
+          toast: true,
+          customClass: {
+            popup: "swal2-popup-custom",
+            timerProgressBar: "swal2-timer-bar",
+          },
+        });
+      });
+    </script>
     <% } %>
-  </div>
-  <% } %>
 
-  <script>
-    setTimeout(function() {
-      $("div.msg").fadeOut();
-    }, 2000);
-  </script>
-</head>
+    <style>
+      .swal2-popup-custom {
+        border-radius: 12px !important;
+        padding: 15px 25px !important;
+        font-family: "Roboto", sans-serif !important;
+        font-size: 16px !important;
+        letter-spacing: 0.5px !important;
+        text-transform: capitalize !important;
+      }
+      .swal2-timer-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(to right, #ff8080, #cc4d4d);
+        width: 100%;
+        transition: width 0.3s linear;
+      }
+    </style>
+  </head>
+</html>
