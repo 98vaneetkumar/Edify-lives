@@ -190,8 +190,8 @@
   a {
   background: whitesmoke;
   box-shadow: none;
-  color: #fff;
-  background: linear-gradient(118deg, #e64a4a, #b33d3d);
+  color: black;
+  background: linear-gradient(118deg, #fdfcfb, #f3ece7);
 }
 
 .vertical-layout.vertical-menu-modern.menu-collapsed .main-menu.expanded {
