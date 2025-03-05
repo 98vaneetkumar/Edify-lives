@@ -117,8 +117,28 @@
         method: "post",
         data: { id: id, status: status },
         success: function(res) {
-          window.location.reload();
+      if (res.success) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: res.message,
+          showConfirmButton: false,
+          timer: 3000,
+          toast: true
+        });
+
+        // Update button text & class dynamically
+        let btn = $(`i[onclick="changeStatus('${id}','${status}')"]`);
+        if (status == "1") {
+          btn.removeClass("btn-outline-danger").addClass("btn-outline-success").text("Active");
+          btn.attr("onclick", `changeStatus('${id}','0')`);
+        } else {
+          btn.removeClass("btn-outline-success").addClass("btn-outline-danger").text("Inactive");
+          btn.attr("onclick", `changeStatus('${id}','1')`);
         }
+      }
+    }
+ 
       });
     }
 
@@ -148,7 +168,13 @@
                 });
 
                 setTimeout(() => {
-                  window.location.reload();
+                  $(`#users-row-${id}`).remove();
+
+                  $("#myTable tbody tr").each(function (index) {
+                    $(this)
+                      .find("td:first")
+                      .text(index + 1);
+                  });
                 }, 2000);
               }
             },

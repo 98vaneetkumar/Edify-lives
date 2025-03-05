@@ -135,7 +135,13 @@
                 });
 
                 setTimeout(() => {
-                  window.location.reload();
+                  $(`#users-row-${id}`).remove();
+
+                  $("#myTable tbody tr").each(function (index) {
+                    $(this)
+                      .find("td:first")
+                      .text(index + 1);
+                  });
                 }, 2000);
               }
             },
