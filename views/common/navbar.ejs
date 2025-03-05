@@ -170,6 +170,25 @@
   </script>
 
 
+<script>
+  function updateIconsForDarkMode() {
+  if (localStorage.getItem("darkMode") === "enabled") {
+    document.querySelectorAll(".dark-mode .nav-item.active i").forEach((icon) => {
+      icon.style.stroke = "black"; // For Feather icons
+      icon.style.color = "black"; // For FontAwesome icons
+    });
+  } else {
+    document.querySelectorAll(".nav-item.active i").forEach((icon) => {
+      icon.style.stroke = ""; // Reset to default
+      icon.style.color = "";
+    });
+  }
+}
+
+document.addEventListener("DOMContentLoaded", updateIconsForDarkMode);
+
+</script>
+
 
 
 
@@ -359,5 +378,17 @@
     .dark-mode * {
       color: white !important;
     }
+
+
+    .dark-mode .nav-item.active .menu-title {
+      color: black !important;
+    }
+
+    .dark-mode .nav-item.active i {
+      color: black !important;
+      fill: black !important; /* This is for SVG icons */
+    }
+
+
   </style>
 </body>
