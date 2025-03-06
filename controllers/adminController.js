@@ -187,15 +187,31 @@ module.exports = {
     try {
       if (!req.session.user) return res.redirect("/admin/login");
 
-      const [user, churches, business, nonprofit, subscription, banner] =
-        await Promise.all([
-          Models.userModel.count({ where: { role: 1 } }),
-          Models.userModel.count({ where: { role: 2 } }),
-          Models.userModel.count({ where: { role: 3 } }),
-          Models.userModel.count({ where: { role: 4 } }),
-          Models.subscriptionModel.count(),
-          Models.bannerModel.count(),
-        ]);
+      const [
+        user,
+        churches,
+        business,
+        nonprofit,
+        subscription,
+        banner,
+        heartToServe,
+        numberOfMembers,
+        maritalStatus,
+        profilePreference,
+        traitsExperience,
+      ] = await Promise.all([
+        Models.userModel.count({ where: { role: 1 } }),
+        Models.userModel.count({ where: { role: 2 } }),
+        Models.userModel.count({ where: { role: 3 } }),
+        Models.userModel.count({ where: { role: 4 } }),
+        Models.subscriptionModel.count(),
+        Models.bannerModel.count(),
+        Models.heartToServeModel.count(),
+        Models.numberOfMembersModel.count(),
+        Models.maritalStatusModel.count(),
+        Models.profilePreferenceModel.count(),
+        Models.traitsExperienceModel.count(),
+      ]);
 
       const currentYear = Math.max(2025, moment().year());
       const months = [];
@@ -244,6 +260,11 @@ module.exports = {
         nonprofit,
         subscription,
         banner,
+        heartToServe,
+        numberOfMembers,
+        maritalStatus,
+        profilePreference,
+        traitsExperience,
         session: req.session.user,
       });
     } catch (error) {
@@ -1076,6 +1097,351 @@ module.exports = {
       return res
         .status(500)
         .json({ success: false, message: "Internal Server Error" });
+    }
+  },
+
+  traitsexperience_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let traitsexperience_data = await Models.traitsExperienceModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/traitsexperience/traitsexperienceListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Traits & Experience",
+        traitsexperience_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  traitsexperience_add: async (req, res) => {
+    try {
+      let title = "Traits & Experience";
+      res.render("admin/traitsexperience/traitsexperienceAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  traitsexperience_create: async (req, res) => {
+    try {
+      let objToSave = {
+        title: req.body.title,
+      };
+
+      await Models.traitsExperienceModel.create(objToSave);
+
+      return res.json({
+        success: true,
+        message: "traits and experience added successfully.",
+      });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+  traitsexperience_delete: async (req, res) => {
+    try {
+      const traitsexperienceId = req.body.id;
+      await Models.traitsExperienceModel.destroy({
+        where: { id: traitsexperienceId },
+      });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res
+        .status(500)
+        .json({ error: "Failed to delete traits and experience " });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  numberofmembers_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let numberofmembers_data = await Models.numberOfMembersModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/numberofmembers/numberofmembersListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Number of Members",
+        numberofmembers_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  numberofmembers_add: async (req, res) => {
+    try {
+      let title = "Number of Members";
+      res.render("admin/numberofmembers/numberofmembersAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  numberofmembers_create: async (req, res) => {
+    try {
+      let objToSave = {
+        title: req.body.title,
+      };
+
+      await Models.numberOfMembersModel.create(objToSave);
+
+      return res.json({
+        success: true,
+        message: "number of members added successfully.",
+      });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+  numberofmembers_delete: async (req, res) => {
+    try {
+      const numberofmembersId = req.body.id;
+      await Models.numberOfMembersModel.destroy({
+        where: { id: numberofmembersId },
+      });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete number of members " });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  maritalstatus_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let maritalstatus_data = await Models.maritalStatusModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/maritalstatus/maritalstatusListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Marital Status",
+        maritalstatus_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  maritalstatus_add: async (req, res) => {
+    try {
+      let title = "Marital Status";
+      res.render("admin/maritalstatus/maritalstatusAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  maritalstatus_create: async (req, res) => {
+    try {
+      let objToSave = {
+        title: req.body.title,
+      };
+
+      await Models.maritalStatusModel.create(objToSave);
+
+      return res.json({
+        success: true,
+        message: "marital status added successfully.",
+      });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+  maritalstatus_delete: async (req, res) => {
+    try {
+      const maritalstatusId = req.body.id;
+      await Models.maritalStatusModel.destroy({
+        where: { id: maritalstatusId },
+      });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete marital status " });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  hearttoserve_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let hearttoserve_data = await Models.heartToServeModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/hearttoserve/hearttoserveListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Heart To Serve",
+        hearttoserve_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  hearttoserve_add: async (req, res) => {
+    try {
+      let title = "Heart To Serve";
+      res.render("admin/hearttoserve/hearttoserveAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  hearttoserve_create: async (req, res) => {
+    try {
+      let objToSave = {
+        title: req.body.title,
+      };
+
+      await Models.heartToServeModel.create(objToSave);
+
+      return res.json({
+        success: true,
+        message: "heart to serve added successfully.",
+      });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+  hearttoserve_delete: async (req, res) => {
+    try {
+      const hearttoserveId = req.body.id;
+      await Models.heartToServeModel.destroy({ where: { id: hearttoserveId } });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete heart to serve " });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  profilepreference_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let profilepreference_data = await Models.profilePreferenceModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/profilepreference/profilepreferenceListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Profile Preference",
+        profilepreference_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  profilepreference_add: async (req, res) => {
+    try {
+      let title = "Profile Preference";
+      res.render("admin/profilepreference/profilepreferenceAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  profilepreference_create: async (req, res) => {
+    try {
+      let objToSave = {
+        title: req.body.title,
+      };
+
+      await Models.profilePreferenceModel.create(objToSave);
+
+      return res.json({
+        success: true,
+        message: "profile preference added successfully.",
+      });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+  profilepreference_delete: async (req, res) => {
+    try {
+      const profilepreferenceId = req.body.id;
+      await Models.profilePreferenceModel.destroy({
+        where: { id: profilepreferenceId },
+      });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete profile preference " });
+      return res.redirect("/admin/login");
     }
   },
 

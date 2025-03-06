@@ -94,18 +94,44 @@
           <span class="menu-title text-truncate" data-i18n="Banner">Banner</span>
         </a>
       </li>
+
+      <li class="<% if(title =='Traits & Experience'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/admin/traitsexperience_listing">
+          <i class="fas fa-user-check"></i>
+          <span class="menu-title text-truncate" data-i18n="Traits & Experience">Traits & Experience</span>
+        </a>
+      </li>
+      
+      <li class="<% if(title =='Marital Status'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/admin/maritalstatus_listing">
+          <i class="fas fa-ring"></i>
+          <span class="menu-title text-truncate" data-i18n="Marital Status">Marital Status</span>
+        </a>
+      </li>
+      
+      <li class="<% if(title =='Profile Preference'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/admin/profilepreference_listing">
+          <i class="fas fa-user-cog"></i>
+          <span class="menu-title text-truncate" data-i18n="Profile Preference">Profile Preference</span>
+        </a>
+      </li>
+      
+      <li class="<% if(title =='Number of Members'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/admin/numberofmembers_listing">
+          <i class="fas fa-user-cog"></i>
+          <span class="menu-title text-truncate" data-i18n="Number of Members">Number of Members</span>
+        </a>
+      </li>
+      
+      <li class="<% if(title =='Heart To Serve'){ %> nav-item dropdown active <% }%>">
+        <a class="d-flex align-items-center" href="/admin/hearttoserve_listing">
+          <i class="fas fa-heart"></i>
+          <span class="menu-title text-truncate" data-i18n="Heart to Serve">Heart to Serve</span>
+        </a>
+      </li>
       
       
-      <!-- <li
-        class="<% if(title =='Contact Us'){ %> nav-item dropdown active <% }%>"
-      >
-        <a class="d-flex align-items-center" href="/#"
-          ><i data-feather="phone-call"></i
-          ><span class="menu-title text-truncate" data-i18n="Contact Us"
-            >Contact Us</span
-          ></a
-        >
-      </li> -->
+      
       <li class="<% if(title =='About Us'){ %> nav-item dropdown active <% }%>">
         <a class="d-flex align-items-center" href="/admin/aboutUs">
           <i data-feather="help-circle"></i>

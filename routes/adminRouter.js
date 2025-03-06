@@ -93,6 +93,42 @@ module.exports = function () {
 
 
 
+
+  router.get("/maritalstatus_listing", controller.adminController.maritalstatus_listing);
+  router.get("/maritalstatus_add", controller.adminController.maritalstatus_add);
+  router.post("/maritalstatus_create", controller.adminController.maritalstatus_create);
+  router.post("/maritalstatus_delete", controller.adminController.maritalstatus_delete);
+
+
+  router.get("/profilepreference_listing", controller.adminController.profilepreference_listing);
+  router.get("/profilepreference_add", controller.adminController.profilepreference_add);
+  router.post("/profilepreference_create", controller.adminController.profilepreference_create);
+  router.post("/profilepreference_delete", controller.adminController.profilepreference_delete);
+  
+
+
+  router.get("/hearttoserve_listing", controller.adminController.hearttoserve_listing);
+  router.get("/hearttoserve_add", controller.adminController.hearttoserve_add);
+  router.post("/hearttoserve_create", controller.adminController.hearttoserve_create);
+  router.post("/hearttoserve_delete", controller.adminController.hearttoserve_delete);
+  
+
+
+  router.get("/numberofmembers_listing", controller.adminController.numberofmembers_listing);
+  router.get("/numberofmembers_add", controller.adminController.numberofmembers_add);
+  router.post("/numberofmembers_create", controller.adminController.numberofmembers_create);
+  router.post("/numberofmembers_delete", controller.adminController.numberofmembers_delete);
+  
+
+  router.get("/traitsexperience_listing", controller.adminController.traitsexperience_listing);
+  router.get("/traitsexperience_add", controller.adminController.traitsexperience_add);
+  router.post("/traitsexperience_create", controller.adminController.traitsexperience_create);
+  router.post("/traitsexperience_delete", controller.adminController.traitsexperience_delete);
+  
+
+
+
+
   router.post("/test", controller.adminController.test);
 
   return router;
