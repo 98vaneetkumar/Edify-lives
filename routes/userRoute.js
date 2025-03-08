@@ -19,6 +19,15 @@ module.exports=function(){
     router.get("/cms",authentication, controller.userController.cms)
     router.get("/notificationsList",authentication, controller.userController.notificationsList)
 
+
+    router.get("/maritalstatus_listing", controller.userController.maritalstatus_listing);
+    router.get("/profilepreference_listing", controller.userController.profilepreference_listing);
+    router.get("/hearttoserve_listing", controller.userController.hearttoserve_listing);
+    router.get("/numberofmembers_listing", controller.userController.numberofmembers_listing);
+    router.get("/traitsexperience_listing", controller.userController.traitsexperience_listing);
+    
+    
+
     return router
 }
 

@@ -1,411 +1,480 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "title": "Edify lives",
-        "description": "project description",
-        "version": "1.0"
-    },
-    "produces": ["application/json"],
-    "basePath": "/",
-    "securityDefinitions": {
-        "Bearer": {
-            "type": "apiKey",
-            "name": "authorization",
-            "in": "header"
-        }
-    },
-    "paths": {
-        "/users/signUp": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-signUp-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "firstName",
-                        "in": "formData",
-                        "description": "Enter the firstName",
-                        "required": true,
-                        "type": "string",
-                        "value": "Vaneet"
-                    },
-                    {
-                        "name": "lastName",
-                        "in": "formData",
-                        "description": "Enter lastName ",
-                        "required": true,
-                        "type": "string",
-                        "value": "Kumar"
-                    },
-                    {
-                        "name": "email",
-                        "in": "formData",
-                        "description": "Enter the email",
-                        "required": true,
-                        "type": "string",
-                        "value": "vaneet@gmail.com"
-                    },
-                    {
-                        "name": "gender",
-                        "in": "formData",
-                        "description": "Enter the gender",
-                        "required": false,
-                        "enum":[0,1],
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "countryCode",
-                        "in": "formData",
-                        "description": "Enter country code",
-                        "required": true,
-                        "type": "string",
-                        "value": "+91"
-                    },
-                    {
-                        "name": "phoneNumber",
-                        "in": "formData",
-                        "description": "Enter phone number",
-                        "required": true,
-                        "type": "string",
-                        "value": "8628023157"
-                    },
-                    {
-                        "name": "password",
-                        "in": "formData",
-                        "description": "Enter password",
-                        "required": true,
-                        "type": "string",
-                        "value": "123456"
-                    },
-                    {
-                        "name": "profilePicture",
-                        "in": "formData",
-                        "description": "Profile picture to upload",
-                        "required": false,
-                        "type": "file",
-                        "format": "binary",
-                        "maxLength": 5242880,
-                        "allowedMimeTypes": [
-                          "image/jpeg",
-                          "image/png"
-                        ]
-                    },
-                    {
-                        "name": "maritalStatus",
-                        "in": "formData",
-                        "description": "Enter your married status (0 = Not Married, 1 = Married)",
-                        "required": false,
-                        "type": "number",
-                        "enum": [0,1],
-                        "value": 0
-                     },                     
-                    {
-                        "name": "location",
-                        "in": "formData",
-                        "description": "Enter your location",
-                        "required": false,
-                        "type": "string",
-                        "value": "Mohali "
-                    },
-                    {
-                        "name": "latitude",
-                        "in": "formData",
-                        "description": "Enter latitude",
-                        "required": false,
-                        "type": "string",
-                        "value": "30.7046"
-                    },
-                    {
-                        "name": "longitude",
-                        "in": "formData",
-                        "description": "Enter longitude",
-                        "required": false,
-                        "type": "string",
-                        "value": "76.7179"
-                    },
-                    {
-                        "name": "donateEdifyLivers",
-                        "in": "formData",
-                        "description": "Enter donateEdifyLivers",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "traitAndExperience",
-                        "in": "formData",
-                        "description": "Enter trait And Experience",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "postEmpSeekingSection",
-                        "in": "formData",
-                        "description": "Would you like to profile posted  on the employment seeking section",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "hartOfService",
-                        "in": "formData",
-                        "description": "Who do you have the heart of service",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "deviceType",
-                        "in": "formData",
-                        "description": "Enter deviceType (1 = Android, 2 = iOS)",
-                        "required": false,
-                        "type": "number",
-                        "enum": [1, 2],
-                        "value": 1
-                     },                     
-                    {
-                        "name": "deviceToken",
-                        "in": "formData",
-                        "description": "Enter deviceToken",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/users/login": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-login-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "formData",
-                        "description": "Enter the email",
-                        "required": true,
-                        "type": "string",
-                        "value": "vaneet@gmail.com"
-                    },
-                    {
-                        "name": "password",
-                        "in": "formData",
-                        "description": "Enter password",
-                        "required": true,
-                        "type": "string",
-                        "value": "123456"
-                    },
-                    {
-                        "name": "deviceToken",
-                        "in": "formData",
-                        "description": "Enter deviceToken",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "deviceType",
-                        "in": "formData",
-                        "description": "Enter deviceType",
-                        "enum": [1,2],
-                        "required": false,
-                        "type": "number",
-                        "value": 1
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/users/logout": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-logout-post",
-                "tags": ["Application User"],
-                "description": "",
-                "security": [
-					{
-						"Bearer": []
-					}
-				],
-				"parameters": [
-					
-				],
-                "responses": {}
-            }
-        },
-        "/users/changePassword": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-changePassword-post",
-                "tags": ["Application User"],
-                "description": "",
-                "security": [
-					{
-						"Bearer": []
-					}
-				],
-                "parameters": [
-                    {
-                        "name": "currentPassword",
-                        "in": "formData",
-                        "description": "Enter the currentPassword",
-                        "required": true,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "newPassword",
-                        "in": "formData",
-                        "description": "Enter newPassword ",
-                        "required": true,
-                        "type": "string",
-                        "value": ""
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/users/forgotPassword": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-forgotPassword-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "formData",
-                        "description": "Enter the email",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/users/resendForgotPasswordLink": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-resendForgotPasswordLink-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "formData",
-                        "description": "Enter the email",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/users/otpVerify": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-otpVerify-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "countryCode",
-                        "in": "formData",
-                        "description": "Enter the phoneNumber",
-                        "required": false,
-                        "type": "string",
-                        "value": "+91"
-                    },
-                    {
-                        "name": "phoneNumber",
-                        "in": "formData",
-                        "description": "Enter the phoneNumber",
-                        "required": false,
-                        "type": "string",
-                        "value": "8628023157"
-                    },
-                    {
-                        "name": "otp",
-                        "in": "formData",
-                        "description": "Enter the otp",
-                        "required": false,
-                        "type": "string",
-                        "value": "1111"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/users/resendOtp": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-resendOtp-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "countryCode",
-                        "in": "formData",
-                        "description": "Enter the phoneNumber",
-                        "required": false,
-                        "type": "string",
-                        "value": "+91"
-                    },
-                    {
-                        "name": "phoneNumber",
-                        "in": "formData",
-                        "description": "Enter the phoneNumber",
-                        "required": false,
-                        "type": "string",
-                        "value": "1010101010"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/users/cms": {
-            "get": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-cms-post",
-                "tags": ["Application User"],
-                "description": "",
-                "security": [
-					{
-						"Bearer": []
-					}
-				],
-				"parameters": [
-                  
-				],
-                "responses": {}
-            }
-        },
-        "/users/notificationsList": {
-            "get": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "users-notificationsList-post",
-                "tags": ["Application User"],
-                "description": "",
-                "security": [
-					{
-						"Bearer": []
-					}
-				],
-				"parameters": [
-                  
-				],
-                "responses": {}
-            }
-        }
-    },
-    "definitions": {
+  "swagger": "2.0",
+  "info": {
+    "title": "Edify lives",
+    "description": "project description",
+    "version": "1.0"
+  },
+  "produces": ["application/json"],
+  "basePath": "/",
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "authorization",
+      "in": "header"
     }
+  },
+  "paths": {
+    "/users/signUp": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-signUp-post",
+        "tags": ["Application User"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "formData",
+            "description": "Enter the firstName",
+            "required": true,
+            "type": "string",
+            "value": "Vaneet"
+          },
+          {
+            "name": "lastName",
+            "in": "formData",
+            "description": "Enter lastName ",
+            "required": true,
+            "type": "string",
+            "value": "Kumar"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Enter the email",
+            "required": true,
+            "type": "string",
+            "value": "vaneet@gmail.com"
+          },
+          {
+            "name": "gender",
+            "in": "formData",
+            "description": "Enter the gender",
+            "required": false,
+            "enum": [0, 1],
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "countryCode",
+            "in": "formData",
+            "description": "Enter country code",
+            "required": true,
+            "type": "string",
+            "value": "+91"
+          },
+          {
+            "name": "phoneNumber",
+            "in": "formData",
+            "description": "Enter phone number",
+            "required": true,
+            "type": "string",
+            "value": "8628023157"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Enter password",
+            "required": true,
+            "type": "string",
+            "value": "123456"
+          },
+          {
+            "name": "profilePicture",
+            "in": "formData",
+            "description": "Profile picture to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          },
+          {
+            "name": "maritalStatus",
+            "in": "formData",
+            "description": "Enter your married status (0 = Not Married, 1 = Married)",
+            "required": false,
+            "type": "number",
+            "enum": [0, 1],
+            "value": 0
+          },
+          {
+            "name": "location",
+            "in": "formData",
+            "description": "Enter your location",
+            "required": false,
+            "type": "string",
+            "value": "Mohali "
+          },
+          {
+            "name": "latitude",
+            "in": "formData",
+            "description": "Enter latitude",
+            "required": false,
+            "type": "string",
+            "value": "30.7046"
+          },
+          {
+            "name": "longitude",
+            "in": "formData",
+            "description": "Enter longitude",
+            "required": false,
+            "type": "string",
+            "value": "76.7179"
+          },
+          {
+            "name": "donateEdifyLivers",
+            "in": "formData",
+            "description": "Enter donateEdifyLivers",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "traitAndExperience",
+            "in": "formData",
+            "description": "Enter trait And Experience",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "postEmpSeekingSection",
+            "in": "formData",
+            "description": "Would you like to profile posted  on the employment seeking section",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "hartOfService",
+            "in": "formData",
+            "description": "Who do you have the heart of service",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "deviceType",
+            "in": "formData",
+            "description": "Enter deviceType (1 = Android, 2 = iOS)",
+            "required": false,
+            "type": "number",
+            "enum": [1, 2],
+            "value": 1
+          },
+          {
+            "name": "deviceToken",
+            "in": "formData",
+            "description": "Enter deviceToken",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/login": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-login-post",
+        "tags": ["Application User"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Enter the email",
+            "required": true,
+            "type": "string",
+            "value": "vaneet@gmail.com"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Enter password",
+            "required": true,
+            "type": "string",
+            "value": "123456"
+          },
+          {
+            "name": "deviceToken",
+            "in": "formData",
+            "description": "Enter deviceToken",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "deviceType",
+            "in": "formData",
+            "description": "Enter deviceType",
+            "enum": [1, 2],
+            "required": false,
+            "type": "number",
+            "value": 1
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/logout": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-logout-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/changePassword": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-changePassword-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "currentPassword",
+            "in": "formData",
+            "description": "Enter the currentPassword",
+            "required": true,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "newPassword",
+            "in": "formData",
+            "description": "Enter newPassword ",
+            "required": true,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/forgotPassword": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-forgotPassword-post",
+        "tags": ["Application User"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Enter the email",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/resendForgotPasswordLink": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-resendForgotPasswordLink-post",
+        "tags": ["Application User"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Enter the email",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/otpVerify": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-otpVerify-post",
+        "tags": ["Application User"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "countryCode",
+            "in": "formData",
+            "description": "Enter the phoneNumber",
+            "required": false,
+            "type": "string",
+            "value": "+91"
+          },
+          {
+            "name": "phoneNumber",
+            "in": "formData",
+            "description": "Enter the phoneNumber",
+            "required": false,
+            "type": "string",
+            "value": "8628023157"
+          },
+          {
+            "name": "otp",
+            "in": "formData",
+            "description": "Enter the otp",
+            "required": false,
+            "type": "string",
+            "value": "1111"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/resendOtp": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-resendOtp-post",
+        "tags": ["Application User"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "countryCode",
+            "in": "formData",
+            "description": "Enter the phoneNumber",
+            "required": false,
+            "type": "string",
+            "value": "+91"
+          },
+          {
+            "name": "phoneNumber",
+            "in": "formData",
+            "description": "Enter the phoneNumber",
+            "required": false,
+            "type": "string",
+            "value": "1010101010"
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/cms": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-cms-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/notificationsList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-notificationsList-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/maritalstatus_listing": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-maritalstatus_listing-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
+    "/users/profilepreference_listing": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-profilepreference_listing-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
+    "/users/hearttoserve_listing": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-hearttoserve_listing-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
+    "/users/numberofmembers_listing": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-numberofmembers_listing-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
+    "/users/traitsexperience_listing": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-traitsexperience_listing-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    }
+  },
+  "definitions": {}
 }

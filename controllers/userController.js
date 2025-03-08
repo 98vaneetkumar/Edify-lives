@@ -116,15 +116,18 @@ module.exports = {
         deviceType: payload.deviceType || null,
       };
       try {
-        // let phone = countryCode + payload.phoneNumber; 
+        // let phone = countryCode + payload.phoneNumber;
         // const otpResponse = await otpManager.sendOTP(phone);
         // Save user
-       await Models.userModel.create(objToSave);
-       return commonHelper.success(res, Response.success_msg.otpResend);
+        await Models.userModel.create(objToSave);
+        return commonHelper.success(res, Response.success_msg.otpResend);
       } catch (error) {
-        return commonHelper.error(res, Response.error_msg.otpResErr, error.message);
+        return commonHelper.error(
+          res,
+          Response.error_msg.otpResErr,
+          error.message
+        );
       }
-
     } catch (error) {
       console.error("Error during sign-up:", error);
       return commonHelper.error(res, Response.error_msg.regUser, error.message);
@@ -536,4 +539,93 @@ module.exports = {
       throw error;
     }
   },
+
+  maritalstatus_listing: async (req, res) => {
+    try {
+      let maritalstatus_data = await Models.maritalStatusModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.json({
+        success: true,
+        title: "Marital Status",
+        maritalstatus_data,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: "Internal Server Error" });
+    }
+  },
+  
+  profilepreference_listing: async (req, res) => {
+    try {
+      let profilepreference_data = await Models.profilePreferenceModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.json({
+        success: true,
+        title: "Profile Preference",
+        profilepreference_data,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: "Internal Server Error" });
+    }
+  },
+  
+  hearttoserve_listing: async (req, res) => {
+    try {
+      let hearttoserve_data = await Models.heartToServeModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.json({
+        success: true,
+        title: "Heart To Serve",
+        hearttoserve_data,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: "Internal Server Error" });
+    }
+  },
+  
+  numberofmembers_listing: async (req, res) => {
+    try {
+      let numberofmembers_data = await Models.numberOfMembersModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.json({
+        success: true,
+        title: "Number of Members",
+        numberofmembers_data,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: "Internal Server Error" });
+    }
+  },
+  
+  traitsexperience_listing: async (req, res) => {
+    try {
+      let traitsexperience_data = await Models.traitsExperienceModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.json({
+        success: true,
+        title: "Traits & Experience",
+        traitsexperience_data,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: "Internal Server Error" });
+    }
+  },
+  
+
+
+
 };
