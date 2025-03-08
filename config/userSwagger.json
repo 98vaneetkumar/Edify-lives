@@ -15,6 +15,61 @@
     }
   },
   "paths": {
+    "/users/maritalstatus_listing": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-maritalstatus_listing-post",
+        "tags": ["Application Common"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
+    "/users/profilepreference_listing": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-profilepreference_listing-post",
+        "tags": ["Application Common"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
+    "/users/hearttoserve_listing": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-hearttoserve_listing-post",
+        "tags": ["Application Common"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
+    "/users/numberofmembers_listing": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-numberofmembers_listing-post",
+        "tags": ["Application Common"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
+    "/users/traitsexperience_listing": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-traitsexperience_listing-post",
+        "tags": ["Application Common"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
     "/users/signUp": {
       "post": {
         "x-swagger-router-controller": "middleware-name1",
@@ -385,85 +440,6 @@
       "get": {
         "x-swagger-router-controller": "middleware-name1",
         "operationId": "users-notificationsList-post",
-        "tags": ["Application User"],
-        "description": "",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/users/maritalstatus_listing": {
-      "get": {
-        "x-swagger-router-controller": "middleware-name1",
-        "operationId": "users-maritalstatus_listing-post",
-        "tags": ["Application User"],
-        "description": "",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "parameters": [],
-        "responses": {}
-      }
-    },
-
-    "/users/profilepreference_listing": {
-      "get": {
-        "x-swagger-router-controller": "middleware-name1",
-        "operationId": "users-profilepreference_listing-post",
-        "tags": ["Application User"],
-        "description": "",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "parameters": [],
-        "responses": {}
-      }
-    },
-
-    "/users/hearttoserve_listing": {
-      "get": {
-        "x-swagger-router-controller": "middleware-name1",
-        "operationId": "users-hearttoserve_listing-post",
-        "tags": ["Application User"],
-        "description": "",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "parameters": [],
-        "responses": {}
-      }
-    },
-
-    "/users/numberofmembers_listing": {
-      "get": {
-        "x-swagger-router-controller": "middleware-name1",
-        "operationId": "users-numberofmembers_listing-post",
-        "tags": ["Application User"],
-        "description": "",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "parameters": [],
-        "responses": {}
-      }
-    },
-
-    "/users/traitsexperience_listing": {
-      "get": {
-        "x-swagger-router-controller": "middleware-name1",
-        "operationId": "users-traitsexperience_listing-post",
         "tags": ["Application User"],
         "description": "",
         "security": [
