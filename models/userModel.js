@@ -193,11 +193,16 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:''
       },
-      chruchAttendAddress:{
-        type: DataTypes.STRING(255),
+      chruchAttendAddress: {
+        type: Sequelize.UUID, // Correct type for UUID
         allowNull: true,
-        defaultValue:''
-      },
+        references: {
+            model: "users",  // Target model name
+            key: "id",       // Referencing the correct primary key
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+    },    
       companyLogo:{
         type: DataTypes.STRING(255),
         allowNull: true,

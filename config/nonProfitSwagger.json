@@ -15,6 +15,19 @@
         }
     },
     "paths": {
+        "/nonProfit/getAllChurches": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "nonProfit-getAllChurches-get",
+                "tags": ["Application User"],
+                "description": "",
+              
+				"parameters": [
+					
+				],
+                "responses": {}
+            }
+        },
         "/nonProfit/signUp": {
             "post": {
                 "x-swagger-router-controller": "middleware-name1",

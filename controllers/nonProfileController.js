@@ -124,4 +124,16 @@ module.exports = {
       return commonHelper.error(res, Response.error_msg.regUser, error.message);
     }
   },
+  getAllChurches:async(req,res)=>{
+    try {
+      let response=await Models.userModel.findAll({
+        where:{
+          role:2
+        }
+      })
+      return commonHelper.success(res, Response.success_msg.churchesFound, response);
+    } catch (error) {
+      throw error
+    }
+  }
 };

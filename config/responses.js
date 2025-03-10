@@ -19,6 +19,7 @@ var success_msg = {
 
   otpResend: "OTP resent successfully",
   notificationList: "Notification list fetched successfully",
+  churchesFound:"Churches found successfully"
 };
 
 var failed_msg = {

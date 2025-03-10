@@ -5,6 +5,8 @@ const {authentication,forgotPasswordVerify} = require('../middlewares/authentica
 
 
 module.exports=function(){
+    router.get("/getAllChurches",controller.nonProfileController.getAllChurches)
+
     router.post('/signUp', controller.nonProfileController.signUp);
     router.post('/login', controller.userController.login);
     router.post('/logout', authentication, controller.userController.logout);
@@ -18,7 +20,6 @@ module.exports=function(){
 
     router.get("/cms",authentication, controller.userController.cms)
     router.get("/notificationsList",authentication, controller.userController.notificationsList)
-
     return router
 }
 
