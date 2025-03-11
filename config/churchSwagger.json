@@ -413,8 +413,13 @@
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-needPost-post",
-                "tags": ["Application User"],
+                "tags": ["Application Church"],
                 "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
                 "parameters": [
                     {
                         "name": "title",
@@ -432,7 +437,7 @@
             "get": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-needPostList-post",
-                "tags": ["Application User"],
+                "tags": ["Application Church"],
                 "description": "",
                 "security": [
 					{
@@ -449,8 +454,13 @@
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-commentOnNeedPost-post",
-                "tags": ["Application User"],
+                "tags": ["Application Church"],
                 "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
                 "parameters": [
                     {
                         "name": "needPostId",
@@ -476,8 +486,13 @@
             "get": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-commentOnNeedPostList-get",
-                "tags": ["Application User"],
+                "tags": ["Application Church"],
                 "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
                 "parameters": [
                     {
                         "name": "needPostId",
@@ -495,8 +510,13 @@
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-likeNeedPost-get",
-                "tags": ["Application User"],
+                "tags": ["Application Church"],
                 "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
                 "parameters": [
                     {
                         "name": "needPostId",
@@ -514,8 +534,13 @@
             "get": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-likeNeedPostList-get",
-                "tags": ["Application User"],
+                "tags": ["Application Church"],
                 "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
                 "parameters": [
                     {
                         "name": "needPostId",
@@ -533,8 +558,13 @@
             "post": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-unLikeNeedPost-post",
-                "tags": ["Application User"],
+                "tags": ["Application Church"],
                 "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
                 "parameters": [
                     {
                         "name": "needPostId",
@@ -552,7 +582,7 @@
             "get": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-bannerList-post",
-                "tags": ["Application User"],
+                "tags": ["Application Church"],
                 "description": "",
                 "security": [
 					{
