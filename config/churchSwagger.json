@@ -199,6 +199,11 @@
         "operationId": "church-logoUploadChurch-post",
         "tags": ["Application User"],
         "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "visionStatement",
