@@ -196,7 +196,42 @@
         "responses": {}
       }
     },
-
+    "/nonProfit/uploadLogNonProfile": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "church-uploadLogNonProfile-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "valuesStatement",
+            "in": "formData",
+            "description": "Enter value statement picture to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          },
+          {
+            "name": "companyLogo",
+            "in": "formData",
+            "description": "Enter company logo picture to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          }
+        ],
+        "responses": {}
+      }
+    },
     "/nonProfit/changePassword": {
       "post": {
         "x-swagger-router-controller": "middleware-name1",

@@ -124,7 +124,33 @@ module.exports = {
       return commonHelper.error(res, Response.error_msg.regUser, error.message);
     }
   },
-  
+  uploadLogNonProfile:async(req,res)=>{
+    try {
+      let companyLogoPath = null;
+      if (req.files && req.files.companyLogo) {
+        companyLogoPath = await commonHelper.fileUpload(req.files.companyLogo);
+      }
+
+      let valuesStatementPath = null;
+      if (req.files && req.files.valuesStatement) {
+        valuesStatementPath = await commonHelper.fileUpload(
+          req.files.valuesStatement
+        );
+      }
+      
+        await Models.userModel.update({
+            companyLogo: companyLogoPath,
+            valuesStatement: valuesStatementPath,
+          }, {where: {
+            id: req.user.id
+          }})
+      
+        let uploadLogo = await Models.userModel.findOne({where: {id: req.user.id}})
+        return commonHelper.success(res, Response.success_msg.logoUploadSuccess,uploadLogo);
+    } catch (error) {
+      throw error
+    }
+  },
   getAllChurches:async(req,res)=>{
     try {
       let response=await Models.userModel.findAll({
