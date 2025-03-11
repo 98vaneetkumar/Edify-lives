@@ -8,7 +8,7 @@ module.exports=function(){
     router.get("/getAllChurches",controller.nonProfileController.getAllChurches)
 
     router.post('/signUp', controller.nonProfileController.signUp);
-    router.post('/login', controller.userController.login);
+    router.post('/login', controller.nonProfileController.login);
     router.post('/logout', authentication, controller.userController.logout);
     router.post('/forgotPassword', controller.userController.forgotPassword);
     router.post('/resendForgotPasswordLink', controller.userController.resendForgotPasswordLink);

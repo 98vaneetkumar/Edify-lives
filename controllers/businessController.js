@@ -114,6 +114,60 @@ module.exports = {
       console.error("Error during sign-up:", error);
       return commonHelper.error(res, Response.error_msg.regUser, error.message);
     }
-  }
+  },
+   login: async (req, res) => {
+        try {
+          const schema = Joi.object().keys({
+            email: Joi.string().email().required(),
+            password: Joi.string().required(),
+            deviceToken: "abc", // static data, will come from frontend
+            deviceType: Joi.number().valid(1, 2).optional(),
+          });
+          let payload = await helper.validationJoi(req.body, schema);
+    
+          const { email, password, devideToken, deviceType } = payload;
+    
+          const user = await Models.userModel.findOne({
+            where: { email: email,role:3 },
+            raw: true,
+          });
+    
+          if (!user) {
+            return commonHelper.failed(res, Response.failed_msg.userNotFound);
+          }
+    
+          const isPasswordValid = await bcrypt.compare(password, user.password);
+    
+          if (!isPasswordValid) {
+            return commonHelper.failed(res, Response.failed_msg.invalidPassword);
+          }
+    
+          await Models.userModel.update(
+            {
+              deviceToken: payload.deviceToken,
+              deviceType: payload.deviceType,
+              verifyStatus: 0,
+            },
+            {
+              where: {
+                id: user.id,
+              },
+            }
+          );
+    
+          const token = jwt.sign(
+            {
+              id: user.id,
+              email: user.email,
+            },
+            secretKey
+          );
+          user.token = token;
+          return commonHelper.success(res, Response.success_msg.login, user);
+        } catch (err) {
+          console.error("Error during login:", err);
+          return commonHelper.error(res, Response.error_msg.loguser, err.message);
+        }
+    },
   
 }
