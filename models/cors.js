@@ -5,7 +5,7 @@ module.exports = (Sequelize, DataTypes) => {
       defaultValue: Sequelize.UUIDV4,
       primaryKey: true,
     },
-
+  
     createdAt: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW(0),
