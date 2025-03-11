@@ -23,6 +23,7 @@ module.exports = {
   videoModel:require("./videoModel")(Sequelize, sequelize, Sequelize.DataTypes),
   commentVideoModel:require("./commentVideoModels")(Sequelize, sequelize, Sequelize.DataTypes),
   likeVideoModel:require("./likeVideoModels")(Sequelize, sequelize, Sequelize.DataTypes),
+  eventModel:require("./eventModel")(Sequelize, sequelize, Sequelize.DataTypes),
 
 };
  

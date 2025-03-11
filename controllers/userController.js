@@ -158,7 +158,7 @@ module.exports = {
       const schema = Joi.object().keys({
         email: Joi.string().email().required(),
         password: Joi.string().required(),
-        deviceToken: "abc", // static data, will come from frontend
+        deviceToken:Joi.string().optional(), // static data, will come from frontend
         deviceType: Joi.number().valid(1, 2).optional(),
       });
       let payload = await helper.validationJoi(req.body, schema);
