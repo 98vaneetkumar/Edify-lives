@@ -118,6 +118,8 @@ module.exports = {
            await Models.userModel.create(objToSave);
            return commonHelper.success(res, Response.success_msg.otpResend);
           } catch (error) {
+            console.log("error",error);
+            
             return commonHelper.error(res, Response.error_msg.otpResErr, error.message);
           }
    
