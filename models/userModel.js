@@ -194,7 +194,7 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         defaultValue:''
       },
       nonProfitServe:{
-        type: DataTypes.INTEGER(25),
+        type: DataTypes.STRING(255),
         allowNull: true,
         defaultValue:0
       },
