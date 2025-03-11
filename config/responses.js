@@ -38,6 +38,8 @@ var success_msg = {
   likeTestimonyPost: "Like on testimony post added successfully",
   likeTestimonyPostList: "Like on testimony post list fetched successfully",
   unLikeTestimonyPost: "Unlike on testimony post added successfully",
+
+  logoUploadSuccess: "Logo uploaded successfully",
 };
 
 var failed_msg = {
@@ -87,6 +89,7 @@ var error_msg = {
 
   otpResErr: "Failed to resend OTP",
   invalidPhoneNumber: "Invalid phone number",
+  errUploadLogo: "Error uploading logo",
 };
 
 module.exports = {

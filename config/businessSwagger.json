@@ -1,378 +1,211 @@
 {
-    "swagger": "2.0",
-    "info": {
-        "title": "Edify lives",
-        "description": "project description",
-        "version": "1.0"
-    },
-    "produces": ["application/json"],
-    "basePath": "/",
-    "securityDefinitions": {
-        "Bearer": {
-            "type": "apiKey",
-            "name": "authorization",
-            "in": "header"
-        }
-    },
-    "paths": {
-        "/business/signUp": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "business-signUp-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "formData",
-                        "description": "Enter the email",
-                        "required": true,
-                        "type": "string",
-                        "value": "vaneet@gmail.com"
-                    },
-                    {
-                        "name": "countryCode",
-                        "in": "formData",
-                        "description": "Enter country code",
-                        "required": true,
-                        "type": "string",
-                        "value": "+91"
-                    },
-                    {
-                        "name": "phoneNumber",
-                        "in": "formData",
-                        "description": "Enter phone number",
-                        "required": true,
-                        "type": "string",
-                        "value": "8628023157"
-                    },
-                    {
-                        "name": "password",
-                        "in": "formData",
-                        "description": "Enter password",
-                        "required": true,
-                        "type": "string",
-                        "value": "123456"
-                    },
-                    {
-                        "name": "businessName",
-                        "in": "formData",
-                        "description": "Enter business Name",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "typeOfBusiness",
-                        "in": "formData",
-                        "description": "Enter type of business",
-                        "required": false, 
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "businessAddress",
-                        "in": "formData",
-                        "description": "Enter business address",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "businessUserAddress",
-                        "in": "formData",
-                        "description": "Enter business user address",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "businessLogo",
-                        "in": "formData",
-                        "description": "Enter business logo to upload",
-                        "required": false,
-                        "type": "file",
-                        "format": "binary",
-                        "maxLength": 5242880,
-                        "allowedMimeTypes": [
-                          "image/jpeg",
-                          "image/png"
-                        ]
-                    },
-                    {
-                        "name": "maritalStatus",
-                        "in": "formData",
-                        "description": "Enter your married Status 0 for not married or 1 for married",
-                        "required": false,
-                        "enum":[0,1],
-                        "type": "number",
-                        "value": 0
-                    },
-                    {
-                        "name": "location",
-                        "in": "formData",
-                        "description": "Enter your location",
-                        "required": false,
-                        "type": "string",
-                        "value": "Mohali "
-                    },
-                    {
-                        "name": "latitude",
-                        "in": "formData",
-                        "description": "Enter latitude",
-                        "required": false,
-                        "type": "string",
-                        "value": "30.7046"
-                    },
-                    {
-                        "name": "longitude",
-                        "in": "formData",
-                        "description": "Enter longitude",
-                        "required": false,
-                        "type": "string",
-                        "value": "76.7179"
-                    },
-                    {
-                        "name": "donateEdifyLivers",
-                        "in": "formData",
-                        "description": "Enter donateEdifyLivers",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                  
-                    {
-                        "name": "deviceType",
-                        "in": "formData",
-                        "description": "Enter deviceType",
-                        "enum": [1,2],
-                        "required": false,
-                        "type": "number",
-                        "value": 1
-                    },
-                    {
-                        "name": "deviceToken",
-                        "in": "formData",
-                        "description": "Enter deviceToken",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/business/login": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "business-login-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "formData",
-                        "description": "Enter the email",
-                        "required": true,
-                        "type": "string",
-                        "value": "vaneet@gmail.com"
-                    },
-                    {
-                        "name": "password",
-                        "in": "formData",
-                        "description": "Enter password",
-                        "required": true,
-                        "type": "string",
-                        "value": "123456"
-                    },
-                    {
-                        "name": "deviceToken",
-                        "in": "formData",
-                        "description": "Enter deviceToken",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "deviceType",
-                        "in": "formData",
-                        "description": "Enter deviceType",
-                        "enum": [1,2],
-                        "required": false,
-                        "type": "number",
-                        "value": "1"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/business/logout": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "business-logout-post",
-                "tags": ["Application User"],
-                "description": "",
-                "security": [
-					{
-						"Bearer": []
-					}
-				],
-				"parameters": [
-					
-				],
-                "responses": {}
-            }
-        },
-        "/business/changePassword": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "business-changePassword-post",
-                "tags": ["Application User"],
-                "description": "",
-                "security": [
-					{
-						"Bearer": []
-					}
-				],
-                "parameters": [
-                    {
-                        "name": "currentPassword",
-                        "in": "formData",
-                        "description": "Enter the currentPassword",
-                        "required": true,
-                        "type": "string",
-                        "value": ""
-                    },
-                    {
-                        "name": "newPassword",
-                        "in": "formData",
-                        "description": "Enter newPassword ",
-                        "required": true,
-                        "type": "string",
-                        "value": ""
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/business/forgotPassword": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "business-forgotPassword-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "formData",
-                        "description": "Enter the email",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/business/resendForgotPasswordLink": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "business-resendForgotPasswordLink-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "formData",
-                        "description": "Enter the email",
-                        "required": false,
-                        "type": "string",
-                        "value": ""
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/business/otpVerify": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "business-otpVerify-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "countryCode",
-                        "in": "formData",
-                        "description": "Enter the phoneNumber",
-                        "required": false,
-                        "type": "string",
-                        "value": "+91"
-                    },
-                    {
-                        "name": "phoneNumber",
-                        "in": "formData",
-                        "description": "Enter the phoneNumber",
-                        "required": false,
-                        "type": "string",
-                        "value": "8628023157"
-                    },
-                    {
-                        "name": "otp",
-                        "in": "formData",
-                        "description": "Enter the otp",
-                        "required": false,
-                        "type": "string",
-                        "value": "1111"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/business/resendOtp": {
-            "post": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "business-resendOtp-post",
-                "tags": ["Application User"],
-                "description": "",
-                "parameters": [
-                    {
-                        "name": "countryCode",
-                        "in": "formData",
-                        "description": "Enter the phoneNumber",
-                        "required": false,
-                        "type": "string",
-                        "value": "+91"
-                    },
-                    {
-                        "name": "phoneNumber",
-                        "in": "formData",
-                        "description": "Enter the phoneNumber",
-                        "required": false,
-                        "type": "string",
-                        "value": "1010101010"
-                    }
-                ],
-                "responses": {}
-            }
-        },
-        "/business/cms": {
-            "get": {
-                "x-swagger-router-controller": "middleware-name1",
-                "operationId": "business-cms-post",
-                "tags": ["Application User"],
-                "description": "",
-                "security": [
-					{
-						"Bearer": []
-					}
-				],
-				"parameters": [
-                  
-				],
-                "responses": {}
-            }
-        }
-    },
-    "definitions": {
+  "swagger": "2.0",
+  "info": {
+    "title": "Edify lives",
+    "description": "project description",
+    "version": "1.0"
+  },
+  "produces": ["application/json"],
+  "basePath": "/",
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "authorization",
+      "in": "header"
     }
+  },
+  "paths": {
+    "/business/signUp": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "business-signUp-post",
+        "tags": ["Application User"],
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Enter the email",
+            "required": true,
+            "type": "string",
+            "value": "vaneet@gmail.com"
+          },
+          {
+            "name": "countryCode",
+            "in": "formData",
+            "description": "Enter country code",
+            "required": true,
+            "type": "string",
+            "value": "+91"
+          },
+          {
+            "name": "phoneNumber",
+            "in": "formData",
+            "description": "Enter phone number",
+            "required": true,
+            "type": "string",
+            "value": "8628023157"
+          },
+          {
+            "name": "password",
+            "in": "formData",
+            "description": "Enter password",
+            "required": true,
+            "type": "string",
+            "value": "123456"
+          },
+          {
+            "name": "businessName",
+            "in": "formData",
+            "description": "Enter business Name",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "typeOfBusiness",
+            "in": "formData",
+            "description": "Enter type of business",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "businessAddress",
+            "in": "formData",
+            "description": "Enter business address",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "businessUserAddress",
+            "in": "formData",
+            "description": "Enter business user address",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "businessLogo",
+            "in": "formData",
+            "description": "Enter business logo to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          },
+          {
+            "name": "maritalStatus",
+            "in": "formData",
+            "description": "Enter your married Status 0 for not married or 1 for married",
+            "required": false,
+            "enum": [0, 1],
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "location",
+            "in": "formData",
+            "description": "Enter your location",
+            "required": false,
+            "type": "string",
+            "value": "Mohali "
+          },
+          {
+            "name": "latitude",
+            "in": "formData",
+            "description": "Enter latitude",
+            "required": false,
+            "type": "string",
+            "value": "30.7046"
+          },
+          {
+            "name": "longitude",
+            "in": "formData",
+            "description": "Enter longitude",
+            "required": false,
+            "type": "string",
+            "value": "76.7179"
+          },
+          {
+            "name": "donateEdifyLivers",
+            "in": "formData",
+            "description": "Enter donateEdifyLivers",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+
+          {
+            "name": "deviceType",
+            "in": "formData",
+            "description": "Enter deviceType",
+            "enum": [1, 2],
+            "required": false,
+            "type": "number",
+            "value": 1
+          },
+          {
+            "name": "deviceToken",
+            "in": "formData",
+            "description": "Enter deviceToken",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/business/changePassword": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "business-changePassword-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "currentPassword",
+            "in": "formData",
+            "description": "Enter the currentPassword",
+            "required": true,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "newPassword",
+            "in": "formData",
+            "description": "Enter newPassword ",
+            "required": true,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/business/cms": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "business-cms-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    }
+  },
+  "definitions": {}
 }

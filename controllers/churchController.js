@@ -39,7 +39,6 @@ module.exports = {
         churchWebsite: Joi.string().optional(),
         churchAccessCode: Joi.string().optional(),
         numberOfMembers: Joi.number().optional(),
-        visionStatement: Joi.any().optional(),
         valuesStatement: Joi.any().optional(),
         maritalStatus: Joi.number().valid(0, 1).optional(),
         location: Joi.string().optional(),
@@ -81,15 +80,6 @@ module.exports = {
         process.env.SALT
       );
 
-      // Handle vision statement upload
-      let visionStatementPath = null;
-      if (req.files?.visionStatement) {
-        visionStatementPath = await commonHelper.fileUpload(
-          req.files.visionStatement,
-          "images"
-        );
-      }
-
       // Handle values statement upload
       let valuesStatementPath = null;
       if (req.files?.valueStatement) {
@@ -123,7 +113,6 @@ module.exports = {
         churchWebsite: payload.churchWebsite || null,
         churchAccessCode: payload.churchAccessCode || null,
         numberOfMembers: payload.numberOfMembers || null,
-        visionStatement: visionStatementPath || null,
         valuesStatement: valuesStatementPath || null,
         maritalStatus: payload.maritalStatus || null,
         location: payload.location || null,
@@ -147,59 +136,41 @@ module.exports = {
       return commonHelper.error(res, Response.error_msg.regUser, error.message);
     }
   },
-  login: async (req, res) => {
-      try {
-        const schema = Joi.object().keys({
-          email: Joi.string().email().required(),
-          password: Joi.string().required(),
-          deviceToken: "abc", // static data, will come from frontend
-          deviceType: Joi.number().valid(1, 2).optional(),
-        });
-        let payload = await helper.validationJoi(req.body, schema);
-  
-        const { email, password, devideToken, deviceType } = payload;
-  
-        const user = await Models.userModel.findOne({
-          where: { email: email,role:2 },
-          raw: true,
-        });
-  
-        if (!user) {
-          return commonHelper.failed(res, Response.failed_msg.userNotFound);
-        }
-  
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-  
-        if (!isPasswordValid) {
-          return commonHelper.failed(res, Response.failed_msg.invalidPassword);
-        }
-  
-        await Models.userModel.update(
-          {
-            deviceToken: payload.deviceToken,
-            deviceType: payload.deviceType,
-            verifyStatus: 0,
-          },
-          {
-            where: {
-              id: user.id,
-            },
-          }
+
+  logoUploadChurch: async(req, res)=>{
+    try {
+      
+      // Handle vision statement upload
+      let visionStatementPath = null;
+      if (req.files?.visionStatement) {
+        visionStatementPath = await commonHelper.fileUpload(
+          req.files.visionStatement,
+          "images"
         );
-  
-        const token = jwt.sign(
-          {
-            id: user.id,
-            email: user.email,
-          },
-          secretKey
-        );
-        user.token = token;
-        return commonHelper.success(res, Response.success_msg.login, user);
-      } catch (err) {
-        console.error("Error during login:", err);
-        return commonHelper.error(res, Response.error_msg.loguser, err.message);
       }
+
+      let companyLogoPath = null;
+      if (req.files?.companyLogo) {
+        companyLogoPath = await commonHelper.fileUpload(
+          req.files.companyLogo,
+          "images"
+        );
+      }
+
+      let objToUpdate = await Models.userModel.update({
+        visionStatement: visionStatementPath || null,
+        companyLogo: companyLogoPath || null,
+      }, {where: {
+        id: req.user.id
+      }})
+
+      let uploadLogo = await Models.userModel.findOne({where: {id: req.user.id}})
+      return commonHelper.success(res, Response.success_msg.logoUploadSuccess,uploadLogo);
+
+    } catch (error) {
+      console.error("Error during sign-up:", error);
+      return commonHelper.error(res, Response.error_msg.errUploadLogo, error.message);
+    }
   },
 
   bannerList:async(req,res)=>{
@@ -210,6 +181,8 @@ module.exports = {
       throw error
     }
   },
+
+
 
 
 
@@ -232,6 +205,7 @@ module.exports = {
   needPostList:async(req,res)=>{
     try {
       let response=await Models.needPostModel.findAll({
+
        include:[{
           model:Models.userModel,
           as:'user',
@@ -281,10 +255,20 @@ module.exports = {
         needPostId:Joi.string().required()
       }); 
       let payload = await helper.validationJoi(req.body, schema);
-      let response=await Models.likeNeedPostModel.create({
+     let has =  await Models.likeNeedPostModel.findOne({where: {
         userId:req.user.id,
         needPostId:payload.needPostId
-      });
+      }})
+      if(!has) {
+        await Models.likeNeedPostModel.create({
+          userId:req.user.id,
+          needPostId:payload.needPostId
+        });
+      }
+      let response =  await Models.likeNeedPostModel.findOne({where: {
+        userId:req.user.id,
+        needPostId:payload.needPostId
+      }})
       return commonHelper.success(res, Response.success_msg.likeNeedPost,response);
     } catch (error) {
       throw error
