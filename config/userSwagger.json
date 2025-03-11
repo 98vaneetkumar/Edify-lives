@@ -924,6 +924,119 @@
         ],
         "responses": {}
       }
+    },
+    "/users/createEvent": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-createEvent-post",
+        "tags": ["Application Event"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "eventType",
+            "in": "formData",
+            "description": "Enter the eventType",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "address",
+            "in": "formData",
+            "description": "Enter the address",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "latitude",
+            "in": "formData",
+            "description": "Enter the latitude",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "longitude",
+            "in": "formData",
+            "description": "Enter the longitude",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "date",
+            "in": "formData",
+            "description": "Enter the date",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "time",
+            "in": "formData",
+            "description": "Enter the time",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "eventTitle",
+            "in": "formData",
+            "description": "Enter the eventTitle",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "countryCode",
+            "in": "formData",
+            "description": "Enter the countryCode",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "phoneNumber",
+            "in": "formData",
+            "description": "Enter the phoneNumber",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Enter the email",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/eventList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-eventList-post",
+        "tags": ["Application Video"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          
+        ],
+        "responses": {}
+      }
     }
   },
   "definitions": {}

@@ -55,6 +55,9 @@ router.post("/likeUnlikeVideo",authentication, controller.userController.likeUnl
 
 router.post("/commentOnVideo",authentication, controller.userController.commentOnVideo)
 router.get("/commentOnVideoList",authentication, controller.userController.commentOnVideoList)
+
+router.post("/createEvent",authentication, controller.userController.createEvent)
+router.get("/eventList",authentication, controller.userController.eventList)
 return router
 }
 

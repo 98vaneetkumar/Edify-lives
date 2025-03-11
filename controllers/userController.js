@@ -1035,5 +1035,47 @@ module.exports = {
     } catch (error) {
       throw error
     }
-  }
+  },
+  createEvent:async(req,res)=>{
+    try {
+      const schema = Joi.object().keys({
+        eventType: Joi.string().required(),
+        address: Joi.string().optional(),
+        latitude: Joi.string().optional(),
+        longitude: Joi.string().optional(),
+        date: Joi.string().optional(),
+        time: Joi.string().optional(),
+        eventTitle: Joi.string().optional(),
+        countryCode: Joi.string().optional(),
+        phoneNumber: Joi.string().optional(),
+        email: Joi.string().optional(),
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+      let objToSave={
+        userId:req.user.id,
+        eventType:payload.eventType,
+        address:payload.address,
+        latitude:payload.latitude,
+        longitude:payload.longitude,
+        date:payload.date,
+        time:payload.time,
+        eventTitle:payload.eventTitle,
+        countryCode:payload.countryCode,
+        phoneNumber:payload.phoneNumber,
+        email:payload.email
+      }
+      let response=await Models.eventModel.create(objToSave);
+      return commonHelper.success(res, Response.success_msg.createEvent,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  eventList:async(req,res)=>{
+    try {
+      let response=await Models.eventModel.findAll()
+      return commonHelper.success(res, Response.success_msg.eventList,response);
+    } catch (error) {
+      throw error
+    }
+  },
 };
