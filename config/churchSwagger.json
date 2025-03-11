@@ -123,16 +123,6 @@
             "value": ""
           },
           {
-            "name": "visionStatement",
-            "in": "formData",
-            "description": "Enter vision statement picture to upload",
-            "required": false,
-            "type": "file",
-            "format": "binary",
-            "maxLength": 5242880,
-            "allowedMimeTypes": ["image/jpeg", "image/png"]
-          },
-          {
             "name": "valueStatement",
             "in": "formData",
             "description": "Enter value statement picture to upload",
