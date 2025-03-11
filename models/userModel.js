@@ -97,9 +97,9 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         defaultValue:0 //0 means no 1 for yes 
       },
       hartOfService:{ 
-        type: DataTypes.STRING,  // who do you have the heart to serve
+        type: DataTypes.STRING(255),  // who do you have the heart to serve
         allowNull: true,
-        defaultValue:0  // 0 means no 1 for yes
+        defaultValue:null  // 0 means no 1 for yes
       },
       profilePicture: {
         type: DataTypes.STRING(255),
