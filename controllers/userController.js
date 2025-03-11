@@ -32,6 +32,9 @@ Models.likeNeedPostModel.belongsTo(Models.userModel, {
 Models.videoModel.belongsTo(Models.userModel, {
   foreignKey: 'userId',
 })
+Models.commentVideoModel.belongsTo(Models.userModel, {
+  foreignKey: 'userId',
+})
 
 module.exports = {
   signUp: async (req, res) => {
@@ -937,18 +940,18 @@ module.exports = {
       let response=await Models.videoModel.findAll({
         attributes: {
           include: [
-            [Sequelize.literal("(SELECT count(id) FROM commentTestimonyPost where testimonyPostId=testimonyPost.id )"), "commentsCount"],
-            [Sequelize.literal("(SELECT count(id) FROM liketesTimonyPost where testimonyPostId=testimonyPost.id )"), "likesCount"],
+            [Sequelize.literal("(SELECT count(id) FROM commentVideo where videoId=videoModel.id )"), "commentsCount"],
+            [Sequelize.literal("(SELECT count(id) FROM likeVideo where videoId=videoModel.id )"), "likesCount"],
             [Sequelize.literal(`
               (CASE 
-                WHEN (SELECT count(id) FROM commentTestimonyPost where testimonyPostId=testimonyPost.id and userId = '${req.user.id}') > 0 
+                WHEN (SELECT count(id) FROM commentVideo where videoId=videoModel.id and userId = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
               `),"isComment"],
             [Sequelize.literal(`
                 (CASE 
-                  WHEN (SELECT count(id) FROM liketesTimonyPost where testimonyPostId=testimonyPost.id and userId = '${req.user.id}') > 0 
+                  WHEN (SELECT count(id) FROM likeVideo where videoId=videoModel.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
@@ -1000,9 +1003,35 @@ module.exports = {
       throw error
     }
   },
-  commentVideo:async(req,res)=>{
+  commentOnVideo:async(req,res)=>{
     try {
-      
+      let schema=Joi.object().keys({
+        videoId:Joi.string().required(),
+        comment:Joi.string().required()
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+      let objToSave={
+        userId:req.user.id,
+        videoId:payload.videoId,
+        comment:payload.comment
+      }
+      let response=await Models.commentVideoModel.create(objToSave);
+      return commonHelper.success(res, Response.success_msg.commentVideo,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  commentOnVideoList:async(req,res)=>{
+    try {
+      let response=await Models.commentVideoModel.findAll({
+        where:{
+          videoId:req.query.videoId
+        },
+        include:[{
+          model:Models.userModel,
+        }]
+      });
+      return commonHelper.success(res, Response.success_msg.commentVideoList,response);
     } catch (error) {
       throw error
     }

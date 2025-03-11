@@ -52,6 +52,9 @@ router.post("/unLikeTestimonyPost",authentication, controller.userController.unl
 router.post("/addVideo",authentication, controller.userController.addVideo)
 router.get("/videoList",authentication, controller.userController.videoList)
 router.post("/likeUnlikeVideo",authentication, controller.userController.likeUnlikeVideo)
-    return router
+
+router.post("/commentOnVideo",authentication, controller.userController.commentOnVideo)
+router.get("/commentOnVideoList",authentication, controller.userController.commentOnVideoList)
+return router
 }
 

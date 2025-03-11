@@ -783,6 +783,67 @@
         ],
         "responses": {}
       }
+    },
+    "/users/addVideo": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "church-addVideo-post",
+        "tags": ["Application Video"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "video",
+            "in": "formData",
+            "description": "Enter vidoe picture to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          },
+          {
+            "name": "thumbnail",
+            "in": "formData",
+            "description": "Enter thumbnail picture to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          },
+          {
+            "name": "caption",
+            "in": "formData",
+            "description": "Enter the caption",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/videoList": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "church-videoList-post",
+        "tags": ["Application Video"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+       
+        ],
+        "responses": {}
+      }
     }
   },
   "definitions": {}

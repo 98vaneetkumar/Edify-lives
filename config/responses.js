@@ -44,6 +44,8 @@ var success_msg = {
   videoList:"Video list fetched successfully",
   unLikeVideo:"Unlike on video added successfully",
   likeVideo:"Like on video added successfully",
+  commentVideo:"Comment on video added successfully",
+  commentVideoList:"Comment on video list fetched successfully",
 };
 
 var failed_msg = {
