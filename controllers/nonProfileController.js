@@ -39,6 +39,7 @@ module.exports = {
         companyLogo: Joi.string().optional(),
         valuesStatement: Joi.string().optional(),
         webSiteNonProfile: Joi.string().optional(),
+        chruchAttendAddress:Joi.string().optional()
       });
 
       let payload = await helper.validationJoi(req.body, schema);
@@ -111,6 +112,7 @@ module.exports = {
         deviceToken: payload.deviceToken,
         deviceType: payload.deviceType,
         webSiteNonProfile: payload.webSiteNonProfile,
+        chruchAttendAddress:payload.chruchAttendAddress
       };
 
     try {
