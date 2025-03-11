@@ -305,7 +305,7 @@ module.exports = {
           needPostId:payload.needPostId
         }
       });
-      return commonHelper.success(res, Response.success_msg.unLikeNeedPost,response);
+      return commonHelper.success(res, Response.success_msg.unLikeNeedPost);
     } catch (error) {
       throw error
     }
