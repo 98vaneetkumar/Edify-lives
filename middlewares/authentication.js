@@ -8,23 +8,28 @@ const Sequelize = require("sequelize");
 module.exports = {
   authentication: async (req, res, next) => {
     let token = req.headers["authorization"];
-    token = token.startsWith("Bearer ") ? token.split(" ")[1] : token;
-    if (token) {
-      jwt.verify(token, secretKey, async (err, authData) => {
-        if (err) {
-          return commonHelper.failed(resp.failed_msg.invTok);
-        }
-        let userDetail = await Models.userModel.findOne({
-          where: { id: authData.id },
-          raw: true,
+    if(token){
+      token = token.startsWith("Bearer ") ? token.split(" ")[1] : token;
+      if (token) {
+        jwt.verify(token, secretKey, async (err, authData) => {
+          if (err) {
+            return commonHelper.failed(resp.failed_msg.invTok);
+          }
+          let userDetail = await Models.userModel.findOne({
+            where: { id: authData.id },
+            raw: true,
+          });
+          req.user = userDetail;
+          req.token = token;
+          next();
         });
-        req.user = userDetail;
-        req.token = token;
-        next();
-      });
-    } else {
+      } else {
+        return commonHelper.error(res,resp.error_msg.tokenNotPrv);
+      }
+    }else{
       return commonHelper.error(res,resp.error_msg.tokenNotPrv);
     }
+ 
   },
 
   forgotPasswordVerify: async (req, res, next) => {
