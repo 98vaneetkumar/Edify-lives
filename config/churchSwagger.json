@@ -99,7 +99,7 @@
             "value": ""
           },
           {
-            "name": "churchAccessCode",
+            "name": "churchCode",
             "in": "formData",
             "description": "Enter church access code",
             "required": false,

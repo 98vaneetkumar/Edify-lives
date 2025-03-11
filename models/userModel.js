@@ -45,7 +45,16 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:''
       },
-
+      churchAccessCode:{
+        type: Sequelize.UUID, // Correct type for UUID
+        allowNull: true,
+        references: {
+            model: "users",  // Target model name
+            key: "id",       // Referencing the correct primary key
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
       password: {
         type: DataTypes.STRING(60),
         allowNull: true,
@@ -119,15 +128,10 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:''
       },
-      churchAccessCode:{
-        type: Sequelize.UUID, // Correct type for UUID
+      churchCode:{
+        type: DataTypes.STRING(255),
         allowNull: true,
-        references: {
-            model: "users",  // Target model name
-            key: "id",       // Referencing the correct primary key
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        defaultValue:''
       },
       numberOfMembers:{
         type: DataTypes.INTEGER,

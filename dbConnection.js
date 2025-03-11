@@ -11,7 +11,7 @@ const sequelize = new Sequelize(
 
 const connectdb = async () => {
   await sequelize
-    .authenticate()
+    .authenticate() 
     .then(async () => {
       await sequelize.sync({ alter: false });
       console.log("db is connected and sync also");

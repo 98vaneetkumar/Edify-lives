@@ -27,7 +27,7 @@ Models.likeNeedPostModel.belongsTo(Models.userModel, {
 });
 module.exports = {
   signUp: async (req, res) => {
-    try {
+    try {      
       const schema = Joi.object().keys({
         firstName: Joi.string().required(),
         lastName: Joi.string().required(),
@@ -37,7 +37,7 @@ module.exports = {
         password: Joi.string().required(),
         churchName: Joi.string().optional(),
         churchWebsite: Joi.string().optional(),
-        churchAccessCode: Joi.string().optional(),
+        churchCode: Joi.string().optional(),
         filterTestimonies: Joi.number().optional(),
         valuesStatement: Joi.any().optional(),
         maritalStatus: Joi.number().valid(0, 1).optional(),
@@ -112,7 +112,7 @@ module.exports = {
         password: hashedPassword,
         churchName: payload.churchName || null,
         churchWebsite: payload.churchWebsite || null,
-        churchAccessCode: payload.churchAccessCode || null,
+        churchCode: payload.churchCode || null,
         filterTestimonies: payload.filterTestimonies || null,
         valuesStatement: valuesStatementPath || null,
         maritalStatus: payload.maritalStatus || null,
@@ -126,6 +126,7 @@ module.exports = {
         hartOfService:payload.hartOfService || null,
       };
        try {
+        
         // const otpResponse = await otpManager.sendOTP(phone);
         await Models.userModel.create(objToSave);
         return commonHelper.success(res, Response.success_msg.otpResend);
