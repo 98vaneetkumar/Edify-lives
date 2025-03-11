@@ -199,6 +199,7 @@ module.exports = {
         maritalStatus,
         profilePreference,
         traitsExperience,
+        filterCount,
       ] = await Promise.all([
         Models.userModel.count({ where: { role: 1 } }),
         Models.userModel.count({ where: { role: 2 } }),
@@ -211,6 +212,7 @@ module.exports = {
         Models.maritalStatusModel.count(),
         Models.profilePreferenceModel.count(),
         Models.traitsExperienceModel.count(),
+        Models.filterTestimoniesModel.count(),
       ]);
 
       const currentYear = Math.max(2025, moment().year());
@@ -265,6 +267,7 @@ module.exports = {
         maritalStatus,
         profilePreference,
         traitsExperience,
+        filterCount,
         session: req.session.user,
       });
     } catch (error) {
@@ -1444,6 +1447,74 @@ module.exports = {
       return res.redirect("/admin/login");
     }
   },
+
+  filterTestimonies_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let filtertestimonies_data = await Models.filterTestimoniesModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/filtertestimonies/filtertestimoniesListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Filter Testimonies",
+        filtertestimonies_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  filterTestimonies_add: async (req, res) => {
+    try {
+      let title = "Filter Testimonies";
+      res.render("admin/filtertestimonies/filtertestimoniesAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  filterTestimonies_create: async (req, res) => {
+    try {
+      let objToSave = {
+        title: req.body.title,
+      };
+
+      await Models.filterTestimoniesModel.create(objToSave);
+
+      return res.json({
+        success: true,
+        message: "Filter added successfully.",
+      });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+  filterTestimonies_delete: async (req, res) => {
+    try {
+      const filterTestimoniesId = req.body.id;
+      await Models.filterTestimoniesModel.destroy({ where: { id: filterTestimoniesId } });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete filter" });
+      return res.redirect("/admin/login");
+    }
+  },
+
 
   test: async (req, res) => {
     try {

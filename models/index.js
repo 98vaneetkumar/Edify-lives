@@ -22,6 +22,8 @@ module.exports = {
   commentTestimonyModel:require("./commentTestimonyModel")(Sequelize, sequelize, Sequelize.DataTypes),
   likeTestimonyModel:require("./likeTestimonyPost")(Sequelize, sequelize, Sequelize.DataTypes),
 
+  filterTestimoniesModel:require("./filterTestimoniesModel")(Sequelize, sequelize, Sequelize.DataTypes),
+
 
 };
  

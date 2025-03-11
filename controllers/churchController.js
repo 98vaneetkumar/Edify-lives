@@ -38,7 +38,7 @@ module.exports = {
         churchName: Joi.string().optional(),
         churchWebsite: Joi.string().optional(),
         churchAccessCode: Joi.string().optional(),
-        numberOfMembers: Joi.number().optional(),
+        filterTestimonies: Joi.number().optional(),
         valuesStatement: Joi.any().optional(),
         maritalStatus: Joi.number().valid(0, 1).optional(),
         location: Joi.string().optional(),
@@ -112,7 +112,7 @@ module.exports = {
         churchName: payload.churchName || null,
         churchWebsite: payload.churchWebsite || null,
         churchAccessCode: payload.churchAccessCode || null,
-        numberOfMembers: payload.numberOfMembers || null,
+        filterTestimonies: payload.filterTestimonies || null,
         valuesStatement: valuesStatementPath || null,
         maritalStatus: payload.maritalStatus || null,
         location: payload.location || null,
@@ -418,4 +418,23 @@ module.exports = {
       throw error
     }
   },
+
+
+   filters_listing: async (req, res) => {
+      try {
+        let filters_data = await Models.filterTestimoniesModel.findAll({
+          order: [["createdAt", "DESC"]],
+          raw: true,
+        });
+        res.json({
+          success: true,
+          title: "Filter Testimonies",
+          filters_data,
+        });
+      } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, error: "Internal Server Error" });
+      }
+    },
+    
 };

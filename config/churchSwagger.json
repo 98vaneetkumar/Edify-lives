@@ -15,6 +15,18 @@
     }
   },
   "paths": {
+
+    "/church/filters_listing": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-filters_listing-post",
+        "tags": ["Application Common"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
     "/church/signUp": {
       "post": {
         "x-swagger-router-controller": "middleware-name1",

@@ -35,6 +35,8 @@ module.exports=function(){
     router.get("/likeTestimonyPostList",authentication, controller.churchController.likeTestimonyPostList)
     router.post("/unLikeTestimonyPost",authentication, controller.churchController.unlikeTestimonyPost)
 
+    router.get("/filters_listing", controller.churchController.filters_listing)
+
 
     return router
 }

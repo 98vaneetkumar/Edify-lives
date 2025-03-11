@@ -125,7 +125,10 @@ module.exports = function () {
   router.post("/traitsexperience_create", controller.adminController.traitsexperience_create);
   router.post("/traitsexperience_delete", controller.adminController.traitsexperience_delete);
   
-
+  router.get("/filterTestimonies_listing", controller.adminController.filterTestimonies_listing);
+  router.get("/filterTestimonies_add", controller.adminController.filterTestimonies_add);
+  router.post("/filterTestimonies_create", controller.adminController.filterTestimonies_create);
+  router.post("/filterTestimonies_delete", controller.adminController.filterTestimonies_delete);
 
 
 
