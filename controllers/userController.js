@@ -971,7 +971,7 @@ module.exports = {
   likeUnlikeVideo:async(req,res)=>{
     try {
       let schema=Joi.object().keys({
-        needPostId:Joi.string().required()
+        videoId:Joi.string().required()
       }); 
       let payload = await helper.validationJoi(req.body, schema);
      let has =  await Models.likeVideoModel.findOne({where: {
@@ -1036,6 +1036,4 @@ module.exports = {
       throw error
     }
   }
-
-
 };

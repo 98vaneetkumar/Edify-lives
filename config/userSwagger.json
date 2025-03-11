@@ -829,7 +829,7 @@
       }
     },
     "/users/videoList": {
-      "post": {
+      "get": {
         "x-swagger-router-controller": "middleware-name1",
         "operationId": "church-videoList-post",
         "tags": ["Application Video"],
@@ -841,6 +841,86 @@
         ],
         "parameters": [
        
+        ],
+        "responses": {}
+      }
+    },
+    "/users/likeUnlikeVideo": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-likeUnlikeVideo-get",
+        "tags": ["Application Video"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "videoId",
+            "in": "formData",
+            "description": "Enter the videoId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/commentOnVideo": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-commentOnVideo-post",
+        "tags": ["Application Video"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "videoId",
+            "in": "formData",
+            "description": "Enter the videoId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "comment",
+            "in": "formData",
+            "description": "Enter the comment",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/commentOnVideoList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-commentOnVideoList-post",
+        "tags": ["Application Video"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "videoId",
+            "in": "formData",
+            "description": "Enter the videoId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
         ],
         "responses": {}
       }
