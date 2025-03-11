@@ -30,7 +30,7 @@ module.exports = {
         gender: Joi.string().optional(),
         phoneNumber: Joi.string().required(),
         password: Joi.string().required(),
-        maritalStatus: Joi.number().valid(0, 1).optional(),
+        maritalStatus: Joi.string().optional(),
         profilePicture: Joi.any().optional(),
         location: Joi.string().optional(),
         latitude: Joi.string().optional(),

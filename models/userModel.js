@@ -62,9 +62,9 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         defaultValue:''
       },
       maritalStatus: {
-        type: DataTypes.INTEGER(10),
+        type: DataTypes.STRING(255),
         allowNull: true,
-        defaultValue:null  // 1 for married 0 for not married
+        defaultValue:null 
       },
       location:{
         type: DataTypes.STRING(255),
@@ -178,7 +178,7 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:''
       },
-      
+
       addressNonProfit: {
         type: DataTypes.STRING(255),
         allowNull: true,

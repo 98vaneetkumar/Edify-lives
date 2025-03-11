@@ -147,11 +147,10 @@
           {
             "name": "maritalStatus",
             "in": "formData",
-            "description": "Enter your married status (0 = Not Married, 1 = Married)",
+            "description": "Enter your married status",
             "required": false,
-            "type": "number",
-            "enum": [0, 1],
-            "value": 0
+            "type": "string",
+            "value": ""
           },
           {
             "name": "location",
@@ -159,7 +158,7 @@
             "description": "Enter your location",
             "required": false,
             "type": "string",
-            "value": "Mohali "
+            "value": "Mohali"
           },
           {
             "name": "latitude",
