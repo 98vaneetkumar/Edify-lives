@@ -140,7 +140,6 @@ module.exports = {
     try {
       const schema = Joi.object().keys({
         email: Joi.string().email().required(),
-        role:Joi.number().required(),
         password: Joi.string().required(),
         deviceToken: "abc", // static data, will come from frontend
         deviceType: Joi.number().valid(1, 2).optional(),
@@ -150,7 +149,7 @@ module.exports = {
       const { email, password, devideToken, deviceType } = payload;
 
       const user = await Models.userModel.findOne({
-        where: { email: email, role: payload.role },
+        where: { email: email},
         raw: true,
       });
 
