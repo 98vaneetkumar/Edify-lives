@@ -1025,7 +1025,7 @@
       "get": {
         "x-swagger-router-controller": "middleware-name1",
         "operationId": "users-eventList-post",
-        "tags": ["Application Video"],
+        "tags": ["Application Event"],
         "description": "",
         "security": [
           {
