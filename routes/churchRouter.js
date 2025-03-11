@@ -19,6 +19,9 @@ module.exports=function(){
     router.get("/cms",authentication, controller.userController.cms)
     router.get("/notificationsList",authentication, controller.userController.notificationsList)
 
+    router.get("/bannerList",authentication, controller.churchController.bannerList)
+
+
     router.post("/needPost",authentication, controller.churchController.needPost)
     router.get("/needPostList",authentication, controller.churchController.needPostList)
 
@@ -29,7 +32,16 @@ module.exports=function(){
     router.get("/likeNeedPostList",authentication, controller.churchController.likeNeedPostList)
     router.post("/unLikeNeedPost",authentication, controller.churchController.unlikeNeedPost)
 
-    router.get("/bannerList",authentication, controller.churchController.bannerList)
+    router.post("/testimonyPost",authentication, controller.churchController.testimonyPost)
+    router.get("/testimonyPostList",authentication, controller.churchController.testimonyPostList)
+
+    router.post("/commentOnTestimonyPost",authentication, controller.churchController.commentOnTestimonyPost)
+    router.get("/commentOnTestimonyPostList",authentication, controller.churchController.commentOnTestimonyPostList)
+
+    router.post("/likeTestimonyPost",authentication, controller.churchController.likeTestimonyPost)
+    router.get("/likeTestimonyPostList",authentication, controller.churchController.likeTestimonyPostList)
+    router.post("/unLikeTestimonyPost",authentication, controller.churchController.unlikeTestimonyPost)
+
 
     return router
 }

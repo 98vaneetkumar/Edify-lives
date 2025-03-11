@@ -201,6 +201,18 @@ module.exports = {
         return commonHelper.error(res, Response.error_msg.loguser, err.message);
       }
   },
+
+  bannerList:async(req,res)=>{
+    try {
+      let response=await Models.bannerModel.findAll();
+      return commonHelper.success(res, Response.success_msg.bannerList,response);
+    } catch (error) {
+      throw error
+    }
+  },
+
+
+
   needPost:async(req,res)=>{
     try {
       const schema = Joi.object().keys({
@@ -310,12 +322,116 @@ module.exports = {
       throw error
     }
   },
-  bannerList:async(req,res)=>{
+
+
+
+  testimonyPost:async(req,res)=>{
     try {
-      let response=await Models.bannerModel.findAll();
-      return commonHelper.success(res, Response.success_msg.bannerList,response);
+      const schema = Joi.object().keys({
+        title: Joi.string().required()
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+      let objToSave={
+        userId:req.user.id,
+        title:payload.title
+      }
+     let response= await Models.testimonyPostModel.create(objToSave);
+      return commonHelper.success(res, Response.success_msg.testimonyPost,response);
     } catch (error) {
       throw error
     }
-  }
+  },
+  testimonyPostList:async(req,res)=>{
+    try {
+      let response=await Models.testimonyPostModel.findAll({
+       include:[{
+          model:Models.userModel,
+          as:'user',
+       }]
+      });
+      return commonHelper.success(res, Response.success_msg.testimonyPostList,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  commentOnTestimonyPost:async(req,res)=>{
+    try {
+      let schema=Joi.object().keys({
+        testimonyPostId:Joi.string().required(),
+        comment:Joi.string().required()
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+      let objToSave={
+        userId:req.user.id,
+        testimonyPostId:payload.testimonyPostId,
+        comment:payload.comment
+      }
+      let response=await Models.commentTestimonyModel.create(objToSave);
+      return commonHelper.success(res, Response.success_msg.testimonyPostComment,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  commentOnTestimonyPostList:async(req,res)=>{
+    try {
+      let response=await Models.commentTestimonyModel.findAll({
+        where:{
+          testimonyPostId:req.query.testimonyPostId
+        },
+        include:[{
+          model:Models.userModel,
+        }]
+      });
+      return commonHelper.success(res, Response.success_msg.testimonyPostCommentList,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  likeTestimonyPost:async(req,res)=>{
+    try {
+      let schema=Joi.object().keys({
+        testimonyPostId:Joi.string().required()
+      }); 
+      let payload = await helper.validationJoi(req.body, schema);
+      let response=await Models.likeTestimonyModel.create({
+        userId:req.user.id,
+        testimonyPostId:payload.testimonyPostId
+      });
+      return commonHelper.success(res, Response.success_msg.likeTestimonyPost,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  likeTestimonyPostList:async(req,res)=>{
+    try {
+      let response=await Models.likeTestimonyModel.findAll({
+        where:{
+          testimonyPostId:req.query.testimonyPostId
+        },
+        include:[{
+          model:Models.userModel
+        }]
+      });
+      return commonHelper.success(res, Response.success_msg.likeTestimonyPostList,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  unlikeTestimonyPost:async(req,res)=>{
+    try {
+      let schema=Joi.object().keys({
+        testimonyPostId:Joi.string().required()
+      }); 
+      let payload = await helper.validationJoi(req.body, schema);
+      let response=await Models.likeTestimonyModel.destroy({
+        where:{
+          userId:req.user.id,
+          testimonyPostId:payload.testimonyPostId
+        }
+      });
+      return commonHelper.success(res, Response.success_msg.unLikeTestimonyPost);
+    } catch (error) {
+      throw error
+    }
+  },
 };
