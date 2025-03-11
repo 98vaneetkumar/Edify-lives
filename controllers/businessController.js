@@ -35,6 +35,7 @@ module.exports = {
         donateEdifyLivers: Joi.string().optional(),
         deviceToken: Joi.string().optional(),
         deviceType: Joi.number().valid(1, 2).optional(),
+        hartOfService: Joi.string().optional(),
       });
   
       let payload = await helper.validationJoi(req.body, schema);
@@ -98,6 +99,7 @@ module.exports = {
         donateEdifyLivers: payload.donateEdifyLivers || null,
         deviceToken: payload.deviceToken || null,
         deviceType: payload.deviceType || null,
+        hartOfService: payload.hartOfService || null,
       };
   
 

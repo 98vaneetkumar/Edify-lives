@@ -177,9 +177,9 @@
             "value": "76.7179"
           },
           {
-            "name": "churchAccessCode",
+            "name": "usersAccessCode",
             "in": "formData",
-            "description": "EnterchurchAccessCode ",
+            "description": "EnterusersAccessCode ",
             "required": false,
             "type": "string",
             "value": ""
@@ -456,6 +456,331 @@
           }
         ],
         "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/needPost": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-needPost-post",
+        "tags": ["Application users"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "Enter the message",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/needPostList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-needPostList-post",
+        "tags": ["Application users"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/commentOnNeedPost": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-commentOnNeedPost-post",
+        "tags": ["Application users"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "needPostId",
+            "in": "formData",
+            "description": "Enter the needPostId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "comment",
+            "in": "formData",
+            "description": "Enter the comment",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/commentOnNeedPostList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-commentOnNeedPostList-get",
+        "tags": ["Application users"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "needPostId",
+            "in": "query",
+            "description": "Enter the needPostId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/likeUnlikeNeedPost": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-likeNeedPost-get",
+        "tags": ["Application users"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "needPostId",
+            "in": "formData",
+            "description": "Enter the needPostId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/likeNeedPostList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-likeNeedPostList-get",
+        "tags": ["Application users"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "needPostId",
+            "in": "query",
+            "description": "Enter the needPostId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/bannerList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-bannerList-post",
+        "tags": ["Application users"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/testimonyPost": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-testimonyPost-post",
+        "tags": ["Application users Testimony"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "formData",
+            "description": "Enter the message",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/testimonyPostList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-testimonyPostList-post",
+        "tags": ["Application users Testimony"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/commentOnTestimonyPost": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-commentOnTestimonyPost-post",
+        "tags": ["Application users Testimony"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "testimonyPostId",
+            "in": "formData",
+            "description": "Enter the testimonyPostId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "comment",
+            "in": "formData",
+            "description": "Enter the comment",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/commentOnTestimonyPostList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-commentOnTestimonyPostList-get",
+        "tags": ["Application users Testimony"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "testimonyPostId",
+            "in": "query",
+            "description": "Enter the testimonyPostId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/likeTestimonyPost": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-likeTestimonyPost-get",
+        "tags": ["Application users Testimony"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "testimonyPostId",
+            "in": "formData",
+            "description": "Enter the testimonyPostId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/likeTestimonyPostList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-likeTestimonyPostList-get",
+        "tags": ["Application users Testimony"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "testimonyPostId",
+            "in": "query",
+            "description": "Enter the testimonyPostId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/unLikeTestimonyPost": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-unLikeTestimonyPost-post",
+        "tags": ["Application users Testimony"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "testimonyPostId",
+            "in": "formData",
+            "description": "Enter the testimonyPostId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
         "responses": {}
       }
     }

@@ -13,17 +13,16 @@ module.exports = {
   numberOfMembersModel:require("./numberOfMembersModel")(Sequelize, sequelize, Sequelize.DataTypes),
   profilePreferenceModel:require("./profilePreferenceModel")(Sequelize, sequelize, Sequelize.DataTypes),
   traitsExperienceModel:require("./traitsExperienceModel")(Sequelize, sequelize, Sequelize.DataTypes),
-
   needPostModel:require("./needPostModel")(Sequelize, sequelize, Sequelize.DataTypes),
   commentNeedPostModel:require("./commentNeedModel")(Sequelize, sequelize, Sequelize.DataTypes),
   likeNeedPostModel:require("./likeNeedPostModel")(Sequelize, sequelize, Sequelize.DataTypes),
-
   testimonyPostModel:require("./testimonyPostModel")(Sequelize, sequelize, Sequelize.DataTypes),
   commentTestimonyModel:require("./commentTestimonyModel")(Sequelize, sequelize, Sequelize.DataTypes),
   likeTestimonyModel:require("./likeTestimonyPost")(Sequelize, sequelize, Sequelize.DataTypes),
-
   filterTestimoniesModel:require("./filterTestimoniesModel")(Sequelize, sequelize, Sequelize.DataTypes),
-
+  videoModel:require("./videoModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  commentVideoModel:require("./commentVideoModels")(Sequelize, sequelize, Sequelize.DataTypes),
+  likeVideoModel:require("./likeVideoModels")(Sequelize, sequelize, Sequelize.DataTypes),
 
 };
  

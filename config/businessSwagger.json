@@ -137,7 +137,14 @@
             "type": "string",
             "value": ""
           },
-
+          {
+            "name": "hartOfService",
+            "in": "formData",
+            "description": "Enter hartOfService",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
           {
             "name": "deviceType",
             "in": "formData",

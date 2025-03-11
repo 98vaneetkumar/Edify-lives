@@ -40,6 +40,10 @@ var success_msg = {
   unLikeTestimonyPost: "Unlike on testimony post added successfully",
 
   logoUploadSuccess: "Logo uploaded successfully",
+  addVideo:"Video added successfully",
+  videoList:"Video list fetched successfully",
+  unLikeVideo:"Unlike on video added successfully",
+  likeVideo:"Like on video added successfully",
 };
 
 var failed_msg = {

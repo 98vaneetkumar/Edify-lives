@@ -26,6 +26,32 @@ module.exports=function(){
     router.get("/cms",authentication, controller.userController.cms)
     router.get("/notificationsList",authentication, controller.userController.notificationsList)
 
+
+    
+//  <------------------------------------Comman api's------------------------------------------------------------>
+
+router.post("/needPost",authentication, controller.userController.needPost)
+router.get("/needPostList",authentication, controller.userController.needPostList)
+
+router.post("/commentOnNeedPost",authentication, controller.userController.commentOnNeedPost)
+router.get("/commentOnNeedPostList",authentication, controller.userController.commentOnNeedPostList)
+
+router.post("/likeUnlikeNeedPost",authentication, controller.userController.likeUnlikeNeedPost)
+router.get("/likeNeedPostList",authentication, controller.userController.likeNeedPostList)
+
+router.post("/testimonyPost",authentication, controller.userController.testimonyPost)
+router.get("/testimonyPostList",authentication, controller.userController.testimonyPostList)
+
+router.post("/commentOnTestimonyPost",authentication, controller.userController.commentOnTestimonyPost)
+router.get("/commentOnTestimonyPostList",authentication, controller.userController.commentOnTestimonyPostList)
+
+router.post("/likeTestimonyPost",authentication, controller.userController.likeTestimonyPost)
+router.get("/likeTestimonyPostList",authentication, controller.userController.likeTestimonyPostList)
+router.post("/unLikeTestimonyPost",authentication, controller.userController.unlikeTestimonyPost)
+
+router.post("/addVideo",authentication, controller.userController.addVideo)
+router.get("/videoList",authentication, controller.userController.videoList)
+router.post("/likeUnlikeVideo",authentication, controller.userController.likeUnlikeVideo)
     return router
 }
 
