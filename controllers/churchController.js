@@ -3,6 +3,7 @@
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const Sequelize=require("sequelize");
 const otpManager = require("node-twillo-otp-manager")(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN,
@@ -159,10 +160,18 @@ module.exports = {
           "images"
         );
       }
+      let valuesStatementPath = null;
+      if (req.files?.valueStatement) {
+        valuesStatementPath = await commonHelper.fileUpload(
+          req.files.valueStatement,
+          "images"
+        );
+      }
 
       let objToUpdate = await Models.userModel.update({
         visionStatement: visionStatementPath || null,
         companyLogo: companyLogoPath || null,
+        valuesStatement: valuesStatementPath || null
       }, {where: {
         id: req.user.id
       }})
@@ -207,12 +216,35 @@ module.exports = {
   },
   needPostList:async(req,res)=>{
     try {
+     let limit= parseInt(req.query.limit, 10) || 10;
+     let offset=parseInt(req.query.skip, 10) || 0;
       let response=await Models.needPostModel.findAll({
-
+        attributes: {
+          include: [
+            [Sequelize.literal("(SELECT count(id) FROM commentNeedPost where needPostId=needPost.id )"), "commentsCount"],
+            [Sequelize.literal("(SELECT count(id) FROM likeNeedPost where needPostId=needPost.id )"), "likesCount"],
+            [Sequelize.literal(`
+              (CASE 
+                WHEN (SELECT count(id) FROM commentNeedPost where needPostId=needPost.id and userId = '${req.user.id}') > 0 
+                THEN 1 
+                ELSE 0 
+              END)
+            `),"isComment"],
+            [Sequelize.literal(`
+              (CASE 
+                WHEN (SELECT count(id) FROM likeNeedPost where needPostId=needPost.id and userId = '${req.user.id}') > 0 
+                THEN 1 
+                ELSE 0 
+              END)
+            `),"isLike"]
+          ]
+        },
        include:[{
           model:Models.userModel,
           as:'user',
-       }]
+       }],
+       limit: limit,
+       offset: offset
       });
       return commonHelper.success(res, Response.success_msg.needPostList,response);
     } catch (error) {
@@ -331,6 +363,26 @@ module.exports = {
   testimonyPostList:async(req,res)=>{
     try {
       let response=await Models.testimonyPostModel.findAll({
+        attributes: {
+          include: [
+            [Sequelize.literal("(SELECT count(id) FROM commentTestimonyPost where testimonyPostId=testimonyPost.id )"), "commentsCount"],
+            [Sequelize.literal("(SELECT count(id) FROM liketesTimonyPost where testimonyPostId=testimonyPost.id )"), "likesCount"],
+            [Sequelize.literal(`
+              (CASE 
+                WHEN (SELECT count(id) FROM commentTestimonyPost where testimonyPostId=testimonyPost.id and userId = '${req.user.id}') > 0 
+                THEN 1 
+                ELSE 0 
+              END)
+              `),"isComment"],
+            [Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM liketesTimonyPost where testimonyPostId=testimonyPost.id and userId = '${req.user.id}') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+              `),"isLike"]  
+          ]
+        },
        include:[{
           model:Models.userModel,
           as:'user',
