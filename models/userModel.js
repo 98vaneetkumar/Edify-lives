@@ -120,9 +120,14 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         defaultValue:''
       },
       churchAccessCode:{
-        type: DataTypes.STRING(255),
+        type: Sequelize.UUID, // Correct type for UUID
         allowNull: true,
-        defaultValue:''
+        references: {
+            model: "users",  // Target model name
+            key: "id",       // Referencing the correct primary key
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
       },
       numberOfMembers:{
         type: DataTypes.INTEGER,
@@ -173,6 +178,7 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:''
       },
+      
       addressNonProfit: {
         type: DataTypes.STRING(255),
         allowNull: true,
@@ -194,14 +200,9 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         defaultValue:''
       },
       chruchAttendAddress: {
-        type: Sequelize.UUID, // Correct type for UUID
+        type: DataTypes.STRING(255),
         allowNull: true,
-        references: {
-            model: "users",  // Target model name
-            key: "id",       // Referencing the correct primary key
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        defaultValue:''
     },    
       companyLogo:{
         type: DataTypes.STRING(255),

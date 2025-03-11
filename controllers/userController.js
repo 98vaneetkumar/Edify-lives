@@ -39,6 +39,7 @@ module.exports = {
         traitAndExperience: Joi.string().optional(),
         postEmpSeekingSection: Joi.number().optional(),
         hartOfService: Joi.string().optional(),
+        churchAccessCode: Joi.string().optional(),
         deviceToken: Joi.string().optional(),
         deviceType: Joi.number().valid(1, 2).optional(),
       });
@@ -112,6 +113,7 @@ module.exports = {
         traitAndExperience: payload.traitAndExperience || null,
         postEmpSeekingSection: payload.postEmpSeekingSection || null,
         hartOfService: payload.hartOfService || null,
+        churchAccessCode: payload.churchAccessCode || null,
         deviceToken: payload.deviceToken || null,
         deviceType: payload.deviceType || null,
       };

@@ -178,6 +178,14 @@
             "value": "76.7179"
           },
           {
+            "name": "churchAccessCode",
+            "in": "formData",
+            "description": "EnterchurchAccessCode ",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
             "name": "donateEdifyLivers",
             "in": "formData",
             "description": "Enter donateEdifyLivers",
