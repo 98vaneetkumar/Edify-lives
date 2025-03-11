@@ -19,6 +19,9 @@ Models.needPostModel.belongsTo(Models.userModel, {
   foreignKey: 'userId',
   as: 'user'
 });
+Models.commentNeedPostModel.belongsTo(Models.userModel, {
+  foreignKey: 'userId',
+});
 module.exports = {
   signUp: async (req, res) => {
     try {
