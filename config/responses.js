@@ -19,7 +19,15 @@ var success_msg = {
 
   otpResend: "OTP resent successfully",
   notificationList: "Notification list fetched successfully",
-  churchesFound:"Churches found successfully"
+  churchesFound:"Churches found successfully",
+  needPost:"Need posted successfully",
+  needPostList:"Need post list fetched successfully",
+  needPostComment:"Comment on need post added successfully",
+  needPostCommentList:"Comment on need post list fetched successfully",
+  likeNeedPost:"Like on need post added successfully",
+  likeNeedPostList:"Like on need post list fetched successfully",
+  unLikeNeedPost:"Unlike on need post added successfully",
+  bannerList:"Banner list fetched successfully",
 };
 
 var failed_msg = {

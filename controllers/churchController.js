@@ -15,6 +15,10 @@ const helper = require("../helpers/validation.js");
 const Models = require("../models/index");
 const Response = require("../config/responses.js");
 
+Models.needPostModel.belongsTo(Models.userModel, {
+  foreignKey: 'userId',
+  as: 'user'
+});
 module.exports = {
   signUp: async (req, res) => {
     try {
@@ -38,6 +42,7 @@ module.exports = {
         donateEdifyLivers: Joi.string().optional(),
         deviceToken: Joi.string().optional(),
         deviceType: Joi.number().valid(1, 2).optional(),
+        hartOfService: Joi.string().optional(),
       });
 
       let payload = await helper.validationJoi(req.body, schema);
@@ -121,6 +126,7 @@ module.exports = {
         donateEdifyLivers: payload.donateEdifyLivers || null,
         deviceToken: payload.deviceToken || null,
         deviceType: payload.deviceType || null,
+        hartOfService:payload.hartOfService || null,
       };
        try {
         // const otpResponse = await otpManager.sendOTP(phone);
@@ -135,4 +141,121 @@ module.exports = {
       return commonHelper.error(res, Response.error_msg.regUser, error.message);
     }
   },
+  needPost:async(req,res)=>{
+    try {
+      const schema = Joi.object().keys({
+        title: Joi.string().required()
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+      let objToSave={
+        userId:req.user.id,
+        title:payload.title
+      }
+     let response= await Models.needPostModel.create(objToSave);
+      return commonHelper.success(res, Response.success_msg.needPost,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  needPostList:async(req,res)=>{
+    try {
+      let response=await Models.needPostModel.findAll({
+       include:[{
+          model:Models.userModel,
+          as:'user',
+       }]
+      });
+      return commonHelper.success(res, Response.success_msg.needPostList,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  commentOnNeedPost:async(req,res)=>{
+    try {
+      let schema=Joi.object().keys({
+        needPostId:Joi.string().required(),
+        comment:Joi.string().required()
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+      let objToSave={
+        userId:req.user.id,
+        needPostId:payload.needPostId,
+        comment:payload.comment
+      }
+      let response=await Models.commentNeedPostModel.create(objToSave);
+      return commonHelper.success(res, Response.success_msg.needPostComment,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  commentOnNeedPostList:async(req,res)=>{
+    try {
+      let response=await Models.commentNeedPostModel.findAll({
+        where:{
+          needPostId:req.query.needPostId
+        },
+        include:[{
+          model:Models.userModel,
+        }]
+      });
+      return commonHelper.success(res, Response.success_msg.needPostCommentList,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  likeNeedPost:async(req,res)=>{
+    try {
+      let schema=Joi.object().keys({
+        needPostId:Joi.string().required()
+      }); 
+      let payload = await helper.validationJoi(req.body, schema);
+      let response=await Models.likeNeedPostModel.create({
+        userId:req.user.id,
+        needPostId:payload.needPostId
+      });
+      return commonHelper.success(res, Response.success_msg.likeNeedPost,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  likeNeedPostList:async(req,res)=>{
+    try {
+      let response=await Models.likeNeedPostModel.findAll({
+        where:{
+          needPostId:req.query.needPostId
+        },
+        include:[{
+          model:Models.userModel
+        }]
+      });
+      return commonHelper.success(res, Response.success_msg.likeNeedPostList,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  unlikeNeedPost:async(req,res)=>{
+    try {
+      let schema=Joi.object().keys({
+        needPostId:Joi.string().required()
+      }); 
+      let payload = await helper.validationJoi(req.body, schema);
+      let response=await Models.likeNeedPostModel.destroy({
+        where:{
+          userId:req.user.id,
+          needPostId:payload.needPostId
+        }
+      });
+      return commonHelper.success(res, Response.success_msg.unLikeNeedPost,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  bannerList:async(req,res)=>{
+    try {
+      let response=await Models.bannerModel.findAll();
+      return commonHelper.success(res, Response.success_msg.bannerList,response);
+    } catch (error) {
+      throw error
+    }
+  }
 };

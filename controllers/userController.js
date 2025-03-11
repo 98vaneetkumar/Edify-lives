@@ -38,7 +38,7 @@ module.exports = {
         donateEdifyLivers: Joi.string().optional(),
         traitAndExperience: Joi.string().optional(),
         postEmpSeekingSection: Joi.number().optional(),
-        hartOfService: Joi.number().optional(),
+        hartOfService: Joi.string().optional(),
         deviceToken: Joi.string().optional(),
         deviceType: Joi.number().valid(1, 2).optional(),
       });

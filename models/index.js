@@ -13,5 +13,9 @@ module.exports = {
   numberOfMembersModel:require("./numberOfMembersModel")(Sequelize, sequelize, Sequelize.DataTypes),
   profilePreferenceModel:require("./profilePreferenceModel")(Sequelize, sequelize, Sequelize.DataTypes),
   traitsExperienceModel:require("./traitsExperienceModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  needPostModel:require("./needPostModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  commentNeedPostModel:require("./commentNeedModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  likeNeedPostModel:require("./likeNeedPostModel")(Sequelize, sequelize, Sequelize.DataTypes),
+
 };
  

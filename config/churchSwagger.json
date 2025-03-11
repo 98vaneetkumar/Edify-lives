@@ -103,6 +103,14 @@
                         "value": ""
                     },
                     {
+                        "name": "hartOfService",
+                        "in": "formData",
+                        "description": "Who do you have the heart of service",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                      },
+                    {
                         "name": "visionStatement",
                         "in": "formData",
                         "description": "Enter vision statement picture to upload",
@@ -388,6 +396,162 @@
             "get": {
                 "x-swagger-router-controller": "middleware-name1",
                 "operationId": "church-cms-post",
+                "tags": ["Application User"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": [
+                  
+				],
+                "responses": {}
+            }
+        },
+        "/church/needPost": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-needPost-post",
+                "tags": ["Application User"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "formData",
+                        "description": "Enter the message",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },  
+        "/church/needPostList": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-needPostList-post",
+                "tags": ["Application User"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": [
+                  
+				],
+                "responses": {}
+            }
+        },
+        "/church/commentOnNeedPost": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-commentOnNeedPost-post",
+                "tags": ["Application User"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "needPostId",
+                        "in": "formData",
+                        "description": "Enter the needPostId",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "description": "Enter the comment",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/church/commentOnNeedPostList": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-commentOnNeedPostList-get",
+                "tags": ["Application User"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "needPostId",
+                        "in": "query",
+                        "description": "Enter the needPostId",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/church/likeNeedPost": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-likeNeedPost-get",
+                "tags": ["Application User"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "needPostId",
+                        "in": "formData",
+                        "description": "Enter the needPostId",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/church/likeNeedPostList": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-likeNeedPostList-get",
+                "tags": ["Application User"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "needPostId",
+                        "in": "query",
+                        "description": "Enter the needPostId",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/church/unLikeNeedPost": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-unLikeNeedPost-post",
+                "tags": ["Application User"],
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "needPostId",
+                        "in": "formData",
+                        "description": "Enter the needPostId",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/church/bannerList": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-bannerList-post",
                 "tags": ["Application User"],
                 "description": "",
                 "security": [
