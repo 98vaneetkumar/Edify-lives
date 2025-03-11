@@ -594,6 +594,175 @@
 				],
                 "responses": {}
             }
+        },
+        "/church/testimonyPost": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-testimonyPost-post",
+                "tags": ["Application Church Testimony"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "formData",
+                        "description": "Enter the message",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },  
+        "/church/testimonyPostList": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-testimonyPostList-post",
+                "tags": ["Application Church Testimony"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+				"parameters": [
+                  
+				],
+                "responses": {}
+            }
+        },
+        "/church/commentOnTestimonyPost": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-commentOnTestimonyPost-post",
+                "tags": ["Application Church Testimony"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+                "parameters": [
+                    {
+                        "name": "testimonyPostId",
+                        "in": "formData",
+                        "description": "Enter the testimonyPostId",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    },
+                    {
+                        "name": "comment",
+                        "in": "formData",
+                        "description": "Enter the comment",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/church/commentOnTestimonyPostList": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-commentOnTestimonyPostList-get",
+                "tags": ["Application Church Testimony"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+                "parameters": [
+                    {
+                        "name": "testimonyPostId",
+                        "in": "query",
+                        "description": "Enter the testimonyPostId",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/church/likeTestimonyPost": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-likeTestimonyPost-get",
+                "tags": ["Application Church Testimony"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+                "parameters": [
+                    {
+                        "name": "testimonyPostId",
+                        "in": "formData",
+                        "description": "Enter the testimonyPostId",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/church/likeTestimonyPostList": {
+            "get": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-likeTestimonyPostList-get",
+                "tags": ["Application Church Testimony"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+                "parameters": [
+                    {
+                        "name": "testimonyPostId",
+                        "in": "query",
+                        "description": "Enter the testimonyPostId",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/church/unLikeTestimonyPost": {
+            "post": {
+                "x-swagger-router-controller": "middleware-name1",
+                "operationId": "church-unLikeTestimonyPost-post",
+                "tags": ["Application Church Testimony"],
+                "description": "",
+                "security": [
+					{
+						"Bearer": []
+					}
+				],
+                "parameters": [
+                    {
+                        "name": "testimonyPostId",
+                        "in": "formData",
+                        "description": "Enter the testimonyPostId",
+                        "required": false,
+                        "type": "string",
+                        "value": ""
+                    }
+                ],
+                "responses": {}
+            }
         }
     },
     "definitions": {
