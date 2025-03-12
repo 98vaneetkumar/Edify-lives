@@ -888,8 +888,8 @@ footer.footer-border {
 }
 
 .main-menu.menu-light .navigation > li.active > a {
-  background: linear-gradient(118deg, #fdfcfb, #f3ece7);
-  color: black;
+  background: linear-gradient(118deg, #232526, #414345, #5c5e60);
+  color: white;
   font-weight: 400;
   border-radius: 4px;
 }

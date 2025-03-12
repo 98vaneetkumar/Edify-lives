@@ -1,8 +1,8 @@
 <div
   class="main-menu menu-fixed menu-light menu-accordion menu-shadow"
   data-scroll-to-active="true"
-  style="background: linear-gradient(to right, #1c1c1c, #2a2a2a);"
-  >
+  style="background: linear-gradient(to right, #1c1c1c, #2a2a2a)"
+>
   <div class="navbar-header">
     <ul class="nav navbar-nav flex-row">
       <li class="nav-item mx-auto w-100">
@@ -36,21 +36,21 @@
       <li
         class="<% if(title =='Dashboard'){ %> nav-item dropdown active <% }%>"
       >
-        <a class="d-flex align-items-center" href="/admin/dashboard"
-          ><i data-feather="home"></i
-          ><span class="menu-title text-truncate" data-i18n="Dashboards"
+        <a class="d-flex align-items-center" href="/admin/dashboard">
+          <i class="fas fa-home"></i>
+          <span class="menu-title text-truncate" data-i18n="Dashboards"
             >Dashboard</span
-          ></a
-        >
+          >
+        </a>
       </li>
+
       <li class="<% if(title =='Users'){ %> nav-item dropdown active <% }%>">
-        <a class="d-flex align-items-center" href="/admin/users_listing"
-          ><i data-feather="users"></i
-          ><span class="menu-title text-truncate" data-i18n="Users"
-            >Users</span
-          ></a
-        >
+        <a class="d-flex align-items-center" href="/admin/users_listing">
+          <i class="fas fa-users"></i>
+          <span class="menu-title text-truncate" data-i18n="Users">Users</span>
+        </a>
       </li>
+
       <li class="<% if(title =='Churches'){ %> nav-item dropdown active <% }%>">
         <a class="d-flex align-items-center" href="/admin/churches_listing">
           <i class="fas fa-church"></i>
@@ -59,9 +59,7 @@
           >
         </a>
       </li>
-      <li
-        class="<% if(title =='Business'){ %> nav-item dropdown active <% }%>"
-      >
+      <li class="<% if(title =='Business'){ %> nav-item dropdown active <% }%>">
         <a class="d-flex align-items-center" href="/admin/business_listing">
           <i class="fas fa-briefcase"></i>
           <span class="menu-title text-truncate" data-i18n="Business"
@@ -81,68 +79,110 @@
         </a>
       </li>
 
-      <li class="<% if(title == 'subscription'){ %> nav-item dropdown active <% }%>">
+      <li
+        class="<% if(title == 'subscription'){ %> nav-item dropdown active <% }%>"
+      >
         <a class="d-flex align-items-center" href="/admin/subscription_listing">
           <i class="fas fa-credit-card"></i>
-          <span class="menu-title text-truncate" data-i18n="Subscription">Subscription</span>
+          <span class="menu-title text-truncate" data-i18n="Subscription"
+            >Subscription</span
+          >
         </a>
       </li>
 
       <li class="<% if(title =='banner'){ %> nav-item dropdown active <% }%>">
         <a class="d-flex align-items-center" href="/admin/banner_listing">
-          <i data-feather="image"></i>
-          <span class="menu-title text-truncate" data-i18n="Banner">Banner</span>
+          <i class="fas fa-image"></i>
+          <span class="menu-title text-truncate" data-i18n="Banner"
+            >Banner</span
+          >
         </a>
       </li>
 
-      <li class="<% if(title =='Traits & Experience'){ %> nav-item dropdown active <% }%>">
-        <a class="d-flex align-items-center" href="/admin/traitsexperience_listing">
+      <li
+        class="<% if(title =='Traits & Experience'){ %> nav-item dropdown active <% }%>"
+      >
+        <a
+          class="d-flex align-items-center"
+          href="/admin/traitsexperience_listing"
+        >
           <i class="fas fa-user-check"></i>
-          <span class="menu-title text-truncate" data-i18n="Traits & Experience">Traits & Experience</span>
+          <span class="menu-title text-truncate" data-i18n="Traits & Experience"
+            >Traits & Experience</span
+          >
         </a>
       </li>
-      
-      <li class="<% if(title =='Marital Status'){ %> nav-item dropdown active <% }%>">
-        <a class="d-flex align-items-center" href="/admin/maritalstatus_listing">
+
+      <li
+        class="<% if(title =='Marital Status'){ %> nav-item dropdown active <% }%>"
+      >
+        <a
+          class="d-flex align-items-center"
+          href="/admin/maritalstatus_listing"
+        >
           <i class="fas fa-ring"></i>
-          <span class="menu-title text-truncate" data-i18n="Marital Status">Marital Status</span>
+          <span class="menu-title text-truncate" data-i18n="Marital Status"
+            >Marital Status</span
+          >
         </a>
       </li>
-      
-      <li class="<% if(title =='Profile Preference'){ %> nav-item dropdown active <% }%>">
-        <a class="d-flex align-items-center" href="/admin/profilepreference_listing">
+
+      <li
+        class="<% if(title =='Profile Preference'){ %> nav-item dropdown active <% }%>"
+      >
+        <a
+          class="d-flex align-items-center"
+          href="/admin/profilepreference_listing"
+        >
           <i class="fas fa-user-cog"></i>
-          <span class="menu-title text-truncate" data-i18n="Profile Preference">Profile Preference</span>
+          <span class="menu-title text-truncate" data-i18n="Profile Preference"
+            >Profile Preference</span
+          >
         </a>
       </li>
-      
-      <li class="<% if(title =='Number of Members'){ %> nav-item dropdown active <% }%>">
-        <a class="d-flex align-items-center" href="/admin/numberofmembers_listing">
+
+      <li
+        class="<% if(title =='Number of Members'){ %> nav-item dropdown active <% }%>"
+      >
+        <a
+          class="d-flex align-items-center"
+          href="/admin/numberofmembers_listing"
+        >
           <i class="fas fa-user-cog"></i>
-          <span class="menu-title text-truncate" data-i18n="Number of Members">Number of Members</span>
+          <span class="menu-title text-truncate" data-i18n="Number of Members"
+            >Number of Members</span
+          >
         </a>
       </li>
-      
-      <li class="<% if(title =='Heart To Serve'){ %> nav-item dropdown active <% }%>">
+
+      <li
+        class="<% if(title =='Heart To Serve'){ %> nav-item dropdown active <% }%>"
+      >
         <a class="d-flex align-items-center" href="/admin/hearttoserve_listing">
           <i class="fas fa-heart"></i>
-          <span class="menu-title text-truncate" data-i18n="Heart to Serve">Heart to Serve</span>
+          <span class="menu-title text-truncate" data-i18n="Heart to Serve"
+            >Heart to Serve</span
+          >
         </a>
       </li>
 
-      <li class="<% if(title == 'Filter Testimonies'){ %> nav-item dropdown active <% }%>">
-        <a class="d-flex align-items-center" href="/admin/filterTestimonies_listing">
+      <li
+        class="<% if(title == 'Filter Testimonies'){ %> nav-item dropdown active <% }%>"
+      >
+        <a
+          class="d-flex align-items-center"
+          href="/admin/filterTestimonies_listing"
+        >
           <i class="fas fa-filter"></i>
-          <span class="menu-title text-truncate" data-i18n="Filter">Filter Testimonies</span>
+          <span class="menu-title text-truncate" data-i18n="Filter"
+            >Filter Testimonies</span
+          >
         </a>
       </li>
-      
-      
-      
-      
+
       <li class="<% if(title =='About Us'){ %> nav-item dropdown active <% }%>">
         <a class="d-flex align-items-center" href="/admin/aboutUs">
-          <i data-feather="help-circle"></i>
+          <i class="fas fa-info-circle"></i>
           <span class="menu-title text-truncate" data-i18n="About Us"
             >About Us</span
           >
@@ -152,22 +192,23 @@
       <li
         class="<% if(title =='Privacy Policy'){ %> nav-item dropdown active <% }%>"
       >
-        <a class="d-flex align-items-center" href="/admin/privacypolicy"
-          ><i data-feather="file-text"></i
-          ><span class="menu-title text-truncate" data-i18n="Privacy Policy"
+        <a class="d-flex align-items-center" href="/admin/privacypolicy">
+          <i class="fas fa-file-alt"></i>
+          <span class="menu-title text-truncate" data-i18n="Privacy Policy"
             >Privacy Policy</span
-          ></a
-        >
+          >
+        </a>
       </li>
+
       <li
         class="<% if(title =='Terms & Conditions'){ %> nav-item dropdown active <% }%>"
       >
-        <a class="d-flex align-items-center" href="/admin/termsconditions"
-          ><i data-feather="edit-3"></i
-          ><span class="menu-title text-truncate" data-i18n="Terms & Conditions"
+        <a class="d-flex align-items-center" href="/admin/termsconditions">
+          <i class="fas fa-file-contract"></i>
+          <span class="menu-title text-truncate" data-i18n="Terms & Conditions"
             >Terms & Conditions</span
-          ></a
-        >
+          >
+        </a>
       </li>
     </ul>
   </div>
