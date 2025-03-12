@@ -101,9 +101,9 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         defaultValue:''
       },
       postEmpSeekingSection:{
-        type: DataTypes.INTEGER, // would you like profile posted on the employement seeking section
+        type: DataTypes.STRING(255), // would you like profile posted on the employement seeking section
         allowNull: true,
-        defaultValue:0 //0 means no 1 for yes 
+        defaultValue:null //0 means no 1 for yes 
       },
       hartOfService:{ 
         type: DataTypes.STRING(255),  // who do you have the heart to serve

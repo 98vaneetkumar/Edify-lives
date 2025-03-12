@@ -54,7 +54,7 @@ module.exports = {
         longitude: Joi.string().optional(),
         donateEdifyLivers: Joi.string().optional(),
         traitAndExperience: Joi.string().optional(),
-        postEmpSeekingSection: Joi.number().optional(),
+        postEmpSeekingSection: Joi.string().optional(),
         hartOfService: Joi.string().optional(),
         churchAccessCode: Joi.string().optional(),
         deviceToken: Joi.string().optional(),

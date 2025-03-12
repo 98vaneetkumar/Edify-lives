@@ -205,8 +205,7 @@
             "in": "formData",
             "description": "Would you like to profile posted  on the employment seeking section",
             "required": false,
-            "enum":[0,1],
-            "type": "number",
+            "type": "string",
             "value": ""
           },
           {
