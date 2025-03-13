@@ -814,12 +814,18 @@ module.exports = {
   testimonyPost:async(req,res)=>{
     try {
       const schema = Joi.object().keys({
-        title: Joi.string().required()
+        growingUp: Joi.string().optional(),
+        beforeJesus:Joi.string().optional(),
+        findJesus:Joi.string().optional(),
+        faithInJesus:Joi.string().optional()
       });
       let payload = await helper.validationJoi(req.body, schema);
       let objToSave={
         userId:req.user.id,
-        title:payload.title
+        growingUp:payload.growingUp,
+        beforeJesus:payload.beforeJesus,
+        findJesus:payload.findJesus,
+        faithInJesus:payload.faithInJesus
       }
      let response= await Models.testimonyPostModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.testimonyPost,response);

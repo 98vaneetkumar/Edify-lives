@@ -686,9 +686,33 @@
         ],
         "parameters": [
           {
-            "name": "title",
+            "name": "growingUp",
             "in": "formData",
-            "description": "Enter the message",
+            "description": "what did you go through growing up",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "beforeJesus",
+            "in": "formData",
+            "description": "what was your life before Jesus",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "findJesus",
+            "in": "formData",
+            "description": "how did you find Jesus",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "faithInJesus",
+            "in": "formData",
+            "description": "Your life after placing faith in Jesus",
             "required": false,
             "type": "string",
             "value": ""

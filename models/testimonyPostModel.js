@@ -13,7 +13,22 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
             onUpdate: "CASCADE",
             onDelete: "CASCADE",
         },
-        title: {
+        growingUp: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            defaultValue: "",
+        },
+        beforeJesus: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            defaultValue: "",
+        },
+        findJesus: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+            defaultValue: "",
+        },
+        faithInJesus: {
             type: DataTypes.TEXT,
             allowNull: true,
             defaultValue: "",
