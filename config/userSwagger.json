@@ -792,7 +792,7 @@
         "responses": {}
       }
     },
-    "/users/likeTestimonyPost": {
+    "/users/likeUnlikeTestimonyPost": {
       "post": {
         "x-swagger-router-controller": "middleware-name1",
         "operationId": "users-likeTestimonyPost-get",

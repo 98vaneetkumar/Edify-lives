@@ -45,9 +45,8 @@ router.get("/testimonyPostList",authentication, controller.userController.testim
 router.post("/commentOnTestimonyPost",authentication, controller.userController.commentOnTestimonyPost)
 router.get("/commentOnTestimonyPostList",authentication, controller.userController.commentOnTestimonyPostList)
 
-router.post("/likeTestimonyPost",authentication, controller.userController.likeTestimonyPost)
+router.post("/likeUnlikeTestimonyPost",authentication, controller.userController.likeUnlikeTestimonyPost)
 router.get("/likeTestimonyPostList",authentication, controller.userController.likeTestimonyPostList)
-router.post("/unLikeTestimonyPost",authentication, controller.userController.unlikeTestimonyPost)
 
 router.post("/addVideo",authentication, controller.userController.addVideo)
 router.get("/videoList",authentication, controller.userController.videoList)

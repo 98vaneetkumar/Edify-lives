@@ -899,17 +899,34 @@ module.exports = {
       throw error
     }
   },
-  likeTestimonyPost:async(req,res)=>{
+  likeUnlikeTestimonyPost:async(req,res)=>{
     try {
       let schema=Joi.object().keys({
         testimonyPostId:Joi.string().required()
       }); 
       let payload = await helper.validationJoi(req.body, schema);
-      let response=await Models.likeTestimonyModel.create({
-        userId:req.user.id,
-        testimonyPostId:payload.testimonyPostId
-      });
-      return commonHelper.success(res, Response.success_msg.likeTestimonyPost,response);
+      let has=await Models.likeTestimonyModel.findOne({
+        where:{
+          userId:req.user.id,
+          testimonyPostId:payload.testimonyPostId
+        }
+      })
+      if(!has){
+        let response=await Models.likeTestimonyModel.create({
+          userId:req.user.id,
+          testimonyPostId:payload.testimonyPostId
+        });
+        return commonHelper.success(res, Response.success_msg.likeTestimonyPost,response);
+      }else{
+        await Models.likeTestimonyModel.destroy({
+          where:{
+            userId:req.user.id,
+            testimonyPostId:payload.testimonyPostId
+          }
+        });
+        return commonHelper.success(res, Response.success_msg.unLikeTestimonyPost);
+      }
+   
     } catch (error) {
       throw error
     }
@@ -925,23 +942,6 @@ module.exports = {
         }]
       });
       return commonHelper.success(res, Response.success_msg.likeTestimonyPostList,response);
-    } catch (error) {
-      throw error
-    }
-  },
-  unlikeTestimonyPost:async(req,res)=>{
-    try {
-      let schema=Joi.object().keys({
-        testimonyPostId:Joi.string().required()
-      }); 
-      let payload = await helper.validationJoi(req.body, schema);
-      let response=await Models.likeTestimonyModel.destroy({
-        where:{
-          userId:req.user.id,
-          testimonyPostId:payload.testimonyPostId
-        }
-      });
-      return commonHelper.success(res, Response.success_msg.unLikeTestimonyPost);
     } catch (error) {
       throw error
     }
