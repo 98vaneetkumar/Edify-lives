@@ -8,7 +8,7 @@ const Sequelize = require("sequelize");
 module.exports = {
   authentication: async (req, res, next) => {
     let token = req.headers["authorization"];
-    log("token========>",token)
+    console.log("token========>",token)
     if(token){
       token = token.startsWith("Bearer ") ? token.split(" ")[1] : token;
       if (token) {
