@@ -57,6 +57,9 @@ router.get("/commentOnVideoList",authentication, controller.userController.comme
 
 router.post("/createEvent",authentication, controller.userController.createEvent)
 router.get("/eventList",authentication, controller.userController.eventList)
+
+router.get("/filters_listing", controller.adminController.filters_listing)
+
 return router
 }
 

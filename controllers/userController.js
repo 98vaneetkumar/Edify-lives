@@ -660,8 +660,9 @@ module.exports = {
   },
   needPostList:async(req,res)=>{
     try {
-     let limit= parseInt(req.query.limit, 10) || 10;
-     let offset=parseInt(req.query.skip, 10) || 0;
+      let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
+      
      let where;
      if (req.query && req.query.city) {
 			where = {
@@ -835,6 +836,21 @@ module.exports = {
   },
   testimonyPostList:async(req,res)=>{
     try {
+      let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
+      
+      let where = {};
+      if (req.query && req.query.search) {
+        where = {
+          [Op.or]: [
+            { growingUp: { [Op.like]: `%${req.query.search}%` } },
+            { beforeJesus: { [Op.like]: `%${req.query.search}%` } },
+            { findJesus: { [Op.like]: `%${req.query.search}%` } },
+            { faithInJesus: { [Op.like]: `%${req.query.search}%` } }
+          ]
+        };
+      }
+      
       let response=await Models.testimonyPostModel.findAll({
         attributes: {
           include: [
@@ -859,7 +875,10 @@ module.exports = {
        include:[{
           model:Models.userModel,
           as:'user',
-       }]
+       }],
+       where:where,
+       limit:limit,
+       offset:offset
       });
       return commonHelper.success(res, Response.success_msg.testimonyPostList,response);
     } catch (error) {
@@ -1117,4 +1136,20 @@ module.exports = {
       throw error
     }
   },
+  filters_listing: async (req, res) => {
+        try {
+          let filters_data = await Models.filterTestimoniesModel.findAll({
+            order: [["createdAt", "DESC"]],
+            raw: true,
+          });
+          res.json({
+            success: true,
+            title: "Filter Testimonies",
+            filters_data,
+          });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ success: false, error: "Internal Server Error" });
+        }
+      },
 };

@@ -673,6 +673,16 @@
         "responses": {}
       }
     },
+    "/users/filters_listing": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-filters_listing-post",
+        "tags": ["Application Filter List"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
     "/users/testimonyPost": {
       "post": {
         "x-swagger-router-controller": "middleware-name1",
@@ -732,7 +742,32 @@
             "Bearer": []
           }
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Enter the limit",
+            "required": false,
+            "type": "number",
+            "value": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Enter the how many record you want to skip",
+            "required": false,
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Enter the search",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
         "responses": {}
       }
     },
