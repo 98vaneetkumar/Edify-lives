@@ -477,6 +477,22 @@
             "required": false,
             "type": "string",
             "value": ""
+          },
+          {
+            "name": "city",
+            "in": "formData",
+            "description": "Enter the city",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "zipCode",
+            "in": "formData",
+            "description": "Enter the zip code",
+            "required": false,
+            "type": "string",
+            "value": ""
           }
         ],
         "responses": {}

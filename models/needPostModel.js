@@ -18,6 +18,16 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
             allowNull: true,
             defaultValue: "",
         },
+        city:{
+            type: DataTypes.TEXT,
+            allowNull: true,
+            defaultValue: "",
+        },
+        zipCode:{
+            type: DataTypes.TEXT,
+            allowNull: true,
+            defaultValue: "",
+        },
       },
       {
         timestamps: true,

@@ -641,12 +641,16 @@ module.exports = {
   needPost:async(req,res)=>{
     try {
       const schema = Joi.object().keys({
-        title: Joi.string().required()
+        title: Joi.string().required(),
+        city:Joi.string().optional(),
+        zipCode:Joi.string().optional()
       });
       let payload = await helper.validationJoi(req.body, schema);
       let objToSave={
         userId:req.user.id,
-        title:payload.title
+        title:payload.title,
+        city:payload.city,
+        zipCode:payload.zipCode
       }
      let response= await Models.needPostModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.needPost,response);
