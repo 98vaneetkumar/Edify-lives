@@ -509,7 +509,48 @@
             "Bearer": []
           }
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Enter the limit",
+            "required": false,
+            "type": "number",
+            "value": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Enter the how many record you want to skip",
+            "required": false,
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "city",
+            "in": "query",
+            "description": "Enter the city",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "zipCode",
+            "in": "query",
+            "description": "Enter the zipCode",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Enter the search key",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
         "responses": {}
       }
     },

@@ -662,6 +662,34 @@ module.exports = {
     try {
      let limit= parseInt(req.query.limit, 10) || 10;
      let offset=parseInt(req.query.skip, 10) || 0;
+     let where;
+     if (req.query && req.query.city) {
+			where = {
+				[Op.or]: {
+					city: {
+						[Op.like]: "%" + req.query.city + "%",
+					},
+				},
+			};
+		}
+    if (req.query && req.query.zipCode) {
+			where = {
+				[Op.or]: {
+					zipCode: {
+						[Op.like]: "%" + req.query.zipCode + "%",
+					},
+				},
+			};
+		}
+    if (req.query && req.query.search) {
+			where = {
+				[Op.or]: {
+					title: {
+						[Op.like]: "%" + req.query.search + "%",
+					},
+				},
+			};
+		}
       let response=await Models.needPostModel.findAll({
         attributes: {
           include: [
@@ -687,6 +715,7 @@ module.exports = {
           model:Models.userModel,
           as:'user',
        }],
+       where:where,
        limit: limit,
        offset: offset
       });
