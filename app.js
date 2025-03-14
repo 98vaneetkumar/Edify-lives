@@ -11,7 +11,11 @@ const flash = require("connect-flash");
 
 const HOST = "0.0.0.0";
 const PORT = process.env.PORT || 3000;
+const app = express();
 
+const server=require("http").createServer(app)
+const io = require('socket.io')(server);
+require("./socket/socket")(io)
 const indexRouter = require("./routes/index");
 const adminRouter = require("./routes/adminRouter")();
 const usersRouter = require("./routes/userRoute")();
@@ -19,7 +23,7 @@ const chruchRouter = require("./routes/churchRouter")();
 const businessRouter = require("./routes/businessRouter")();
 const nonProfitRouter = require("./routes/nonProfitRouter")();
 
-const app = express();
+
 
 // Connect to Database
 require("./dbConnection").connectdb();
@@ -99,6 +103,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start Server
-app.listen(PORT, HOST, () => {
+server.listen(PORT, HOST, () => {
   console.log(`Server is running on port ${PORT}`);
 });

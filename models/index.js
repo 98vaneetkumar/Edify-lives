@@ -28,5 +28,7 @@ module.exports = {
   likeGroupModel:require("./likeGroupModel")(Sequelize, sequelize, Sequelize.DataTypes),
   commentGroupModel:require("./commentGroupModel")(Sequelize, sequelize, Sequelize.DataTypes),
   groupMemberModel:require("./groupMemberModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  chatConstantModel:require("./chatConstantModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  messageModel:require("./messageModel")(Sequelize, sequelize, Sequelize.DataTypes),
 };
  

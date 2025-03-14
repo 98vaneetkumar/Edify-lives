@@ -239,7 +239,16 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:''
       },
-
+     socketId:{
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue:''
+     },
+     isOnline:{
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue:0  // 0 means offline 1 for online
+     },
     },
     {
       timestamps: true,
