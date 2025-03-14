@@ -1131,6 +1131,22 @@
             "required": false,
             "type": "string",
             "value": ""
+          },
+          {
+            "name": "link",
+            "in": "formData",
+            "description": "Enter the link",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "eventDescription",
+            "in": "formData",
+            "description": "Enter the eventDescription",
+            "required": false,
+            "type": "string",
+            "value": ""
           }
         ],
         "responses": {}

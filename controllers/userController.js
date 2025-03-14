@@ -1107,6 +1107,8 @@ module.exports = {
         countryCode: Joi.string().optional(),
         phoneNumber: Joi.string().optional(),
         email: Joi.string().optional(),
+        link:Joi.string().optional(),
+        comment:Joi.string().optional()
       });
       let payload = await helper.validationJoi(req.body, schema);
       let objToSave={
@@ -1120,7 +1122,9 @@ module.exports = {
         eventTitle:payload.eventTitle,
         countryCode:payload.countryCode,
         phoneNumber:payload.phoneNumber,
-        email:payload.email
+        email:payload.email,
+        link:payload.link,
+        eventDescription:payload.eventDescription
       }
       let response=await Models.eventModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.createEvent,response);
