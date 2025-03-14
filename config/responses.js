@@ -48,6 +48,17 @@ var success_msg = {
   commentVideoList:"Comment on video list fetched successfully",
   createEvent:"Event created successfully",
   eventList:"Event list fetched successfully",
+  createGroup:"Group created successfully",
+  groupList:"Group list fetched successfully",
+  likeGroup:"Like on group added successfully",
+  unLikeGroup:"Unlike on group added successfully",
+  commentGroup:"Comment on group added successfully",
+  commentGroupList:"Comment on group list fetched successfully",
+  likeGroupList:"Like on group list fetched successfully",
+  myGroupList:"My group list fetched successfully",
+  groupDetail:"Group detail fetched successfully",
+  joinGroup:"Group joined successfully",
+  groupMemberList:"Group member list fetched successfully",
 };
 
 var failed_msg = {

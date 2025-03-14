@@ -24,6 +24,9 @@ module.exports = {
   commentVideoModel:require("./commentVideoModels")(Sequelize, sequelize, Sequelize.DataTypes),
   likeVideoModel:require("./likeVideoModels")(Sequelize, sequelize, Sequelize.DataTypes),
   eventModel:require("./eventModel")(Sequelize, sequelize, Sequelize.DataTypes),
-
+  groupModel:require("./groupModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  likeGroupModel:require("./likeGroupModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  commentGroupModel:require("./commentGroupModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  groupMemberModel:require("./groupMemberModel")(Sequelize, sequelize, Sequelize.DataTypes),
 };
  

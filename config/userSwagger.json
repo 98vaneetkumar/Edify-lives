@@ -1168,6 +1168,314 @@
         ],
         "responses": {}
       }
+    },
+    "/users/createGroup": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-createGroup-post",
+        "tags": ["Application Group"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "groupName",
+            "in": "formData",
+            "description": "Enter the groupName",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "groupDescription",
+            "in": "formData",
+            "description": "Enter the groupDescription",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "groupType",
+            "in": "formData",
+            "description": "Enter the groupType",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "groupLogo",
+            "in": "formData",
+            "description": "Enter group logo to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/groupList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-groupList-post",
+        "tags": ["Application Group"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Enter the limit",
+            "required": false,
+            "type": "number",
+            "value": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Enter the how many record you want to skip",
+            "required": false,
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Enter the search",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/commentOnGroup": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-commentOnGroup-post",
+        "tags": ["Application Group"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "formData",
+            "description": "Enter the group Id",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "comment",
+            "in": "formData",
+            "description": "Enter the comment",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/likeUnlikeGroup": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-likeUnlikeGroup-get",
+        "tags": ["Application Group"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "formData",
+            "description": "Enter the group Id",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/listOfCommentOnGroup": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-listOfCommentOnGroup-post",
+        "tags": ["Application Group"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "query",
+            "description": "Enter the groupId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+      
+        ],
+        "responses": {}
+      }
+    },
+    "/users/listOfLikeGroupUsers": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-listOfLikeGroupUsers-post",
+        "tags": ["Application Group"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "query",
+            "description": "Enter the groupId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+      
+        ],
+        "responses": {}
+      }
+    },
+    "/users/myGroupList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-myGroupList-post",
+        "tags": ["Application Group"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Enter the limit",
+            "required": false,
+            "type": "number",
+            "value": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Enter the how many record you want to skip",
+            "required": false,
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Enter the search",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/groupDetail": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-groupDetail-post",
+        "tags": ["Application Group"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "query",
+            "description": "Enter the groupId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/joinGroup": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-joinGroup-post",
+        "tags": ["Application Group"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "formData",
+            "description": "Enter the groupId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/groupMemberList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-groupMemberList-post",
+        "tags": ["Application Group"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "query",
+            "description": "Enter the groupId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
     }
   },
   "definitions": {}

@@ -35,7 +35,18 @@ Models.videoModel.belongsTo(Models.userModel, {
 Models.commentVideoModel.belongsTo(Models.userModel, {
   foreignKey: 'userId',
 })
-
+Models.groupModel.belongsTo(Models.userModel, {
+  foreignKey: 'userId',
+})
+Models.commentGroupModel.belongsTo(Models.userModel, {
+  foreignKey: 'userId',
+})
+Models.likeGroupModel.belongsTo(Models.userModel, {
+  foreignKey: 'userId',
+})
+Models.groupMemberModel.belongsTo(Models.userModel, {
+  foreignKey: 'userId',
+})
 module.exports = {
   signUp: async (req, res) => {
     try {
@@ -1155,5 +1166,253 @@ module.exports = {
           console.error(error);
           res.status(500).json({ success: false, error: "Internal Server Error" });
         }
-      },
+  },
+  // <-----------------------------Create group------------------------------------------>
+  createGroup:async(req,res)=>{
+    try {
+      const schema = Joi.object().keys({
+        groupName:Joi.string().optional(),
+        groupDescription:Joi.string().optional(),
+        groupType:Joi.string().optional(),
+        // groupCategory:Joi.string().optional(),
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+         let groupLogoPath = null;
+            if (req.files?.visionStatement) {
+              groupLogoPath = await commonHelper.fileUpload(
+                req.files.groupLogo,
+                "images"
+              );
+            }
+      let objToSave={
+        userId:req.user.id,
+        groupName:payload.groupName,
+        groupDescription:payload.groupDescription,
+        groupType:payload.groupType,
+        groupLogo:groupLogoPath,
+        // groupCategory:payload.groupCategory
+      }
+      let response=await Models.groupModel.create(objToSave);
+      return commonHelper.success(res, Response.success_msg.createGroup,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  groupList:async(req,res)=>{
+    try {
+      let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
+      
+      let where = {};
+      if (req.query && req.query.search) {
+        where = {
+          [Op.or]: [
+            { groupName: { [Op.like]: `%${req.query.search}%` } },
+            { groupDescription: { [Op.like]: `%${req.query.search}%` } },
+            { groupType: { [Op.like]: `%${req.query.search}%` } },
+          ]
+        };
+      }
+      let response=await Models.groupModel.findAll({
+        attributes: {
+          include: [
+            [Sequelize.literal(`
+              (CASE 
+                WHEN (SELECT count(id) FROM group where userId = '${req.user.id}') > 0 
+                THEN 1 
+                ELSE 0 
+              END)
+              `),"iCreated"], 
+              [Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM group where userId = '${req.user.id}') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+                `),"iCreated"], 
+            [Sequelize.literal("(SELECT count(id) FROM commentGroup where groupId=group.id )"), "commentsCount"],
+            [Sequelize.literal("(SELECT count(id) FROM likeGroup where groupId=group.id )"), "likesCount"],
+            [Sequelize.literal(`
+              (CASE 
+                WHEN (SELECT count(id) FROM commentGroup where groupId=group.id and userId = '${req.user.id}') > 0 
+                THEN 1 
+                ELSE 0 
+              END)
+              `),"isComment"],
+            [Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM likeGroup where groupId=group.id and userId = '${req.user.id}') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+              `),"isLike"]  
+          ]
+        },
+       include:[{
+          model:Models.userModel,
+          as:'user',
+       }],
+       where:where,
+       limit:limit,
+       offset:offset
+      })
+      return commonHelper.success(res, Response.success_msg.groupList,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  commentOnGroup:async(req,res)=>{
+    try {
+      let schema=Joi.object().keys({
+        groupId:Joi.string().required(),
+        comment:Joi.string().required()
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+      let objToSave={
+        userId:req.user.id,
+        groupId:payload.groupId,
+        comment:payload.comment
+      }
+      let response=await Models.commentGroupModel.create(objToSave);
+      return commonHelper.success(res, Response.success_msg.commentGroup,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  likeUnlikeGroup:async(req,res)=>{
+    try {
+      let schema=Joi.object().keys({
+        groupId:Joi.string().required()
+      }); 
+      let payload = await helper.validationJoi(req.body, schema);
+      let has=await Models.likeGroupModel.findOne({
+        where:{
+          userId:req.user.id,
+          groupId:payload.testimonyPostId
+        }
+      })
+      if(!has){
+        let response=await Models.likeGroupModel.create({
+          userId:req.user.id,
+          groupId:payload.groupId
+        });
+        return commonHelper.success(res, Response.success_msg.likeGroup,response);
+      }else{
+        await Models.likeGroupModel.destroy({
+          where:{
+            userId:req.user.id,
+            groupId:payload.groupId
+          }
+        });
+        return commonHelper.success(res, Response.success_msg.unLikeGroup);
+      }
+    } catch (error) {
+      throw error
+    }
+  },
+  listOfCommentOnGroup:async(req,res)=>{
+    try {
+      let response=await Models.commentGroupModel.findAll({
+        where:{
+          groupId:req.query.groupId
+        },
+        include:[{
+          model:Models.userModel,
+        }]
+      })
+      return commonHelper.success(res, Response.success_msg.commentGroupList,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  listOfLikeGroupUsers:async(req,res)=>{
+    try {
+      let response=await Models.likeGroupModel.findAll({
+        where:{
+          groupId:req.query.groupId
+        },
+        include:[{
+          model:Models.userModel
+        }]
+      })
+      return commonHelper.success(res, Response.success_msg.likeGroupList,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  myGroupList:async(req,res)=>{
+    try {
+      let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
+      let where = {
+        userId:req.user.id
+      };
+      if (req.query && req.query.search) {
+        where = {
+          [Op.or]: [
+            { groupName: { [Op.like]: `%${req.query.search}%` } },
+            { groupDescription: { [Op.like]: `%${req.query.search}%` } },
+            { groupType: { [Op.like]: `%${req.query.search}%` } },
+          ]
+        };
+      }
+      let response=await Models.groupModel.findAll({
+        attributes: {
+          include: [
+            [Sequelize.literal("(SELECT count(id) FROM commentGroup where groupId=group.id )"), "commentsCount"],
+            [Sequelize.literal("(SELECT count(id) FROM likeGroup where groupId=group.id )"), "likesCount"],
+          ]
+        },
+        where:where,
+        limit:limit,
+        offset:offset
+      })
+      return commonHelper.success(res, Response.success_msg.myGroupList,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  groupDetail:async(req,res)=>{
+    try {
+      let response=await Models.groupModel.findOne({
+        where:{
+          id:req.query.groupId
+        },
+        include:[{
+          model:Models.userModel,
+        }]
+      })
+      return commonHelper.success(res, Response.success_msg.groupList,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  joinGroup:async(req,res)=>{
+    try {
+      let objToSave={
+        groupId:req.body.groupId,
+        userId:req.user.id
+      }
+      let response=await Models.groupMemberModel.create(objToSave)
+      return commonHelper.success(res, Response.success_msg.joinGroup,response);
+    } catch (error) {
+      throw error
+    }
+  },
+  groupMemberList:async(req,res)=>{
+    try {
+      let response=await Models.groupMemberModel.findAll({
+        where:{
+          groupId:req.query.groupId
+        },
+        include:[{
+          model:Models.userModel
+        }]
+      })
+      return commonHelper.success(res, Response.success_msg.groupMemberList,response);
+    } catch (error) {
+      throw error
+    }
+  }
+
 };

@@ -29,37 +29,47 @@ module.exports=function(){
 
     
 //  <------------------------------------Comman api's------------------------------------------------------------>
+    router.get("/filters_listing", controller.userController.filters_listing)
 
-router.post("/needPost",authentication, controller.userController.needPost)
-router.get("/needPostList",authentication, controller.userController.needPostList)
+    router.post("/needPost",authentication, controller.userController.needPost)
+    router.get("/needPostList",authentication, controller.userController.needPostList)
 
-router.post("/commentOnNeedPost",authentication, controller.userController.commentOnNeedPost)
-router.get("/commentOnNeedPostList",authentication, controller.userController.commentOnNeedPostList)
+    router.post("/commentOnNeedPost",authentication, controller.userController.commentOnNeedPost)
+    router.get("/commentOnNeedPostList",authentication, controller.userController.commentOnNeedPostList)
 
-router.post("/likeUnlikeNeedPost",authentication, controller.userController.likeUnlikeNeedPost)
-router.get("/likeNeedPostList",authentication, controller.userController.likeNeedPostList)
+    router.post("/likeUnlikeNeedPost",authentication, controller.userController.likeUnlikeNeedPost)
+    router.get("/likeNeedPostList",authentication, controller.userController.likeNeedPostList)
 
-router.post("/testimonyPost",authentication, controller.userController.testimonyPost)
-router.get("/testimonyPostList",authentication, controller.userController.testimonyPostList)
+    router.post("/testimonyPost",authentication, controller.userController.testimonyPost)
+    router.get("/testimonyPostList",authentication, controller.userController.testimonyPostList)
 
-router.post("/commentOnTestimonyPost",authentication, controller.userController.commentOnTestimonyPost)
-router.get("/commentOnTestimonyPostList",authentication, controller.userController.commentOnTestimonyPostList)
+    router.post("/commentOnTestimonyPost",authentication, controller.userController.commentOnTestimonyPost)
+    router.get("/commentOnTestimonyPostList",authentication, controller.userController.commentOnTestimonyPostList)
 
-router.post("/likeUnlikeTestimonyPost",authentication, controller.userController.likeUnlikeTestimonyPost)
-router.get("/likeTestimonyPostList",authentication, controller.userController.likeTestimonyPostList)
+    router.post("/likeUnlikeTestimonyPost",authentication, controller.userController.likeUnlikeTestimonyPost)
+    router.get("/likeTestimonyPostList",authentication, controller.userController.likeTestimonyPostList)
 
-router.post("/addVideo",authentication, controller.userController.addVideo)
-router.get("/videoList",authentication, controller.userController.videoList)
-router.post("/likeUnlikeVideo",authentication, controller.userController.likeUnlikeVideo)
+    router.post("/addVideo",authentication, controller.userController.addVideo)
+    router.get("/videoList",authentication, controller.userController.videoList)
+    router.post("/likeUnlikeVideo",authentication, controller.userController.likeUnlikeVideo)
 
-router.post("/commentOnVideo",authentication, controller.userController.commentOnVideo)
-router.get("/commentOnVideoList",authentication, controller.userController.commentOnVideoList)
+    router.post("/commentOnVideo",authentication, controller.userController.commentOnVideo)
+    router.get("/commentOnVideoList",authentication, controller.userController.commentOnVideoList)
 
-router.post("/createEvent",authentication, controller.userController.createEvent)
-router.get("/eventList",authentication, controller.userController.eventList)
+    router.post("/createEvent",authentication, controller.userController.createEvent)
+    router.get("/eventList",authentication, controller.userController.eventList)
 
-router.get("/filters_listing", controller.userController.filters_listing)
+    router.post("/createGroup",authentication, controller.userController.createGroup)
+    router.get("/groupList",authentication, controller.userController.groupList)
+    router.post("/commentOnGroup",authentication, controller.userController.commentOnGroup)
+    router.post("/likeUnlikeGroup",authentication, controller.userController.likeUnlikeGroup)
+    router.get("/listOfCommentOnGroup",authentication, controller.userController.listOfCommentOnGroup)
+    router.get("/listOfLikeGroupUsers",authentication, controller.userController.listOfLikeGroupUsers)
 
-return router
+    router.get("/myGroupList",authentication, controller.userController.myGroupList)
+    router.get("/groupDetail",authentication, controller.userController.groupDetail)
+    router.post("/joinGroup",authentication, controller.userController.joinGroup)
+    router.get("/groupMemberList",authentication, controller.userController.groupMemberList)
+    return router
 }
 
