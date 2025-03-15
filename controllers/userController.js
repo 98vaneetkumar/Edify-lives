@@ -887,7 +887,7 @@ module.exports = {
         attributes: {
           include: [
             [Sequelize.literal("(SELECT count(id) FROM commentTestimonyPost where testimonyPostId=testimonyPost.id )"), "commentsCount"],
-            [Sequelize.literal("(SELECT count(id) FROM liketesTimonyPost where testimonyPostId=testimonyPost.id )"), "likesCount"],
+            [Sequelize.literal("(SELECT count(id) FROM likeTestimonyPost where testimonyPostId=testimonyPost.id )"), "likesCount"],
             [Sequelize.literal(`
               (CASE 
                 WHEN (SELECT count(id) FROM commentTestimonyPost where testimonyPostId=testimonyPost.id and userId = '${req.user.id}') > 0 
@@ -897,7 +897,7 @@ module.exports = {
               `),"isComment"],
             [Sequelize.literal(`
                 (CASE 
-                  WHEN (SELECT count(id) FROM liketesTimonyPost where testimonyPostId=testimonyPost.id and userId = '${req.user.id}') > 0 
+                  WHEN (SELECT count(id) FROM likeTestimonyPost where testimonyPostId=testimonyPost.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)

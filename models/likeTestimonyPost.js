@@ -1,6 +1,6 @@
 module.exports = (Sequelize, sequelize, DataTypes) => {
     return sequelize.define(
-      "liketesTimonyPost",
+      "likeTestimonyPost",
       {
         ...require("./cors")(Sequelize, DataTypes),
         userId:{
