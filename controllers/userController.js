@@ -704,7 +704,7 @@ module.exports = {
 				},
 			};
 		}
-      let response=await Models.needPostModel.findAll({
+      let response=await Models.needPostModel.findAndCountAll({
         attributes: {
           include: [
             [Sequelize.literal("(SELECT count(id) FROM commentNeedPost where needPostId=needPost.id )"), "commentsCount"],
