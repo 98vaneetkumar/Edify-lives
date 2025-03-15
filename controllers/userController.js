@@ -1010,6 +1010,16 @@ module.exports = {
   },
   videoList:async(req,res)=>{
     try {
+      let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
+      let where={}
+      if (req.query && req.query.search) {
+        where = {
+          [Op.or]: [
+            { caption: { [Op.like]: `%${req.query.search}%` } },
+          ]
+        };
+      }
       let response=await Models.videoModel.findAndCountAll({
         attributes: {
           include: [
@@ -1034,7 +1044,10 @@ module.exports = {
        include:[{
           model:Models.userModel,
           as:'user',
-       }]
+       }],
+       where:where,
+       limit:limit,
+       offset:offset
       });
       return commonHelper.success(res, Response.success_msg.videoList,response);
     } catch (error) {
