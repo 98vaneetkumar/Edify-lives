@@ -1515,6 +1515,46 @@
         ],
         "responses": {}
       }
+    },
+    "/users/nonProfileUserList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-nonProfileUserList-post",
+        "tags": ["Application Non Profile User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Enter the limit",
+            "required": false,
+            "type": "number",
+            "value": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Enter the how many record you want to skip",
+            "required": false,
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Enter the search",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
     }
   },
   "definitions": {}

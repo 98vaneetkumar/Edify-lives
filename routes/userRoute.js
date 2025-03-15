@@ -70,6 +70,8 @@ module.exports=function(){
     router.get("/groupDetail",authentication, controller.userController.groupDetail)
     router.post("/joinGroup",authentication, controller.userController.joinGroup)
     router.get("/groupMemberList",authentication, controller.userController.groupMemberList)
+
+    router.get("/nonProfileUserList",authentication, controller.userController.nonProfileUserList)
     return router
 }
 

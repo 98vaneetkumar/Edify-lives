@@ -549,7 +549,7 @@ module.exports = {
       return commonHelper.success(res, Response.success_msg.cms, response);
     } catch (error) {
       console.log("error", error);
-      throw error;
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);;
     }
   },
   notificationsList: async (req, res) => {
@@ -571,7 +571,7 @@ module.exports = {
         response
       );
     } catch (error) {
-      throw error;
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);;
     }
   },
   maritalstatus_listing: async (req, res) => {
@@ -671,7 +671,7 @@ module.exports = {
      let response= await Models.needPostModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.needPost,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   needPostList:async(req,res)=>{
@@ -738,7 +738,7 @@ module.exports = {
       });
       return commonHelper.success(res, Response.success_msg.needPostList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   commentOnNeedPost:async(req,res)=>{
@@ -756,7 +756,7 @@ module.exports = {
       let response=await Models.commentNeedPostModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.needPostComment,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   commentOnNeedPostList:async(req,res)=>{
@@ -771,7 +771,7 @@ module.exports = {
       });
       return commonHelper.success(res, Response.success_msg.needPostCommentList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   likeUnlikeNeedPost:async(req,res)=>{
@@ -806,7 +806,7 @@ module.exports = {
       }
 
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   likeNeedPostList:async(req,res)=>{
@@ -821,7 +821,7 @@ module.exports = {
       });
       return commonHelper.success(res, Response.success_msg.likeNeedPostList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
 
@@ -849,7 +849,7 @@ module.exports = {
      let response= await Models.testimonyPostModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.testimonyPost,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   testimonyPostList:async(req,res)=>{
@@ -914,7 +914,7 @@ module.exports = {
       });
       return commonHelper.success(res, Response.success_msg.testimonyPostList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   commentOnTestimonyPost:async(req,res)=>{
@@ -932,7 +932,7 @@ module.exports = {
       let response=await Models.commentTestimonyModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.testimonyPostComment,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   commentOnTestimonyPostList:async(req,res)=>{
@@ -947,7 +947,7 @@ module.exports = {
       });
       return commonHelper.success(res, Response.success_msg.testimonyPostCommentList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   likeUnlikeTestimonyPost:async(req,res)=>{
@@ -979,7 +979,7 @@ module.exports = {
       }
    
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   likeTestimonyPostList:async(req,res)=>{
@@ -994,7 +994,7 @@ module.exports = {
       });
       return commonHelper.success(res, Response.success_msg.likeTestimonyPostList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
 
@@ -1024,7 +1024,7 @@ module.exports = {
          let response= await Models.videoModel.create(objToSave);
          return commonHelper.success(res, Response.success_msg.addVideo,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   videoList:async(req,res)=>{
@@ -1070,7 +1070,7 @@ module.exports = {
       });
       return commonHelper.success(res, Response.success_msg.videoList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   likeUnlikeVideo:async(req,res)=>{
@@ -1105,7 +1105,7 @@ module.exports = {
       }
 
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   commentOnVideo:async(req,res)=>{
@@ -1123,7 +1123,7 @@ module.exports = {
       let response=await Models.commentVideoModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.commentVideo,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   commentOnVideoList:async(req,res)=>{
@@ -1138,7 +1138,7 @@ module.exports = {
       });
       return commonHelper.success(res, Response.success_msg.commentVideoList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   createEvent:async(req,res)=>{
@@ -1176,7 +1176,7 @@ module.exports = {
       let response=await Models.eventModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.createEvent,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   eventList:async(req,res)=>{
@@ -1184,7 +1184,7 @@ module.exports = {
       let response=await Models.eventModel.findAndCountAll()
       return commonHelper.success(res, Response.success_msg.eventList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   filters_listing: async (req, res) => {
@@ -1231,7 +1231,7 @@ module.exports = {
       let response=await Models.groupModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.createGroup,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   groupList:async(req,res)=>{
@@ -1280,7 +1280,7 @@ module.exports = {
       })
       return commonHelper.success(res, Response.success_msg.groupList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   commentOnGroup:async(req,res)=>{
@@ -1298,7 +1298,7 @@ module.exports = {
       let response=await Models.commentGroupModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.commentGroup,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   likeUnlikeGroup:async(req,res)=>{
@@ -1329,7 +1329,7 @@ module.exports = {
         return commonHelper.success(res, Response.success_msg.unLikeGroup);
       }
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   listOfCommentOnGroup:async(req,res)=>{
@@ -1344,7 +1344,7 @@ module.exports = {
       })
       return commonHelper.success(res, Response.success_msg.commentGroupList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   listOfLikeGroupUsers:async(req,res)=>{
@@ -1359,7 +1359,7 @@ module.exports = {
       })
       return commonHelper.success(res, Response.success_msg.likeGroupList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   myGroupList:async(req,res)=>{
@@ -1391,7 +1391,7 @@ module.exports = {
       })
       return commonHelper.success(res, Response.success_msg.myGroupList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   groupDetail:async(req,res)=>{
@@ -1406,7 +1406,7 @@ module.exports = {
       })
       return commonHelper.success(res, Response.success_msg.groupList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   joinGroup:async(req,res)=>{
@@ -1418,7 +1418,7 @@ module.exports = {
       let response=await Models.groupMemberModel.create(objToSave)
       return commonHelper.success(res, Response.success_msg.joinGroup,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
   groupMemberList:async(req,res)=>{
@@ -1433,7 +1433,36 @@ module.exports = {
       })
       return commonHelper.success(res, Response.success_msg.groupMemberList,response);
     } catch (error) {
-      throw error
+       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+  nonProfileUserList:async(req,res)=>{
+    try {
+      let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
+      let where = {
+        id: { [Op.ne]: req.user.id },
+        role: 4
+      };
+  
+      if (req.query && req.query.search) {
+        where = {
+          ...where, // Preserve existing conditions
+          [Op.or]: [
+            { firstName: { [Op.like]: `%${req.query.search}%` } },
+            { lastName: { [Op.like]: `%${req.query.search}%` } },
+            { email: { [Op.like]: `%${req.query.search}%` } }
+          ]
+        };
+      }
+      let response=await Models.userModel.findAndCountAll({
+        where:where,
+        limit:limit,
+        offset:offset
+      })
+      return commonHelper.success(res, Response.success_msg.nonProfileUserList,response);
+    } catch (error) {
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   }
 

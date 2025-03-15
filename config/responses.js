@@ -59,6 +59,7 @@ var success_msg = {
   groupDetail:"Group detail fetched successfully",
   joinGroup:"Group joined successfully",
   groupMemberList:"Group member list fetched successfully",
+  nonProfileUserList:"Non profile user list fetched successfully",
 };
 
 var failed_msg = {
@@ -109,6 +110,7 @@ var error_msg = {
   otpResErr: "Failed to resend OTP",
   invalidPhoneNumber: "Invalid phone number",
   errUploadLogo: "Error uploading logo",
+  internalServerError: "Internal server error",
 };
 
 module.exports = {
