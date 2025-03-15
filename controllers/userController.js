@@ -49,6 +49,9 @@ Models.likeGroupModel.belongsTo(Models.userModel, {
 Models.groupMemberModel.belongsTo(Models.userModel, {
   foreignKey: 'userId',
 })
+Models.testimonyPostModel.belongsTo(Models.userModel, {
+  foreignKey: 'userId',
+})
 module.exports = {
   signUp: async (req, res) => {
     try {
@@ -863,6 +866,20 @@ module.exports = {
             { findJesus: { [Op.like]: `%${req.query.search}%` } },
             { faithInJesus: { [Op.like]: `%${req.query.search}%` } }
           ]
+        };
+      }
+      if (req.query && req.query.filter) {
+        let filters = Array.isArray(req.query.filter) ? req.query.filter : [req.query.filter];
+      
+        where = {
+          [Op.or]: filters.map(filter => ({
+            [Op.or]: [
+              { growingUp: { [Op.like]: `%${filter}%` } },
+              { beforeJesus: { [Op.like]: `%${filter}%` } },
+              { findJesus: { [Op.like]: `%${filter}%` } },
+              { faithInJesus: { [Op.like]: `%${filter}%` } }
+            ]
+          }))
         };
       }
       

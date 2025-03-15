@@ -774,6 +774,14 @@
             "required": false,
             "type": "string",
             "value": ""
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Enter the filter",
+            "required": false,
+            "type": "string",
+            "value": ""
           }
         ],
         "responses": {}
