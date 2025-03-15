@@ -1241,14 +1241,7 @@ module.exports = {
                 THEN 1 
                 ELSE 0 
               END)
-              `),"iCreated"], 
-              [Sequelize.literal(`
-                (CASE 
-                  WHEN (SELECT count(id) FROM group where userId = '${req.user.id}') > 0 
-                  THEN 1 
-                  ELSE 0 
-                END)
-                `),"iCreated"], 
+              `),"iCreated"],  
             [Sequelize.literal("(SELECT count(id) FROM commentGroup where groupId=group.id )"), "commentsCount"],
             [Sequelize.literal("(SELECT count(id) FROM likeGroup where groupId=group.id )"), "likesCount"],
             [Sequelize.literal(`
