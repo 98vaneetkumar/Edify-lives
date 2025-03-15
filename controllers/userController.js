@@ -864,7 +864,7 @@ module.exports = {
         };
       }
       
-      let response=await Models.testimonyPostModel.findAll({
+      let response=await Models.testimonyPostModel.findAndCountAll({
         attributes: {
           include: [
             [Sequelize.literal("(SELECT count(id) FROM commentTestimonyPost where testimonyPostId=testimonyPost.id )"), "commentsCount"],
@@ -1008,7 +1008,7 @@ module.exports = {
   },
   videoList:async(req,res)=>{
     try {
-      let response=await Models.videoModel.findAll({
+      let response=await Models.videoModel.findAndCountAll({
         attributes: {
           include: [
             [Sequelize.literal("(SELECT count(id) FROM commentVideo where videoId=videoModel.id )"), "commentsCount"],
@@ -1147,7 +1147,7 @@ module.exports = {
   },
   eventList:async(req,res)=>{
     try {
-      let response=await Models.eventModel.findAll()
+      let response=await Models.eventModel.findAndCountAll()
       return commonHelper.success(res, Response.success_msg.eventList,response);
     } catch (error) {
       throw error
@@ -1215,7 +1215,7 @@ module.exports = {
           ]
         };
       }
-      let response=await Models.groupModel.findAll({
+      let response=await Models.groupModel.findAndCountAll({
         attributes: {
           include: [
             [Sequelize.literal(`
@@ -1358,7 +1358,7 @@ module.exports = {
           ]
         };
       }
-      let response=await Models.groupModel.findAll({
+      let response=await Models.groupModel.findAndCountAll({
         attributes: {
           include: [
             [Sequelize.literal("(SELECT count(id) FROM commentGroup where groupId=group.id )"), "commentsCount"],
@@ -1403,7 +1403,7 @@ module.exports = {
   },
   groupMemberList:async(req,res)=>{
     try {
-      let response=await Models.groupMemberModel.findAll({
+      let response=await Models.groupMemberModel.findAndCountAll({
         where:{
           groupId:req.query.groupId
         },
