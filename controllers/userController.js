@@ -978,6 +978,8 @@ module.exports = {
       throw error
     }
   },
+
+
   addVideo:async(req,res)=>{
     try {
        let videoPath = null;
@@ -1011,18 +1013,18 @@ module.exports = {
       let response=await Models.videoModel.findAndCountAll({
         attributes: {
           include: [
-            [Sequelize.literal("(SELECT count(id) FROM commentVideo where videoId=videoModel.id )"), "commentsCount"],
-            [Sequelize.literal("(SELECT count(id) FROM likeVideo where videoId=videoModel.id )"), "likesCount"],
+            [Sequelize.literal("(SELECT count(id) FROM commentVideo where videoId=videos.id )"), "commentsCount"],
+            [Sequelize.literal("(SELECT count(id) FROM likeVideo where videoId=videos.id )"), "likesCount"],
             [Sequelize.literal(`
               (CASE 
-                WHEN (SELECT count(id) FROM commentVideo where videoId=videoModel.id and userId = '${req.user.id}') > 0 
+                WHEN (SELECT count(id) FROM commentVideo where videoId=videos.id and userId = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
               `),"isComment"],
             [Sequelize.literal(`
                 (CASE 
-                  WHEN (SELECT count(id) FROM likeVideo where videoId=videoModel.id and userId = '${req.user.id}') > 0 
+                  WHEN (SELECT count(id) FROM likeVideo where videoId=videos.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
