@@ -828,6 +828,7 @@ module.exports = {
   testimonyPost:async(req,res)=>{
     try {
       const schema = Joi.object().keys({
+        testimoryType:Joi.string().optional(),
         growingUp: Joi.string().optional(),
         beforeJesus:Joi.string().optional(),
         findJesus:Joi.string().optional(),
@@ -836,6 +837,7 @@ module.exports = {
       let payload = await helper.validationJoi(req.body, schema);
       let objToSave={
         userId:req.user.id,
+        testimoryType:payload.testimoryType,
         growingUp:payload.growingUp,
         beforeJesus:payload.beforeJesus,
         findJesus:payload.findJesus,

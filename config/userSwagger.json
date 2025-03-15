@@ -695,6 +695,14 @@
           }
         ],
         "parameters": [
+        {
+          "name": "testimoryType",
+          "in": "formData",
+          "description": "",
+          "required": false,
+          "type": "string",
+          "value": ""
+        },
           {
             "name": "growingUp",
             "in": "formData",

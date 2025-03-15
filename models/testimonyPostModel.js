@@ -13,6 +13,11 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
             onUpdate: "CASCADE",
             onDelete: "CASCADE",
         },
+        testimoryType:{
+            type: DataTypes.STRING(255),
+            allowNull: true,
+            defaultValue: "",
+        },
         growingUp: {
             type: DataTypes.TEXT,
             allowNull: true,
