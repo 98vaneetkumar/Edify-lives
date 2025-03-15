@@ -4,6 +4,7 @@ const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const Sequelize=require('sequelize');
+const {Op}=require('sequelize');
 const otpManager = require("node-twillo-otp-manager")(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN,
