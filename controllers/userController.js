@@ -1647,7 +1647,7 @@ module.exports = {
   },
 
 
-  getFollowList :async(req,res)=>{
+  followList :async(req,res)=>{
     try {
       console.log("this is vamneet");
       
@@ -1670,22 +1670,22 @@ module.exports = {
         attributes: {
           include: [
             // Check if the logged-in user follows this user
-            [Sequelize.literal(`(SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}' AND followingId = user.id)`), "iFollow"],
+            [Sequelize.literal(`(SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}' AND followingId = users.id)`), "iFollow"],
   
             // Check if this user follows the logged-in user
-            [Sequelize.literal(`(SELECT COUNT(id) FROM follow WHERE followerId = user.id AND followingId = '${req.user.id}')`), "heFollowsMe"],
+            [Sequelize.literal(`(SELECT COUNT(id) FROM follow WHERE followerId = users.id AND followingId = '${req.user.id}')`), "heFollowsMe"],
   
             // Determine follow status
             [Sequelize.literal(`
               (CASE
-                WHEN (SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}' AND followingId = user.id) > 0 
-                AND (SELECT COUNT(id) FROM follow WHERE followerId = user.id AND followingId = '${req.user.id}') > 0 
+                WHEN (SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}' AND followingId = users.id) > 0 
+                AND (SELECT COUNT(id) FROM follow WHERE followerId = users.id AND followingId = '${req.user.id}') > 0 
                 THEN 'Mutual'
                 
-                WHEN (SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}' AND followingId = user.id) > 0 
+                WHEN (SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}' AND followingId = users.id) > 0 
                 THEN 'I Follow'
                 
-                WHEN (SELECT COUNT(id) FROM follow WHERE followerId = user.id AND followingId = '${req.user.id}') > 0 
+                WHEN (SELECT COUNT(id) FROM follow WHERE followerId = users.id AND followingId = '${req.user.id}') > 0 
                 THEN 'He Follows Me'
                 
                 ELSE 'None'

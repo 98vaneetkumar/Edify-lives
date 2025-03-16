@@ -1734,10 +1734,10 @@
         "responses": {}
       }
     },
-    "/users/getFollowList": {
+    "/users/followList": {
       "get": {
         "x-swagger-router-controller": "middleware-name1",
-        "operationId": "users-getFollowList-get",
+        "operationId": "users-followList-get",
         "tags": ["Application users Following"],
         "description": "",
         "security": [

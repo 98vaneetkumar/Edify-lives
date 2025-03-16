@@ -80,7 +80,7 @@ module.exports=function(){
     router.post("/commentOnFeed",authentication, controller.userController.commentOnFeed)
     router.get("/commentOnFeedList",authentication, controller.userController.commentOnFeedList)
 
-    router.get("/getFollowList ",authentication, controller.userController.getFollowList)
+    router.get("/followList",authentication, controller.userController.followList)
     router.post("/followUnfollwUser",authentication, controller.userController.followUnfollwUser)
     
     return router
