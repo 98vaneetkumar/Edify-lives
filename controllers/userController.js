@@ -1495,7 +1495,7 @@ module.exports = {
     try {
       const schema = Joi.object().keys({
         description:Joi.string().optional(),
-      });
+      }); 
       let payload = await helper.validationJoi(req.body, schema);
       let imagePath = null;
         if (req.files?.image) {
@@ -1507,10 +1507,11 @@ module.exports = {
       let objToSave={
         description:payload.description,
         image:imagePath,
+        userId:req.user.id
       }    
       let response=await Models.addFeedModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.addFeed, response);
-    } catch (error) {
+    } catch (error) {      
       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
