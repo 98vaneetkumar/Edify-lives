@@ -1642,7 +1642,16 @@ module.exports = {
         comment:payload.comment
       }
       let response=await Models.commentFeedModel.create(objToSave);
-      return commonHelper.success(res, Response.success_msg.commentOnFeed,response);
+      let details=await Models.commentFeedModel.findOne({
+        where:{
+          id:response.id
+        },
+        include:[{
+          model:Models.userModel,
+          attributes:projection
+        }]
+      })
+      return commonHelper.success(res, Response.success_msg.commentOnFeed,details);
     } catch (error) {
       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
