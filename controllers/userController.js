@@ -1025,9 +1025,9 @@ module.exports = {
               );
             }
             let thumbnailPath = null;
-            if (req.files?.thumbnail) {
-              thumbnailPath = await commonHelper.fileUpload(
-                req.files.thumbnail,
+            if (req.files?.video) {
+              thumbnailPath = await commonHelper.uploadThumbnailOnly(
+                req.files.video,
                 "images"
               );
             }
