@@ -1,27 +1,17 @@
 var success_msg = {
   registered: "User registered successfully",
-
   login: "Login successful",
-
   passwordLink: "Password reset link has been sent to your email",
-
   passwordChange: "Password changed successfully",
-
   logout: "User logged out successfully!",
-
   updateProfile: "User profile updated successfully!",
-
   passwordUpdate: "Password updated successfully.",
-
   otpSend: "OTP sent successfully",
-
   otpVerify: "Otp verified successfully",
-
   otpResend: "OTP resent successfully",
   notificationList: "Notification list fetched successfully",
   churchesFound: "Churches found successfully",
   bannerList: "Banner list fetched successfully",
-
   needPost: "Need posted successfully",
   needPostList: "Need post list fetched successfully",
   needPostComment: "Comment on need post added successfully",
@@ -29,7 +19,6 @@ var success_msg = {
   likeNeedPost: "Like on need post added successfully",
   likeNeedPostList: "Like on need post list fetched successfully",
   unLikeNeedPost: "Unlike on need post added successfully",
-
   testimonyPost: "Testimony posted successfully",
   testimonyPostList: "Testimony post list fetched successfully",
   testimonyPostComment: "Comment on testimony post added successfully",
@@ -60,53 +49,44 @@ var success_msg = {
   joinGroup:"Group joined successfully",
   groupMemberList:"Group member list fetched successfully",
   nonProfileUserList:"Non profile user list fetched successfully",
+  addFeed:"Feed added successfully",
+  feedList:"Feed list fetched successfully",
+  likeFeed:"Like on feed added successfully",
+  unlikeFeed:"Unlike on feed added successfully",
+  likeFeedList:"Like on feed list fetched successfully",
+  commentOnFeed:"Comment on feed added successfully",
+  commentOnFeedList:"Comment on feed list fetched successfully",
+  getFollowList:"Follow list fetched successfully",
+  followUser:"User followed successfully",
+  unfollowUser:"User unfollowed successfully",
 };
 
 var failed_msg = {
   emailAlreadyExists: "Email already exists!",
   phoneNumberAlreadyExists: "Phone number already exists!",
   userNotFound: "User not found",
-
   invalidPassword: "Invalid password",
-
   noAccWEmail: "No account exists with this email",
-
   pwdNoMatch: "Passwords do not match!",
-
   userIdReq: "User ID is required.",
-
   incorrectCurrPwd: "Incorrect current password.",
-
   tokReq: "Token is required!",
-
   invTok: "Invalid token!",
 };
 
 var error_msg = {
   regUser: "Error registering user",
-
   loguser: "Error during login",
-
   forgPwdErr: "Forgot password error",
-
   resetPwdErr: "Reset password error",
-
   chngPwdErr: "Error while changing the password",
-
   logoutErr: "Logout error",
-
   updPrfErr: "Error while updating profile",
-
   tokenNotPrv: "Token is not provided!",
-
   forPwdTokVer: "Forgot password token verification error!",
-
   pwdResTokExp: "Password reset token is invalid or has expired",
-
   otpSendErr: "Error while sending the otp",
-
   otpVerErr: "Error while verifying the otp",
-
   otpResErr: "Failed to resend OTP",
   invalidPhoneNumber: "Invalid phone number",
   errUploadLogo: "Error uploading logo",

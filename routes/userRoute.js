@@ -72,6 +72,17 @@ module.exports=function(){
     router.get("/groupMemberList",authentication, controller.userController.groupMemberList)
 
     router.get("/nonProfileUserList",authentication, controller.userController.nonProfileUserList)
+
+    router.post("/addFeed",authentication, controller.userController.addFeed)
+    router.get("/feedList",authentication, controller.userController.feedList)
+    router.post("/likeUnlikeFeed",authentication, controller.userController.likeUnlikeFeed)
+    router.get("/likeFeedList",authentication, controller.userController.likeFeedList)
+    router.post("/commentOnFeed",authentication, controller.userController.commentOnFeed)
+    router.get("/commentOnFeedList",authentication, controller.userController.commentOnFeedList)
+
+    router.get("/getFollowList ",authentication, controller.userController.getFollowList)
+    router.post("/followUnfollwUser",authentication, controller.userController.followUnfollwUser)
+    
     return router
 }
 

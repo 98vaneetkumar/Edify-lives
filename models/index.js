@@ -30,5 +30,9 @@ module.exports = {
   groupMemberModel:require("./groupMemberModel")(Sequelize, sequelize, Sequelize.DataTypes),
   chatConstantModel:require("./chatConstantModel")(Sequelize, sequelize, Sequelize.DataTypes),
   messageModel:require("./messageModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  addFeedModel:require("./addFeedModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  likeFeedModel:require("./likeFeedModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  commentFeedModel:require("./commentFeedModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  followingModel:require("./followingModel")(Sequelize, sequelize, Sequelize.DataTypes),
 };
  

@@ -1555,6 +1555,250 @@
         ],
         "responses": {}
       }
+    },
+    "/users/addFeed": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-addFeed-post",
+        "tags": ["Application users Add Feed"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+        {
+          "name": "description",
+          "in": "formData",
+          "description": "",
+          "required": false,
+          "type": "string",
+          "value": ""
+        },
+        {
+          "name": "image",
+          "in": "formData",
+          "description": "Add image to upload",
+          "required": false,
+          "type": "file",
+          "format": "binary",
+          "maxLength": 5242880,
+          "allowedMimeTypes": ["image/jpeg", "image/png"]
+        } 
+        ],
+        "responses": {}
+      }
+    },
+    "/users/feedList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-feedList-post",
+        "tags": ["Application users Add Feed"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Enter the limit",
+            "required": false,
+            "type": "number",
+            "value": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Enter the how many record you want to skip",
+            "required": false,
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Enter the search",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/likeUnlikeFeed": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-likeUnlikeFeed-post",
+        "tags": ["Application users Add Feed"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "feedId",
+            "in": "formData",
+            "description": "Enter the feedId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/likeFeedList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-likeFeedList-get",
+        "tags": ["Application users Add Feed"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "feedId",
+            "in": "query",
+            "description": "Enter the feedId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/commentOnFeed": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-commentOnFeed-get",
+        "tags": ["Application users Add Feed"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "feedId",
+            "in": "formData",
+            "description": "Enter the feedId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "comment",
+            "in": "formData",
+            "description": "Enter the comment",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/commentOnFeedList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-commentOnFeedList-get",
+        "tags": ["Application users Add Feed"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "feedId",
+            "in": "query",
+            "description": "Enter the feedId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/getFollowList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-getFollowList-get",
+        "tags": ["Application users Following"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Enter the limit",
+            "required": false,
+            "type": "number",
+            "value": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Enter the how many record you want to skip",
+            "required": false,
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Enter the search",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {
+        
+        }
+      }
+    },
+    "/users/followUnfollwUser": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-followUnfollwUser-get",
+        "tags": ["Application users Following"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "followingId",
+            "in": "formData",
+            "description": "Enter the followingId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
     }
   },
   "definitions": {}
