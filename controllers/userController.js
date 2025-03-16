@@ -1025,12 +1025,12 @@ module.exports = {
               );
             }
             let thumbnailPath = null;
-            if (req.files?.video) {
-              thumbnailPath = await commonHelper.uploadThumbnailOnly(
-                req.files.video,
+            if (req.files?.thumbnail) {
+              thumbnailPath = await commonHelper.fileUpload(
+                req.files.thumbnail,
                 "images"
               );
-            }
+            } 
           let objToSave={
             userId:req.user.id,
             caption:req.body.caption,
