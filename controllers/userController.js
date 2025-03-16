@@ -16,7 +16,7 @@ const commonHelper = require("../helpers/commonHelper.js");
 const helper = require("../helpers/validation.js");
 const Models = require("../models/index");
 const Response = require("../config/responses.js");
-let projection=["id","firstName","lastName","email","countryCode","phoneNumber","role","maritalStatus" ]
+let projection=["id","firstName","lastName","email","countryCode","phoneNumber","role","maritalStatus" ,"profilePicture"]
 Models.notificationModel.belongsTo(Models.userModel, {
   foreignKey: "senderId",
   as: "sender",
@@ -1535,18 +1535,32 @@ module.exports = {
             
             // Count of comments
             [Sequelize.literal(`(SELECT COUNT(id) FROM commentFeed WHERE commentFeed.feedId = addFeed.id)`), "commentsCount"],
-            
+            [Sequelize.literal(`
+              (CASE 
+                WHEN (SELECT count(id) FROM commentFeed where feedId=addFeed.id and userId = '${req.user.id}') > 0 
+                THEN 1 
+                ELSE 0 
+              END)
+              `),"isComment"],
+            [Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM likeFeed where feedId=addFeed.id and userId = '${req.user.id}') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+              `),"isLike"],
             // 3 recently liked users (Subquery)
             [Sequelize.literal(`
               (SELECT JSON_ARRAYAGG(
-                  JSON_OBJECT('id', users.id, 'name', users.firstName, 'image', users.profilePicture)
+                  JSON_OBJECT('id', users.id, 'firstName', users.firstName,'lastName',users.lastName, 'image', users.profilePicture)
                 ) FROM likeFeed 
                 JOIN users ON users.id = likeFeed.userId 
                 WHERE likeFeed.feedId = addFeed.id 
                 ORDER BY likeFeed.createdAt DESC 
                 LIMIT 3
               )
-            `), "recentLikes"]
+            `), "recentLikes"],
+         
           ]
         },
         include: [
