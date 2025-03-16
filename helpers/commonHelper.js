@@ -3,7 +3,7 @@ const { v4: uuid } = require("uuid");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
-const ffmpeg = require('fluent-ffmpeg');
+// const ffmpeg = require('fluent-ffmpeg');
 
 
 const emailTamplate = require("./emailTemplate/forgetPassword");
@@ -76,48 +76,48 @@ module.exports = {
       return null;
     }
   },
-  uploadThumbnailOnly: async (videoPath, folder = "images") => {
-    try {
-      // Generate a random name for the thumbnail
-      const letters = "ABCDE1234567890FGHJK1234567890MNPQRSTUXY";
-      let thumbnailName = "";
-      while (thumbnailName.length < 28) {
-        const randIndex = Math.floor(Math.random() * letters.length);
-        thumbnailName += letters[randIndex];
-      }
-      const thumbnailExt = "jpg"; // Thumbnail extension
-      const thumbnailFullName = `${thumbnailName}.${thumbnailExt}`;
+  // uploadThumbnailOnly: async (videoPath, folder = "images") => {
+  //   try {
+  //     // Generate a random name for the thumbnail
+  //     const letters = "ABCDE1234567890FGHJK1234567890MNPQRSTUXY";
+  //     let thumbnailName = "";
+  //     while (thumbnailName.length < 28) {
+  //       const randIndex = Math.floor(Math.random() * letters.length);
+  //       thumbnailName += letters[randIndex];
+  //     }
+  //     const thumbnailExt = "jpg"; // Thumbnail extension
+  //     const thumbnailFullName = `${thumbnailName}.${thumbnailExt}`;
   
-      console.log("🚀 ~ thumbnailFullName:", thumbnailFullName);
+  //     console.log("🚀 ~ thumbnailFullName:", thumbnailFullName);
   
-      // Define the path where the thumbnail will be saved
-      const thumbnailPath = `public/${folder}/${thumbnailFullName}`;
+  //     // Define the path where the thumbnail will be saved
+  //     const thumbnailPath = `public/${folder}/${thumbnailFullName}`;
   
-      // Create a promise to generate and store the thumbnail
-      return new Promise((resolve, reject) => {
-        ffmpeg(videoPath) // Use the provided video path
-          .screenshots({
-            timestamps: ["05%"], // Capture a thumbnail at 5% of the video duration
-            filename: thumbnailFullName,
-            folder: `public/${folder}`,
-            size: "320x240",
-          })
-          .on("end", () => {
-            console.log("Thumbnail generated successfully:", thumbnailFullName);
+  //     // Create a promise to generate and store the thumbnail
+  //     return new Promise((resolve, reject) => {
+  //       ffmpeg(videoPath) // Use the provided video path
+  //         .screenshots({
+  //           timestamps: ["05%"], // Capture a thumbnail at 5% of the video duration
+  //           filename: thumbnailFullName,
+  //           folder: `public/${folder}`,
+  //           size: "320x240",
+  //         })
+  //         .on("end", () => {
+  //           console.log("Thumbnail generated successfully:", thumbnailFullName);
   
-            // Return the relative URL path like `/images/filename.jpg`
-            resolve(`/${folder}/${thumbnailFullName}`);
-          })
-          .on("error", (err) => {
-            console.error("Error generating thumbnail:", err);
-            reject(err);
-          });
-      });
-    } catch (error) {
-      console.error("Error in uploadThumbnailOnly:", error);
-      throw error;
-    }
-  },  
+  //           // Return the relative URL path like `/images/filename.jpg`
+  //           resolve(`/${folder}/${thumbnailFullName}`);
+  //         })
+  //         .on("error", (err) => {
+  //           console.error("Error generating thumbnail:", err);
+  //           reject(err);
+  //         });
+  //     });
+  //   } catch (error) {
+  //     console.error("Error in uploadThumbnailOnly:", error);
+  //     throw error;
+  //   }
+  // },  
   bcryptData: async (newPassword, salt) => {
     try {
       // Ensure `salt` is a number if passed as a string
