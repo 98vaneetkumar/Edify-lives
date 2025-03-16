@@ -1539,9 +1539,9 @@ module.exports = {
             // 3 recently liked users (Subquery)
             [Sequelize.literal(`
               (SELECT JSON_ARRAYAGG(
-                  JSON_OBJECT('id', user.id, 'name', user.firstName, 'image', user.profileImage)
+                  JSON_OBJECT('id', users.id, 'name', users.firstName, 'image', users.profilePicture)
                 ) FROM likeFeed 
-                JOIN user ON user.id = likeFeed.userId 
+                JOIN users ON users.id = likeFeed.userId 
                 WHERE likeFeed.feedId = addFeed.id 
                 ORDER BY likeFeed.createdAt DESC 
                 LIMIT 3
