@@ -1,4 +1,8 @@
 const Sequelize = require("sequelize");
+const prayerRequestModel = require("./prayerRequestModel");
+const dailyBreadModel = require("./dailyBreadModel");
+const prayerRequestCommentMOdel = require("./prayerRequestCommentMOdel");
+const dailyBreadCommentModel = require("./dailyBreadCommentModel");
 const sequelize = require("../dbConnection").sequelize;
 
 module.exports = {
@@ -34,5 +38,9 @@ module.exports = {
   likeFeedModel:require("./likeFeedModel")(Sequelize, sequelize, Sequelize.DataTypes),
   commentFeedModel:require("./commentFeedModel")(Sequelize, sequelize, Sequelize.DataTypes),
   followingModel:require("./followingModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  prayerRequestModel: require("./prayerRequestModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  dailyBreadModel: require("./dailyBreadModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  prayerRequestCommentMOdel: require("./prayerRequestCommentMOdel")(Sequelize, sequelize, Sequelize.DataTypes),
+  dailyBreadCommentModel: require("./dailyBreadCommentModel")(Sequelize, sequelize, Sequelize.DataTypes),
 };
  

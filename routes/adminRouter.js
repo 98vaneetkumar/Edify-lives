@@ -130,6 +130,20 @@ module.exports = function () {
   router.post("/filterTestimonies_create", controller.adminController.filterTestimonies_create);
   router.post("/filterTestimonies_delete", controller.adminController.filterTestimonies_delete);
 
+  router.get("/prayerrequest_listing", controller.adminController.prayerrequest_listing);
+  router.get("/prayerrequest_add", controller.adminController.prayerrequest_add);
+  router.post("/prayerrequest_create", controller.adminController.prayerrequest_create);
+  router.post("/prayerrequest_delete", controller.adminController.prayerrequest_delete);
+  router.get("/prayerrequest_view/:id", controller.adminController.prayerrequest_view);
+
+
+  router.get("/dailybread_listing", controller.adminController.dailybread_listing);
+  router.get("/dailybread_add", controller.adminController.dailybread_add);
+  router.post("/dailybread_create", controller.adminController.dailybread_create);
+  router.post("/dailybread_delete", controller.adminController.dailybread_delete);
+  router.get("/dailybread_view/:id", controller.adminController.dailybread_view);
+  
+
 
 
   router.post("/test", controller.adminController.test);

@@ -1,0 +1,84 @@
+<%- include('../../common/header') %>
+
+<body
+  class="vertical-layout vertical-menu-modern navbar-floating footer-static"
+  data-open="click"
+  data-menu="vertical-menu-modern"
+  data-col=""
+>
+  <%- include('../../common/navbar') %> 
+  <%- include('../../common/sidebar') %>
+
+  <div class="app-content content">
+    <div class="content-wrapper container-xxl p-0">
+      <div class="content-body">
+        <div class="row">
+          <div class="col-md-8 offset-md-2">
+            <div class="card">
+              <div class="card-header">
+                <h4>Add Daily Bread</h4>
+              </div>
+              <div class="card-body">
+                <form id="dailyBreadForm">
+                  <div class="mb-2">
+                    <label>Description</label>
+                    <textarea
+                      name="description"
+                      class="form-control"
+                      rows="4"
+                      required
+                    ></textarea>
+                  </div>
+
+                  <button
+                    type="submit"
+                    class="btn text-white"
+                    style="background: linear-gradient(to right, #1c1c1c, #2a2a2a); border: none;"
+                  >
+                    Add
+                  </button>
+                  <a
+                    href="/admin/dailybread_listing"
+                    class="btn text-white"
+                    style="background: #e76c65; border: none"
+                  >
+                    Cancel
+                  </a>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../../common/footer') %> 
+  <%- include('../../common/script') %>
+
+  <script>
+    $("#dailyBreadForm").on("submit", function (event) {
+      event.preventDefault();
+      var formData = $(this).serialize();
+      $.ajax({
+        url: "/admin/dailybread_create",
+        method: "POST",
+        data: formData,
+        success: function (res) {
+          if (res.success) {
+            Swal.fire({
+              title: "Success!",
+              text: "Daily bread added successfully.",
+              icon: "success",
+              timer: 2000,
+              showConfirmButton: false,
+            });
+            setTimeout(() => {
+              window.location.href = "/admin/dailybread_listing";
+            }, 2000);
+          }
+        },
+      });
+    });
+  </script>
+</body>

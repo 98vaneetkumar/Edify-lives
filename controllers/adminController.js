@@ -200,6 +200,8 @@ module.exports = {
         profilePreference,
         traitsExperience,
         filterCount,
+        prayerRequests,
+        dailyBread,
       ] = await Promise.all([
         Models.userModel.count({ where: { role: 1 } }),
         Models.userModel.count({ where: { role: 2 } }),
@@ -213,6 +215,8 @@ module.exports = {
         Models.profilePreferenceModel.count(),
         Models.traitsExperienceModel.count(),
         Models.filterTestimoniesModel.count(),
+        Models.prayerRequestModel.count(),
+        Models.dailyBreadModel.count(),
       ]);
 
       const currentYear = Math.max(2025, moment().year());
@@ -268,6 +272,8 @@ module.exports = {
         profilePreference,
         traitsExperience,
         filterCount,
+        prayerRequests,
+        dailyBread,
         session: req.session.user,
       });
     } catch (error) {
@@ -1516,14 +1522,200 @@ module.exports = {
   },
 
 
+  prayerrequest_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let prayerrequest_data = await Models.prayerRequestModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/prayerrequest/prayerrequestListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Prayer Request",
+        prayerrequest_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  prayerrequest_add: async (req, res) => {
+    try {
+      let title = "Prayer Request";
+      res.render("admin/prayerrequest/prayerrequestAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  prayerrequest_create: async (req, res) => {
+    try {
+      let objToSave = {
+        description: req.body.description,
+      };
+
+      await Models.prayerRequestModel.create(objToSave);
+
+      return res.json({
+        success: true,
+        message: "prayer request added successfully.",
+      });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+  prayerrequest_delete: async (req, res) => {
+    try {
+      const prayerrequestId = req.body.id;
+      await Models.prayerRequestModel.destroy({ where: { id: prayerrequestId } });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete prayer request " });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  prayerrequest_view: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+
+      let prayerrequestId = req.params.id;
+
+      let data = await Models.prayerRequestModel.findOne({
+        where: { id: prayerrequestId },
+      });
+      res.render("admin/prayerrequest/prayerrequestView", {
+        title: "Prayer Request",
+        data,
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+
+
+  dailybread_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let dailybread_data = await Models.dailyBreadModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/dailybread/dailybreadListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Daily Bread",
+        dailybread_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  dailybread_add: async (req, res) => {
+    try {
+      let title = "Daily Bread";
+      res.render("admin/dailybread/dailybreadAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  dailybread_create: async (req, res) => {
+    try {
+      let objToSave = {
+        description: req.body.description,
+      };
+
+      await Models.dailyBreadModel.create(objToSave);
+
+      return res.json({
+        success: true,
+        message: "daily bread added successfully.",
+      });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+  dailybread_delete: async (req, res) => {
+    try {
+      const dailybreadId = req.body.id;
+      await Models.dailyBreadModel.destroy({ where: { id: dailybreadId } });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete daily bread " });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  dailybread_view: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+
+      let dailybreadId = req.params.id;
+
+      let data = await Models.dailyBreadModel.findOne({
+        where: { id: dailybreadId },
+      });
+      res.render("admin/dailybread/dailybreadView", {
+        title: "dailybreads",
+        data,
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+
+
+
+
+
   test: async (req, res) => {
     try {
       let objtosave = {
-        title: "hello",
-        description: "well well well",
-        type: 3,
+        prayerrequestId : "771cb492-4295-444d-af1b-1f5b88cbc7ea",
+        comment: "Good",
+        commentBy: "0187477c-b6a9-4805-8602-a301c0a2204e"
+
       };
-      const saved = await Models.cmsModel.create(objtosave);
+      const saved = await Models.prayerRequestModel.create(objtosave);
       console.log(saved);
     } catch (error) {
       throw error;
