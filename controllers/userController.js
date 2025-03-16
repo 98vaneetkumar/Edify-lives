@@ -1581,6 +1581,7 @@ module.exports = {
   },
   likeUnlikeFeed:async(req,res)=>{
     try {
+      
       let objToSave={
         userId:req.user.id,
         feedId:req.body.feedId
@@ -1591,6 +1592,7 @@ module.exports = {
           feedId:req.body.feedId
         }
       })
+      
       if(!has){
         let response=await Models.likeFeedModel.create(objToSave);
         return commonHelper.success(res, Response.success_msg.likeFeed,response);
@@ -1598,13 +1600,15 @@ module.exports = {
           let response=await Models.likeFeedModel.destroy({
             where:{
               userId:req.user.id,
-              feedId:req.params.feedId
+              feedId:req.body.feedId
             }
             });
             return commonHelper.success(res, Response.success_msg.unlikeFeed,response);
         }
 
     } catch (error) {
+      console.log("error",error);
+      
       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
