@@ -1026,7 +1026,7 @@ module.exports = {
             }
             let thumbnailPath = null;
             if (req.files?.thumbnail) {
-              valuesStatementPath = await commonHelper.fileUpload(
+              thumbnailPath = await commonHelper.fileUpload(
                 req.files.thumbnail,
                 "images"
               );
@@ -1037,6 +1037,7 @@ module.exports = {
             video:videoPath,
             thumbnail:thumbnailPath,
           }
+          
          let response= await Models.videoModel.create(objToSave);
          return commonHelper.success(res, Response.success_msg.addVideo,response);
     } catch (error) {
