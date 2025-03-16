@@ -9,6 +9,35 @@ const moment = require("moment");
 const Models = require("../models/index");
 const helper = require("../helpers/commonHelper");
 
+
+Models.prayerRequestModel.hasMany(Models.prayerRequestCommentMOdel, {
+  foreignKey: "prayerRequestId",
+  as: "comments", 
+});
+
+Models.prayerRequestCommentMOdel.belongsTo(Models.prayerRequestModel, {
+  foreignKey: "prayerRequestId",
+});
+
+Models.prayerRequestCommentMOdel.belongsTo(Models.userModel, {
+   foreignKey: "commentBy", as: "user" 
+  });
+
+
+  Models.dailyBreadModel.hasMany(Models.dailyBreadCommentModel, {
+    foreignKey: "dailyBreadId",
+    as: "comments", 
+  });
+  
+  Models.dailyBreadCommentModel.belongsTo(Models.dailyBreadModel, {
+    foreignKey: "dailyBreadId",
+  });
+  
+  Models.dailyBreadCommentModel.belongsTo(Models.userModel, {
+     foreignKey: "commentBy", as: "user" 
+    });
+
+
 module.exports = {
   login_page: async (req, res) => {
     if (req.session.user) return res.redirect("/admin/dashboard");
@@ -1512,7 +1541,9 @@ module.exports = {
   filterTestimonies_delete: async (req, res) => {
     try {
       const filterTestimoniesId = req.body.id;
-      await Models.filterTestimoniesModel.destroy({ where: { id: filterTestimoniesId } });
+      await Models.filterTestimoniesModel.destroy({
+        where: { id: filterTestimoniesId },
+      });
       res.json({ success: true });
     } catch (error) {
       console.log(error);
@@ -1520,7 +1551,6 @@ module.exports = {
       return res.redirect("/admin/login");
     }
   },
-
 
   prayerrequest_listing: async (req, res) => {
     try {
@@ -1580,7 +1610,9 @@ module.exports = {
   prayerrequest_delete: async (req, res) => {
     try {
       const prayerrequestId = req.body.id;
-      await Models.prayerRequestModel.destroy({ where: { id: prayerrequestId } });
+      await Models.prayerRequestModel.destroy({
+        where: { id: prayerrequestId },
+      });
       res.json({ success: true });
     } catch (error) {
       console.log(error);
@@ -1592,12 +1624,31 @@ module.exports = {
   prayerrequest_view: async (req, res) => {
     try {
       if (!req.session.user) return res.redirect("/admin/login");
-
+  
       let prayerrequestId = req.params.id;
-
+  
       let data = await Models.prayerRequestModel.findOne({
         where: { id: prayerrequestId },
+        include: [
+          {
+            model: Models.prayerRequestCommentMOdel,
+            as: "comments",
+            include: [
+              {
+                model: Models.userModel, 
+                as: "user",     
+                attributes: ["firstName", "lastName"], 
+              },
+            ],
+          },
+        ],
       });
+  
+      if (!data) {
+        req.flash("error", "Prayer request not found.");
+        return res.redirect("/admin/prayerrequest_listing");
+      }
+  
       res.render("admin/prayerrequest/prayerrequestView", {
         title: "Prayer Request",
         data,
@@ -1610,8 +1661,8 @@ module.exports = {
       return res.redirect("/admin/login");
     }
   },
-
-
+  
+  
 
   dailybread_listing: async (req, res) => {
     try {
@@ -1688,9 +1739,22 @@ module.exports = {
 
       let data = await Models.dailyBreadModel.findOne({
         where: { id: dailybreadId },
+        include: [
+          {
+            model: Models.dailyBreadCommentModel,
+            as: "comments",
+            include: [
+              {
+                model: Models.userModel, 
+                as: "user",     
+                attributes: ["firstName", "lastName"], 
+              },
+            ],
+          },
+        ],
       });
       res.render("admin/dailybread/dailybreadView", {
-        title: "dailybreads",
+        title: "Daily Bread",
         data,
         session: req.session.user,
         msg: req.flash("msg"),
@@ -1700,22 +1764,16 @@ module.exports = {
       console.log(error);
       return res.redirect("/admin/login");
     }
-  },
-
-
-
-
-
+  },  
 
   test: async (req, res) => {
     try {
       let objtosave = {
-        prayerrequestId : "771cb492-4295-444d-af1b-1f5b88cbc7ea",
-        comment: "Good",
-        commentBy: "0187477c-b6a9-4805-8602-a301c0a2204e"
-
+        dailyBreadId: "e3f45af0-7da4-4ee0-8f63-22eed4cc2dbf",
+        comment: "Nice",
+        commentBy: "0187477c-b6a9-4805-8602-a301c0a2204e",
       };
-      const saved = await Models.prayerRequestModel.create(objtosave);
+      const saved = await Models.dailyBreadCommentModel.create(objtosave);
       console.log(saved);
     } catch (error) {
       throw error;

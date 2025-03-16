@@ -2,7 +2,7 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
     return sequelize.define(
       "dailyBreadComments",
       {
-        prayerRequestId: {
+        dailyBreadId: {
           type: Sequelize.UUID,
           allowNull: false,
           references: {

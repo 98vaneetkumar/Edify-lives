@@ -35,13 +35,13 @@
                           >Description</label
                         >
                         <textarea
-                          class="form-control"
+                          class="form-control text-start"
                           id="description"
                           name="description"
                           disabled
-                        >
-                          <%= data.description ? data.description : 'N/A' %>
-                        </textarea>
+                        ><%= data.description ? data.description.trim() : 'N/A' %>
+                      </textarea>
+
                       </div>
                     </form>
 
@@ -57,24 +57,27 @@
                         </thead>
                         <tbody>
                           <% if (data.comments && data.comments.length > 0) { %>
-                          <% data.comments.forEach(comment => { %>
-                          <tr>
-                            <td><%= comment.text ? comment.text : 'N/A' %></td>
-                            <td>
-                              <%= comment.commentedBy ? comment.commentedBy :
-                              'Unknown' %>
-                            </td>
-                          </tr>
-                          <% }) %> <% } else { %>
-                          <tr>
-                            <td colspan="2" class="text-center">
-                              No comments available
-                            </td>
-                          </tr>
+                            <% data.comments.forEach(comment => { %>
+                              <tr>
+                                <td><%= comment.comment ? comment.comment : 'N/A' %></td>
+                                <td>
+                                  <% if (comment.user) { %>
+                                    <%= comment.user.firstName %> <%= comment.user.lastName %>
+                                  <% } else { %>
+                                    Unknown
+                                  <% } %>
+                                </td>
+                              </tr>
+                            <% }) %> 
+                          <% } else { %>
+                            <tr>
+                              <td colspan="2" class="text-center">No comments available</td>
+                            </tr>
                           <% } %>
                         </tbody>
                       </table>
                     </div>
+                    
                     <!-- End Comment Table -->
                   </div>
                 </div>
