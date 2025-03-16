@@ -36,7 +36,7 @@ module.exports = {
   followingModel:require("./followingModel")(Sequelize, sequelize, Sequelize.DataTypes),
   prayerRequestModel: require("./prayerRequestModel")(Sequelize, sequelize, Sequelize.DataTypes),
   dailyBreadModel: require("./dailyBreadModel")(Sequelize, sequelize, Sequelize.DataTypes),
-  prayerRequestCommentMOdel: require("./prayerRequestCommentMOdel")(Sequelize, sequelize, Sequelize.DataTypes),
+  prayerRequestCommentMOdel: require("./prayerRequestCommentModel")(Sequelize, sequelize, Sequelize.DataTypes),
   dailyBreadCommentModel: require("./dailyBreadCommentModel")(Sequelize, sequelize, Sequelize.DataTypes),
 };
  
