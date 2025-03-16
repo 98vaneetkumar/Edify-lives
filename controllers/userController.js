@@ -1119,10 +1119,11 @@ module.exports = {
           }
         });
         return commonHelper.success(res, Response.success_msg.unLikeVideo);
-
       }
 
     } catch (error) {
+      console.log("error",error);
+      
        return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
