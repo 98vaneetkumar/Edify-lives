@@ -1649,9 +1649,7 @@ module.exports = {
 
 
   followList :async(req,res)=>{
-    try {
-      console.log("this is vamneet");
-      
+    try {      
       let limit = parseInt(req.query.limit, 10) || 10;
       let offset = (parseInt(req.query.skip, 10) || 0) * limit;
       let where= {
