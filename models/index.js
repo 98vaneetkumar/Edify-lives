@@ -1,8 +1,4 @@
 const Sequelize = require("sequelize");
-const prayerRequestModel = require("./prayerRequestModel");
-const dailyBreadModel = require("./dailyBreadModel");
-const prayerRequestCommentMOdel = require("./prayerRequestCommentMOdel");
-const dailyBreadCommentModel = require("./dailyBreadCommentModel");
 const sequelize = require("../dbConnection").sequelize;
 
 module.exports = {
