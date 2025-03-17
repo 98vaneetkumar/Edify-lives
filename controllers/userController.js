@@ -1335,7 +1335,7 @@ module.exports = {
       let has=await Models.likeGroupModel.findOne({
         where:{
           userId:req.user.id,
-          groupId:payload.testimonyPostId
+          groupId:payload.groupId
         }
       })
       if(!has){
