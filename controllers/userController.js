@@ -44,6 +44,7 @@ Models.groupModel.belongsTo(Models.userModel, {
 Models.commentGroupModel.belongsTo(Models.userModel, {
   foreignKey: 'userId',
 })
+Models.groupModel.hasMany(Models.groupMemberModel,{foreignKey:"groupId"})
 Models.likeGroupModel.belongsTo(Models.userModel, {
   foreignKey: 'userId',
 })
@@ -51,6 +52,7 @@ Models.groupPostModel.belongsTo(Models.groupModel,{foreignKey:"groupId"})
 Models.groupMemberModel.belongsTo(Models.userModel, {
   foreignKey: 'userId',
 })
+Models.groupMemberModel.belongsTo(Models.groupModel,{foreignKey:"groupId"})
 Models.testimonyPostModel.belongsTo(Models.userModel, {
   foreignKey: 'userId',
 })
@@ -1425,9 +1427,7 @@ module.exports = {
     try {
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
-      let where = {
-        userId:req.user.id
-      };
+      let where = { };
       if (req.query && req.query.search) {
         where = {
           [Op.or]: [
@@ -1444,11 +1444,18 @@ module.exports = {
             [Sequelize.literal("(SELECT count(id) FROM likeGroup where groupId=group.id )"), "likesCount"],
           ]
         },
+        include: [
+          {
+              model: Models.groupMemberModel,
+              where: { userId: req.user.id }, // Filter only where userId matches req.user.id
+              required: true // Ensures only groups where the user is a member are included
+          }
+      ],
         where:where,
         limit:limit,
         offset:offset
       })
-      return commonHelper.success(res, Response.success_msg.myGroupList,response);
+      return commonHelper.success(res, Response.success_msg.myGroupList,response1);
     } catch (error) {
        return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
