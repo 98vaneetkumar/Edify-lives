@@ -1455,8 +1455,10 @@ module.exports = {
         limit:limit,
         offset:offset
       })
-      return commonHelper.success(res, Response.success_msg.myGroupList,response1);
+      return commonHelper.success(res, Response.success_msg.myGroupList,response);
     } catch (error) {
+      console.log("error",error);
+      
        return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
   },
