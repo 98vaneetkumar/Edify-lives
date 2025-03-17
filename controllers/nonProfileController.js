@@ -19,7 +19,7 @@ module.exports = {
   signUp: async (req, res) => {
     try {
       const schema = Joi.object().keys({
-        nameNonProfit: Joi.string().required(),
+        firstName: Joi.string().required(),
         addressNonProfit: Joi.string().required(),
         email: Joi.string().email().required(),
         countryCode: Joi.string().optional(),
@@ -36,7 +36,7 @@ module.exports = {
         donateEdifyLivers: Joi.string().optional(),
         deviceToken: Joi.string().optional(),
         deviceType: Joi.number().valid(1, 2).optional(),
-        companyLogo: Joi.string().optional(),
+        profilePicture: Joi.string().optional(),
         valuesStatement: Joi.string().optional(),
         webSiteNonProfile: Joi.string().optional(),
         chruchAttendAddress:Joi.string().optional()
@@ -69,9 +69,9 @@ module.exports = {
         process.env.SALT
       );
 
-      let companyLogoPath = null;
-      if (req.files && req.files.companyLogo) {
-        companyLogoPath = await commonHelper.fileUpload(req.files.companyLogo);
+      let profilePicturePath = null;
+      if (req.files && req.files.profilePicture) {
+        profilePicturePath = await commonHelper.fileUpload(req.files.profilePicture);
       }
 
       let valuesStatementPath = null;
@@ -91,7 +91,7 @@ module.exports = {
         return commonHelper.failed(res, Response.error_msg.invalidPhoneNumber);
       }
       let objToSave = {
-        nameNonProfit: payload.nameNonProfit,
+        firstName: payload.firstName,
         addressNonProfit: payload.addressNonProfit,
         email: payload.email,
         role: 4,
@@ -103,7 +103,7 @@ module.exports = {
         nonProfitOrganization: payload.nonProfitOrganization,
         churchAttendAddress: payload.churchAttendAddress,
         maritalStatus: payload.maritalStatus,
-        companyLogo: companyLogoPath,
+        profilePicture: profilePicturePath,
         valuesStatement: valuesStatementPath,
         location: payload.location,
         latitude: payload.latitude,
@@ -132,9 +132,9 @@ module.exports = {
   },
   uploadLogNonProfile:async(req,res)=>{
     try {
-      let companyLogoPath = null;
-      if (req.files && req.files.companyLogo) {
-        companyLogoPath = await commonHelper.fileUpload(req.files.companyLogo);
+      let profilePicturePath = null;
+      if (req.files && req.files.profilePicture) {
+        profilePicturePath = await commonHelper.fileUpload(req.files.profilePicture);
       }
 
       let valuesStatementPath = null;
@@ -145,7 +145,7 @@ module.exports = {
       }
       
         await Models.userModel.update({
-            companyLogo: companyLogoPath,
+            profilePicture: profilePicturePath,
             valuesStatement: valuesStatementPath,
           }, {where: {
             id: req.user.id

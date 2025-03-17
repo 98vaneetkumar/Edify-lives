@@ -150,11 +150,6 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
       },
 
       //3.Business fileds
-      businessName: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue:''
-      },
       typeOfBusiness: {
         type: DataTypes.STRING(255),
         allowNull: true,
@@ -170,18 +165,8 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:''
       },
-      businessLogo:{
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue:''
-      },
 
       //4.Non Profit fields
-      nameNonProfit: {
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue:''
-      },
 
       addressNonProfit: {
         type: DataTypes.STRING(255),
@@ -208,11 +193,6 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue:''
     },    
-      companyLogo:{
-        type: DataTypes.STRING(255),
-        allowNull: true,
-        defaultValue:''
-      },
 
 
       // ===============

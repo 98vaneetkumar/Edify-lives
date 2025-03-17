@@ -55,7 +55,7 @@
             "value": "123456"
           },
           {
-            "name": "businessName",
+            "name": "firstName",
             "in": "formData",
             "description": "Enter business Name",
             "required": false,
@@ -87,7 +87,7 @@
             "value": ""
           },
           {
-            "name": "businessLogo",
+            "name": "profilePicture",
             "in": "formData",
             "description": "Enter business logo to upload",
             "required": false,

@@ -143,10 +143,10 @@ module.exports = {
         );
       }
 
-      let companyLogoPath = null;
-      if (req.files?.companyLogo) {
-        companyLogoPath = await commonHelper.fileUpload(
-          req.files.companyLogo,
+      let profilePicturePath = null;
+      if (req.files?.profilePicture) {
+        profilePicturePath = await commonHelper.fileUpload(
+          req.files.profilePicture,
           "images"
         );
       }
@@ -160,7 +160,7 @@ module.exports = {
 
       let objToUpdate = await Models.userModel.update({
         visionStatement: visionStatementPath || null,
-        companyLogo: companyLogoPath || null,
+        profilePicture: profilePicturePath || null,
         valuesStatement: valuesStatementPath || null
       }, {where: {
         id: req.user.id

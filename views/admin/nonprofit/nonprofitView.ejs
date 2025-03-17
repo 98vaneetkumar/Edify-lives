@@ -48,7 +48,7 @@
                             align-items: center;
                           "
                         >
-                          <% if(!data.companyLogo) { %>
+                          <% if(!data.profilePicture) { %>
                           <img
                             src="../../assets/images (1).jpeg"
                             class="profile_img"
@@ -59,7 +59,7 @@
                           />
                           <% } else { %>
                           <img
-                            src="<%= data.companyLogo %>"
+                            src="<%= data.profilePicture %>"
                             class="profile_img"
                             alt="user image"
                             height="120px"
@@ -70,16 +70,16 @@
                       </a>
                       <form class="auth-register-form mt-2">
                         <div class="mb-1">
-                          <label for="nameNonProfit" class="form-label"
+                          <label for="firstName" class="form-label"
                             >Name Of Non-Profit</label
                           >
                           <input
                             type="text"
                             class="form-control"
-                            id="nameNonProfit"
-                            name="nameNonProfit"
-                            aria-describedby="nameNonProfit"
-                            value="<%=data.nameNonProfit ? data.nameNonProfit : 'N/A' %>"
+                            id="firstName"
+                            name="firstName"
+                            aria-describedby="firstName"
+                            value="<%=data.firstName ? data.firstName : 'N/A' %>"
                             disabled
                           />
                         </div>

@@ -23,11 +23,11 @@ module.exports = {
         countryCode: Joi.string().optional(),
         phoneNumber: Joi.string().required(),
         password: Joi.string().required(),
-        businessName: Joi.string().optional(),
+        firstName: Joi.string().optional(),
         typeOfBusiness: Joi.string().optional(),
         businessAddress: Joi.string().optional(),
         businessUserAddress: Joi.string().optional(),
-        businessLogo: Joi.any().optional(),
+        profilePicture: Joi.any().optional(),
         maritalStatus: Joi.number().valid(0, 1).optional(),
         location: Joi.string().optional(),
         latitude: Joi.string().optional(),
@@ -60,9 +60,9 @@ module.exports = {
       const hashedPassword = await commonHelper.bcryptData(payload.password, process.env.SALT);
   
       // Handle business logo upload
-      let businessLogoPath = null;
-      if (req.files?.businessLogo) {
-        businessLogoPath = await commonHelper.fileUpload(req.files.businessLogo, 'images');
+      let profilePicturePath = null;
+      if (req.files?.profilePicture) {
+        profilePicturePath = await commonHelper.fileUpload(req.files.profilePicture, 'images');
       }
   
       // Handle values statement upload
@@ -87,11 +87,11 @@ module.exports = {
         countryCode,
         phoneNumber: payload.phoneNumber,
         password: hashedPassword,
-        businessName: payload.businessName || null,
+        firstName: payload.firstName || null,
         typeOfBusiness: payload.typeOfBusiness || null,
         businessAddress: payload.businessAddress || null,
         businessUserAddress: payload.businessUserAddress || null,
-        businessLogo: businessLogoPath || null,
+        profilePicture: profilePicturePath || null,
         maritalStatus: payload.maritalStatus || null,
         location: payload.location || null,
         latitude: payload.latitude || null,

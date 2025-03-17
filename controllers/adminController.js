@@ -614,6 +614,7 @@ module.exports = {
         order: [["createdAt", "DESC"]],
         raw: true,
       });
+      
       res.render("admin/churches/churchListing", {
         session: req.session.user,
         msg: req.flash("msg"),

@@ -47,13 +47,13 @@
                   <% business_data.forEach((data,i)=>{%>
                   <tr>
                     <td><%= i+1%></td>
-                    <td><%= data.businessName ? data.businessName:"N/A"%></td>
+                    <td><%= data.firstName ? data.firstName:"N/A"%></td>
                     <td><%= data.typeOfBusiness ? data.typeOfBusiness:"N/A"%></td>
                     <td> 
-                      <% if (!data.businessLogo) { %>
+                      <% if (!data.profilePicture) { %>
                         <img src="/assets/images (1).jpeg" alt="dummy image" style="height:100px; width:100px;">
                       <% } else { %>
-                        <img src="<%= data.businessLogo %>" alt="Business Logo" style="height:100px; width:100px;">
+                        <img src="<%= data.profilePicture %>" alt="Business Logo" style="height:100px; width:100px;">
                       <% } %>
                     </td>                    
                     <td><%= data.businessAddress ? data.businessAddress:"N/A"%>

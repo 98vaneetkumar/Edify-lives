@@ -49,15 +49,15 @@
                   <% nonprofit_data.forEach((data,i)=>{%>
                   <tr>
                     <td><%= i+1%></td>
-                    <td><%= data.nameNonProfit ? data.nameNonProfit:"N/A"%></td>
+                    <td><%= data.firstName ? data.firstName:"N/A"%></td>
                     <td><%= data.addressNonProfit ? data.addressNonProfit:"N/A"%></td>
                     <td><%= data.webSiteNonProfile ? data.webSiteNonProfile:"N/A"%>
                     </td>
                     <td>
-                      <% if (!data.companyLogo) { %>
+                      <% if (!data.profilePicture) { %>
                         <img src="/assets/images (1).jpeg" alt="dummy image" style="height:100px; width:100px;">
                       <% } else { %>
-                        <img src="<%= data.companyLogo %>" alt="Business Logo" style="height:100px; width:100px;">
+                        <img src="<%= data.profilePicture %>" alt="Business Logo" style="height:100px; width:100px;">
                       <% } %>
                     </td>                    
                     <td><%= data.nonProfitServe ? data.nonProfitServe:"N/A"%></td>

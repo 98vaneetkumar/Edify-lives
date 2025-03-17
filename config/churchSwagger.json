@@ -15,7 +15,6 @@
     }
   },
   "paths": {
-
     "/church/filters_listing": {
       "get": {
         "x-swagger-router-controller": "middleware-name1",
@@ -122,7 +121,7 @@
             "type": "string",
             "value": ""
           },
-       
+
           {
             "name": "maritalStatus",
             "in": "formData",
@@ -209,7 +208,7 @@
             "allowedMimeTypes": ["image/jpeg", "image/png"]
           },
           {
-            "name": "companyLogo",
+            "name": "profilePicture",
             "in": "formData",
             "description": "Enter company logo picture to upload",
             "required": false,

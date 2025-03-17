@@ -34,9 +34,9 @@
         "description": "",
         "parameters": [
           {
-            "name": "nameNonProfit",
+            "name": "firstName",
             "in": "formData",
-            "description": "Enter the nameNonProfit",
+            "description": "Enter the firstName",
             "required": true,
             "type": "string",
             "value": "vaneet"
@@ -114,7 +114,7 @@
             "value": ""
           },
           {
-            "name": "companyLogo",
+            "name": "profilePicture",
             "in": "formData",
             "description": "Enter company Logo to upload",
             "required": false,
@@ -219,7 +219,7 @@
             "allowedMimeTypes": ["image/jpeg", "image/png"]
           },
           {
-            "name": "companyLogo",
+            "name": "profilePicture",
             "in": "formData",
             "description": "Enter company logo picture to upload",
             "required": false,
