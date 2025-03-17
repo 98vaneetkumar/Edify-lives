@@ -62,6 +62,10 @@ Models.likeFeedModel.belongsTo(Models.userModel, {
 Models.commentFeedModel.belongsTo(Models.userModel, {
   foreignKey: 'userId',
 })
+Models.likeDailyBreadModel.belongsTo(Models.userModel,{foreignKey:"userId"})
+Models.dailyBreadCommentModel.belongsTo(Models.userModel,{foreignKey:"commentBy"})
+Models.prayerRequestCommentModel.belongsTo(Models.userModel,{foreignKey:"commentBy"})
+Models.likePrayerRequestModel.belongsTo(Models.userModel,{foreignKey:"userId"})
 module.exports = {
   signUp: async (req, res) => {
     try {
@@ -1745,6 +1749,336 @@ module.exports = {
     } catch (error) {
       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
     }
-  }
+  },
+
+  // <-----------------------------Daily bread------------------------------------------>
+
+  dailyBreadList:async(req,res)=>{
+    try {
+      let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
+      
+      let where = {};
+      if (req.query && req.query.search) {
+        where = {
+          [Op.or]: [
+            { description: { [Op.like]: `%${req.query.search}%` } },
+          ]
+        };
+      }
+     
+      let response=await Models.dailyBreadModel.findAndCountAll({
+        attributes: {
+          include: [
+            [Sequelize.literal("(SELECT count(id) FROM dailyBreadComments where dailyBreadId=dailyBread.id )"), "commentsCount"],
+            [Sequelize.literal("(SELECT count(id) FROM likeDailyBread where dailyBreadId=dailyBread.id )"), "likesCount"],
+            [Sequelize.literal(`
+              (CASE 
+                WHEN (SELECT count(id) FROM dailyBreadComments where dailyBreadId=dailyBread.id and commentBy = '${req.user.id}') > 0 
+                THEN 1 
+                ELSE 0 
+              END)
+              `),"isComment"],
+            [Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM likeDailyBread where dailyBreadId=dailyBread.id and userId = '${req.user.id}') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+              `),"isLike"]  
+          ]
+        }, 
+        where:where,
+        limit:limit,
+        offset:offset,
+        order: [["createdAt", "DESC"]],
+      });
+      return commonHelper.success(res, Response.success_msg.getDailyBreadList,response);
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+  dailyBreadDetail:async(req,res)=>{
+    try {
+      let response=await Models.dailyBreadModel.findOne({
+        attributes: {
+          include: [
+            [Sequelize.literal("(SELECT count(id) FROM dailyBreadComments where dailyBreaddailyBread.id )"), "commentsCount"],
+            [Sequelize.literal("(SELECT count(id) FROM likeDailyBread where dailyBreadId=dailyBread.id )"), "likesCount"],    
+            [Sequelize.literal(`
+              (CASE
+                WHEN (SELECT count(id) FROM dailyBreadComments where dailyBreadId=dailyBread.id and userId = '${req.user.id}') > 0
+                THEN 1
+                ELSE 0
+                END)
+                `),"isComment"],
+            [Sequelize.literal(`
+                  (CASE
+                  WHEN (SELECT count(id) FROM likeDailyBread where dailyBreadId=dailyB
+                  read.id and userId = '${req.user.id}') > 0
+                  THEN 1
+                  ELSE 0
+                  END)
+                  `),"isLike"]
+                  ]
+                },
+        where:{
+          id:req.query.dailyBreadId
+        },
+      });
+      return commonHelper.success(res, Response.success_msg.getDailyBreadDetail,response);
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+  dailyBreadComment:async(req,res)=>{
+    try {
+      let schema=Joi.object().keys({
+        dailyBreadId:Joi.string().required(),
+        comment:Joi.string().required()
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+      let objToSave={
+        commentBy:req.user.id,
+        dailyBreadId:payload.dailyBreadId,
+        comment:payload.comment
+      }
+    let response=  await Models.dailyBreadCommentModel.create(objToSave)
+      return commonHelper.success(res, Response.success_msg.commentAdded,response);
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+  dailyBreadCommentList:async(req,res)=>{
+    try {
+      let response=await Models.dailyBreadCommentModel.findAll({
+        where:{
+          dailyBreadId:req.query.dailyBreadId
+        },
+        include:[
+          {
+            model:Models.dailyBreadModel,
+          }
+        ],
+        order: [["createdAt", "DESC"]],
+      })
+      return commonHelper.success(res, Response.success_msg.commentList,response); 
+      
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+  dailyBreadLikeUnlike:async(req,res)=>{
+    try {
+      let has=await Models.likeDailyBreadModel.findOne({
+        where:{
+          userId:req.user.id,
+          dailyBreadId:req.params.dailyBreadId
+        }
+      })
+      if(!has){
+        let objToSave={
+          userId:req.user.id,
+          dailyBreadId:req.params.dailyBreadId
+      }
+      let response=await Models.likeDailyBreadModel.create(objToSave)
+      return commonHelper.success(res, Response.success_msg.likeDailyBreadAdded,response);
+    }else{
+      let response=await Models.likeDailyBreadModel.destroy({
+        where:{
+          userId:req.user.id,
+          dailyBreadId:req.params.dailyBreadId
+          }
+          })
+      return commonHelper.success(res, Response.success_msg.unlikeDailyBreadAdded,response);
+    }
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+  dailyBreadLikeList:async(req,res)=>{
+    try {
+      let response=await Models.likeDailyBreadModel.findAll({
+        where:{
+          dailyBreadId:req.query.dailyBreadId
+        },
+        include:[{
+          model:Models.userModel
+        }]
+      })
+      return commonHelper.success(res, Response.success_msg.likeDailyBreadAdded,response);
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+  
+  // <-----------------------------Prayer Request------------------------------------------>
+
+  prayerRequestList:async(req,res)=>{
+    let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
+      
+      let where = {};
+      if (req.query && req.query.search) {
+        where = {
+          [Op.or]: [
+            { description: { [Op.like]: `%${req.query.search}%` } },
+          ]
+        };
+      }
+     
+      let response=await Models.prayerRequestModel.findAndCountAll({
+        attributes: {
+          include: [
+            [Sequelize.literal("(SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id )"), "commentsCount"],
+            [Sequelize.literal("(SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id )"), "likesCount"],
+            [Sequelize.literal(`
+              (CASE 
+                WHEN (SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id and commentBy = '${req.user.id}') > 0 
+                THEN 1 
+                ELSE 0 
+              END)
+              `),"isComment"],
+            [Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id and userId = '${req.user.id}') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+              `),"isLike"]  
+          ]
+        }, 
+        where:where,
+        limit:limit,
+        offset:offset,
+        order: [["createdAt", "DESC"]],
+      });
+      return commonHelper.success(res, Response.success_msg.getDailyBreadList,response);
+  },
+  prayerRequestDetail:async(req,res)=>{
+    try {
+      let response=await Models.prayerRequestModel.findOne({
+        attributes: {
+          include: [
+            [Sequelize.literal("(SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id )"), "commentsCount"],
+            [Sequelize.literal("(SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id )"), "likesCount"],
+            [Sequelize.literal(`
+              (CASE 
+                WHEN (SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id and commentBy = '${req.user.id}') > 0 
+                THEN 1 
+                ELSE 0 
+              END)
+              `),"isComment"],
+            [Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id and userId = '${req.user.id}') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+              `),"isLike"]  
+          ]
+        },
+        where:{
+          id:req.query.prayerRequestId
+        },
+      });
+      return commonHelper.success(res, Response.success_msg.getDailyBreadDetail,response);
+ 
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+  prayerRequestComment:async(req,res)=>{
+    try {
+      let schema=Joi.object().keys({
+        prayerRequestId:Joi.string().required(),
+        comment:Joi.string().required()
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+      let objToSave={
+        commentBy:req.user.id,
+        prayerRequestId:payload.prayerRequestId,
+        comment:payload.comment
+      }
+    let response=  await Models.prayerRequestCommentModel.create(objToSave)
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+  prayerRequestCommentList:async(req,res)=>{
+    try {
+      let response=await Models.prayerRequestCommentModel.findAll({
+        where:{
+          prayerRequestId:req.query.prayerRequestId
+        },
+        include:[
+          {
+            model:Models.prayerRequestModel,
+          }
+        ],
+        order: [["createdAt", "DESC"]],
+      })
+      return commonHelper.success(res, Response.success_msg.commentList,response); 
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+  prayerRequestLikeUnlike:async(req,res)=>{
+    try {
+      let has=await Models.likePrayerRequestModel.findOne({
+        where:{
+          userId:req.user.id,
+          prayerRequestId:req.params.prayerRequestId
+        }
+      })
+      if(!has){
+        let objToSave={
+          userId:req.user.id,
+          prayerRequestId:req.params.prayerRequestId
+      }
+      let response=await Models.likePrayerRequestModel.create(objToSave)
+      return commonHelper.success(res, Response.success_msg.likeDailyPrayerAdded,response);
+    }else{
+      let response=await Models.likePrayerRequestModel.destroy({
+        where:{
+          userId:req.user.id,
+          prayerRequestId:req.params.prayerRequestId
+          }
+          })
+      return commonHelper.success(res, Response.success_msg.unlikeDailyPrayerAdded,response);
+    }
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+  prayerRequestLikeList:async(req,res)=>{
+    try {
+      let response=await Models.likePrayerRequestModel.findAll({
+        where:{
+          prayerRequestId:req.query.prayerRequestId
+        },
+        include:[{
+          model:Models.userModel
+        }]
+      })
+      return commonHelper.success(res, Response.success_msg.likeDailyPrayerList,response);
+   
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+
+
 
 };

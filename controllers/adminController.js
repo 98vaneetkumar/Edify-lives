@@ -10,17 +10,18 @@ const Models = require("../models/index");
 const helper = require("../helpers/commonHelper");
 
 
-Models.prayerRequestModel.hasMany(Models.prayerRequestCommentMOdel, {
+Models.prayerRequestModel.hasMany(Models.prayerRequestCommentModel, {
   foreignKey: "prayerRequestId",
   as: "comments", 
 });
 
-Models.prayerRequestCommentMOdel.belongsTo(Models.prayerRequestModel, {
+Models.prayerRequestCommentModel.belongsTo(Models.prayerRequestModel, {
   foreignKey: "prayerRequestId",
 });
 
-Models.prayerRequestCommentMOdel.belongsTo(Models.userModel, {
-   foreignKey: "commentBy", as: "user" 
+Models.prayerRequestCommentModel.belongsTo(Models.userModel, {
+   foreignKey: "commentBy",
+    // as: "user" 
   });
 
 
@@ -34,7 +35,8 @@ Models.prayerRequestCommentMOdel.belongsTo(Models.userModel, {
   });
   
   Models.dailyBreadCommentModel.belongsTo(Models.userModel, {
-     foreignKey: "commentBy", as: "user" 
+     foreignKey: "commentBy",
+      // as: "user" 
     });
 
 
@@ -1632,7 +1634,7 @@ module.exports = {
         where: { id: prayerrequestId },
         include: [
           {
-            model: Models.prayerRequestCommentMOdel,
+            model: Models.prayerRequestCommentModel,
             as: "comments",
             include: [
               {

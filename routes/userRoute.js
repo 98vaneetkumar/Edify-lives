@@ -82,7 +82,23 @@ module.exports=function(){
 
     router.get("/followList",authentication, controller.userController.followList)
     router.post("/followUnfollwUser",authentication, controller.userController.followUnfollwUser)
-    
+
+
+    router.get("/dailyBreadList",authentication, controller.userController.dailyBreadList)
+    router.get("/dailyBreadDetail",authentication, controller.userController.dailyBreadDetail)
+    router.post("/dailyBreadComment",authentication, controller.userController.dailyBreadComment)
+    router.get("/dailyBreadCommentList",authentication, controller.userController.dailyBreadCommentList)
+    router.post("/dailyBreadLikeUnlike",authentication, controller.userController.dailyBreadLikeUnlike)
+    router.get("/dailyBreadLikeList",authentication, controller.userController.dailyBreadLikeList)
+
+
+    router.get("/prayerRequestList",authentication, controller.userController.prayerRequestList)
+    router.get("/prayerRequestDetail",authentication, controller.userController.prayerRequestDetail)
+    router.post("/prayerRequestComment",authentication, controller.userController.prayerRequestComment)
+    router.get("/prayerRequestCommentList",authentication, controller.userController.prayerRequestCommentList)
+    router.post("/prayerRequestLikeUnlike",authentication, controller.userController.prayerRequestLikeUnlike)
+    router.get("/prayerRequestLikeList",authentication, controller.userController.prayerRequestLikeList)
+
     return router
 }
 

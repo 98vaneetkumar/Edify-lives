@@ -34,9 +34,11 @@ module.exports = {
   likeFeedModel:require("./likeFeedModel")(Sequelize, sequelize, Sequelize.DataTypes),
   commentFeedModel:require("./commentFeedModel")(Sequelize, sequelize, Sequelize.DataTypes),
   followingModel:require("./followingModel")(Sequelize, sequelize, Sequelize.DataTypes),
-  prayerRequestModel: require("./prayerRequestModel")(Sequelize, sequelize, Sequelize.DataTypes),
   dailyBreadModel: require("./dailyBreadModel")(Sequelize, sequelize, Sequelize.DataTypes),
-  prayerRequestCommentMOdel: require("./prayerRequestCommentModel")(Sequelize, sequelize, Sequelize.DataTypes),
   dailyBreadCommentModel: require("./dailyBreadCommentModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  likeDailyBreadModel: require("./likeDailyBreadModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  prayerRequestModel: require("./prayerRequestModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  prayerRequestCommentModel: require("./prayerRequestCommentModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  likePrayerRequestModel: require("./likePrayerRequestModel")(Sequelize, sequelize, Sequelize.DataTypes),
 };
  

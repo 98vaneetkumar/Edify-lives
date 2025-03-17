@@ -1799,6 +1799,346 @@
         ],
         "responses": {}
       }
+    },
+    "/users/dailyBreadList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-dailyBreadList-get",
+        "tags": ["Application Daily Bread List"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Enter the limit",
+            "required": false,
+            "type": "number",
+            "value": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Enter the how many record you want to skip",
+            "required": false,
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Enter the search",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {
+        
+        }
+      }
+    },
+    "/users/dailyBreadDetail": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-dailyBreadDetail-get",
+        "tags": ["Application Daily Bread List"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dailyBreadId",
+            "in": "query",
+            "description": "Enter the dailyBreadId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/dailyBreadComment": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-dailyBreadComment-get",
+        "tags": ["Application Daily Bread List"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dailyBreadId",
+            "in": "formData",
+            "description": "Enter the dailyBreadId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "comment",
+            "in": "formData",
+            "description": "Enter the comment",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/dailyBreadCommentList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-dailyBreadCommentList-get",
+        "tags": ["Application Daily Bread List"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dailyBreadId",
+            "in": "query",
+            "description": "Enter the dailyBreadId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/dailyBreadLikeUnlike": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-dailyBreadLikeUnlike-get",
+        "tags": ["Application Daily Bread List"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dailyBreadId",
+            "in": "formData",
+            "description": "Enter the dailyBreadId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/dailyBreadLikeList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-dailyBreadLikeList-get",
+        "tags": ["Application Daily Bread List"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "dailyBreadId",
+            "in": "query",
+            "description": "Enter the dailyBreadId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/prayerRequestList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-prayerRequestList-get",
+        "tags": ["Application Daily Prayer List"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Enter the limit",
+            "required": false,
+            "type": "number",
+            "value": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Enter the how many record you want to skip",
+            "required": false,
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Enter the search",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {
+        
+        }
+      }
+    },
+    "/users/prayerRequestDetail": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-prayerRequestDetail-get",
+        "tags": ["Application Daily Prayer List"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "prayerRequestId",
+            "in": "query",
+            "description": "Enter the prayerRequestId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/prayerRequestComment": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-prayerRequestComment-get",
+        "tags": ["Application Daily Prayer List"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "prayerRequestId",
+            "in": "formData",
+            "description": "Enter the prayerRequestId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "comment",
+            "in": "formData",
+            "description": "Enter the comment",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/prayerRequestCommentList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-prayerRequestCommentList-get",
+        "tags": ["Application Daily Prayer List"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "prayerRequestId",
+            "in": "query",
+            "description": "Enter the prayerRequestId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/prayerRequestLikeUnlike": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-prayerRequestLikeUnlike-get",
+        "tags": ["Application Daily Prayer List"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "prayerRequestId",
+            "in": "formData",
+            "description": "Enter the prayerRequestId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/prayerRequestLikeList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-prayerRequestLikeList-get",
+        "tags": ["Application Daily Prayer List"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "prayerRequestId",
+            "in": "query",
+            "description": "Enter the dailprayerRequestIdyBreadId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
+        "responses": {}
+      }
     }
   },
   "definitions": {}

@@ -59,6 +59,18 @@ var success_msg = {
   getFollowList:"Follow list fetched successfully",
   followUser:"User followed successfully",
   unfollowUser:"User unfollowed successfully",
+  getDailyBreadList:"Daily bread list fetched successfully",
+  getDailyBreadDetail:"Daily bread detail fetched successfully",
+  commentAdded:"Comment add succssfully",
+  commentList:"Comment list get successfully",
+  likeDailyBreadAdded:"Like daily bread successfully",
+  unlikeDailyBreadAdded:"Unlike daily bread successfully.",
+  likeDailyBreadList:"Like daily bread list succssfully",
+  getDailyPrayerList:"Daily Prayer list fetched successfully.",
+  getDailyPrayerDetail:"Daily Prayer detail fetched successfully.",
+  likeDailyPrayerAdded:"Like daily Prayer successfully",
+  unlikeDailyPrayerAdded:"Unlike daily Prayer successfully.",
+  likeDailyPrayerList:"Like daily Prayer list get successfully"
 };
 
 var failed_msg = {
