@@ -1258,6 +1258,48 @@
         "responses": {}
       }
     },
+    "/users/groupPost": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-groupPost-post",
+        "tags": ["Application Group"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "formData",
+            "description": "Enter the groupId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "description": "Enter the description",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "Enter to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          }
+        ],
+        "responses": {}
+      }
+    },
     "/users/groupList": {
       "get": {
         "x-swagger-router-controller": "middleware-name1",

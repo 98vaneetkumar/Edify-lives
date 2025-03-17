@@ -61,6 +61,7 @@ module.exports=function(){
 
     router.post("/createGroup",authentication, controller.userController.createGroup)
     router.get("/groupList",authentication, controller.userController.groupList)
+    router.post("/groupPost",authentication,controller.userController.groupPost)
     router.post("/commentOnGroup",authentication, controller.userController.commentOnGroup)
     router.post("/likeUnlikeGroup",authentication, controller.userController.likeUnlikeGroup)
     router.get("/listOfCommentOnGroup",authentication, controller.userController.listOfCommentOnGroup)

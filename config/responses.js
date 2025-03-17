@@ -70,7 +70,8 @@ var success_msg = {
   getDailyPrayerDetail:"Daily Prayer detail fetched successfully.",
   likeDailyPrayerAdded:"Like daily Prayer successfully",
   unlikeDailyPrayerAdded:"Unlike daily Prayer successfully.",
-  likeDailyPrayerList:"Like daily Prayer list get successfully"
+  likeDailyPrayerList:"Like daily Prayer list get successfully",
+  groupPost:"Group post add scussfully"
 };
 
 var failed_msg = {

@@ -47,6 +47,7 @@ Models.commentGroupModel.belongsTo(Models.userModel, {
 Models.likeGroupModel.belongsTo(Models.userModel, {
   foreignKey: 'userId',
 })
+Models.groupPostModel.belongsTo(Models.groupModel,{foreignKey:"groupId"})
 Models.groupMemberModel.belongsTo(Models.userModel, {
   foreignKey: 'userId',
 })
@@ -1291,7 +1292,14 @@ module.exports = {
                   THEN 1 
                   ELSE 0 
                 END)
-              `),"isLike"]  
+              `),"isLike"],
+              [Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM groupMember where groupId=group.id and userId = '${req.user.id}') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+              `),"isJoin"]     
           ]
         },
        include:[{
@@ -1306,6 +1314,30 @@ module.exports = {
       return commonHelper.success(res, Response.success_msg.groupList,response);
     } catch (error) {
        return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  },
+  groupPost:async(req,res)=>{
+    try {
+      let imagePath = null;
+      if (req.files?.image) {
+        imagePath = await commonHelper.fileUpload(
+          req.files.image,
+          "images"
+        );
+      }
+      let objToSave={
+        userId:req.user.id,
+        groupId:req.body.groupId,
+        description:req.body.description,
+        image:imagePath
+      }
+      let response=await Models.groupPostModel.create(objToSave)
+      return commonHelper.success(res, Response.success_msg.groupPost,response);
+
+    } catch (error) {
+      console.log("error",error)
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+
     }
   },
   commentOnGroup:async(req,res)=>{
@@ -1429,7 +1461,10 @@ module.exports = {
         },
         include:[{
           model:Models.userModel,
-        }]
+        },
+      {
+        model:Models.groupPostModel
+      }]
       })
       return commonHelper.success(res, Response.success_msg.groupList,response);
     } catch (error) {
