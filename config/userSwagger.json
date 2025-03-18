@@ -371,7 +371,7 @@
             "name": "firstName",
             "in": "formData",
             "description": "Enter the firstName",
-            "required": true,
+            "required": false,
             "type": "string",
             "value": "Vaneet"
           },
@@ -379,7 +379,7 @@
             "name": "lastName",
             "in": "formData",
             "description": "Enter lastName ",
-            "required": true,
+            "required": false,
             "type": "string",
             "value": "Kumar"
           },
@@ -387,7 +387,7 @@
             "name": "email",
             "in": "formData",
             "description": "Enter the email",
-            "required": true,
+            "required": false,
             "type": "string",
             "value": "vaneet@gmail.com"
           },
@@ -404,7 +404,7 @@
             "name": "countryCode",
             "in": "formData",
             "description": "Enter country code",
-            "required": true,
+            "required": false,
             "type": "string",
             "value": "+91"
           },
@@ -412,7 +412,7 @@
             "name": "phoneNumber",
             "in": "formData",
             "description": "Enter phone number",
-            "required": true,
+            "required": false,
             "type": "string",
             "value": "8628023157"
           },
@@ -502,6 +502,114 @@
             "name": "churchAccessCode",
             "in": "formData",
             "description": "Enter churchAccessCode",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "churchName",
+            "in": "formData",
+            "description": "Enter churchName",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "churchWebsite",
+            "in": "formData",
+            "description": "Enter churchWebsite",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "churchCode",
+            "in": "formData",
+            "description": "Enter churchCode",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "numberOfMembers",
+            "in": "formData",
+            "description": "Enter how many members in church",
+            "required": false,
+            "type": "number",
+            "value": ""
+          },
+          {
+            "name": "visionStatement",
+            "in": "formData",
+            "description": "Enter vision statement picture to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          },
+          {
+            "name": "valueStatement",
+            "in": "formData",
+            "description": "Enter value statement picture to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          },
+          {
+            "name": "typeOfBusiness",
+            "in": "formData",
+            "description": "Enter type of business",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "businessAddress",
+            "in": "formData",
+            "description": "Enter business address",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "businessUserAddress",
+            "in": "formData",
+            "description": "Enter business user address",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "webSiteNonProfile",
+            "in": "formData",
+            "description": "Enter webSite NonProfile link",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "nonProfitServe",
+            "in": "formData",
+            "description": "Enter non Profit Serve",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "nonPorfitOrganization",
+            "in": "formData",
+            "description": "Enter non Porfit Organization text",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "chruchAttendAddress",
+            "in": "formData",
+            "description": "Enter chruch Attend Address",
             "required": false,
             "type": "string",
             "value": ""
