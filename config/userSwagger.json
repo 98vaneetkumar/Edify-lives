@@ -15,6 +15,22 @@
     }
   },
   "paths": {
+    "/users/getProfile": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-getProfile-post",
+        "tags": ["Application Common"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
     "/users/maritalstatus_listing": {
       "get": {
         "x-swagger-router-controller": "middleware-name1",
@@ -76,6 +92,11 @@
         "operationId": "users-userTraitAndExperienceList-post",
         "tags": ["Application Common"],
         "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "parameters": [],
         "responses": {}
       }
@@ -87,6 +108,11 @@
         "operationId": "users-userTypeOfBusinessList-post",
         "tags": ["Application Common"],
         "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
         "parameters": [],
         "responses": {}
       }
@@ -326,6 +352,161 @@
           }
         ],
         "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/updateProfile": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-updateProfile-post",
+        "tags": ["Application User"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "firstName",
+            "in": "formData",
+            "description": "Enter the firstName",
+            "required": true,
+            "type": "string",
+            "value": "Vaneet"
+          },
+          {
+            "name": "lastName",
+            "in": "formData",
+            "description": "Enter lastName ",
+            "required": true,
+            "type": "string",
+            "value": "Kumar"
+          },
+          {
+            "name": "email",
+            "in": "formData",
+            "description": "Enter the email",
+            "required": true,
+            "type": "string",
+            "value": "vaneet@gmail.com"
+          },
+          {
+            "name": "gender",
+            "in": "formData",
+            "description": "Enter the gender",
+            "required": false,
+            "enum": [0, 1],
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "countryCode",
+            "in": "formData",
+            "description": "Enter country code",
+            "required": true,
+            "type": "string",
+            "value": "+91"
+          },
+          {
+            "name": "phoneNumber",
+            "in": "formData",
+            "description": "Enter phone number",
+            "required": true,
+            "type": "string",
+            "value": "8628023157"
+          },
+          {
+            "name": "profilePicture",
+            "in": "formData",
+            "description": "Profile picture to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          },
+          {
+            "name": "maritalStatus",
+            "in": "formData",
+            "description": "Enter your married status",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "location",
+            "in": "formData",
+            "description": "Enter your location",
+            "required": false,
+            "type": "string",
+            "value": "Mohali"
+          },
+          {
+            "name": "latitude",
+            "in": "formData",
+            "description": "Enter latitude",
+            "required": false,
+            "type": "string",
+            "value": "30.7046"
+          },
+          {
+            "name": "longitude",
+            "in": "formData",
+            "description": "Enter longitude",
+            "required": false,
+            "type": "string",
+            "value": "76.7179"
+          },
+          {
+            "name": "usersAccessCode",
+            "in": "formData",
+            "description": "Enter usersAccessCode",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "donateEdifyLivers",
+            "in": "formData",
+            "description": "Enter donateEdifyLivers",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "traitAndExperience",
+            "in": "formData",
+            "description": "Enter trait And Experience",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "postEmpSeekingSection",
+            "in": "formData",
+            "description": "Would you like to profile posted  on the employment seeking section",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "hartOfService",
+            "in": "formData",
+            "description": "Who do you have the heart of service",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "churchAccessCode",
+            "in": "formData",
+            "description": "Enter churchAccessCode",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
         "responses": {}
       }
     },

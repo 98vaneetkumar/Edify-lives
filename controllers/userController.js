@@ -624,6 +624,7 @@ module.exports = {
           postEmpSeekingSection: req.body.postEmpSeekingSection,
           hartOfService: req.body.hartOfService,
           churchAccessCode: req.body.churchAccessCode,
+          usersAccessCode: req.body.usersAccessCode,
         },
         { where: { id: req.params.id } }
       );
