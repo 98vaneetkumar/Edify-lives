@@ -1832,6 +1832,8 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error",error);
+      
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
