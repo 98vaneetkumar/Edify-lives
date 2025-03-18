@@ -92,6 +92,17 @@
       }
     },
 
+    "/users/groupFilterType": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-groupFilterType-post",
+        "tags": ["Application Group Filter"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
     "/users/signUp": {
       "post": {
         "x-swagger-router-controller": "middleware-name1",

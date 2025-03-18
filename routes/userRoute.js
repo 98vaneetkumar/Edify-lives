@@ -29,6 +29,9 @@ module.exports=function(){
 
     
 //  <------------------------------------Comman api's------------------------------------------------------------>
+    router.get("/groupFilterType", controller.userController.groupFilterType)
+
+
     router.get("/filters_listing", controller.userController.filters_listing)
 
     router.post("/needPost",authentication, controller.userController.needPost)

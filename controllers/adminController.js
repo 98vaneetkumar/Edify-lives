@@ -233,6 +233,7 @@ module.exports = {
         filterCount,
         prayerRequests,
         dailyBread,
+        groupFilters,
       ] = await Promise.all([
         Models.userModel.count({ where: { role: 1 } }),
         Models.userModel.count({ where: { role: 2 } }),
@@ -248,6 +249,7 @@ module.exports = {
         Models.filterTestimoniesModel.count(),
         Models.prayerRequestModel.count(),
         Models.dailyBreadModel.count(),
+        Models.groupFilter.count()
       ]);
 
       const currentYear = Math.max(2025, moment().year());
@@ -305,6 +307,7 @@ module.exports = {
         filterCount,
         prayerRequests,
         dailyBread,
+        groupFilters,
         session: req.session.user,
       });
     } catch (error) {
@@ -1768,6 +1771,75 @@ module.exports = {
       return res.redirect("/admin/login");
     }
   },  
+
+  groupfilter_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let groupfilter_data = await Models.groupFilter.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/groupfilter/groupfilterListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Group Filter",
+        groupfilter_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  groupfilter_add: async (req, res) => {
+    try {
+      let title = "Group Filter";
+      res.render("admin/groupfilter/groupfilterAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  groupfilter_create: async (req, res) => {
+    try {
+      let objToSave = {
+        title: req.body.title,
+      };
+
+      await Models.groupFilter.create(objToSave);
+
+      return res.json({
+        success: true,
+        message: "Group filter added successfully.",
+      });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+  groupfilter_delete: async (req, res) => {
+    try {
+      const groupFilterId = req.body.id;
+      await Models.groupFilter.destroy({
+        where: { id: groupFilterId },
+      });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete group filter" });
+      return res.redirect("/admin/login");
+    }
+  },
 
   test: async (req, res) => {
     try {

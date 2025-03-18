@@ -142,6 +142,12 @@ module.exports = function () {
   router.post("/dailybread_create", controller.adminController.dailybread_create);
   router.post("/dailybread_delete", controller.adminController.dailybread_delete);
   router.get("/dailybread_view/:id", controller.adminController.dailybread_view);
+
+
+  router.get("/groupfilter_listing", controller.adminController.groupfilter_listing);
+  router.get("/groupfilter_add", controller.adminController.groupfilter_add);
+  router.post("/groupfilter_create", controller.adminController.groupfilter_create);
+  router.post("/groupfilter_delete", controller.adminController.groupfilter_delete);
   
 
 

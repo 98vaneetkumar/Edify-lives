@@ -1450,6 +1450,22 @@ module.exports = {
       );
     }
   },
+
+  groupFilterType: async(req, res)=>{
+    try {
+      let response = await Models.groupFilter.findAll()
+      return commonHelper.success(res, Response.success_msg.groupFilterType, response)
+    } catch (error) {
+      console.log("groupFilterType", error)
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
+
+
   filters_listing: async (req, res) => {
     try {
       let filters_data = await Models.filterTestimoniesModel.findAll({
@@ -1518,6 +1534,16 @@ module.exports = {
             { groupDescription: { [Op.like]: `%${req.query.search}%` } },
             { groupType: { [Op.like]: `%${req.query.search}%` } },
           ],
+        };
+      }
+      if (req.query && req.query.filter) {
+        let filters = Array.isArray(req.query.filter)
+          ? req.query.filter
+          : [req.query.filter];
+        where = {
+          [Op.or]: filters.map((filter) => ({
+            [Op.or]: [{ groupType: { [Op.like]: `%${filter}%` } }],
+          })),
         };
       }
       let response = await Models.groupModel.findAndCountAll({
@@ -2847,6 +2873,8 @@ module.exports = {
       );
     }
   },
+
+
 
   
 };

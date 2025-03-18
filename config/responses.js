@@ -74,6 +74,7 @@ var success_msg = {
   groupPost:"Group post add scussfully",
   userTraitAndExpList: "User trait and experience list fetched successfully",
   userTypeOfBusList: "User type of business list fetched successfully",
+  groupFilterType: "Group filter type fetched successfully",
 };
 
 var failed_msg = {
