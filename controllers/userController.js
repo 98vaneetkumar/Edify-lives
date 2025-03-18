@@ -2484,7 +2484,7 @@ module.exports = {
         };
       }
 
-      let response = await Models.dailyBreadModel.findAndCountAll({
+      let response = await Models.dailyBreadModel.findOne({
         attributes: {
           include: [
             [
@@ -3023,7 +3023,16 @@ module.exports = {
           ],
         };
       }
-
+      if (req.query && req.query.filter) {
+        let filters = Array.isArray(req.query.filter)
+          ? req.query.filter
+          : [req.query.filter];
+        where = {
+          [Op.or]: filters.map((filter) => ({
+            [Op.or]: [{ typeOfBusiness: { [Op.like]: `%${filter}%` } }],
+          })),
+        };
+      }
       let response = await Models.userModel.findAndCountAll({
         where: where,
         limit: limit,
