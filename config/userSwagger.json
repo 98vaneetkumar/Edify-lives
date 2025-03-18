@@ -118,30 +118,7 @@
       }
     },
     
-    "/users/groupPostList": {
-      "get": {
-        "x-swagger-router-controller": "middleware-name1",
-        "operationId": "users-groupPostList-post",
-        "tags": ["Application Common"],
-        "description": "",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
-        "parameters": [
-          {
-            "name": "groupId",
-            "in": "query",
-            "description": "Enter the groupId",
-            "required": false,
-            "type": "string",
-            "value": ""
-          }
-        ],
-        "responses": {}
-      }
-    },
+
 
     "/users/groupFilterType": {
       "get": {
@@ -1640,6 +1617,30 @@
             "format": "binary",
             "maxLength": 5242880,
             "allowedMimeTypes": ["image/jpeg", "image/png"]
+          }
+        ],
+        "responses": {}
+      }
+    },
+    "/users/groupPostList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-groupPostList-post",
+        "tags": ["Application Group"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "groupId",
+            "in": "query",
+            "description": "Enter the groupId",
+            "required": false,
+            "type": "string",
+            "value": ""
           }
         ],
         "responses": {}

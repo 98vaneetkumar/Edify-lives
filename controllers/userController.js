@@ -1783,7 +1783,7 @@ module.exports = {
                   JSON_OBJECT('id', users.id, 'firstName', users.firstName,'lastName',users.lastName, 'profilePicture', users.profilePicture)
                 ) FROM likeGroup 
                 JOIN users ON users.id = likeGroup.userId 
-                WHERE likeGroup.groupPostId = addFeed.id 
+                WHERE likeGroup.groupPostId = groupPost.id 
                 ORDER BY likeGroup.createdAt DESC 
                 LIMIT 3
               )
