@@ -81,7 +81,40 @@
         "operationId": "users-traitsexperience_listing-post",
         "tags": ["Application Common"],
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Enter the limit",
+            "required": false,
+            "type": "number",
+            "value": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Enter the how many record you want to skip",
+            "required": false,
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Enter the search",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Enter the filter",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
         "responses": {}
       }
     },
@@ -97,7 +130,40 @@
             "Bearer": []
           }
         ],
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Enter the limit",
+            "required": false,
+            "type": "number",
+            "value": 10
+          },
+          {
+            "name": "skip",
+            "in": "query",
+            "description": "Enter the how many record you want to skip",
+            "required": false,
+            "type": "number",
+            "value": 0
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Enter the search",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "filter",
+            "in": "query",
+            "description": "Enter the filter",
+            "required": false,
+            "type": "string",
+            "value": ""
+          }
+        ],
         "responses": {}
       }
     },
