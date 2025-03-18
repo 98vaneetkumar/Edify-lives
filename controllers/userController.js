@@ -778,6 +778,15 @@ module.exports = {
       res.status(500).json({ success: false, error: "Internal Server Error" });
     }
   },
+  bannerList:async(req,res)=>{
+    try {
+      let response=await Models.bannerModel.findAll()
+      return commonHelper.success(res, Response.success_msg.needPost, response);
+
+    } catch (error) {
+     throw error 
+    }
+  },
   needPost: async (req, res) => {
     try {
       const schema = Joi.object().keys({

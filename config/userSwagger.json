@@ -1021,11 +1021,7 @@
         "operationId": "users-bannerList-post",
         "tags": ["Application users"],
         "description": "",
-        "security": [
-          {
-            "Bearer": []
-          }
-        ],
+       
         "parameters": [],
         "responses": {}
       }
