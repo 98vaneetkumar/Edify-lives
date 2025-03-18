@@ -101,6 +101,7 @@ module.exports=function(){
     router.get("/prayerRequestLikeList",authentication, controller.userController.prayerRequestLikeList)
 
     router.get("/userTraitAndExperienceList",authentication, controller.userController.userTraitAndExperienceList)
+    router.get("/userTypeOfBusinessList",authentication, controller.userController.userTypeOfBusinessList)
 
     return router
 }

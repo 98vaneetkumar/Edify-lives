@@ -3,8 +3,8 @@
 const Joi = require("joi");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const Sequelize=require('sequelize');
-const {Op}=require('sequelize');
+const Sequelize = require("sequelize");
+const { Op } = require("sequelize");
 const otpManager = require("node-twillo-otp-manager")(
   process.env.TWILIO_ACCOUNT_SID,
   process.env.TWILIO_AUTH_TOKEN,
@@ -16,59 +16,77 @@ const commonHelper = require("../helpers/commonHelper.js");
 const helper = require("../helpers/validation.js");
 const Models = require("../models/index");
 const Response = require("../config/responses.js");
-let projection=["id","firstName","lastName","email","countryCode","phoneNumber","role","maritalStatus" ,"profilePicture"]
+let projection = [
+  "id",
+  "firstName",
+  "lastName",
+  "email",
+  "countryCode",
+  "phoneNumber",
+  "role",
+  "maritalStatus",
+  "profilePicture",
+];
 Models.notificationModel.belongsTo(Models.userModel, {
   foreignKey: "senderId",
   as: "sender",
 });
 
 Models.needPostModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
-  as: 'user'
+  foreignKey: "userId",
+  as: "user",
 });
 Models.commentNeedPostModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
+  foreignKey: "userId",
 });
 Models.likeNeedPostModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
+  foreignKey: "userId",
 });
 Models.videoModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
-})
+  foreignKey: "userId",
+});
 Models.commentVideoModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
-})
+  foreignKey: "userId",
+});
 Models.groupModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
-})
+  foreignKey: "userId",
+});
 Models.commentGroupModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
-})
-Models.groupModel.hasMany(Models.groupMemberModel,{foreignKey:"groupId"})
+  foreignKey: "userId",
+});
+Models.groupModel.hasMany(Models.groupMemberModel, { foreignKey: "groupId" });
 Models.likeGroupModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
-})
-Models.groupPostModel.belongsTo(Models.groupModel,{foreignKey:"groupId"})
+  foreignKey: "userId",
+});
+Models.groupPostModel.belongsTo(Models.groupModel, { foreignKey: "groupId" });
 Models.groupMemberModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
-})
-Models.groupMemberModel.belongsTo(Models.groupModel,{foreignKey:"groupId"})
+  foreignKey: "userId",
+});
+Models.groupMemberModel.belongsTo(Models.groupModel, { foreignKey: "groupId" });
 Models.testimonyPostModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
-})
+  foreignKey: "userId",
+});
 Models.addFeedModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
-})
+  foreignKey: "userId",
+});
 Models.likeFeedModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
-})
+  foreignKey: "userId",
+});
 Models.commentFeedModel.belongsTo(Models.userModel, {
-  foreignKey: 'userId',
-})
-Models.likeDailyBreadModel.belongsTo(Models.userModel,{foreignKey:"userId"})
-Models.dailyBreadCommentModel.belongsTo(Models.userModel,{foreignKey:"commentBy"})
-Models.prayerRequestCommentModel.belongsTo(Models.userModel,{foreignKey:"commentBy"})
-Models.likePrayerRequestModel.belongsTo(Models.userModel,{foreignKey:"userId"})
+  foreignKey: "userId",
+});
+Models.likeDailyBreadModel.belongsTo(Models.userModel, {
+  foreignKey: "userId",
+});
+Models.dailyBreadCommentModel.belongsTo(Models.userModel, {
+  foreignKey: "commentBy",
+});
+Models.prayerRequestCommentModel.belongsTo(Models.userModel, {
+  foreignKey: "commentBy",
+});
+Models.likePrayerRequestModel.belongsTo(Models.userModel, {
+  foreignKey: "userId",
+});
 module.exports = {
   signUp: async (req, res) => {
     try {
@@ -191,7 +209,7 @@ module.exports = {
       const schema = Joi.object().keys({
         email: Joi.string().email().required(),
         password: Joi.string().required(),
-        deviceToken:Joi.string().optional(), // static data, will come from frontend
+        deviceToken: Joi.string().optional(), // static data, will come from frontend
         deviceType: Joi.number().valid(1, 2).optional(),
       });
       let payload = await helper.validationJoi(req.body, schema);
@@ -199,7 +217,7 @@ module.exports = {
       const { email, password, devideToken, deviceType } = payload;
 
       const user = await Models.userModel.findOne({
-        where: { email: email},
+        where: { email: email },
         raw: true,
       });
 
@@ -566,7 +584,11 @@ module.exports = {
       return commonHelper.success(res, Response.success_msg.cms, response);
     } catch (error) {
       console.log("error", error);
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);;
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
   notificationsList: async (req, res) => {
@@ -588,7 +610,11 @@ module.exports = {
         response
       );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);;
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
   maritalstatus_listing: async (req, res) => {
@@ -671,212 +697,285 @@ module.exports = {
       res.status(500).json({ success: false, error: "Internal Server Error" });
     }
   },
-  needPost:async(req,res)=>{
+  needPost: async (req, res) => {
     try {
       const schema = Joi.object().keys({
         title: Joi.string().required(),
-        city:Joi.string().optional(),
-        zipCode:Joi.string().optional()
+        city: Joi.string().optional(),
+        zipCode: Joi.string().optional(),
       });
       let payload = await helper.validationJoi(req.body, schema);
-      let objToSave={
-        userId:req.user.id,
-        title:payload.title,
-        city:payload.city,
-        zipCode:payload.zipCode
-      }
-     let response= await Models.needPostModel.create(objToSave);
-      return commonHelper.success(res, Response.success_msg.needPost,response);
+      let objToSave = {
+        userId: req.user.id,
+        title: payload.title,
+        city: payload.city,
+        zipCode: payload.zipCode,
+      };
+      let response = await Models.needPostModel.create(objToSave);
+      return commonHelper.success(res, Response.success_msg.needPost, response);
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  needPostList:async(req,res)=>{
+  needPostList: async (req, res) => {
     try {
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
-      
-     let where;
-     if (req.query && req.query.city) {
-			where = {
-				[Op.or]: {
-					city: {
-						[Op.like]: "%" + req.query.city + "%",
-					},
-				},
-			};
-		}
-    if (req.query && req.query.zipCode) {
-			where = {
-				[Op.or]: {
-					zipCode: {
-						[Op.like]: "%" + req.query.zipCode + "%",
-					},
-				},
-			};
-		}
-    if (req.query && req.query.search) {
-			where = {
-				[Op.or]: {
-					title: {
-						[Op.like]: "%" + req.query.search + "%",
-					},
-				},
-			};
-		}
-      let response=await Models.needPostModel.findAndCountAll({
+
+      let where;
+      if (req.query && req.query.city) {
+        where = {
+          [Op.or]: {
+            city: {
+              [Op.like]: "%" + req.query.city + "%",
+            },
+          },
+        };
+      }
+      if (req.query && req.query.zipCode) {
+        where = {
+          [Op.or]: {
+            zipCode: {
+              [Op.like]: "%" + req.query.zipCode + "%",
+            },
+          },
+        };
+      }
+      if (req.query && req.query.search) {
+        where = {
+          [Op.or]: {
+            title: {
+              [Op.like]: "%" + req.query.search + "%",
+            },
+          },
+        };
+      }
+      let response = await Models.needPostModel.findAndCountAll({
         attributes: {
           include: [
-            [Sequelize.literal("(SELECT count(id) FROM commentNeedPost where needPostId=needPost.id )"), "commentsCount"],
-            [Sequelize.literal("(SELECT count(id) FROM likeNeedPost where needPostId=needPost.id )"), "likesCount"],
-            [Sequelize.literal(`
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM commentNeedPost where needPostId=needPost.id )"
+              ),
+              "commentsCount",
+            ],
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM likeNeedPost where needPostId=needPost.id )"
+              ),
+              "likesCount",
+            ],
+            [
+              Sequelize.literal(`
               (CASE 
                 WHEN (SELECT count(id) FROM commentNeedPost where needPostId=needPost.id and userId = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
-            `),"isComment"],
-            [Sequelize.literal(`
+            `),
+              "isComment",
+            ],
+            [
+              Sequelize.literal(`
               (CASE 
                 WHEN (SELECT count(id) FROM likeNeedPost where needPostId=needPost.id and userId = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
-            `),"isLike"]
-          ]
+            `),
+              "isLike",
+            ],
+          ],
         },
-       include:[{
-          model:Models.userModel,
-          as:'user',
-       }],
-       where:where,
-       limit: limit,
-       offset: offset,
-       order: [["createdAt", "DESC"]],
-      });
-      return commonHelper.success(res, Response.success_msg.needPostList,response);
-    } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
-    }
-  },
-  commentOnNeedPost:async(req,res)=>{
-    try {
-      let schema=Joi.object().keys({
-        needPostId:Joi.string().required(),
-        comment:Joi.string().required()
-      });
-      let payload = await helper.validationJoi(req.body, schema);
-      let objToSave={
-        userId:req.user.id,
-        needPostId:payload.needPostId,
-        comment:payload.comment
-      }
-      let response=await Models.commentNeedPostModel.create(objToSave);
-      return commonHelper.success(res, Response.success_msg.needPostComment,response);
-    } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
-    }
-  },
-  commentOnNeedPostList:async(req,res)=>{
-    try {
-      let response=await Models.commentNeedPostModel.findAll({
-        where:{
-          needPostId:req.query.needPostId
-        },
-        include:[{
-          model:Models.userModel,
-        }],
+        include: [
+          {
+            model: Models.userModel,
+            as: "user",
+          },
+        ],
+        where: where,
+        limit: limit,
+        offset: offset,
         order: [["createdAt", "DESC"]],
       });
-      return commonHelper.success(res, Response.success_msg.needPostCommentList,response);
+      return commonHelper.success(
+        res,
+        Response.success_msg.needPostList,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  likeUnlikeNeedPost:async(req,res)=>{
+  commentOnNeedPost: async (req, res) => {
     try {
-      let schema=Joi.object().keys({
-        needPostId:Joi.string().required()
-      }); 
+      let schema = Joi.object().keys({
+        needPostId: Joi.string().required(),
+        comment: Joi.string().required(),
+      });
       let payload = await helper.validationJoi(req.body, schema);
-     let has =  await Models.likeNeedPostModel.findOne({where: {
-        userId:req.user.id,
-        needPostId:payload.needPostId
-      }})
-      if(!has) {
+      let objToSave = {
+        userId: req.user.id,
+        needPostId: payload.needPostId,
+        comment: payload.comment,
+      };
+      let response = await Models.commentNeedPostModel.create(objToSave);
+      return commonHelper.success(
+        res,
+        Response.success_msg.needPostComment,
+        response
+      );
+    } catch (error) {
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
+  commentOnNeedPostList: async (req, res) => {
+    try {
+      let response = await Models.commentNeedPostModel.findAll({
+        where: {
+          needPostId: req.query.needPostId,
+        },
+        include: [
+          {
+            model: Models.userModel,
+          },
+        ],
+        order: [["createdAt", "DESC"]],
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.needPostCommentList,
+        response
+      );
+    } catch (error) {
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
+  likeUnlikeNeedPost: async (req, res) => {
+    try {
+      let schema = Joi.object().keys({
+        needPostId: Joi.string().required(),
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+      let has = await Models.likeNeedPostModel.findOne({
+        where: {
+          userId: req.user.id,
+          needPostId: payload.needPostId,
+        },
+      });
+      if (!has) {
         await Models.likeNeedPostModel.create({
-          userId:req.user.id,
-          needPostId:payload.needPostId
+          userId: req.user.id,
+          needPostId: payload.needPostId,
         });
-        let response =  await Models.likeNeedPostModel.findOne({where: {
-          userId:req.user.id,
-          needPostId:payload.needPostId
-        }})
-        return commonHelper.success(res, Response.success_msg.likeNeedPost,response);
-      }else{
+        let response = await Models.likeNeedPostModel.findOne({
+          where: {
+            userId: req.user.id,
+            needPostId: payload.needPostId,
+          },
+        });
+        return commonHelper.success(
+          res,
+          Response.success_msg.likeNeedPost,
+          response
+        );
+      } else {
         await Models.likeNeedPostModel.destroy({
-          where:{
-            userId:req.user.id,
-            needPostId:payload.needPostId
-          }
+          where: {
+            userId: req.user.id,
+            needPostId: payload.needPostId,
+          },
         });
         return commonHelper.success(res, Response.success_msg.unLikeNeedPost);
-
       }
-
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  likeNeedPostList:async(req,res)=>{
+  likeNeedPostList: async (req, res) => {
     try {
-      let response=await Models.likeNeedPostModel.findAll({
-        where:{
-          needPostId:req.query.needPostId
+      let response = await Models.likeNeedPostModel.findAll({
+        where: {
+          needPostId: req.query.needPostId,
         },
-        include:[{
-          model:Models.userModel
-        }],
+        include: [
+          {
+            model: Models.userModel,
+          },
+        ],
         order: [["createdAt", "DESC"]],
       });
-      return commonHelper.success(res, Response.success_msg.likeNeedPostList,response);
+      return commonHelper.success(
+        res,
+        Response.success_msg.likeNeedPostList,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
 
-
-
-
-  testimonyPost:async(req,res)=>{
+  testimonyPost: async (req, res) => {
     try {
       const schema = Joi.object().keys({
-        testimoryType:Joi.string().optional(),
+        testimoryType: Joi.string().optional(),
         growingUp: Joi.string().optional(),
-        beforeJesus:Joi.string().optional(),
-        findJesus:Joi.string().optional(),
-        faithInJesus:Joi.string().optional()
+        beforeJesus: Joi.string().optional(),
+        findJesus: Joi.string().optional(),
+        faithInJesus: Joi.string().optional(),
       });
       let payload = await helper.validationJoi(req.body, schema);
-      let objToSave={
-        userId:req.user.id,
-        testimoryType:payload.testimoryType,
-        growingUp:payload.growingUp,
-        beforeJesus:payload.beforeJesus,
-        findJesus:payload.findJesus,
-        faithInJesus:payload.faithInJesus
-      }
-     let response= await Models.testimonyPostModel.create(objToSave);
-      return commonHelper.success(res, Response.success_msg.testimonyPost,response);
+      let objToSave = {
+        userId: req.user.id,
+        testimoryType: payload.testimoryType,
+        growingUp: payload.growingUp,
+        beforeJesus: payload.beforeJesus,
+        findJesus: payload.findJesus,
+        faithInJesus: payload.faithInJesus,
+      };
+      let response = await Models.testimonyPostModel.create(objToSave);
+      return commonHelper.success(
+        res,
+        Response.success_msg.testimonyPost,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  testimonyPostList:async(req,res)=>{
+  testimonyPostList: async (req, res) => {
     try {
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
-      
+
       let where = {};
       if (req.query && req.query.search) {
         where = {
@@ -884,291 +983,410 @@ module.exports = {
             { growingUp: { [Op.like]: `%${req.query.search}%` } },
             { beforeJesus: { [Op.like]: `%${req.query.search}%` } },
             { findJesus: { [Op.like]: `%${req.query.search}%` } },
-            { faithInJesus: { [Op.like]: `%${req.query.search}%` } }
-          ]
+            { faithInJesus: { [Op.like]: `%${req.query.search}%` } },
+          ],
         };
       }
       if (req.query && req.query.filter) {
-        let filters = Array.isArray(req.query.filter) ? req.query.filter : [req.query.filter];
-      
+        let filters = Array.isArray(req.query.filter)
+          ? req.query.filter
+          : [req.query.filter];
+
         where = {
-          [Op.or]: filters.map(filter => ({
+          [Op.or]: filters.map((filter) => ({
             [Op.or]: [
               { growingUp: { [Op.like]: `%${filter}%` } },
               { beforeJesus: { [Op.like]: `%${filter}%` } },
               { findJesus: { [Op.like]: `%${filter}%` } },
-              { faithInJesus: { [Op.like]: `%${filter}%` } }
-            ]
-          }))
+              { faithInJesus: { [Op.like]: `%${filter}%` } },
+            ],
+          })),
         };
       }
-      
-      let response=await Models.testimonyPostModel.findAndCountAll({
+
+      let response = await Models.testimonyPostModel.findAndCountAll({
         attributes: {
           include: [
-            [Sequelize.literal("(SELECT count(id) FROM commentTestimonyPost where testimonyPostId=testimonyPost.id )"), "commentsCount"],
-            [Sequelize.literal("(SELECT count(id) FROM likeTestimonyPost where testimonyPostId=testimonyPost.id )"), "likesCount"],
-            [Sequelize.literal(`
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM commentTestimonyPost where testimonyPostId=testimonyPost.id )"
+              ),
+              "commentsCount",
+            ],
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM likeTestimonyPost where testimonyPostId=testimonyPost.id )"
+              ),
+              "likesCount",
+            ],
+            [
+              Sequelize.literal(`
               (CASE 
                 WHEN (SELECT count(id) FROM commentTestimonyPost where testimonyPostId=testimonyPost.id and userId = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
-              `),"isComment"],
-            [Sequelize.literal(`
+              `),
+              "isComment",
+            ],
+            [
+              Sequelize.literal(`
                 (CASE 
                   WHEN (SELECT count(id) FROM likeTestimonyPost where testimonyPostId=testimonyPost.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
-              `),"isLike"]  
-          ]
+              `),
+              "isLike",
+            ],
+          ],
         },
-       include:[{
-          model:Models.userModel,
-          as:'user',
-       }],
-       where:where,
-       limit:limit,
-       offset:offset,
-       order: [["createdAt", "DESC"]],
-      });
-      return commonHelper.success(res, Response.success_msg.testimonyPostList,response);
-    } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
-    }
-  },
-  commentOnTestimonyPost:async(req,res)=>{
-    try {
-      let schema=Joi.object().keys({
-        testimonyPostId:Joi.string().required(),
-        comment:Joi.string().required()
-      });
-      let payload = await helper.validationJoi(req.body, schema);
-      let objToSave={
-        userId:req.user.id,
-        testimonyPostId:payload.testimonyPostId,
-        comment:payload.comment
-      }
-      let response=await Models.commentTestimonyModel.create(objToSave);
-      return commonHelper.success(res, Response.success_msg.testimonyPostComment,response);
-    } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
-    }
-  },
-  commentOnTestimonyPostList:async(req,res)=>{
-    try {
-      let response=await Models.commentTestimonyModel.findAll({
-        where:{
-          testimonyPostId:req.query.testimonyPostId
-        },
-        include:[{
-          model:Models.userModel,
-        }],
+        include: [
+          {
+            model: Models.userModel,
+            as: "user",
+          },
+        ],
+        where: where,
+        limit: limit,
+        offset: offset,
         order: [["createdAt", "DESC"]],
       });
-      return commonHelper.success(res, Response.success_msg.testimonyPostCommentList,response);
+      return commonHelper.success(
+        res,
+        Response.success_msg.testimonyPostList,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  likeUnlikeTestimonyPost:async(req,res)=>{
+  commentOnTestimonyPost: async (req, res) => {
     try {
-      let schema=Joi.object().keys({
-        testimonyPostId:Joi.string().required()
-      }); 
+      let schema = Joi.object().keys({
+        testimonyPostId: Joi.string().required(),
+        comment: Joi.string().required(),
+      });
       let payload = await helper.validationJoi(req.body, schema);
-      let has=await Models.likeTestimonyModel.findOne({
-        where:{
-          userId:req.user.id,
-          testimonyPostId:payload.testimonyPostId
-        }
-      })
-      if(!has){
-        let response=await Models.likeTestimonyModel.create({
-          userId:req.user.id,
-          testimonyPostId:payload.testimonyPostId
+      let objToSave = {
+        userId: req.user.id,
+        testimonyPostId: payload.testimonyPostId,
+        comment: payload.comment,
+      };
+      let response = await Models.commentTestimonyModel.create(objToSave);
+      return commonHelper.success(
+        res,
+        Response.success_msg.testimonyPostComment,
+        response
+      );
+    } catch (error) {
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
+  commentOnTestimonyPostList: async (req, res) => {
+    try {
+      let response = await Models.commentTestimonyModel.findAll({
+        where: {
+          testimonyPostId: req.query.testimonyPostId,
+        },
+        include: [
+          {
+            model: Models.userModel,
+          },
+        ],
+        order: [["createdAt", "DESC"]],
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.testimonyPostCommentList,
+        response
+      );
+    } catch (error) {
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
+  likeUnlikeTestimonyPost: async (req, res) => {
+    try {
+      let schema = Joi.object().keys({
+        testimonyPostId: Joi.string().required(),
+      });
+      let payload = await helper.validationJoi(req.body, schema);
+      let has = await Models.likeTestimonyModel.findOne({
+        where: {
+          userId: req.user.id,
+          testimonyPostId: payload.testimonyPostId,
+        },
+      });
+      if (!has) {
+        let response = await Models.likeTestimonyModel.create({
+          userId: req.user.id,
+          testimonyPostId: payload.testimonyPostId,
         });
-        return commonHelper.success(res, Response.success_msg.likeTestimonyPost,response);
-      }else{
+        return commonHelper.success(
+          res,
+          Response.success_msg.likeTestimonyPost,
+          response
+        );
+      } else {
         await Models.likeTestimonyModel.destroy({
-          where:{
-            userId:req.user.id,
-            testimonyPostId:payload.testimonyPostId
-          }
+          where: {
+            userId: req.user.id,
+            testimonyPostId: payload.testimonyPostId,
+          },
         });
-        return commonHelper.success(res, Response.success_msg.unLikeTestimonyPost);
+        return commonHelper.success(
+          res,
+          Response.success_msg.unLikeTestimonyPost
+        );
       }
-   
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  likeTestimonyPostList:async(req,res)=>{
+  likeTestimonyPostList: async (req, res) => {
     try {
-      let response=await Models.likeTestimonyModel.findAll({
-        where:{
-          testimonyPostId:req.query.testimonyPostId
+      let response = await Models.likeTestimonyModel.findAll({
+        where: {
+          testimonyPostId: req.query.testimonyPostId,
         },
-        include:[{
-          model:Models.userModel
-        }],
+        include: [
+          {
+            model: Models.userModel,
+          },
+        ],
         order: [["createdAt", "DESC"]],
       });
-      return commonHelper.success(res, Response.success_msg.likeTestimonyPostList,response);
+      return commonHelper.success(
+        res,
+        Response.success_msg.likeTestimonyPostList,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
 
-
-  addVideo:async(req,res)=>{
+  addVideo: async (req, res) => {
     try {
-       let videoPath = null;
-            if (req.files?.video) {
-              videoPath = await commonHelper.fileUpload(
-                req.files.video,
-                "images"
-              );
-            }
-            let thumbnailPath = null;
-            if (req.files?.thumbnail) {
-              thumbnailPath = await commonHelper.fileUpload(
-                req.files.thumbnail,
-                "images"
-              );
-            } 
-          let objToSave={
-            userId:req.user.id,
-            caption:req.body.caption,
-            video:videoPath,
-            thumbnail:thumbnailPath,
-          }
-          
-         let response= await Models.videoModel.create(objToSave);
-         return commonHelper.success(res, Response.success_msg.addVideo,response);
+      let videoPath = null;
+      if (req.files?.video) {
+        videoPath = await commonHelper.fileUpload(req.files.video, "images");
+      }
+      let thumbnailPath = null;
+      if (req.files?.thumbnail) {
+        thumbnailPath = await commonHelper.fileUpload(
+          req.files.thumbnail,
+          "images"
+        );
+      }
+      let objToSave = {
+        userId: req.user.id,
+        caption: req.body.caption,
+        video: videoPath,
+        thumbnail: thumbnailPath,
+      };
+
+      let response = await Models.videoModel.create(objToSave);
+      return commonHelper.success(res, Response.success_msg.addVideo, response);
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  videoList:async(req,res)=>{
+  videoList: async (req, res) => {
     try {
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
-      let where={}
+      let where = {};
       if (req.query && req.query.search) {
         where = {
-          [Op.or]: [
-            { caption: { [Op.like]: `%${req.query.search}%` } },
-          ]
+          [Op.or]: [{ caption: { [Op.like]: `%${req.query.search}%` } }],
         };
       }
-      let response=await Models.videoModel.findAndCountAll({
+      let response = await Models.videoModel.findAndCountAll({
         attributes: {
           include: [
-            [Sequelize.literal("(SELECT count(id) FROM commentVideo where videoId=videos.id )"), "commentsCount"],
-            [Sequelize.literal("(SELECT count(id) FROM likeVideo where videoId=videos.id )"), "likesCount"],
-            [Sequelize.literal(`
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM commentVideo where videoId=videos.id )"
+              ),
+              "commentsCount",
+            ],
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM likeVideo where videoId=videos.id )"
+              ),
+              "likesCount",
+            ],
+            [
+              Sequelize.literal(`
               (CASE 
                 WHEN (SELECT count(id) FROM commentVideo where videoId=videos.id and userId = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
-              `),"isComment"],
-            [Sequelize.literal(`
+              `),
+              "isComment",
+            ],
+            [
+              Sequelize.literal(`
                 (CASE 
                   WHEN (SELECT count(id) FROM likeVideo where videoId=videos.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
-              `),"isLike"]  
-          ]
+              `),
+              "isLike",
+            ],
+          ],
         },
-       include:[{
-          model:Models.userModel,
-          as:'user',
-       }],
-       where:where,
-       limit:limit,
-       offset:offset,
-       order: [["createdAt", "DESC"]],
+        include: [
+          {
+            model: Models.userModel,
+            as: "user",
+          },
+        ],
+        where: where,
+        limit: limit,
+        offset: offset,
+        order: [["createdAt", "DESC"]],
       });
-      return commonHelper.success(res, Response.success_msg.videoList,response);
+      return commonHelper.success(
+        res,
+        Response.success_msg.videoList,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  likeUnlikeVideo:async(req,res)=>{
+  likeUnlikeVideo: async (req, res) => {
     try {
-      let schema=Joi.object().keys({
-        videoId:Joi.string().required()
-      }); 
+      let schema = Joi.object().keys({
+        videoId: Joi.string().required(),
+      });
       let payload = await helper.validationJoi(req.body, schema);
-     let has =  await Models.likeVideoModel.findOne({where: {
-        userId:req.user.id,
-        videoId:payload.videoId
-      }})
-      if(!has) {
+      let has = await Models.likeVideoModel.findOne({
+        where: {
+          userId: req.user.id,
+          videoId: payload.videoId,
+        },
+      });
+      if (!has) {
         await Models.likeVideoModel.create({
-          userId:req.user.id,
-          videoId:payload.videoId
+          userId: req.user.id,
+          videoId: payload.videoId,
         });
-        let response =  await Models.likeVideoModel.findOne({where: {
-          userId:req.user.id,
-          videoId:payload.videoId
-        }})
-        return commonHelper.success(res, Response.success_msg.likeVideo,response);
-      }else{
+        let response = await Models.likeVideoModel.findOne({
+          where: {
+            userId: req.user.id,
+            videoId: payload.videoId,
+          },
+        });
+        return commonHelper.success(
+          res,
+          Response.success_msg.likeVideo,
+          response
+        );
+      } else {
         await Models.likeVideoModel.destroy({
-          where:{
-            userId:req.user.id,
-            videoId:payload.videoId
-          }
+          where: {
+            userId: req.user.id,
+            videoId: payload.videoId,
+          },
         });
         return commonHelper.success(res, Response.success_msg.unLikeVideo);
       }
-
     } catch (error) {
-      console.log("error",error);
-      
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  commentOnVideo:async(req,res)=>{
+  commentOnVideo: async (req, res) => {
     try {
-      let schema=Joi.object().keys({
-        videoId:Joi.string().required(),
-        comment:Joi.string().required()
+      let schema = Joi.object().keys({
+        videoId: Joi.string().required(),
+        comment: Joi.string().required(),
       });
       let payload = await helper.validationJoi(req.body, schema);
-      let objToSave={
-        userId:req.user.id,
-        videoId:payload.videoId,
-        comment:payload.comment
-      }
-      let response=await Models.commentVideoModel.create(objToSave);
-      return commonHelper.success(res, Response.success_msg.commentVideo,response);
+      let objToSave = {
+        userId: req.user.id,
+        videoId: payload.videoId,
+        comment: payload.comment,
+      };
+      let response = await Models.commentVideoModel.create(objToSave);
+      return commonHelper.success(
+        res,
+        Response.success_msg.commentVideo,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  commentOnVideoList:async(req,res)=>{
+  commentOnVideoList: async (req, res) => {
     try {
-      let response=await Models.commentVideoModel.findAll({
-        where:{
-          videoId:req.query.videoId
+      let response = await Models.commentVideoModel.findAll({
+        where: {
+          videoId: req.query.videoId,
         },
-        include:[{
-          model:Models.userModel,
-        }],
+        include: [
+          {
+            model: Models.userModel,
+          },
+        ],
         order: [["createdAt", "DESC"]],
       });
-      return commonHelper.success(res, Response.success_msg.commentVideoList,response);
+      return commonHelper.success(
+        res,
+        Response.success_msg.commentVideoList,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  createEvent:async(req,res)=>{
+  createEvent: async (req, res) => {
     try {
       const schema = Joi.object().keys({
         eventType: Joi.string().required(),
@@ -1181,91 +1399,117 @@ module.exports = {
         countryCode: Joi.string().optional(),
         phoneNumber: Joi.string().optional(),
         email: Joi.string().optional(),
-        link:Joi.string().optional(),
-        comment:Joi.string().optional()
+        link: Joi.string().optional(),
+        comment: Joi.string().optional(),
       });
       let payload = await helper.validationJoi(req.body, schema);
-      let objToSave={
-        userId:req.user.id,
-        eventType:payload.eventType,
-        address:payload.address,
-        latitude:payload.latitude,
-        longitude:payload.longitude,
-        date:payload.date,
-        time:payload.time,
-        eventTitle:payload.eventTitle,
-        countryCode:payload.countryCode,
-        phoneNumber:payload.phoneNumber,
-        email:payload.email,
-        link:payload.link,
-        eventDescription:payload.eventDescription
-      }
-      let response=await Models.eventModel.create(objToSave);
-      return commonHelper.success(res, Response.success_msg.createEvent,response);
+      let objToSave = {
+        userId: req.user.id,
+        eventType: payload.eventType,
+        address: payload.address,
+        latitude: payload.latitude,
+        longitude: payload.longitude,
+        date: payload.date,
+        time: payload.time,
+        eventTitle: payload.eventTitle,
+        countryCode: payload.countryCode,
+        phoneNumber: payload.phoneNumber,
+        email: payload.email,
+        link: payload.link,
+        eventDescription: payload.eventDescription,
+      };
+      let response = await Models.eventModel.create(objToSave);
+      return commonHelper.success(
+        res,
+        Response.success_msg.createEvent,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  eventList:async(req,res)=>{
+  eventList: async (req, res) => {
     try {
-      let response=await Models.eventModel.findAndCountAll({order: [["createdAt", "DESC"]],})
-      return commonHelper.success(res, Response.success_msg.eventList,response);
+      let response = await Models.eventModel.findAndCountAll({
+        order: [["createdAt", "DESC"]],
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.eventList,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
   filters_listing: async (req, res) => {
-        try {
-          let filters_data = await Models.filterTestimoniesModel.findAll({
-            order: [["createdAt", "DESC"]],
-            raw: true,
-          });
-          res.json({
-            success: true,
-            title: "Filter Testimonies",
-            filters_data,
-          });
-        } catch (error) {
-          console.error(error);
-          res.status(500).json({ success: false, error: "Internal Server Error" });
-        }
+    try {
+      let filters_data = await Models.filterTestimoniesModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.json({
+        success: true,
+        title: "Filter Testimonies",
+        filters_data,
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, error: "Internal Server Error" });
+    }
   },
   // <-----------------------------Create group------------------------------------------>
-  createGroup:async(req,res)=>{
+  createGroup: async (req, res) => {
     try {
       const schema = Joi.object().keys({
-        groupName:Joi.string().optional(),
-        groupDescription:Joi.string().optional(),
-        groupType:Joi.string().optional(),
+        groupName: Joi.string().optional(),
+        groupDescription: Joi.string().optional(),
+        groupType: Joi.string().optional(),
         // groupCategory:Joi.string().optional(),
       });
       let payload = await helper.validationJoi(req.body, schema);
-         let groupLogoPath = null;
-            if (req.files?.groupLogo) {
-              groupLogoPath = await commonHelper.fileUpload(
-                req.files.groupLogo,
-                "images"
-              );
-            }
-      let objToSave={
-        userId:req.user.id,
-        groupName:payload.groupName,
-        groupDescription:payload.groupDescription,
-        groupType:payload.groupType,
-        groupLogo:groupLogoPath,
-        // groupCategory:payload.groupCategory
+      let groupLogoPath = null;
+      if (req.files?.groupLogo) {
+        groupLogoPath = await commonHelper.fileUpload(
+          req.files.groupLogo,
+          "images"
+        );
       }
-      let response=await Models.groupModel.create(objToSave);
-      return commonHelper.success(res, Response.success_msg.createGroup,response);
+      let objToSave = {
+        userId: req.user.id,
+        groupName: payload.groupName,
+        groupDescription: payload.groupDescription,
+        groupType: payload.groupType,
+        groupLogo: groupLogoPath,
+        // groupCategory:payload.groupCategory
+      };
+      let response = await Models.groupModel.create(objToSave);
+      return commonHelper.success(
+        res,
+        Response.success_msg.createGroup,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  groupList:async(req,res)=>{
+  groupList: async (req, res) => {
     try {
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
-      
+
       let where = {};
       if (req.query && req.query.search) {
         where = {
@@ -1273,333 +1517,470 @@ module.exports = {
             { groupName: { [Op.like]: `%${req.query.search}%` } },
             { groupDescription: { [Op.like]: `%${req.query.search}%` } },
             { groupType: { [Op.like]: `%${req.query.search}%` } },
-          ]
+          ],
         };
       }
-      let response=await Models.groupModel.findAndCountAll({
+      let response = await Models.groupModel.findAndCountAll({
         attributes: {
-          include: [  
-            [Sequelize.literal("(SELECT count(id) FROM commentGroup where groupId=group.id )"), "commentsCount"],
-            [Sequelize.literal("(SELECT count(id) FROM likeGroup where groupId=group.id )"), "likesCount"],
-            [Sequelize.literal(`
+          include: [
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM commentGroup where groupId=group.id )"
+              ),
+              "commentsCount",
+            ],
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM likeGroup where groupId=group.id )"
+              ),
+              "likesCount",
+            ],
+            [
+              Sequelize.literal(`
               (CASE 
                 WHEN (SELECT count(id) FROM commentGroup where groupId=group.id and userId = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
-              `),"isComment"],
-            [Sequelize.literal(`
+              `),
+              "isComment",
+            ],
+            [
+              Sequelize.literal(`
                 (CASE 
                   WHEN (SELECT count(id) FROM likeGroup where groupId=group.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
-              `),"isLike"],
-              [Sequelize.literal(`
+              `),
+              "isLike",
+            ],
+            [
+              Sequelize.literal(`
                 (CASE 
                   WHEN (SELECT count(id) FROM groupMember where groupId=group.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
-              `),"isJoin"]     
-          ]
+              `),
+              "isJoin",
+            ],
+          ],
         },
-       include:[{
-          model:Models.userModel,
-          as:'user',
-       }],
-       where:where,
-       limit:limit,
-       offset:offset,
-       order: [["createdAt", "DESC"]],
-      })
-      return commonHelper.success(res, Response.success_msg.groupList,response);
+        include: [
+          {
+            model: Models.userModel,
+            as: "user",
+          },
+        ],
+        where: where,
+        limit: limit,
+        offset: offset,
+        order: [["createdAt", "DESC"]],
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.groupList,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  groupPost:async(req,res)=>{
+  groupPost: async (req, res) => {
     try {
       let imagePath = null;
       if (req.files?.image) {
-        imagePath = await commonHelper.fileUpload(
-          req.files.image,
-          "images"
-        );
+        imagePath = await commonHelper.fileUpload(req.files.image, "images");
       }
-      let objToSave={
-        userId:req.user.id,
-        groupId:req.body.groupId,
-        description:req.body.description,
-        image:imagePath
-      }
-      let response=await Models.groupPostModel.create(objToSave)
-      return commonHelper.success(res, Response.success_msg.groupPost,response);
-
+      let objToSave = {
+        userId: req.user.id,
+        groupId: req.body.groupId,
+        description: req.body.description,
+        image: imagePath,
+      };
+      let response = await Models.groupPostModel.create(objToSave);
+      return commonHelper.success(
+        res,
+        Response.success_msg.groupPost,
+        response
+      );
     } catch (error) {
-      console.log("error",error)
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
-
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  commentOnGroup:async(req,res)=>{
+  commentOnGroup: async (req, res) => {
     try {
-      let schema=Joi.object().keys({
-        groupId:Joi.string().required(),
-        comment:Joi.string().required()
+      let schema = Joi.object().keys({
+        groupId: Joi.string().required(),
+        comment: Joi.string().required(),
       });
       let payload = await helper.validationJoi(req.body, schema);
-      let objToSave={
-        userId:req.user.id,
-        groupId:payload.groupId,
-        comment:payload.comment
-      }
-      let response=await Models.commentGroupModel.create(objToSave);
-      return commonHelper.success(res, Response.success_msg.commentGroup,response);
+      let objToSave = {
+        userId: req.user.id,
+        groupId: payload.groupId,
+        comment: payload.comment,
+      };
+      let response = await Models.commentGroupModel.create(objToSave);
+      return commonHelper.success(
+        res,
+        Response.success_msg.commentGroup,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  likeUnlikeGroup:async(req,res)=>{
+  likeUnlikeGroup: async (req, res) => {
     try {
-      let schema=Joi.object().keys({
-        groupId:Joi.string().required()
-      }); 
+      let schema = Joi.object().keys({
+        groupId: Joi.string().required(),
+      });
       let payload = await helper.validationJoi(req.body, schema);
-      let has=await Models.likeGroupModel.findOne({
-        where:{
-          userId:req.user.id,
-          groupId:payload.groupId
-        }
-      })
-      if(!has){
-        let response=await Models.likeGroupModel.create({
-          userId:req.user.id,
-          groupId:payload.groupId
+      let has = await Models.likeGroupModel.findOne({
+        where: {
+          userId: req.user.id,
+          groupId: payload.groupId,
+        },
+      });
+      if (!has) {
+        let response = await Models.likeGroupModel.create({
+          userId: req.user.id,
+          groupId: payload.groupId,
         });
-        return commonHelper.success(res, Response.success_msg.likeGroup,response);
-      }else{
+        return commonHelper.success(
+          res,
+          Response.success_msg.likeGroup,
+          response
+        );
+      } else {
         await Models.likeGroupModel.destroy({
-          where:{
-            userId:req.user.id,
-            groupId:payload.groupId
-          }
+          where: {
+            userId: req.user.id,
+            groupId: payload.groupId,
+          },
         });
         return commonHelper.success(res, Response.success_msg.unLikeGroup);
       }
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  listOfCommentOnGroup:async(req,res)=>{
+  listOfCommentOnGroup: async (req, res) => {
     try {
-      let response=await Models.commentGroupModel.findAndCountAll({
-        where:{
-          groupId:req.query.groupId
+      let response = await Models.commentGroupModel.findAndCountAll({
+        where: {
+          groupId: req.query.groupId,
         },
-        include:[{
-          model:Models.userModel,
-        }],
+        include: [
+          {
+            model: Models.userModel,
+          },
+        ],
         order: [["createdAt", "DESC"]],
-      })
-      return commonHelper.success(res, Response.success_msg.commentGroupList,response);
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.commentGroupList,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  listOfLikeGroupUsers:async(req,res)=>{
+  listOfLikeGroupUsers: async (req, res) => {
     try {
-      let response=await Models.likeGroupModel.findAll({
-        where:{
-          groupId:req.query.groupId
+      let response = await Models.likeGroupModel.findAll({
+        where: {
+          groupId: req.query.groupId,
         },
-        include:[{
-          model:Models.userModel
-        }],
+        include: [
+          {
+            model: Models.userModel,
+          },
+        ],
         order: [["createdAt", "DESC"]],
-      })
-      return commonHelper.success(res, Response.success_msg.likeGroupList,response);
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.likeGroupList,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  myGroupList:async(req,res)=>{
+  myGroupList: async (req, res) => {
     try {
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
-      let where = { };
+      let where = {};
       if (req.query && req.query.search) {
         where = {
           [Op.or]: [
             { groupName: { [Op.like]: `%${req.query.search}%` } },
             { groupDescription: { [Op.like]: `%${req.query.search}%` } },
             { groupType: { [Op.like]: `%${req.query.search}%` } },
-          ]
+          ],
         };
       }
-      let response=await Models.groupModel.findAndCountAll({
+      let response = await Models.groupModel.findAndCountAll({
         attributes: {
           include: [
-            [Sequelize.literal("(SELECT count(id) FROM commentGroup where groupId=group.id )"), "commentsCount"],
-            [Sequelize.literal("(SELECT count(id) FROM likeGroup where groupId=group.id )"), "likesCount"],
-          ]
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM commentGroup where groupId=group.id )"
+              ),
+              "commentsCount",
+            ],
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM likeGroup where groupId=group.id )"
+              ),
+              "likesCount",
+            ],
+          ],
         },
         include: [
           {
-              model: Models.groupMemberModel,
-              where: { userId: req.user.id }, // Filter only where userId matches req.user.id
-              required: true // Ensures only groups where the user is a member are included
-          }
-      ],
-        where:where,
-        limit:limit,
-        offset:offset
-      })
-      return commonHelper.success(res, Response.success_msg.myGroupList,response);
+            model: Models.groupMemberModel,
+            where: { userId: req.user.id }, // Filter only where userId matches req.user.id
+            required: true, // Ensures only groups where the user is a member are included
+          },
+        ],
+        where: where,
+        limit: limit,
+        offset: offset,
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.myGroupList,
+        response
+      );
     } catch (error) {
-      console.log("error",error);
-      
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  groupDetail:async(req,res)=>{
+  groupDetail: async (req, res) => {
     try {
-      let response=await Models.groupModel.findOne({
-        where:{
-          id:req.query.groupId
+      let response = await Models.groupModel.findOne({
+        where: {
+          id: req.query.groupId,
         },
-        include:[{
-          model:Models.userModel,
-        },
-      {
-        model:Models.groupPostModel
-      }]
-      })
-      return commonHelper.success(res, Response.success_msg.groupList,response);
+        include: [
+          {
+            model: Models.userModel,
+          },
+          {
+            model: Models.groupPostModel,
+          },
+        ],
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.groupList,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  joinGroup:async(req,res)=>{
+  joinGroup: async (req, res) => {
     try {
-      let objToSave={
-        groupId:req.body.groupId,
-        userId:req.user.id
-      }
-      let response=await Models.groupMemberModel.create(objToSave)
-      return commonHelper.success(res, Response.success_msg.joinGroup,response);
+      let objToSave = {
+        groupId: req.body.groupId,
+        userId: req.user.id,
+      };
+      let response = await Models.groupMemberModel.create(objToSave);
+      return commonHelper.success(
+        res,
+        Response.success_msg.joinGroup,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  groupMemberList:async(req,res)=>{
+  groupMemberList: async (req, res) => {
     try {
-      let response=await Models.groupMemberModel.findAndCountAll({
-        where:{
-          groupId:req.query.groupId
+      let response = await Models.groupMemberModel.findAndCountAll({
+        where: {
+          groupId: req.query.groupId,
         },
-        include:[{
-          model:Models.userModel
-        }],
+        include: [
+          {
+            model: Models.userModel,
+          },
+        ],
         order: [["createdAt", "DESC"]],
-      })
-      return commonHelper.success(res, Response.success_msg.groupMemberList,response);
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.groupMemberList,
+        response
+      );
     } catch (error) {
-       return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  nonProfileUserList:async(req,res)=>{
+  nonProfileUserList: async (req, res) => {
     try {
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
       let where = {
         id: { [Op.ne]: req.user.id },
-        role: 4
+        role: 4,
       };
-  
+
       if (req.query && req.query.search) {
         where = {
           ...where, // Preserve existing conditions
           [Op.or]: [
             { firstName: { [Op.like]: `%${req.query.search}%` } },
             { lastName: { [Op.like]: `%${req.query.search}%` } },
-            { email: { [Op.like]: `%${req.query.search}%` } }
-          ]
+            { email: { [Op.like]: `%${req.query.search}%` } },
+          ],
         };
       }
-      let response=await Models.userModel.findAndCountAll({
-        where:where,
-        limit:limit,
-        offset:offset
-      })
-      return commonHelper.success(res, Response.success_msg.nonProfileUserList,response);
+      let response = await Models.userModel.findAndCountAll({
+        where: where,
+        limit: limit,
+        offset: offset,
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.nonProfileUserList,
+        response
+      );
     } catch (error) {
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-
 
   // <-----------------------------Create feed------------------------------------------>
-  addFeed:async(req,res)=>{
+  addFeed: async (req, res) => {
     try {
       const schema = Joi.object().keys({
-        description:Joi.string().optional(),
-      }); 
+        description: Joi.string().optional(),
+      });
       let payload = await helper.validationJoi(req.body, schema);
       let imagePath = null;
-        if (req.files?.image) {
-            imagePath = await commonHelper.fileUpload(
-               req.files.image,
-               "images"
-            );
-          }
-      let objToSave={
-        description:payload.description,
-        image:imagePath,
-        userId:req.user.id
-      }    
-      let response=await Models.addFeedModel.create(objToSave);
+      if (req.files?.image) {
+        imagePath = await commonHelper.fileUpload(req.files.image, "images");
+      }
+      let objToSave = {
+        description: payload.description,
+        image: imagePath,
+        userId: req.user.id,
+      };
+      let response = await Models.addFeedModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.addFeed, response);
-    } catch (error) {      
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    } catch (error) {
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  feedList:async(req,res)=>{
+  feedList: async (req, res) => {
     try {
       let limit = parseInt(req.query.limit, 10) || 10;
       let offset = (parseInt(req.query.skip, 10) || 0) * limit;
       let where = {};
       if (req.query && req.query.search) {
         where = {
-          [Op.or]: [
-            { description: { [Op.like]: `%${req.query.search}%` } },
-          ]
+          [Op.or]: [{ description: { [Op.like]: `%${req.query.search}%` } }],
         };
       }
       let response = await Models.addFeedModel.findAndCountAll({
         attributes: {
           include: [
             // Count of likes
-            [Sequelize.literal(`(SELECT COUNT(id) FROM likeFeed WHERE likeFeed.feedId = addFeed.id)`), "likesCount"],
-            
+            [
+              Sequelize.literal(
+                `(SELECT COUNT(id) FROM likeFeed WHERE likeFeed.feedId = addFeed.id)`
+              ),
+              "likesCount",
+            ],
+
             // Count of comments
-            [Sequelize.literal(`(SELECT COUNT(id) FROM commentFeed WHERE commentFeed.feedId = addFeed.id)`), "commentsCount"],
-            [Sequelize.literal(`
+            [
+              Sequelize.literal(
+                `(SELECT COUNT(id) FROM commentFeed WHERE commentFeed.feedId = addFeed.id)`
+              ),
+              "commentsCount",
+            ],
+            [
+              Sequelize.literal(`
               (CASE 
                 WHEN (SELECT count(id) FROM commentFeed where feedId=addFeed.id and userId = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
-              `),"isComment"],
-            [Sequelize.literal(`
+              `),
+              "isComment",
+            ],
+            [
+              Sequelize.literal(`
                 (CASE 
                   WHEN (SELECT count(id) FROM likeFeed where feedId=addFeed.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
-              `),"isLike"],
+              `),
+              "isLike",
+            ],
             // 3 recently liked users (Subquery)
-            [Sequelize.literal(`
+            [
+              Sequelize.literal(`
               (SELECT JSON_ARRAYAGG(
                   JSON_OBJECT('id', users.id, 'firstName', users.firstName,'lastName',users.lastName, 'profilePicture', users.profilePicture)
                 ) FROM likeFeed 
@@ -1608,150 +1989,205 @@ module.exports = {
                 ORDER BY likeFeed.createdAt DESC 
                 LIMIT 3
               )
-            `), "recentLikes"],
-         
-          ]
+            `),
+              "recentLikes",
+            ],
+          ],
         },
         include: [
           {
             model: Models.userModel,
-            attributes:projection
-          }
+            attributes: projection,
+          },
         ],
-        where:where,
-        limit:limit,
-        offset:offset,
+        where: where,
+        limit: limit,
+        offset: offset,
         order: [["createdAt", "DESC"]],
       });
       return commonHelper.success(res, Response.success_msg.feedList, response);
     } catch (error) {
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  likeUnlikeFeed:async(req,res)=>{
+  likeUnlikeFeed: async (req, res) => {
     try {
-      
-      let objToSave={
-        userId:req.user.id,
-        feedId:req.body.feedId
-      }
-      let has=await Models.likeFeedModel.findOne({
-        where:{
-          userId:req.user.id,
-          feedId:req.body.feedId
-        }
-      })
-      
-      if(!has){
-        let response=await Models.likeFeedModel.create(objToSave);
-        return commonHelper.success(res, Response.success_msg.likeFeed,response);
-        }else{
-          let response=await Models.likeFeedModel.destroy({
-            where:{
-              userId:req.user.id,
-              feedId:req.body.feedId
-            }
-            });
-            return commonHelper.success(res, Response.success_msg.unlikeFeed,response);
-        }
-
-    } catch (error) {
-      console.log("error",error);
-      
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
-    }
-  },
-  likeFeedList:async(req,res)=>{
-    try {
-      let response=await Models.likeFeedModel.findAndCountAll({
-        where:{
-          feedId:req.query.feedId
+      let objToSave = {
+        userId: req.user.id,
+        feedId: req.body.feedId,
+      };
+      let has = await Models.likeFeedModel.findOne({
+        where: {
+          userId: req.user.id,
+          feedId: req.body.feedId,
         },
-        include:[{
-          model:Models.userModel,
-          attributes:projection
-        }],
-        order: [["createdAt", "DESC"]],
-      })
-      return commonHelper.success(res, Response.success_msg.likeFeedList, response);
+      });
+
+      if (!has) {
+        let response = await Models.likeFeedModel.create(objToSave);
+        return commonHelper.success(
+          res,
+          Response.success_msg.likeFeed,
+          response
+        );
+      } else {
+        let response = await Models.likeFeedModel.destroy({
+          where: {
+            userId: req.user.id,
+            feedId: req.body.feedId,
+          },
+        });
+        return commonHelper.success(
+          res,
+          Response.success_msg.unlikeFeed,
+          response
+        );
+      }
     } catch (error) {
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  commentOnFeed:async(req,res)=>{
+  likeFeedList: async (req, res) => {
     try {
-      let schema=Joi.object().keys({
-        feedId:Joi.string().required(),
-        comment:Joi.string().required()
+      let response = await Models.likeFeedModel.findAndCountAll({
+        where: {
+          feedId: req.query.feedId,
+        },
+        include: [
+          {
+            model: Models.userModel,
+            attributes: projection,
+          },
+        ],
+        order: [["createdAt", "DESC"]],
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.likeFeedList,
+        response
+      );
+    } catch (error) {
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
+  commentOnFeed: async (req, res) => {
+    try {
+      let schema = Joi.object().keys({
+        feedId: Joi.string().required(),
+        comment: Joi.string().required(),
       });
       let payload = await helper.validationJoi(req.body, schema);
-      let objToSave={
-        userId:req.user.id,
-        feedId:payload.feedId,
-        comment:payload.comment
-      }
-      let response=await Models.commentFeedModel.create(objToSave);
-      let details=await Models.commentFeedModel.findOne({
-        where:{
-          id:response.id
+      let objToSave = {
+        userId: req.user.id,
+        feedId: payload.feedId,
+        comment: payload.comment,
+      };
+      let response = await Models.commentFeedModel.create(objToSave);
+      let details = await Models.commentFeedModel.findOne({
+        where: {
+          id: response.id,
         },
-        include:[{
-          model:Models.userModel,
-          attributes:projection
-        }]
-      })
-      return commonHelper.success(res, Response.success_msg.commentOnFeed,details);
+        include: [
+          {
+            model: Models.userModel,
+            attributes: projection,
+          },
+        ],
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.commentOnFeed,
+        details
+      );
     } catch (error) {
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  commentOnFeedList:async(req,res)=>{
+  commentOnFeedList: async (req, res) => {
     try {
-      let response=await Models.commentFeedModel.findAndCountAll({
-        where:{
-          feedId:req.query.feedId
+      let response = await Models.commentFeedModel.findAndCountAll({
+        where: {
+          feedId: req.query.feedId,
         },
-        include:[{
-          model:Models.userModel,
-          attributes:projection
-        }],
+        include: [
+          {
+            model: Models.userModel,
+            attributes: projection,
+          },
+        ],
         order: [["createdAt", "DESC"]],
-      })
-      return commonHelper.success(res, Response.success_msg.commentOnFeedList,response);
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.commentOnFeedList,
+        response
+      );
     } catch (error) {
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
 
-
-  followList :async(req,res)=>{
-    try {      
+  followList: async (req, res) => {
+    try {
       let limit = parseInt(req.query.limit, 10) || 10;
       let offset = (parseInt(req.query.skip, 10) || 0) * limit;
-      let where= {
-        id: { [Op.ne]: req.user.id } // Exclude self
-       }
+      let where = {
+        id: { [Op.ne]: req.user.id }, // Exclude self
+      };
       if (req.query && req.query.search) {
         where = {
           ...where, // Preserve existing conditions
           [Op.or]: [
             { firstName: { [Op.like]: `%${req.query.search}%` } },
             { lastName: { [Op.like]: `%${req.query.search}%` } },
-            { email: { [Op.like]: `%${req.query.search}%` } }
-          ]
+            { email: { [Op.like]: `%${req.query.search}%` } },
+          ],
         };
       }
       let followList = await Models.userModel.findAndCountAll({
         attributes: {
           include: [
             // Check if the logged-in user follows this user
-            [Sequelize.literal(`(SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}' AND followingId = users.id)`), "iFollow"],
-  
+            [
+              Sequelize.literal(
+                `(SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}' AND followingId = users.id)`
+              ),
+              "iFollow",
+            ],
+
             // Check if this user follows the logged-in user
-            [Sequelize.literal(`(SELECT COUNT(id) FROM follow WHERE followerId = users.id AND followingId = '${req.user.id}')`), "heFollowsMe"],
-  
+            [
+              Sequelize.literal(
+                `(SELECT COUNT(id) FROM follow WHERE followerId = users.id AND followingId = '${req.user.id}')`
+              ),
+              "heFollowsMe",
+            ],
+
             // Determine follow status
-            [Sequelize.literal(`
+            [
+              Sequelize.literal(`
               (CASE
                 WHEN (SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}' AND followingId = users.id) > 0 
                 AND (SELECT COUNT(id) FROM follow WHERE followerId = users.id AND followingId = '${req.user.id}') > 0 
@@ -1765,363 +2201,545 @@ module.exports = {
                 
                 ELSE 'None'
               END)
-            `), "followStatus"]
-          ]
+            `),
+              "followStatus",
+            ],
+          ],
         },
-        where:where,
+        where: where,
         limit,
         offset,
         order: [["createdAt", "DESC"]],
       });
-      return commonHelper.success(res, Response.success_msg.getFollowList,followList);
+      return commonHelper.success(
+        res,
+        Response.success_msg.getFollowList,
+        followList
+      );
     } catch (error) {
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  followUnfollwUser:async(req,res)=>{
+  followUnfollwUser: async (req, res) => {
     try {
       const { followingId } = req.body; // The user to be followed
       const followerId = req.user.id; // The logged-in user
-      let existingFollow = await Models.followingModel.findOne({ where: { followerId, followingId } });
-      if(existingFollow){
-        await Models.followingModel.destroy({ where: { followerId, followingId } });
+      let existingFollow = await Models.followingModel.findOne({
+        where: { followerId, followingId },
+      });
+      if (existingFollow) {
+        await Models.followingModel.destroy({
+          where: { followerId, followingId },
+        });
         return commonHelper.success(res, Response.success_msg.unfollowUser);
-      }else{
-       let response= await Models.followingModel.create({ followerId, followingId });
-       return commonHelper.success(res, Response.success_msg.followUser,response);
+      } else {
+        let response = await Models.followingModel.create({
+          followerId,
+          followingId,
+        });
+        return commonHelper.success(
+          res,
+          Response.success_msg.followUser,
+          response
+        );
       }
     } catch (error) {
-      console.log("error",error);
-      
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
 
   // <-----------------------------Daily bread------------------------------------------>
 
-  dailyBreadList:async(req,res)=>{
+  dailyBreadList: async (req, res) => {
     try {
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
-      
+
       let where = {};
       if (req.query && req.query.search) {
         where = {
-          [Op.or]: [
-            { description: { [Op.like]: `%${req.query.search}%` } },
-          ]
+          [Op.or]: [{ description: { [Op.like]: `%${req.query.search}%` } }],
         };
       }
-     
-      let response=await Models.dailyBreadModel.findAndCountAll({
+
+      let response = await Models.dailyBreadModel.findAndCountAll({
         attributes: {
           include: [
-            [Sequelize.literal("(SELECT count(id) FROM dailyBreadComments where dailyBreadId=dailyBread.id )"), "commentsCount"],
-            [Sequelize.literal("(SELECT count(id) FROM likeDailyBread where dailyBreadId=dailyBread.id )"), "likesCount"],
-            [Sequelize.literal(`
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM dailyBreadComments where dailyBreadId=dailyBread.id )"
+              ),
+              "commentsCount",
+            ],
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM likeDailyBread where dailyBreadId=dailyBread.id )"
+              ),
+              "likesCount",
+            ],
+            [
+              Sequelize.literal(`
               (CASE 
                 WHEN (SELECT count(id) FROM dailyBreadComments where dailyBreadId=dailyBread.id and commentBy = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
-              `),"isComment"],
-            [Sequelize.literal(`
+              `),
+              "isComment",
+            ],
+            [
+              Sequelize.literal(`
                 (CASE 
                   WHEN (SELECT count(id) FROM likeDailyBread where dailyBreadId=dailyBread.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
-              `),"isLike"]  
-          ]
-        }, 
-        where:where,
-        limit:limit,
-        offset:offset,
+              `),
+              "isLike",
+            ],
+          ],
+        },
+        where: where,
+        limit: limit,
+        offset: offset,
         order: [["createdAt", "DESC"]],
       });
-      return commonHelper.success(res, Response.success_msg.getDailyBreadList,response);
+      return commonHelper.success(
+        res,
+        Response.success_msg.getDailyBreadList,
+        response
+      );
     } catch (error) {
-      console.log("error",error);
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  dailyBreadDetail:async(req,res)=>{
+  dailyBreadDetail: async (req, res) => {
     try {
-      let response=await Models.dailyBreadModel.findOne({
+      let response = await Models.dailyBreadModel.findOne({
         attributes: {
           include: [
-            [Sequelize.literal("(SELECT count(id) FROM dailyBreadComments where dailyBreaddailyBread.id )"), "commentsCount"],
-            [Sequelize.literal("(SELECT count(id) FROM likeDailyBread where dailyBreadId=dailyBread.id )"), "likesCount"],    
-            [Sequelize.literal(`
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM dailyBreadComments where dailyBreaddailyBread.id )"
+              ),
+              "commentsCount",
+            ],
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM likeDailyBread where dailyBreadId=dailyBread.id )"
+              ),
+              "likesCount",
+            ],
+            [
+              Sequelize.literal(`
               (CASE
                 WHEN (SELECT count(id) FROM dailyBreadComments where dailyBreadId=dailyBread.id and userId = '${req.user.id}') > 0
                 THEN 1
                 ELSE 0
                 END)
-                `),"isComment"],
-            [Sequelize.literal(`
+                `),
+              "isComment",
+            ],
+            [
+              Sequelize.literal(`
                   (CASE
                   WHEN (SELECT count(id) FROM likeDailyBread where dailyBreadId=dailyB
                   read.id and userId = '${req.user.id}') > 0
                   THEN 1
                   ELSE 0
                   END)
-                  `),"isLike"]
-                  ]
-                },
-        where:{
-          id:req.query.dailyBreadId
+                  `),
+              "isLike",
+            ],
+          ],
+        },
+        where: {
+          id: req.query.dailyBreadId,
         },
       });
-      return commonHelper.success(res, Response.success_msg.getDailyBreadDetail,response);
+      return commonHelper.success(
+        res,
+        Response.success_msg.getDailyBreadDetail,
+        response
+      );
     } catch (error) {
-      console.log("error",error);
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  dailyBreadComment:async(req,res)=>{
+  dailyBreadComment: async (req, res) => {
     try {
-      let schema=Joi.object().keys({
-        dailyBreadId:Joi.string().required(),
-        comment:Joi.string().required()
+      let schema = Joi.object().keys({
+        dailyBreadId: Joi.string().required(),
+        comment: Joi.string().required(),
       });
       let payload = await helper.validationJoi(req.body, schema);
-      let objToSave={
-        commentBy:req.user.id,
-        dailyBreadId:payload.dailyBreadId,
-        comment:payload.comment
-      }
-    let response=  await Models.dailyBreadCommentModel.create(objToSave)
-      return commonHelper.success(res, Response.success_msg.commentAdded,response);
+      let objToSave = {
+        commentBy: req.user.id,
+        dailyBreadId: payload.dailyBreadId,
+        comment: payload.comment,
+      };
+      let response = await Models.dailyBreadCommentModel.create(objToSave);
+      return commonHelper.success(
+        res,
+        Response.success_msg.commentAdded,
+        response
+      );
     } catch (error) {
-      console.log("error",error);
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  dailyBreadCommentList:async(req,res)=>{
+  dailyBreadCommentList: async (req, res) => {
     try {
-      let response=await Models.dailyBreadCommentModel.findAll({
-        where:{
-          dailyBreadId:req.query.dailyBreadId
+      let response = await Models.dailyBreadCommentModel.findAll({
+        where: {
+          dailyBreadId: req.query.dailyBreadId,
         },
-        include:[
+        include: [
           {
-            model:Models.dailyBreadModel,
-          }
+            model: Models.dailyBreadModel,
+          },
         ],
         order: [["createdAt", "DESC"]],
-      })
-      return commonHelper.success(res, Response.success_msg.commentList,response); 
-      
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.commentList,
+        response
+      );
     } catch (error) {
-      console.log("error",error);
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  dailyBreadLikeUnlike:async(req,res)=>{
+  dailyBreadLikeUnlike: async (req, res) => {
     try {
-      let has=await Models.likeDailyBreadModel.findOne({
-        where:{
-          userId:req.user.id,
-          dailyBreadId:req.params.dailyBreadId
-        }
-      })
-      if(!has){
-        let objToSave={
-          userId:req.user.id,
-          dailyBreadId:req.params.dailyBreadId
-      }
-      let response=await Models.likeDailyBreadModel.create(objToSave)
-      return commonHelper.success(res, Response.success_msg.likeDailyBreadAdded,response);
-    }else{
-      let response=await Models.likeDailyBreadModel.destroy({
-        where:{
-          userId:req.user.id,
-          dailyBreadId:req.params.dailyBreadId
-          }
-          })
-      return commonHelper.success(res, Response.success_msg.unlikeDailyBreadAdded,response);
-    }
-    } catch (error) {
-      console.log("error",error);
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
-    }
-  },
-  dailyBreadLikeList:async(req,res)=>{
-    try {
-      let response=await Models.likeDailyBreadModel.findAll({
-        where:{
-          dailyBreadId:req.query.dailyBreadId
+      let has = await Models.likeDailyBreadModel.findOne({
+        where: {
+          userId: req.user.id,
+          dailyBreadId: req.params.dailyBreadId,
         },
-        include:[{
-          model:Models.userModel
-        }]
-      })
-      return commonHelper.success(res, Response.success_msg.likeDailyBreadAdded,response);
+      });
+      if (!has) {
+        let objToSave = {
+          userId: req.user.id,
+          dailyBreadId: req.params.dailyBreadId,
+        };
+        let response = await Models.likeDailyBreadModel.create(objToSave);
+        return commonHelper.success(
+          res,
+          Response.success_msg.likeDailyBreadAdded,
+          response
+        );
+      } else {
+        let response = await Models.likeDailyBreadModel.destroy({
+          where: {
+            userId: req.user.id,
+            dailyBreadId: req.params.dailyBreadId,
+          },
+        });
+        return commonHelper.success(
+          res,
+          Response.success_msg.unlikeDailyBreadAdded,
+          response
+        );
+      }
     } catch (error) {
-      console.log("error",error);
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  
+  dailyBreadLikeList: async (req, res) => {
+    try {
+      let response = await Models.likeDailyBreadModel.findAll({
+        where: {
+          dailyBreadId: req.query.dailyBreadId,
+        },
+        include: [
+          {
+            model: Models.userModel,
+          },
+        ],
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.likeDailyBreadAdded,
+        response
+      );
+    } catch (error) {
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
+
   // <-----------------------------Prayer Request------------------------------------------>
 
-  prayerRequestList:async(req,res)=>{
+  prayerRequestList: async (req, res) => {
     let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
-      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
-      
-      let where = {};
-      if (req.query && req.query.search) {
-        where = {
-          [Op.or]: [
-            { description: { [Op.like]: `%${req.query.search}%` } },
-          ]
-        };
-      }
-     
-      let response=await Models.prayerRequestModel.findAndCountAll({
-        attributes: {
-          include: [
-            [Sequelize.literal("(SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id )"), "commentsCount"],
-            [Sequelize.literal("(SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id )"), "likesCount"],
-            [Sequelize.literal(`
+    let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
+
+    let where = {};
+    if (req.query && req.query.search) {
+      where = {
+        [Op.or]: [{ description: { [Op.like]: `%${req.query.search}%` } }],
+      };
+    }
+
+    let response = await Models.prayerRequestModel.findAndCountAll({
+      attributes: {
+        include: [
+          [
+            Sequelize.literal(
+              "(SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id )"
+            ),
+            "commentsCount",
+          ],
+          [
+            Sequelize.literal(
+              "(SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id )"
+            ),
+            "likesCount",
+          ],
+          [
+            Sequelize.literal(`
               (CASE 
                 WHEN (SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id and commentBy = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
-              `),"isComment"],
-            [Sequelize.literal(`
+              `),
+            "isComment",
+          ],
+          [
+            Sequelize.literal(`
                 (CASE 
                   WHEN (SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
-              `),"isLike"]  
-          ]
-        }, 
-        where:where,
-        limit:limit,
-        offset:offset,
-        order: [["createdAt", "DESC"]],
-      });
-      return commonHelper.success(res, Response.success_msg.getDailyBreadList,response);
+              `),
+            "isLike",
+          ],
+        ],
+      },
+      where: where,
+      limit: limit,
+      offset: offset,
+      order: [["createdAt", "DESC"]],
+    });
+    return commonHelper.success(
+      res,
+      Response.success_msg.getDailyBreadList,
+      response
+    );
   },
-  prayerRequestDetail:async(req,res)=>{
+  prayerRequestDetail: async (req, res) => {
     try {
-      let response=await Models.prayerRequestModel.findOne({
+      let response = await Models.prayerRequestModel.findOne({
         attributes: {
           include: [
-            [Sequelize.literal("(SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id )"), "commentsCount"],
-            [Sequelize.literal("(SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id )"), "likesCount"],
-            [Sequelize.literal(`
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id )"
+              ),
+              "commentsCount",
+            ],
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id )"
+              ),
+              "likesCount",
+            ],
+            [
+              Sequelize.literal(`
               (CASE 
                 WHEN (SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id and commentBy = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
-              `),"isComment"],
-            [Sequelize.literal(`
+              `),
+              "isComment",
+            ],
+            [
+              Sequelize.literal(`
                 (CASE 
                   WHEN (SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
-              `),"isLike"]  
-          ]
+              `),
+              "isLike",
+            ],
+          ],
         },
-        where:{
-          id:req.query.prayerRequestId
+        where: {
+          id: req.query.prayerRequestId,
         },
       });
-      return commonHelper.success(res, Response.success_msg.getDailyBreadDetail,response);
- 
+      return commonHelper.success(
+        res,
+        Response.success_msg.getDailyBreadDetail,
+        response
+      );
     } catch (error) {
-      console.log("error",error);
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  prayerRequestComment:async(req,res)=>{
+  prayerRequestComment: async (req, res) => {
     try {
-      let schema=Joi.object().keys({
-        prayerRequestId:Joi.string().required(),
-        comment:Joi.string().required()
+      let schema = Joi.object().keys({
+        prayerRequestId: Joi.string().required(),
+        comment: Joi.string().required(),
       });
       let payload = await helper.validationJoi(req.body, schema);
-      let objToSave={
-        commentBy:req.user.id,
-        prayerRequestId:payload.prayerRequestId,
-        comment:payload.comment
-      }
-    let response=  await Models.prayerRequestCommentModel.create(objToSave)
+      let objToSave = {
+        commentBy: req.user.id,
+        prayerRequestId: payload.prayerRequestId,
+        comment: payload.comment,
+      };
+      let response = await Models.prayerRequestCommentModel.create(objToSave);
     } catch (error) {
-      console.log("error",error);
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  prayerRequestCommentList:async(req,res)=>{
+  prayerRequestCommentList: async (req, res) => {
     try {
-      let response=await Models.prayerRequestCommentModel.findAll({
-        where:{
-          prayerRequestId:req.query.prayerRequestId
+      let response = await Models.prayerRequestCommentModel.findAll({
+        where: {
+          prayerRequestId: req.query.prayerRequestId,
         },
-        include:[
+        include: [
           {
-            model:Models.prayerRequestModel,
-          }
+            model: Models.prayerRequestModel,
+          },
         ],
         order: [["createdAt", "DESC"]],
-      })
-      return commonHelper.success(res, Response.success_msg.commentList,response); 
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.commentList,
+        response
+      );
     } catch (error) {
-      console.log("error",error);
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
-  prayerRequestLikeUnlike:async(req,res)=>{
+  prayerRequestLikeUnlike: async (req, res) => {
     try {
-      let has=await Models.likePrayerRequestModel.findOne({
-        where:{
-          userId:req.user.id,
-          prayerRequestId:req.params.prayerRequestId
-        }
-      })
-      if(!has){
-        let objToSave={
-          userId:req.user.id,
-          prayerRequestId:req.params.prayerRequestId
-      }
-      let response=await Models.likePrayerRequestModel.create(objToSave)
-      return commonHelper.success(res, Response.success_msg.likeDailyPrayerAdded,response);
-    }else{
-      let response=await Models.likePrayerRequestModel.destroy({
-        where:{
-          userId:req.user.id,
-          prayerRequestId:req.params.prayerRequestId
-          }
-          })
-      return commonHelper.success(res, Response.success_msg.unlikeDailyPrayerAdded,response);
-    }
-    } catch (error) {
-      console.log("error",error);
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
-    }
-  },
-  prayerRequestLikeList:async(req,res)=>{
-    try {
-      let response=await Models.likePrayerRequestModel.findAll({
-        where:{
-          prayerRequestId:req.query.prayerRequestId
+      let has = await Models.likePrayerRequestModel.findOne({
+        where: {
+          userId: req.user.id,
+          prayerRequestId: req.params.prayerRequestId,
         },
-        include:[{
-          model:Models.userModel
-        }]
-      })
-      return commonHelper.success(res, Response.success_msg.likeDailyPrayerList,response);
-   
+      });
+      if (!has) {
+        let objToSave = {
+          userId: req.user.id,
+          prayerRequestId: req.params.prayerRequestId,
+        };
+        let response = await Models.likePrayerRequestModel.create(objToSave);
+        return commonHelper.success(
+          res,
+          Response.success_msg.likeDailyPrayerAdded,
+          response
+        );
+      } else {
+        let response = await Models.likePrayerRequestModel.destroy({
+          where: {
+            userId: req.user.id,
+            prayerRequestId: req.params.prayerRequestId,
+          },
+        });
+        return commonHelper.success(
+          res,
+          Response.success_msg.unlikeDailyPrayerAdded,
+          response
+        );
+      }
     } catch (error) {
-      console.log("error",error);
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
+  prayerRequestLikeList: async (req, res) => {
+    try {
+      let response = await Models.likePrayerRequestModel.findAll({
+        where: {
+          prayerRequestId: req.query.prayerRequestId,
+        },
+        include: [
+          {
+            model: Models.userModel,
+          },
+        ],
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.likeDailyPrayerList,
+        response
+      );
+    } catch (error) {
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
 
@@ -2129,11 +2747,11 @@ module.exports = {
     try {
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
-      
+
       let where = {
-        [Op.ne] : {
-          id: req.user.id
-        }
+        [Op.ne]: {
+          id: req.user.id,
+        },
       };
       if (req.query && req.query.search) {
         where = {
@@ -2141,36 +2759,94 @@ module.exports = {
             { firstName: { [Op.like]: `%${req.query.search}%` } },
             { lastName: { [Op.like]: `%${req.query.search}%` } },
             { email: { [Op.like]: `%${req.query.search}%` } },
-          ]
+          ],
         };
       }
       if (req.query && req.query.filter) {
-        let filters = Array.isArray(req.query.filter) ? req.query.filter : [req.query.filter];
+        let filters = Array.isArray(req.query.filter)
+          ? req.query.filter
+          : [req.query.filter];
         where = {
-          [Op.or]: filters.map(filter => ({
-            [Op.or]: [
-              { traitAndExperience: { [Op.like]: `%${filter}%` } },
-            ]
-          }))
+          [Op.or]: filters.map((filter) => ({
+            [Op.or]: [{ traitAndExperience: { [Op.like]: `%${filter}%` } }],
+          })),
         };
       }
 
       let response = await Models.userModel.findAndCountAll({
-       where:where,
-       limit:limit,
-       offset:offset,
-       order: [["createdAt", "DESC"]],
-        
+        where: where,
+        limit: limit,
+        offset: offset,
+        order: [["createdAt", "DESC"]],
       });
 
-      return commonHelper.success(res, Response.success_msg.userTraitAndExpList,response);
-
+      return commonHelper.success(
+        res,
+        Response.success_msg.userTraitAndExpList,
+        response
+      );
     } catch (error) {
-      console.log("error",error);
-      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
-  }
+  },
 
+  userTypeOfBusinessList: async (req, res) => {
+    try {
+      let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
 
+      let where = {
+        [Op.ne]: {
+          id: req.user.id,
+          role: 3,
+        },
+      };
+      if (req.query && req.query.search) {
+        where = {
+          [Op.or]: [
+            { firstName: { [Op.like]: `%${req.query.search}%` } },
+            { lastName: { [Op.like]: `%${req.query.search}%` } },
+            { email: { [Op.like]: `%${req.query.search}%` } },
+          ],
+        };
+      }
+      if (req.query && req.query.filter) {
+        let filters = Array.isArray(req.query.filter)
+          ? req.query.filter
+          : [req.query.filter];
+        where = {
+          [Op.or]: filters.map((filter) => ({
+            [Op.or]: [{ typeOfBusiness: { [Op.like]: `%${filter}%` } }],
+          })),
+        };
+      }
 
+      let response = await Models.userModel.findAndCountAll({
+        where: where,
+        limit: limit,
+        offset: offset,
+        order: [["createdAt", "DESC"]],
+      });
+
+      return commonHelper.success(
+        res,
+        Response.success_msg.userTypeOfBusList,
+        response
+      );
+    } catch (error) {
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
+
+  
 };

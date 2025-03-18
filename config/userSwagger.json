@@ -81,6 +81,17 @@
       }
     },
 
+    "/users/userTypeOfBusinessList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-userTypeOfBusinessList-post",
+        "tags": ["Application Common"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
     "/users/signUp": {
       "post": {
         "x-swagger-router-controller": "middleware-name1",
@@ -706,14 +717,14 @@
           }
         ],
         "parameters": [
-        {
-          "name": "testimoryType",
-          "in": "formData",
-          "description": "",
-          "required": false,
-          "type": "string",
-          "value": ""
-        },
+          {
+            "name": "testimoryType",
+            "in": "formData",
+            "description": "",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
           {
             "name": "growingUp",
             "in": "formData",
@@ -1213,9 +1224,7 @@
             "Bearer": []
           }
         ],
-        "parameters": [
-          
-        ],
+        "parameters": [],
         "responses": {}
       }
     },
@@ -1427,7 +1436,6 @@
             "type": "string",
             "value": ""
           }
-      
         ],
         "responses": {}
       }
@@ -1452,7 +1460,6 @@
             "type": "string",
             "value": ""
           }
-      
         ],
         "responses": {}
       }
@@ -1621,24 +1628,24 @@
           }
         ],
         "parameters": [
-        {
-          "name": "description",
-          "in": "formData",
-          "description": "",
-          "required": false,
-          "type": "string",
-          "value": ""
-        },
-        {
-          "name": "image",
-          "in": "formData",
-          "description": "Add image to upload",
-          "required": false,
-          "type": "file",
-          "format": "binary",
-          "maxLength": 5242880,
-          "allowedMimeTypes": ["image/jpeg", "image/png"]
-        } 
+          {
+            "name": "description",
+            "in": "formData",
+            "description": "",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "Add image to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          }
         ],
         "responses": {}
       }
@@ -1824,9 +1831,7 @@
             "value": ""
           }
         ],
-        "responses": {
-        
-        }
+        "responses": {}
       }
     },
     "/users/followUnfollwUser": {
@@ -1890,9 +1895,7 @@
             "value": ""
           }
         ],
-        "responses": {
-        
-        }
+        "responses": {}
       }
     },
     "/users/dailyBreadDetail": {
@@ -2060,9 +2063,7 @@
             "value": ""
           }
         ],
-        "responses": {
-        
-        }
+        "responses": {}
       }
     },
     "/users/prayerRequestDetail": {
