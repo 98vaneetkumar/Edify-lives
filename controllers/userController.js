@@ -1732,6 +1732,8 @@ module.exports = {
   },
   groupPostList: async (req, res) => {
     try {
+      let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
       let response = await Models.groupPostModel.findAll({
         where: {
           groupId: req.query.groupId,
@@ -1777,6 +1779,8 @@ module.exports = {
             ],
           ],
         },
+        limit: limit,
+        offset: offset,
       });
   
       return commonHelper.success(
