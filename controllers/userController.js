@@ -425,7 +425,7 @@ module.exports = {
   logout: async (req, res) => {
     try {
       const schema = Joi.object().keys({
-        deviceToken: Joi.string().required(),
+        deviceToken: Joi.string().optional(),
         devideType: Joi.string().optional(),
       });
 
