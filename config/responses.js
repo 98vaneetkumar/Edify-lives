@@ -77,6 +77,7 @@ var success_msg = {
   groupFilterType: "Group filter type fetched successfully",
   getProfileData: "Profile data fetched successfully",
   updProfile: "Profile updated successfully",
+  grpPostList: "Group post list fetched successfully",
 };
 
 var failed_msg = {

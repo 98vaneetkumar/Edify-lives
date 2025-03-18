@@ -87,6 +87,9 @@ Models.prayerRequestCommentModel.belongsTo(Models.userModel, {
 Models.likePrayerRequestModel.belongsTo(Models.userModel, {
   foreignKey: "userId",
 });
+Models.groupPostModel.belongsTo(Models.userModel, {
+  foreignKey: "userId",
+});
 module.exports = {
   signUp: async (req, res) => {
     try {
@@ -1718,6 +1721,32 @@ module.exports = {
       );
     } catch (error) {
       console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
+  groupPostList: async (req, res) => {
+    try {
+      let response = await Models.groupPostModel.findAll({
+        where: {
+          groupId: req.body.groupId,
+        },
+        include: [
+          {
+            model: Models.userModel,
+          },
+        ],
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.grpPostList,
+        response
+      );
+    } catch (error) {
+      console.log("groupPostList", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,

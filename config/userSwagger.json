@@ -117,6 +117,22 @@
         "responses": {}
       }
     },
+    
+    "/users/groupPostList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-groupPostList-post",
+        "tags": ["Application Common"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {}
+      }
+    },
 
     "/users/groupFilterType": {
       "get": {
