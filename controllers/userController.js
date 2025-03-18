@@ -2961,9 +2961,7 @@ module.exports = {
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
 
       let where = {
-        [Op.ne]: {
-          id: req.user.id,
-        },
+     
       };
       if (req.query && req.query.search) {
         where = {
