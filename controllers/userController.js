@@ -1811,7 +1811,7 @@ module.exports = {
     }
   },
   
-  commentOnGroup: async (req, res) => {
+  commentOnGroupPost: async (req, res) => {
     try {
       let schema = Joi.object().keys({
         groupId: Joi.string().required(),
@@ -1839,7 +1839,7 @@ module.exports = {
       );
     }
   },
-  likeUnlikeGroup: async (req, res) => {
+  likeUnlikeGroupPost: async (req, res) => {
     try {
       let schema = Joi.object().keys({
         groupId: Joi.string().required(),
@@ -1882,7 +1882,7 @@ module.exports = {
       );
     }
   },
-  listOfCommentOnGroup: async (req, res) => {
+  listOfCommentOnGroupPost: async (req, res) => {
     try {
       let response = await Models.commentGroupModel.findAndCountAll({
         where: {
@@ -1908,7 +1908,7 @@ module.exports = {
       );
     }
   },
-  listOfLikeGroupUsers: async (req, res) => {
+  listOfLikeGroupUsersPost: async (req, res) => {
     try {
       let response = await Models.likeGroupModel.findAll({
         where: {
