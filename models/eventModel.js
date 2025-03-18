@@ -43,6 +43,11 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         allowNull: true,
         defaultValue: null,
       },
+      endTime: {
+        type: Sequelize.STRING(255),
+        allowNull: true,
+        defaultValue: null,
+      },
       eventTitle: {
         type: Sequelize.STRING(255),
         allowNull: true,

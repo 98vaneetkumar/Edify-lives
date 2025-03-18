@@ -1103,6 +1103,17 @@
         "responses": {}
       }
     },
+    "/users/eventType": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-eventType-post",
+        "tags": ["Application Common"],
+        "description": "",
+       
+        "parameters": [],
+        "responses": {}
+      }
+    },
     "/users/filters_listing": {
       "get": {
         "x-swagger-router-controller": "middleware-name1",
@@ -1565,6 +1576,14 @@
             "name": "time",
             "in": "formData",
             "description": "Enter the time",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
+            "name": "endTime",
+            "in": "formData",
+            "description": "Enter the end time",
             "required": false,
             "type": "string",
             "value": ""

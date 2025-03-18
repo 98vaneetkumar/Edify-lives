@@ -800,6 +800,19 @@ module.exports = {
       );
     }
   },
+  eventType:async(req,res)=>{
+    try {
+      let response=await Models.eventTypeModel.findAll()
+      return commonHelper.success(res, Response.success_msg.needPost, response);
+
+    } catch (error) {
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
   needPost: async (req, res) => {
     try {
       const schema = Joi.object().keys({
@@ -1498,6 +1511,7 @@ module.exports = {
         longitude: Joi.string().optional(),
         date: Joi.string().optional(),
         time: Joi.string().optional(),
+        endTime:Joi.string().optional(),
         eventTitle: Joi.string().optional(),
         countryCode: Joi.string().optional(),
         phoneNumber: Joi.string().optional(),
@@ -1514,6 +1528,7 @@ module.exports = {
         longitude: payload.longitude,
         date: payload.date,
         time: payload.time,
+        endTime:payload.endTime,
         eventTitle: payload.eventTitle,
         countryCode: payload.countryCode,
         phoneNumber: payload.phoneNumber,

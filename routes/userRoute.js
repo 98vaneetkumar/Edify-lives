@@ -12,6 +12,7 @@ module.exports=function(){
     router.get("/traitsexperience_listing", controller.userController.traitsexperience_listing);
     router.get("/bannerList",controller.userController.bannerList)
     router.get("/businessType",controller.userController.businessType)
+    router.get("/eventType",controller.userController.eventType)
 
     
     router.post('/signUp', controller.userController.signUp);

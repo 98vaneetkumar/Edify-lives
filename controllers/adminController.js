@@ -1840,6 +1840,8 @@ module.exports = {
       return res.redirect("/admin/login");
     }
   },
+
+
   businessfilter_listing: async (req, res) => {
     try {
       if (!req.session.user) return res.redirect("/admin/login");
@@ -1910,14 +1912,90 @@ module.exports = {
   },
 
 
+  event_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let groupfilter_data = await Models.eventTypeModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/eventType/eventTypeListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Event Type",
+        groupfilter_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  event_add: async (req, res) => {
+    try {
+      let title = "Event Type";
+      res.render("admin/eventType/eventTypeAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  event_create: async (req, res) => {
+    try {
+      let objToSave = {
+        title: req.body.title,
+      };
+
+      await Models.eventTypeModel.create(objToSave);
+
+      return res.json({
+        success: true,
+        message: "Event type added successfully.",
+      });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+  event_delete: async (req, res) => {
+    try {
+      const groupFilterId = req.body.id;
+      await Models.eventTypeModel.destroy({
+        where: { id: groupFilterId },
+      });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete group filter" });
+      return res.redirect("/admin/login");
+    }
+  },
+
   test: async (req, res) => {
     try {
+      // let objtosave = {
+      //   dailyBreadId: "e3f45af0-7da4-4ee0-8f63-22eed4cc2dbf",
+      //   comment: "Nice",
+      //   commentBy: "0187477c-b6a9-4805-8602-a301c0a2204e",
+      // };
+      // const saved = await Models.dailyBreadCommentModel.create(objtosave);
       let objtosave = {
-        dailyBreadId: "e3f45af0-7da4-4ee0-8f63-22eed4cc2dbf",
-        comment: "Nice",
-        commentBy: "0187477c-b6a9-4805-8602-a301c0a2204e",
+        senderId: "033d4d17-1d3c-426d-b7dc-a43048b80042",
+        message: "comment on  you post",
+        type:2,
+        recevierId: "0187477c-b6a9-4805-8602-a301c0a2204e",
       };
-      const saved = await Models.dailyBreadCommentModel.create(objtosave);
+      const saved = await Models.notificationModel.create(objtosave);
       console.log(saved);
     } catch (error) {
       throw error;
