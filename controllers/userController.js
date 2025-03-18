@@ -1825,7 +1825,18 @@ module.exports = {
         groupPostId: payload.groupPostId,
         comment: payload.comment,
       };
-      let response = await Models.commentGroupModel.create(objToSave);
+      let response1 = await Models.commentGroupModel.create(objToSave);
+      let response = await Models.commentGroupModel.findOne({
+        where: {
+          id: response1.id,
+        },
+        include: [
+          {
+            model: Models.userModel,
+          },
+        ],
+        order: [["createdAt", "DESC"]],
+      });
       return commonHelper.success(
         res,
         Response.success_msg.commentGroup,
