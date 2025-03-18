@@ -23,6 +23,10 @@ module.exports=function(){
     router.post('/otpVerify', controller.userController.otpVerify);
     router.post('/resendOtp', controller.userController.resendOtp);
 
+    router.get('/getProfile', authentication, controller.userController.getProfile)
+    router.post('/updateProfile', authentication, controller.userController.updateProfile)
+
+
     router.get("/cms",authentication, controller.userController.cms)
     router.get("/notificationsList",authentication, controller.userController.notificationsList)
 

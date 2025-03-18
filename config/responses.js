@@ -75,6 +75,8 @@ var success_msg = {
   userTraitAndExpList: "User trait and experience list fetched successfully",
   userTypeOfBusList: "User type of business list fetched successfully",
   groupFilterType: "Group filter type fetched successfully",
+  getProfileData: "Profile data fetched successfully",
+  updProfile: "Profile updated successfully",
 };
 
 var failed_msg = {
@@ -107,6 +109,8 @@ var error_msg = {
   invalidPhoneNumber: "Invalid phone number",
   errUploadLogo: "Error uploading logo",
   internalServerError: "Internal server error",
+  getPrf: "Error while fetching user own profile",
+  updPrf: "Error while updating user profile",
 };
 
 module.exports = {

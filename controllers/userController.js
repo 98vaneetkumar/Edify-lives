@@ -577,6 +577,69 @@ module.exports = {
       );
     }
   },
+
+  getProfile: async (req, res) => {
+    try {
+      await Models.userModel.findOne({
+        where: { id: req.user.id },
+        raw: true,
+      });
+      return commonHelper.success(res, Response.success_msg.getProfileData);
+    } catch (error) {
+      console.error("Error while fetching user own profile", error);
+      return commonHelper.error(res, Response.error_msg.getPrf, error.message);
+    }
+  },
+
+  updateProfile: async (req, res) => {
+    try {
+      let fileImage = "";
+
+      if (req.files && req.files.profilePicture) {
+        fileImage = await helper.fileUpload(req.files.profilePicture, "images");
+      } else {
+        let user = await Models.userModel.findOne({
+          where: { id: req.params.id },
+        });
+
+        fileImage = user.profilePicture;
+      }
+
+      // Update user profile
+      await Models.userModel.update(
+        {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          profilePicture: fileImage,
+          email: req.body.email,
+          countryCode: req.body.countryCode,
+          gender: req.body.gender,
+          phoneNumber: req.body.phoneNumber,
+          maritalStatus: req.body.maritalStatus,
+          location: req.body.location,
+          latitude: req.body.latitude,
+          longitude: req.body.longitude,
+          donateEdifyLivers: req.body.donateEdifyLivers,
+          traitAndExperience: req.body.traitAndExperience,
+          postEmpSeekingSection: req.body.postEmpSeekingSection,
+          hartOfService: req.body.hartOfService,
+          churchAccessCode: req.body.churchAccessCode,
+        },
+        { where: { id: req.params.id } }
+      );
+
+      // Fetch updated user
+      let updatedUser = await Models.userModel.findOne({
+        where: { id: req.params.id },
+      });
+
+      return commonHelper.success(res, Response.success_msg.updProfile);
+    } catch (error) {
+      console.error("Error while updating user profile", error);
+      return commonHelper.error(res, Response.error_msg.updPrf, error.message);
+    }
+  },
+
   cms: async (req, res) => {
     try {
       console.log("first", req.params);
@@ -1451,12 +1514,16 @@ module.exports = {
     }
   },
 
-  groupFilterType: async(req, res)=>{
+  groupFilterType: async (req, res) => {
     try {
-      let response = await Models.groupFilter.findAll()
-      return commonHelper.success(res, Response.success_msg.groupFilterType, response)
+      let response = await Models.groupFilter.findAll();
+      return commonHelper.success(
+        res,
+        Response.success_msg.groupFilterType,
+        response
+      );
     } catch (error) {
-      console.log("groupFilterType", error)
+      console.log("groupFilterType", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1464,7 +1531,6 @@ module.exports = {
       );
     }
   },
-
 
   filters_listing: async (req, res) => {
     try {
@@ -2873,8 +2939,4 @@ module.exports = {
       );
     }
   },
-
-
-
-  
 };
