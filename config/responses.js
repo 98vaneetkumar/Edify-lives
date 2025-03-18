@@ -71,7 +71,8 @@ var success_msg = {
   likeDailyPrayerAdded:"Like daily Prayer successfully",
   unlikeDailyPrayerAdded:"Unlike daily Prayer successfully.",
   likeDailyPrayerList:"Like daily Prayer list get successfully",
-  groupPost:"Group post add scussfully"
+  groupPost:"Group post add scussfully",
+  userTraitAndExpList: "User trait and experience list fetched successfully",
 };
 
 var failed_msg = {

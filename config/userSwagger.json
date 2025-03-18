@@ -70,6 +70,17 @@
       }
     },
 
+    "/users/userTraitAndExperienceList": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-userTraitAndExperienceList-post",
+        "tags": ["Application Common"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
     "/users/signUp": {
       "post": {
         "x-swagger-router-controller": "middleware-name1",

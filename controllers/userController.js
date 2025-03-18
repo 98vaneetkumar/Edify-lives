@@ -2125,6 +2125,52 @@ module.exports = {
     }
   },
 
+  userTraitAndExperienceList: async (req, res) => {
+    try {
+      let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
+      
+      let where = {
+        [Op.ne] : {
+          id: req.user.id
+        }
+      };
+      if (req.query && req.query.search) {
+        where = {
+          [Op.or]: [
+            { firstName: { [Op.like]: `%${req.query.search}%` } },
+            { lastName: { [Op.like]: `%${req.query.search}%` } },
+            { email: { [Op.like]: `%${req.query.search}%` } },
+          ]
+        };
+      }
+      if (req.query && req.query.filter) {
+        let filters = Array.isArray(req.query.filter) ? req.query.filter : [req.query.filter];
+        where = {
+          [Op.or]: filters.map(filter => ({
+            [Op.or]: [
+              { traitAndExperience: { [Op.like]: `%${filter}%` } },
+            ]
+          }))
+        };
+      }
+
+      let response = await Models.userModel.findAndCountAll({
+       where:where,
+       limit:limit,
+       offset:offset,
+       order: [["createdAt", "DESC"]],
+        
+      });
+
+      return commonHelper.success(res, Response.success_msg.userTraitAndExpList,response);
+
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res, Response.error_msg.internalServerError,error.message);
+    }
+  }
+
 
 
 };

@@ -100,6 +100,8 @@ module.exports=function(){
     router.post("/prayerRequestLikeUnlike",authentication, controller.userController.prayerRequestLikeUnlike)
     router.get("/prayerRequestLikeList",authentication, controller.userController.prayerRequestLikeList)
 
+    router.get("/userTraitAndExperienceList",authentication, controller.userController.userTraitAndExperienceList)
+
     return router
 }
 
