@@ -11,6 +11,8 @@ module.exports=function(){
     router.get("/numberofmembers_listing", controller.userController.numberofmembers_listing);
     router.get("/traitsexperience_listing", controller.userController.traitsexperience_listing);
     router.get("/bannerList",controller.userController.bannerList)
+    router.get("/businessType",controller.userController.businessType)
+
     
     router.post('/signUp', controller.userController.signUp);
     router.post('/login', controller.userController.login);

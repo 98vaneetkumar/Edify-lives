@@ -1019,7 +1019,18 @@
       "get": {
         "x-swagger-router-controller": "middleware-name1",
         "operationId": "users-bannerList-post",
-        "tags": ["Application users"],
+        "tags": ["Application Common"],
+        "description": "",
+       
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/businessType": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-businessType-post",
+        "tags": ["Application Common"],
         "description": "",
        
         "parameters": [],

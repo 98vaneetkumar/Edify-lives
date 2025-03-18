@@ -583,11 +583,11 @@ module.exports = {
 
   getProfile: async (req, res) => {
     try {
-      await Models.userModel.findOne({
+     let response= await Models.userModel.findOne({
         where: { id: req.user.id },
         raw: true,
       });
-      return commonHelper.success(res, Response.success_msg.getProfileData);
+      return commonHelper.success(res, Response.success_msg.getProfileData,response);
     } catch (error) {
       console.error("Error while fetching user own profile", error);
       return commonHelper.error(res, Response.error_msg.getPrf, error.message);
@@ -785,6 +785,19 @@ module.exports = {
 
     } catch (error) {
      throw error 
+    }
+  },
+  businessType:async(req,res)=>{
+    try {
+      let response=await Models.businessTypeModel.findAll()
+      return commonHelper.success(res, Response.success_msg.needPost, response);
+
+    } catch (error) {
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
     }
   },
   needPost: async (req, res) => {

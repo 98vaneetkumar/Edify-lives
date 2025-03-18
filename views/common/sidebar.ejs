@@ -206,7 +206,14 @@
           </span>
         </a>
       </li>      
-      
+      <li class="<% if(title == 'Business Type'){ %> nav-item dropdown active <% } %>">
+        <a class="d-flex align-items-center" href="/admin/businessfilter_listing">
+          <i class="fas fa-filter"></i>
+          <span class="menu-title text-truncate" data-i18n="Business Type">
+            Business Type
+          </span>
+        </a>
+      </li> 
 
       <li class="<% if(title =='About Us'){ %> nav-item dropdown active <% }%>">
         <a class="d-flex align-items-center" href="/admin/aboutUs">

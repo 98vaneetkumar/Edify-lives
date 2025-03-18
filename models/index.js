@@ -42,5 +42,7 @@ module.exports = {
   prayerRequestCommentModel: require("./prayerRequestCommentModel")(Sequelize, sequelize, Sequelize.DataTypes),
   likePrayerRequestModel: require("./likePrayerRequestModel")(Sequelize, sequelize, Sequelize.DataTypes),
   groupFilter: require("./groupFilterModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  businessTypeModel: require("./businessTypeModel")(Sequelize, sequelize, Sequelize.DataTypes),
+
 };
  

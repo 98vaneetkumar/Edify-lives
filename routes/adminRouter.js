@@ -151,7 +151,11 @@ module.exports = function () {
   
 
 
-
+  router.get("/businessfilter_listing", controller.adminController.businessfilter_listing);
+  router.get("/businessfilter_add", controller.adminController.businessfilter_add);
+  router.post("/businessfilter_create", controller.adminController.businessfilter_create);
+  router.post("/businessfilter_delete", controller.adminController.businessfilter_delete);
+  
   router.post("/test", controller.adminController.test);
 
   return router;

@@ -1840,6 +1840,75 @@ module.exports = {
       return res.redirect("/admin/login");
     }
   },
+  businessfilter_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let groupfilter_data = await Models.businessTypeModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/businessType/businessfilterListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Business Type",
+        groupfilter_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  businessfilter_add: async (req, res) => {
+    try {
+      let title = "Business Type";
+      res.render("admin/businessType/businessfilterAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  businessfilter_create: async (req, res) => {
+    try {
+      let objToSave = {
+        title: req.body.title,
+      };
+
+      await Models.businessTypeModel.create(objToSave);
+
+      return res.json({
+        success: true,
+        message: "Business type added successfully.",
+      });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+  businessfilter_delete: async (req, res) => {
+    try {
+      const groupFilterId = req.body.id;
+      await Models.businessTypeModel.destroy({
+        where: { id: groupFilterId },
+      });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete group filter" });
+      return res.redirect("/admin/login");
+    }
+  },
+
 
   test: async (req, res) => {
     try {
