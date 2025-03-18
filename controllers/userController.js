@@ -2979,14 +2979,12 @@ module.exports = {
 
   userTypeOfBusinessList: async (req, res) => {
     try {
+      
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
 
       let where = {
-        [Op.ne]: {
-          id: req.user.id,
-          role: 3,
-        },
+        role:3
       };
       if (req.query && req.query.search) {
         where = {
@@ -2995,16 +2993,6 @@ module.exports = {
             { lastName: { [Op.like]: `%${req.query.search}%` } },
             { email: { [Op.like]: `%${req.query.search}%` } },
           ],
-        };
-      }
-      if (req.query && req.query.filter) {
-        let filters = Array.isArray(req.query.filter)
-          ? req.query.filter
-          : [req.query.filter];
-        where = {
-          [Op.or]: filters.map((filter) => ({
-            [Op.or]: [{ typeOfBusiness: { [Op.like]: `%${filter}%` } }],
-          })),
         };
       }
 
