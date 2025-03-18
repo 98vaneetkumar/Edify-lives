@@ -1706,6 +1706,14 @@
             "value": ""
           },
           {
+            "name": "groupPostId",
+            "in": "formData",
+            "description": "Enter the groupPostId",
+            "required": false,
+            "type": "string",
+            "value": ""
+          },
+          {
             "name": "comment",
             "in": "formData",
             "description": "Enter the comment",
@@ -1736,6 +1744,14 @@
             "required": false,
             "type": "string",
             "value": ""
+          },
+          {
+            "name": "groupPostId",
+            "in": "query",
+            "description": "Enter the groupPostId",
+            "required": false,
+            "type": "string",
+            "value": ""
           }
         ],
         "responses": {}
@@ -1754,9 +1770,9 @@
         ],
         "parameters": [
           {
-            "name": "groupId",
+            "name": "groupPostId",
             "in": "query",
-            "description": "Enter the groupId",
+            "description": "Enter the groupPostId",
             "required": false,
             "type": "string",
             "value": ""
@@ -1778,9 +1794,9 @@
         ],
         "parameters": [
           {
-            "name": "groupId",
+            "name": "groupPostId",
             "in": "query",
-            "description": "Enter the groupId",
+            "description": "Enter the groupPostId",
             "required": false,
             "type": "string",
             "value": ""

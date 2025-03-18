@@ -68,6 +68,7 @@ module.exports=function(){
 
     router.post("/createGroup",authentication, controller.userController.createGroup)
     router.get("/groupList",authentication, controller.userController.groupList)
+    //we can like dislike comment on post that are on posted in group
     router.post("/groupPost",authentication,controller.userController.groupPost)
     router.get("/groupPostList",authentication, controller.userController.groupPostList)
     router.post("/commentOnGroup",authentication, controller.userController.commentOnGroup)

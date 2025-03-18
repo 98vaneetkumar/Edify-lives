@@ -1777,6 +1777,19 @@ module.exports = {
               `),
               "isLike",
             ],
+            [
+              Sequelize.literal(`
+              (SELECT JSON_ARRAYAGG(
+                  JSON_OBJECT('id', users.id, 'firstName', users.firstName,'lastName',users.lastName, 'profilePicture', users.profilePicture)
+                ) FROM likeGroup 
+                JOIN users ON users.id = likeGroup.userId 
+                WHERE likeGroup.groupPostId = addFeed.id 
+                ORDER BY likeGroup.createdAt DESC 
+                LIMIT 3
+              )
+            `),
+              "recentLikes",
+            ],
           ],
         },
         limit: limit,
@@ -1830,18 +1843,21 @@ module.exports = {
     try {
       let schema = Joi.object().keys({
         groupId: Joi.string().required(),
+        groupPostId: Joi.string().required(),
       });
       let payload = await helper.validationJoi(req.body, schema);
       let has = await Models.likeGroupModel.findOne({
         where: {
           userId: req.user.id,
           groupId: payload.groupId,
+          groupPostId:payload.groupPostId
         },
       });
       if (!has) {
         let response = await Models.likeGroupModel.create({
           userId: req.user.id,
           groupId: payload.groupId,
+          groupPostId:payload.groupPostId
         });
         return commonHelper.success(
           res,
@@ -1853,6 +1869,7 @@ module.exports = {
           where: {
             userId: req.user.id,
             groupId: payload.groupId,
+            groupPostId:payload.groupPostId
           },
         });
         return commonHelper.success(res, Response.success_msg.unLikeGroup);
@@ -1869,7 +1886,7 @@ module.exports = {
     try {
       let response = await Models.commentGroupModel.findAndCountAll({
         where: {
-          groupId: req.query.groupId,
+          groupPostId: req.query.groupPostId,
         },
         include: [
           {
@@ -1895,7 +1912,7 @@ module.exports = {
     try {
       let response = await Models.likeGroupModel.findAll({
         where: {
-          groupId: req.query.groupId,
+          groupPostId: req.query.groupPostId,
         },
         include: [
           {
