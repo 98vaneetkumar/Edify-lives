@@ -1745,46 +1745,36 @@ module.exports = {
           include: [
             [
               Sequelize.literal(
-                `(SELECT count(id) FROM commentGroup WHERE groupId = '${req.query.groupId}' )`
+                `(SELECT count(id) FROM commentGroup WHERE groupPostId = groupPost.id )`
               ),
               "commentsCount",
             ],
-            // [
-            //   Sequelize.literal(
-            //     "(SELECT count(id) FROM likeGroup WHERE groupId = groupPost.groupId and groupPost.id = commentGroup.groupPostId)"
-            //   ),
-            //   "likesCount",
-            // ],
-            // [
-            //   Sequelize.literal(`
-            //     (CASE 
-            //       WHEN (SELECT count(id) FROM commentGroup WHERE groupPost = group.groupId AND userId = '${req.user.id} and groupPost.id = commentGroup.groupPostId') > 0 
-            //       THEN 1 
-            //       ELSE 0 
-            //     END)
-            //   `),
-            //   "isComment",
-            // ],
-            // [
-            //   Sequelize.literal(`
-            //     (CASE 
-            //       WHEN (SELECT count(id) FROM likeGroup WHERE groupPost = group.groupId AND userId = '${req.user.id} and groupPost.id = commentGroup.groupPostId') > 0 
-            //       THEN 1 
-            //       ELSE 0 
-            //     END)
-            //   `),
-            //   "isLike",
-            // ],
-            // [
-            //   Sequelize.literal(`
-            //     (CASE 
-            //       WHEN (SELECT count(id) FROM groupMember WHERE groupPost = group.groupId AND userId = '${req.user.id} and groupPost.id = commentGroup.groupPostId') > 0 
-            //       THEN 1 
-            //       ELSE 0 
-            //     END)
-            //   `),
-            //   "isJoin",
-            // ],
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM likeGroup WHERE groupPostId = groupPost.id)"
+              ),
+              "likesCount",
+            ],
+            [
+              Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM commentGroup WHERE groupPostId = groupPost.id AND userId = '${req.user.id} ') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+              `),
+              "isComment",
+            ],
+            [
+              Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM likeGroup WHERE groupPostId = groupPost.id AND userId = '${req.user.id} ') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+              `),
+              "isLike",
+            ],
           ],
         },
       });
