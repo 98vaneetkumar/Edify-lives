@@ -1635,20 +1635,20 @@ module.exports = {
           include: [
             [
               Sequelize.literal(
-                "(SELECT count(id) FROM commentGroup where groupId=group.id )"
+                "(SELECT count(id) FROM commentGroup where groupId=groups.id )"
               ),
               "commentsCount",
             ],
             [
               Sequelize.literal(
-                "(SELECT count(id) FROM likeGroup where groupId=group.id )"
+                "(SELECT count(id) FROM likeGroup where groupId=groups.id )"
               ),
               "likesCount",
             ],
             [
               Sequelize.literal(`
               (CASE 
-                WHEN (SELECT count(id) FROM commentGroup where groupId=group.id and userId = '${req.user.id}') > 0 
+                WHEN (SELECT count(id) FROM commentGroup where groupId=groups.id and userId = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
@@ -1658,7 +1658,7 @@ module.exports = {
             [
               Sequelize.literal(`
                 (CASE 
-                  WHEN (SELECT count(id) FROM likeGroup where groupId=group.id and userId = '${req.user.id}') > 0 
+                  WHEN (SELECT count(id) FROM likeGroup where groupId=groups.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
@@ -1668,7 +1668,7 @@ module.exports = {
             [
               Sequelize.literal(`
                 (CASE 
-                  WHEN (SELECT count(id) FROM groupMember where groupId=group.id and userId = '${req.user.id}') > 0 
+                  WHEN (SELECT count(id) FROM groupMember where groupId=groups.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
@@ -1732,14 +1732,61 @@ module.exports = {
     try {
       let response = await Models.groupPostModel.findAll({
         where: {
-          groupId: req.body.groupId,
+          groupId: req.query.groupId,
         },
         include: [
           {
             model: Models.userModel,
           },
         ],
+        attributes: {
+          include: [
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM commentGroup WHERE groupId = groups.id and groupPostModel.id = commentGroup.groupPostId)"
+              ),
+              "commentsCount",
+            ],
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM likeGroup WHERE groupId = groups.id and groupPostModel.id = commentGroup.groupPostId)"
+              ),
+              "likesCount",
+            ],
+            [
+              Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM commentGroup WHERE groupId = groups.id AND userId = '${req.user.id} and groupPostModel.id = commentGroup.groupPostId') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+              `),
+              "isComment",
+            ],
+            [
+              Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM likeGroup WHERE groupId = groups.id AND userId = '${req.user.id} and groupPostModel.id = commentGroup.groupPostId') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+              `),
+              "isLike",
+            ],
+            [
+              Sequelize.literal(`
+                (CASE 
+                  WHEN (SELECT count(id) FROM groupMember WHERE groupId = groups.id AND userId = '${req.user.id} and groupPostModel.id = commentGroup.groupPostId') > 0 
+                  THEN 1 
+                  ELSE 0 
+                END)
+              `),
+              "isJoin",
+            ],
+          ],
+        },
       });
+  
       return commonHelper.success(
         res,
         Response.success_msg.grpPostList,
@@ -1754,16 +1801,19 @@ module.exports = {
       );
     }
   },
+  
   commentOnGroup: async (req, res) => {
     try {
       let schema = Joi.object().keys({
         groupId: Joi.string().required(),
+        groupPostId: Joi.string().required(),
         comment: Joi.string().required(),
       });
       let payload = await helper.validationJoi(req.body, schema);
       let objToSave = {
         userId: req.user.id,
         groupId: payload.groupId,
+        groupPostId: payload.groupPostId,
         comment: payload.comment,
       };
       let response = await Models.commentGroupModel.create(objToSave);
@@ -1890,13 +1940,13 @@ module.exports = {
           include: [
             [
               Sequelize.literal(
-                "(SELECT count(id) FROM commentGroup where groupId=group.id )"
+                "(SELECT count(id) FROM commentGroup where groupId=groups.id )"
               ),
               "commentsCount",
             ],
             [
               Sequelize.literal(
-                "(SELECT count(id) FROM likeGroup where groupId=group.id )"
+                "(SELECT count(id) FROM likeGroup where groupId=groups.id )"
               ),
               "likesCount",
             ],

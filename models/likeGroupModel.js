@@ -23,6 +23,16 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
             onUpdate: "CASCADE",
             onDelete: "CASCADE",
         },
+        groupPostId: {
+          type: Sequelize.UUID,
+          allowNull: false,
+          references: {
+              model: "groupPost", // name of Target model
+              key: "id", // key in Target model that we"re referencing
+          },
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE"
+        },
       },
       {
         timestamps: true,
