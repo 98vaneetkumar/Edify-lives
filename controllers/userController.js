@@ -2740,7 +2740,7 @@ module.exports = {
   },
   dailyBreadCommentList: async (req, res) => {
     try {
-      let response = await Models.dailyBreadCommentModel.findAll({
+      let response = await Models.dailyBreadCommentModel.findAndCountAll({
         where: {
           dailyBreadId: req.query.dailyBreadId,
         },
