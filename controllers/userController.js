@@ -583,11 +583,15 @@ module.exports = {
 
   getProfile: async (req, res) => {
     try {
-     let response= await Models.userModel.findOne({
+      let response = await Models.userModel.findOne({
         where: { id: req.user.id },
         raw: true,
       });
-      return commonHelper.success(res, Response.success_msg.getProfileData,response);
+      return commonHelper.success(
+        res,
+        Response.success_msg.getProfileData,
+        response
+      );
     } catch (error) {
       console.error("Error while fetching user own profile", error);
       return commonHelper.error(res, Response.error_msg.getPrf, error.message);
@@ -691,6 +695,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -778,21 +783,21 @@ module.exports = {
       res.status(500).json({ success: false, error: "Internal Server Error" });
     }
   },
-  bannerList:async(req,res)=>{
+  bannerList: async (req, res) => {
     try {
-      let response=await Models.bannerModel.findAll()
+      let response = await Models.bannerModel.findAll();
       return commonHelper.success(res, Response.success_msg.needPost, response);
-
     } catch (error) {
-     throw error 
+      console.log("error", error);
+      throw error;
     }
   },
-  businessType:async(req,res)=>{
+  businessType: async (req, res) => {
     try {
-      let response=await Models.businessTypeModel.findAll()
+      let response = await Models.businessTypeModel.findAll();
       return commonHelper.success(res, Response.success_msg.needPost, response);
-
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -800,12 +805,12 @@ module.exports = {
       );
     }
   },
-  eventType:async(req,res)=>{
+  eventType: async (req, res) => {
     try {
-      let response=await Models.eventTypeModel.findAll()
+      let response = await Models.eventTypeModel.findAll();
       return commonHelper.success(res, Response.success_msg.needPost, response);
-
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -830,6 +835,7 @@ module.exports = {
       let response = await Models.needPostModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.needPost, response);
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -924,6 +930,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -950,6 +957,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -976,6 +984,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1021,6 +1030,7 @@ module.exports = {
         return commonHelper.success(res, Response.success_msg.unLikeNeedPost);
       }
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1047,6 +1057,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1080,6 +1091,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1174,6 +1186,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1200,6 +1213,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1226,6 +1240,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1268,6 +1283,7 @@ module.exports = {
         );
       }
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1294,6 +1310,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1325,6 +1342,7 @@ module.exports = {
       let response = await Models.videoModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.addVideo, response);
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1396,6 +1414,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1469,6 +1488,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1495,6 +1515,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1511,14 +1532,14 @@ module.exports = {
         longitude: Joi.string().optional(),
         date: Joi.string().optional(),
         time: Joi.string().optional(),
-        endTime:Joi.string().optional(),
+        endTime: Joi.string().optional(),
         eventTitle: Joi.string().optional(),
         countryCode: Joi.string().optional(),
         phoneNumber: Joi.string().optional(),
         email: Joi.string().optional(),
         link: Joi.string().optional(),
         comment: Joi.string().optional(),
-        eventDescription:Joi.string().optional()
+        eventDescription: Joi.string().optional(),
       });
       let payload = await helper.validationJoi(req.body, schema);
       let objToSave = {
@@ -1529,7 +1550,7 @@ module.exports = {
         longitude: payload.longitude,
         date: payload.date,
         time: payload.time,
-        endTime:payload.endTime,
+        endTime: payload.endTime,
         eventTitle: payload.eventTitle,
         countryCode: payload.countryCode,
         phoneNumber: payload.phoneNumber,
@@ -1544,8 +1565,8 @@ module.exports = {
         response
       );
     } catch (error) {
-      console.log("error",error);
-      
+      console.log("error", error);
+
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1564,6 +1585,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1638,6 +1660,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1734,8 +1757,8 @@ module.exports = {
         response
       );
     } catch (error) {
-      console.log("error",error);
-      
+      console.log("error", error);
+
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1835,7 +1858,7 @@ module.exports = {
         limit: limit,
         offset: offset,
       });
-  
+
       return commonHelper.success(
         res,
         Response.success_msg.grpPostList,
@@ -1850,7 +1873,7 @@ module.exports = {
       );
     }
   },
-  
+
   commentOnGroupPost: async (req, res) => {
     try {
       let schema = Joi.object().keys({
@@ -1883,8 +1906,8 @@ module.exports = {
         response
       );
     } catch (error) {
-      console.log("error",error);
-      
+      console.log("error", error);
+
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1903,14 +1926,14 @@ module.exports = {
         where: {
           userId: req.user.id,
           groupId: payload.groupId,
-          groupPostId:payload.groupPostId
+          groupPostId: payload.groupPostId,
         },
       });
       if (!has) {
         let response = await Models.likeGroupModel.create({
           userId: req.user.id,
           groupId: payload.groupId,
-          groupPostId:payload.groupPostId
+          groupPostId: payload.groupPostId,
         });
         return commonHelper.success(
           res,
@@ -1922,12 +1945,13 @@ module.exports = {
           where: {
             userId: req.user.id,
             groupId: payload.groupId,
-            groupPostId:payload.groupPostId
+            groupPostId: payload.groupPostId,
           },
         });
         return commonHelper.success(res, Response.success_msg.unLikeGroup);
       }
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1954,6 +1978,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -1980,6 +2005,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -2065,6 +2091,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -2085,6 +2112,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -2111,6 +2139,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -2148,6 +2177,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -2175,6 +2205,7 @@ module.exports = {
       let response = await Models.addFeedModel.create(objToSave);
       return commonHelper.success(res, Response.success_msg.addFeed, response);
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -2259,6 +2290,7 @@ module.exports = {
       });
       return commonHelper.success(res, Response.success_msg.feedList, response);
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -2329,6 +2361,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -2366,6 +2399,7 @@ module.exports = {
         details
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -2393,6 +2427,7 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -2469,6 +2504,7 @@ module.exports = {
         followList
       );
     } catch (error) {
+      console.log("error", error);
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
@@ -2763,63 +2799,72 @@ module.exports = {
   // <-----------------------------Prayer Request------------------------------------------>
 
   prayerRequestList: async (req, res) => {
-    let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
-    let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
+    try {
+      let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
 
-    let where = {};
-    if (req.query && req.query.search) {
-      where = {
-        [Op.or]: [{ description: { [Op.like]: `%${req.query.search}%` } }],
-      };
-    }
+      let where = {};
+      if (req.query && req.query.search) {
+        where = {
+          [Op.or]: [{ description: { [Op.like]: `%${req.query.search}%` } }],
+        };
+      }
 
-    let response = await Models.prayerRequestModel.findAndCountAll({
-      attributes: {
-        include: [
-          [
-            Sequelize.literal(
-              "(SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id )"
-            ),
-            "commentsCount",
-          ],
-          [
-            Sequelize.literal(
-              "(SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id )"
-            ),
-            "likesCount",
-          ],
-          [
-            Sequelize.literal(`
+      let response = await Models.prayerRequestModel.findAndCountAll({
+        attributes: {
+          include: [
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id )"
+              ),
+              "commentsCount",
+            ],
+            [
+              Sequelize.literal(
+                "(SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id )"
+              ),
+              "likesCount",
+            ],
+            [
+              Sequelize.literal(`
               (CASE 
                 WHEN (SELECT count(id) FROM prayerRequestComments where prayerRequestId=prayerRequest.id and commentBy = '${req.user.id}') > 0 
                 THEN 1 
                 ELSE 0 
               END)
               `),
-            "isComment",
-          ],
-          [
-            Sequelize.literal(`
+              "isComment",
+            ],
+            [
+              Sequelize.literal(`
                 (CASE 
                   WHEN (SELECT count(id) FROM likePrayerRequest where prayerRequestId=prayerRequest.id and userId = '${req.user.id}') > 0 
                   THEN 1 
                   ELSE 0 
                 END)
               `),
-            "isLike",
+              "isLike",
+            ],
           ],
-        ],
-      },
-      where: where,
-      limit: limit,
-      offset: offset,
-      order: [["createdAt", "DESC"]],
-    });
-    return commonHelper.success(
-      res,
-      Response.success_msg.getDailyBreadList,
-      response
-    );
+        },
+        where: where,
+        limit: limit,
+        offset: offset,
+        order: [["createdAt", "DESC"]],
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.getDailyBreadList,
+        response
+      );
+    } catch (error) {
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
   },
   prayerRequestDetail: async (req, res) => {
     try {
@@ -3000,9 +3045,7 @@ module.exports = {
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
 
-      let where = {
-     
-      };
+      let where = {};
       if (req.query && req.query.search) {
         where = {
           [Op.or]: [
@@ -3047,12 +3090,11 @@ module.exports = {
 
   userTypeOfBusinessList: async (req, res) => {
     try {
-      
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
 
       let where = {
-        role:3
+        role: 3,
       };
       if (req.query && req.query.search) {
         where = {
