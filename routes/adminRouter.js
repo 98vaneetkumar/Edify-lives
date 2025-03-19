@@ -160,6 +160,17 @@ module.exports = function () {
   router.get("/event_add", controller.adminController.event_add);
   router.post("/event_create", controller.adminController.event_create);
   router.post("/event_delete", controller.adminController.event_delete);
+
+
+  router.get("/christiancompanies_listing", controller.adminController.christiancompanies_listing);
+  router.get("/christiancompanies_add", controller.adminController.christiancompanies_add);
+  router.post("/christiancompanies_create", controller.adminController.christiancompanies_create);
+  router.post("/christiancompanies_delete", controller.adminController.christiancompanies_delete);
+
+  router.get("/christiansseekingemp_listing", controller.adminController.christiansseekingemp_listing);
+  router.get("/christiansseekingemp_add", controller.adminController.christiansseekingemp_add);
+  router.post("/christiansseekingemp_create", controller.adminController.christiansseekingemp_create);
+  router.post("/christiansseekingemp_delete", controller.adminController.christiansseekingemp_delete);
   
   router.get("/test", controller.adminController.test);
 

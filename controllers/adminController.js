@@ -236,6 +236,8 @@ module.exports = {
         groupFilters,
         businessTypeCount,
         eventTypeCount,
+        christianCompanyCount,
+        christianJobSeekerCount,
       ] = await Promise.all([
         Models.userModel.count({ where: { role: 1 } }),
         Models.userModel.count({ where: { role: 2 } }),
@@ -254,6 +256,8 @@ module.exports = {
         Models.groupFilter.count(),
         Models.businessTypeModel.count(),
         Models.eventTypeModel.count(),
+        Models.christianOwnedCompaniesModel.count(),
+        Models.christianSeekingEmpModel.count(),
       ]);
 
       const currentYear = Math.max(2025, moment().year());
@@ -314,6 +318,8 @@ module.exports = {
         groupFilters,
         businessTypeCount,
         eventTypeCount,
+        christianCompanyCount,
+        christianJobSeekerCount,
         session: req.session.user,
       });
     } catch (error) {
@@ -1986,6 +1992,160 @@ module.exports = {
       return res.redirect("/admin/login");
     }
   },
+
+  christiancompanies_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let christiancompanies_data = await Models.christianOwnedCompaniesModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/christianownedcompanies/christianownedcompaniesListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Christian-Owned Companies",
+        christiancompanies_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  christiancompanies_add: async (req, res) => {
+    try {
+      let title = "Christian-Owned Companies";
+      res.render("admin/christianownedcompanies/christianownedcompaniesAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  christiancompanies_create: async (req, res) => {
+    try {
+      let bannerImage = "";
+
+      if (req.files && req.files.bannerImage) {
+        bannerImage = await helper.fileUpload(req.files.bannerImage, "images");
+      } else {
+        return res.json({
+          success: false,
+          message: "christian companies image is required.",
+        });
+      }
+
+      let objToSave = {
+        bannerImage: bannerImage,
+      };
+
+      await Models.christianOwnedCompaniesModel.create(objToSave);
+
+      return res.json({ success: true, message: "christian companies added successfully." });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+
+  christiancompanies_delete: async (req, res) => {
+    try {
+      const christiancompaniesId = req.body.id;
+      await Models.christianOwnedCompaniesModel.destroy({ where: { id: christiancompaniesId } });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete christian companies " });
+      return res.redirect("/admin/login");
+    }
+  },
+
+
+  christiansseekingemp_listing: async (req, res) => {
+    try {
+      if (!req.session.user) return res.redirect("/admin/login");
+      let christiansseekingemp_data = await Models.christianSeekingEmpModel.findAll({
+        order: [["createdAt", "DESC"]],
+        raw: true,
+      });
+      res.render("admin/christianseekingemp/christianseekingempListing", {
+        session: req.session.user,
+        msg: req.flash("msg"),
+        error: req.flash("error"),
+        title: "Christians Seeking Employment",
+        christiansseekingemp_data,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.redirect("/admin/login");
+    }
+  },
+
+  christiansseekingemp_add: async (req, res) => {
+    try {
+      let title = "Christians Seeking Employment";
+      res.render("admin/christianseekingemp/christianseekingempAdd", {
+        title,
+        session: req.session.user,
+        msg: req.flash("msg") || "",
+      });
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal Server Error" });
+      return res.redirect("/admin/login");
+    }
+  },
+
+  christiansseekingemp_create: async (req, res) => {
+    try {
+      let bannerImage = "";
+
+      if (req.files && req.files.bannerImage) {
+        bannerImage = await helper.fileUpload(req.files.bannerImage, "images");
+      } else {
+        return res.json({
+          success: false,
+          message: "christian seeking emp image is required.",
+        });
+      }
+
+      let objToSave = {
+        bannerImage: bannerImage,
+      };
+
+      await Models.christianSeekingEmpModel.create(objToSave);
+
+      return res.json({ success: true, message: "christian seeking emp added successfully." });
+    } catch (error) {
+      console.error(error);
+      return res.json({ success: false, message: "Internal Server Error." });
+    }
+  },
+
+
+  christiansseekingemp_delete: async (req, res) => {
+    try {
+      const christiansseekingempId = req.body.id;
+      await Models.christianSeekingEmpModel.destroy({ where: { id: christiansseekingempId } });
+      res.json({ success: true });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to delete christian seeking emp" });
+      return res.redirect("/admin/login");
+    }
+  },
+
 
   test: async (req, res) => {
     try {
