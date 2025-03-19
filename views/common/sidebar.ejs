@@ -180,16 +180,23 @@
         </a>
       </li>
 
-      <li class="<% if(title =='Prayer Request'){ %> nav-item dropdown active <% }%>">
-        <a class="d-flex align-items-center" href="/admin/prayerrequest_listing">
+      <li
+        class="<% if(title =='Prayer Request'){ %> nav-item dropdown active <% }%>"
+      >
+        <a
+          class="d-flex align-items-center"
+          href="/admin/prayerrequest_listing"
+        >
           <i class="fas fa-praying-hands"></i>
           <span class="menu-title text-truncate" data-i18n="Prayer Request">
             Prayer Request
           </span>
         </a>
       </li>
-      
-      <li class="<% if(title =='Daily Bread'){ %> nav-item dropdown active <% }%>">
+
+      <li
+        class="<% if(title =='Daily Bread'){ %> nav-item dropdown active <% }%>"
+      >
         <a class="d-flex align-items-center" href="/admin/dailybread_listing">
           <i class="fas fa-bible"></i>
           <span class="menu-title text-truncate" data-i18n="Daily Bread">
@@ -198,30 +205,46 @@
         </a>
       </li>
 
-      <li class="<% if(title == 'Group Filter'){ %> nav-item dropdown active <% } %>">
+      <li
+        class="<% if(title == 'Group Filter'){ %> nav-item dropdown active <% } %>"
+      >
         <a class="d-flex align-items-center" href="/admin/groupfilter_listing">
           <i class="fas fa-filter"></i>
           <span class="menu-title text-truncate" data-i18n="Group Filter">
             Group Filter
           </span>
         </a>
-      </li>      
-      <li class="<% if(title == 'Business Type'){ %> nav-item dropdown active <% } %>">
-        <a class="d-flex align-items-center" href="/admin/businessfilter_listing">
-          <i class="fas fa-filter"></i>
+      </li>
+
+      <!-- Business Type -->
+      <li
+        class="<% if(title == 'Business Type'){ %> nav-item dropdown active <% } %>"
+      >
+        <a
+          class="d-flex align-items-center"
+          href="/admin/businessfilter_listing"
+        >
+          <i class="fas fa-building"></i>
+          <!-- Changed icon -->
           <span class="menu-title text-truncate" data-i18n="Business Type">
             Business Type
           </span>
         </a>
-      </li> 
-      <li class="<% if(title == 'Event Type'){ %> nav-item dropdown active <% } %>">
+      </li>
+
+      <!-- Event Type -->
+      <li
+        class="<% if(title == 'Event Type'){ %> nav-item dropdown active <% } %>"
+      >
         <a class="d-flex align-items-center" href="/admin/event_listing">
-          <i class="fas fa-filter"></i>
-          <span class="menu-title text-truncate" data-i18n="Business Type">
+          <i class="fas fa-bullhorn"></i>
+          <!-- Changed icon -->
+          <span class="menu-title text-truncate" data-i18n="Event Type">
             Event Type
           </span>
         </a>
-      </li> 
+      </li>
+
       <li class="<% if(title =='About Us'){ %> nav-item dropdown active <% }%>">
         <a class="d-flex align-items-center" href="/admin/aboutUs">
           <i class="fas fa-info-circle"></i>

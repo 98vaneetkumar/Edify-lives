@@ -234,6 +234,8 @@ module.exports = {
         prayerRequests,
         dailyBread,
         groupFilters,
+        businessTypeCount,
+        eventTypeCount,
       ] = await Promise.all([
         Models.userModel.count({ where: { role: 1 } }),
         Models.userModel.count({ where: { role: 2 } }),
@@ -249,7 +251,9 @@ module.exports = {
         Models.filterTestimoniesModel.count(),
         Models.prayerRequestModel.count(),
         Models.dailyBreadModel.count(),
-        Models.groupFilter.count()
+        Models.groupFilter.count(),
+        Models.businessTypeModel.count(),
+        Models.eventTypeModel.count(),
       ]);
 
       const currentYear = Math.max(2025, moment().year());
@@ -308,6 +312,8 @@ module.exports = {
         prayerRequests,
         dailyBread,
         groupFilters,
+        businessTypeCount,
+        eventTypeCount,
         session: req.session.user,
       });
     } catch (error) {
