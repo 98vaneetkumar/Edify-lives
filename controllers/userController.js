@@ -2504,7 +2504,7 @@ module.exports = {
       let offset = (parseInt(req.query.skip, 10) || 0) * limit;
       let where = {
         id: { [Op.ne]: req.user.id }, // Exclude self
-      };
+      }; 
       if (req.query && req.query.search) {
         where = {
           ...where, // Preserve existing conditions
@@ -2515,10 +2515,10 @@ module.exports = {
           ],
         };
       }
-      let followList = await Models.userModel.findAndCountAll({
+      let followList = await Models.userModel.findAll({
         attributes: {
           include: [
-            // Check if the logged-in user follows this user
+            // Check if the logged-in user follows this user  ifollow -- following
             [
               Sequelize.literal(
                 `(SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}' AND followingId = users.id)`
@@ -2526,7 +2526,7 @@ module.exports = {
               "iFollow",
             ],
 
-            // Check if this user follows the logged-in user
+            // Check if this user follows the logged-in user  heFollowsMe -- flower
             [
               Sequelize.literal(
                 `(SELECT COUNT(id) FROM follow WHERE followerId = users.id AND followingId = '${req.user.id}')`
@@ -2560,6 +2560,16 @@ module.exports = {
         offset,
         order: [["createdAt", "DESC"]],
       });
+      //1 for following  2 for follwer none for all
+     // 1 = following, 2 = follower, else both
+      if (req.query.type == 1) {
+        followList = followList.filter((e) => e.dataValues.iFollow == 1);
+      } else if (req.query.type == 2) {
+        followList = followList.filter((e) => e.dataValues.heFollowsMe == 1);
+      }else{
+        followList=followList
+      }
+
       return commonHelper.success(
         res,
         Response.success_msg.getFollowList,

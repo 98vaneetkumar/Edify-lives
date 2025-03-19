@@ -2375,6 +2375,14 @@
             "required": false,
             "type": "string",
             "value": ""
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Enter the type 1 for following  2 for follwer none for all",
+            "required": false,
+            "type": "string",
+            "value": ""
           }
         ],
         "responses": {}
