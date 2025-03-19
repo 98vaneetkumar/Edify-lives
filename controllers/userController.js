@@ -655,7 +655,7 @@ module.exports = {
         where: { id: req.params.id },
       });
 
-      return commonHelper.success(res, Response.success_msg.updProfile);
+      return commonHelper.success(res, Response.success_msg.updProfile,updatedUser);
     } catch (error) {
       console.error("Error while updating user profile", error);
       return commonHelper.error(res, Response.error_msg.updPrf, error.message);
