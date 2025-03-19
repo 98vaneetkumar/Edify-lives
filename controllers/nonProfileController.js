@@ -38,7 +38,7 @@ module.exports = {
         deviceType: Joi.number().valid(1, 2).optional(),
         profilePicture: Joi.string().optional(),
         valuesStatement: Joi.string().optional(),
-        aboutUs:Joi.string().optional(),
+        aboutMe:Joi.string().optional(),
         churchName:Joi.string().optional(),
         webSiteNonProfile: Joi.string().optional(),
         chruchAttendAddress:Joi.string().optional()
