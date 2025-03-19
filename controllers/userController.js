@@ -2712,7 +2712,18 @@ module.exports = {
         dailyBreadId: payload.dailyBreadId,
         comment: payload.comment,
       };
-      let response = await Models.dailyBreadCommentModel.create(objToSave);
+      let response1 = await Models.dailyBreadCommentModel.create(objToSave);
+      let response = await Models.dailyBreadCommentModel.findAll({
+        where: {
+          id: response1.id,
+        },
+        include: [
+          {
+            model:Models.userModel
+          }
+        ],
+        order: [["createdAt", "DESC"]],
+      });
       return commonHelper.success(
         res,
         Response.success_msg.commentAdded,
