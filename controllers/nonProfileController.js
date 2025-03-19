@@ -39,6 +39,7 @@ module.exports = {
         profilePicture: Joi.string().optional(),
         valuesStatement: Joi.string().optional(),
         aboutUs:Joi.string().optional(),
+        churchName:Joi.string().optional(),
         webSiteNonProfile: Joi.string().optional(),
         chruchAttendAddress:Joi.string().optional()
       });
@@ -96,6 +97,7 @@ module.exports = {
         addressNonProfit: payload.addressNonProfit,
         email: payload.email,
         role: 4,
+        churchName:payload.churchName,
         countryCode: payload.countryCode,
         phoneNumber: payload.phoneNumber,
         aboutMe:payload.aboutMe,

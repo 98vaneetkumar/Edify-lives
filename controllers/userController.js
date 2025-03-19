@@ -113,6 +113,7 @@ module.exports = {
         churchAccessCode: Joi.string().optional(),
         aboutMe:Joi.string().optional(),
         deviceToken: Joi.string().optional(),
+        churchName:Joi.string().optional(),
         deviceType: Joi.number().valid(1, 2).optional(),
       });
 
@@ -176,6 +177,7 @@ module.exports = {
         password: hashedPassword,
         role: 1,
         aboutMe:payload.aboutMe,
+        churchName:payload.churchName,
         maritalStatus: payload.maritalStatus || null,
         gender: payload.gender || null,
         profilePicture: profilePicturePath || null,
@@ -2655,7 +2657,20 @@ module.exports = {
               ),
               "heFollowsMe",
             ],
+            [
+              Sequelize.literal(
+                `(SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}')`
+              ),
+              "follow",
+            ],
 
+            // Check if this user follows the logged-in user  heFollowsMe -- flower
+            [
+              Sequelize.literal(
+                `(SELECT COUNT(id) FROM follow WHERE followerId = users.id')`
+              ),
+              "following",
+            ],
             // Determine follow status
             [
               Sequelize.literal(`
