@@ -591,13 +591,13 @@ module.exports = {
           include:[
             [
               Sequelize.literal(
-                `(SELECT COUNT(id) FROM follow WHERE followerId = users.id AND followingId = '${req.user.id}')`
+                `(SELECT COUNT(id) FROM follow WHERE  followingId = '${req.user.id}')`
               ),
               "followerCount ",
             ],
             [
               Sequelize.literal(
-                `(SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}' AND followingId = users.id)`
+                `(SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}')`
               ),
               "followingCount",
             ],
