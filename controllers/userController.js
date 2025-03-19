@@ -2659,18 +2659,17 @@ module.exports = {
             ],
             [
               Sequelize.literal(
-                `(SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}')`
+                `(SELECT COUNT(id) FROM follow WHERE followingId = users.id)`
               ),
               "follow",
             ],
-
-            // Check if this user follows the logged-in user  heFollowsMe -- flower
             [
               Sequelize.literal(
-                `(SELECT COUNT(id) FROM follow WHERE followerId = users.id')`
+                `(SELECT COUNT(id) FROM follow WHERE followerId = users.id)`
               ),
               "following",
             ],
+                        
             // Determine follow status
             [
               Sequelize.literal(`
