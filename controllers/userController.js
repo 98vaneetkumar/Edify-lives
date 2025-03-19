@@ -597,6 +597,22 @@ module.exports = {
       return commonHelper.error(res, Response.error_msg.getPrf, error.message);
     }
   },
+  otherUserProfile: async (req, res) => {
+    try {
+      let response = await Models.userModel.findOne({
+        where: { id: req.query.userId },
+        raw: true,
+      });
+      return commonHelper.success(
+        res,
+        Response.success_msg.getProfileData,
+        response
+      );
+    } catch (error) {
+      console.error("Error while fetching user own profile", error);
+      return commonHelper.error(res, Response.error_msg.getPrf, error.message);
+    }
+  },
 
   updateProfile: async (req, res) => {
     try {

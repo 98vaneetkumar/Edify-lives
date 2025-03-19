@@ -19,7 +19,7 @@
       "get": {
         "x-swagger-router-controller": "middleware-name1",
         "operationId": "users-getProfile-post",
-        "tags": ["Application Common"],
+        "tags": ["Application User Profile"],
         "description": "",
         "security": [
           {
@@ -27,6 +27,30 @@
           }
         ],
         "parameters": [],
+        "responses": {}
+      }
+    },
+    "/users/otherUserProfile": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-otherUserProfile-post",
+        "tags": ["Application User Profile"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "Enter the userId",
+            "required": false,
+            "type": "number",
+            "value": 
+          }
+        ],
         "responses": {}
       }
     },

@@ -27,6 +27,8 @@ module.exports=function(){
     router.post('/resendOtp', controller.userController.resendOtp);
 
     router.get('/getProfile', authentication, controller.userController.getProfile)
+    router.get('/otherUserProfile', authentication, controller.userController.otherUserProfile)
+
     router.post('/updateProfile', authentication, controller.userController.updateProfile)
 
 
