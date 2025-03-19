@@ -1518,6 +1518,7 @@ module.exports = {
         email: Joi.string().optional(),
         link: Joi.string().optional(),
         comment: Joi.string().optional(),
+        eventDescription:Joi.string().optional()
       });
       let payload = await helper.validationJoi(req.body, schema);
       let objToSave = {
@@ -1543,6 +1544,8 @@ module.exports = {
         response
       );
     } catch (error) {
+      console.log("error",error);
+      
       return commonHelper.error(
         res,
         Response.error_msg.internalServerError,
