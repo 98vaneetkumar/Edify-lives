@@ -47,7 +47,7 @@
             "in": "query",
             "description": "Enter the userId",
             "required": false,
-            "type": "number",
+            "type": "string",
             "value": ""
           }
         ],
