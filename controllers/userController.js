@@ -2737,6 +2737,9 @@ module.exports = {
           {
             model: Models.dailyBreadModel,
           },
+          {
+            model:Models.userModel
+          }
         ],
         order: [["createdAt", "DESC"]],
       });
