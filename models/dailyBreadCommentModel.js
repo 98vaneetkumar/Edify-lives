@@ -2,6 +2,7 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
     return sequelize.define(
       "dailyBreadComments",
       {
+        ...require("./cors")(Sequelize, DataTypes),
         dailyBreadId: {
           type: Sequelize.UUID,
           allowNull: false,
