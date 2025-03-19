@@ -99,6 +99,28 @@
       }
     },
 
+    "/users/getChristianCompanies": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-getChristianCompanies-post",
+        "tags": ["Application christian banner"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
+    "/users/getChristiansSeekingEmp": {
+      "get": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-getChristiansSeekingEmp-post",
+        "tags": ["Application christian banner"],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+
     "/users/traitsexperience_listing": {
       "get": {
         "x-swagger-router-controller": "middleware-name1",

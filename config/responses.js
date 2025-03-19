@@ -78,6 +78,8 @@ var success_msg = {
   getProfileData: "Profile data fetched successfully",
   updProfile: "Profile updated successfully",
   grpPostList: "Group post list fetched successfully",
+  getChristianCompanies: "Christian companies fetched successfully",
+  getChristiansSeekingEmp: "Christians seeking employment fetched successfully",
 };
 
 var failed_msg = {

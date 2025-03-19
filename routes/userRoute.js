@@ -39,6 +39,8 @@ module.exports=function(){
     
 //  <------------------------------------Comman api's------------------------------------------------------------>
     router.get("/groupFilterType", controller.userController.groupFilterType)
+    router.get("/getChristianCompanies", controller.userController.getChristianCompanies)
+    router.get("/getChristiansSeekingEmp", controller.userController.getChristiansSeekingEmp)
 
 
     router.get("/filters_listing", controller.userController.filters_listing)

@@ -3189,4 +3189,45 @@ module.exports = {
       );
     }
   },
+
+  getChristianCompanies: async(req, res)=>{
+    try {
+      let response = await Models.christianOwnedCompaniesModel.findAndCountAll({
+        order: [["createdAt", "DESC"]],
+      })
+      return commonHelper.success(
+        res,
+        Response.success_msg.getChristianCompanies,
+        response
+      );
+    } catch (error) {
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
+
+  getChristiansSeekingEmp: async(req, res)=>{
+    try {
+      let response = await Models.christianSeekingEmpModel.findAndCountAll({
+        order: [["createdAt", "DESC"]],
+      })
+      return commonHelper.success(
+        res,
+        Response.success_msg.getChristiansSeekingEmp,
+        response
+      );
+    } catch (error) {
+      console.log("error", error);
+      return commonHelper.error(
+        res,
+        Response.error_msg.internalServerError,
+        error.message
+      );
+    }
+  },
+  
 };
