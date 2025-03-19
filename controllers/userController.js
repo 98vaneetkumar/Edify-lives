@@ -1576,7 +1576,33 @@ module.exports = {
   },
   eventList: async (req, res) => {
     try {
+      let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
+      let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
+
+      let where = {};
+      if (req.query && req.query.search) {
+        where = {
+          [Op.or]: [
+            { eventTitle: { [Op.like]: `%${req.query.search}%` } },
+            { eventDescription: { [Op.like]: `%${req.query.search}%` } },
+            { comment: { [Op.like]: `%${req.query.search}%` } },
+          ],
+        };
+      }
+      if (req.query && req.query.filter) {
+        let filters = Array.isArray(req.query.filter)
+          ? req.query.filter
+          : [req.query.filter];
+        where = {
+          [Op.or]: filters.map((filter) => ({
+            [Op.or]: [{ eventType: { [Op.like]: `%${filter}%` } }],
+          })),
+        };
+      }
       let response = await Models.eventModel.findAndCountAll({
+        where:where,
+        limit: limit,
+        offset: offset,
         order: [["createdAt", "DESC"]],
       });
       return commonHelper.success(
