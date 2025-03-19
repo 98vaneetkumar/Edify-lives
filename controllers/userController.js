@@ -2735,9 +2735,6 @@ module.exports = {
         },
         include: [
           {
-            model: Models.dailyBreadModel,
-          },
-          {
             model:Models.userModel
           }
         ],
