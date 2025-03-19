@@ -987,6 +987,19 @@ module.exports = {
         comment: payload.comment,
       };
       let response = await Models.commentNeedPostModel.create(objToSave);
+      let needPost = await Models.needPostModel.findOne({
+        where: {
+          id: payload.needPostId,
+        },
+      });
+      let objToSaveNotification = {
+        senderId: req.user.id,
+        recevierId: needPost.userId,
+        message: "Commented on your need post",
+        type: 1,
+      }
+
+      await Models.notificationModel.create(objToSaveNotification);
       return commonHelper.success(
         res,
         Response.success_msg.needPostComment,
@@ -1051,6 +1064,18 @@ module.exports = {
             needPostId: payload.needPostId,
           },
         });
+        let needPost = await Models.needPostModel.findOne({
+          where: {
+            id: payload.needPostId,
+          },
+        });
+        let objToSaveNotification = {
+          senderId: req.user.id,
+          recevierId: needPost.userId,
+          message: "Liked your need post",
+          type: 2,
+        }
+        await Models.notificationModel.create(objToSaveNotification);
         return commonHelper.success(
           res,
           Response.success_msg.likeNeedPost,
@@ -1243,6 +1268,18 @@ module.exports = {
         comment: payload.comment,
       };
       let response = await Models.commentTestimonyModel.create(objToSave);
+      let testimonyPost = await Models.testimonyPostModel.findOne({
+        where: {
+          id: payload.testimonyPostId,
+        },
+      });
+      let objToSaveNotification = {
+        senderId: req.user.id,
+        recevierId: testimonyPost.userId,
+        message: "comment on your testimony post",
+        type: 3,
+      }
+      await Models.notificationModel.create(objToSaveNotification);
       return commonHelper.success(
         res,
         Response.success_msg.testimonyPostComment,
@@ -1301,6 +1338,18 @@ module.exports = {
           userId: req.user.id,
           testimonyPostId: payload.testimonyPostId,
         });
+        let testimonyPost = await Models.testimonyPostModel.findOne({
+          where: {
+            id: payload.testimonyPostId,
+          },
+        });
+        let objToSaveNotification = {
+          senderId: req.user.id,
+          recevierId: testimonyPost.userId,
+          message: "Liked your testimony post",
+          type: 4,
+        }
+        await Models.notificationModel.create(objToSaveNotification);
         return commonHelper.success(
           res,
           Response.success_msg.likeTestimonyPost,
@@ -1481,6 +1530,18 @@ module.exports = {
             videoId: payload.videoId,
           },
         });
+        let video = await Models.videoModel.findOne({
+          where: {
+            id: payload.videoId,
+          },
+        });
+        let objToSaveNotification = {
+          senderId: req.user.id,
+          receiverId: video.userId,
+          message: "Liked your video",
+          type: 5,
+        }
+        await Models.notificationModel.create(objToSaveNotification);
         return commonHelper.success(
           res,
           Response.success_msg.likeVideo,
@@ -1518,6 +1579,18 @@ module.exports = {
         comment: payload.comment,
       };
       let response = await Models.commentVideoModel.create(objToSave);
+      let video = await Models.videoModel.findOne({
+        where: {
+          id: payload.videoId,
+        },
+      });
+      let objToSaveNotification = {
+        senderId: req.user.id,
+        receiverId: video.userId,
+        message: "Commented on your video",
+        type: 6,
+      }
+      await Models.notificationModel.create(objToSaveNotification);
       return commonHelper.success(
         res,
         Response.success_msg.commentVideo,
@@ -1962,6 +2035,19 @@ module.exports = {
         ],
         order: [["createdAt", "DESC"]],
       });
+      let groupPost = await Models.groupPostModel.findOne({
+        where: {
+          id: payload.groupPostId,
+          },
+      });
+      let objToSaveNotification = {
+        senderId: req.user.id,
+        recevierId: groupPost.userId,
+        message: "Commented on your group post",
+        type: 7,
+      }
+      await Models.notificationModel.create(objToSaveNotification);
+
       return commonHelper.success(
         res,
         Response.success_msg.commentGroup,
@@ -1997,6 +2083,18 @@ module.exports = {
           groupId: payload.groupId,
           groupPostId: payload.groupPostId,
         });
+        let groupPost = await Models.groupPostModel.findOne({
+          where: {
+            id: payload.groupPostId,
+          },
+        });
+        let objToSaveNotification = {
+          senderId: req.user.id,
+          recevierId: groupPost.userId,
+          message: "Liked your group post",
+          type: 8,
+        }
+        await Models.notificationModel.create(objToSaveNotification)
         return commonHelper.success(
           res,
           Response.success_msg.likeGroup,
@@ -2375,6 +2473,18 @@ module.exports = {
 
       if (!has) {
         let response = await Models.likeFeedModel.create(objToSave);
+        let feed = await Models.addFeedModel.findOne({
+          where: {
+            id: req.body.feedId,
+          },
+        });
+        let objToSaveNotification = {
+          senderId: req.user.id,
+          recevierId: feed.userId,
+          message: "Liked your feed",
+          type: 9,
+        }
+        await Models.notificationModel.create(objToSaveNotification)
         return commonHelper.success(
           res,
           Response.success_msg.likeFeed,
@@ -2455,6 +2565,18 @@ module.exports = {
           },
         ],
       });
+      let feed = await Models.addFeedModel.findOne({
+        where: {
+          id: payload.feedId,
+        },
+      });
+      let objToSaveNotification = {
+        senderId: req.user.id,
+        recevierId: feed.userId,
+        message: "Commented on your feed",
+        type: 10,
+      }
+      await Models.notificationModel.create(objToSaveNotification)
       return commonHelper.success(
         res,
         Response.success_msg.commentOnFeed,
@@ -2595,12 +2717,20 @@ module.exports = {
         await Models.followingModel.destroy({
           where: { followerId, followingId },
         });
+
         return commonHelper.success(res, Response.success_msg.unfollowUser);
       } else {
         let response = await Models.followingModel.create({
           followerId,
           followingId,
         });
+        let objToSaveNotification = {
+          senderId: followerId,
+          recevierId: followingId,
+          message: `${req.user.firstName} ${req.user.lastName} Followed you`,
+          type: 11,
+        };        
+        await Models.notificationModel.create(objToSaveNotification)
         return commonHelper.success(
           res,
           Response.success_msg.followUser,
