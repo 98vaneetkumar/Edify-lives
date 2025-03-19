@@ -38,6 +38,7 @@ module.exports = {
         deviceType: Joi.number().valid(1, 2).optional(),
         profilePicture: Joi.string().optional(),
         valuesStatement: Joi.string().optional(),
+        aboutUs:Joi.string().optional(),
         webSiteNonProfile: Joi.string().optional(),
         chruchAttendAddress:Joi.string().optional()
       });
@@ -97,6 +98,7 @@ module.exports = {
         role: 4,
         countryCode: payload.countryCode,
         phoneNumber: payload.phoneNumber,
+        aboutMe:payload.aboutMe,
         password: hashedPassword,
         websiteNonProfit: payload.websiteNonProfit,
         nonProfitServe: payload.nonProfitServe,

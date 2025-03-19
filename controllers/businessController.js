@@ -36,6 +36,7 @@ module.exports = {
         deviceToken: Joi.string().optional(),
         deviceType: Joi.number().valid(1, 2).optional(),
         hartOfService: Joi.string().optional(),
+        aboutUs:Joi.string().optional(),
       });
   
       let payload = await helper.validationJoi(req.body, schema);
@@ -87,6 +88,7 @@ module.exports = {
         countryCode,
         phoneNumber: payload.phoneNumber,
         password: hashedPassword,
+        aboutUs:payload.aboutUs,
         firstName: payload.firstName || null,
         typeOfBusiness: payload.typeOfBusiness || null,
         businessAddress: payload.businessAddress || null,

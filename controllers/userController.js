@@ -111,6 +111,7 @@ module.exports = {
         postEmpSeekingSection: Joi.string().optional(),
         hartOfService: Joi.string().optional(),
         churchAccessCode: Joi.string().optional(),
+        aboutMe:Joi.string().optional(),
         deviceToken: Joi.string().optional(),
         deviceType: Joi.number().valid(1, 2).optional(),
       });
@@ -174,6 +175,7 @@ module.exports = {
         phoneNumber: payload.phoneNumber,
         password: hashedPassword,
         role: 1,
+        aboutMe:payload.aboutMe,
         maritalStatus: payload.maritalStatus || null,
         gender: payload.gender || null,
         profilePicture: profilePicturePath || null,
@@ -637,6 +639,7 @@ module.exports = {
           email: req.body.email,
           countryCode: req.body.countryCode,
           gender: req.body.gender,
+          aboutMe:req.body.aboutMe,
           phoneNumber: req.body.phoneNumber,
           maritalStatus: req.body.maritalStatus,
           location: req.body.location,

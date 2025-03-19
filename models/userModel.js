@@ -229,6 +229,11 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
       allowNull: true,
       defaultValue:0  // 0 means offline 1 for online
      },
+     aboutMe:{
+      type: DataTypes.TEXT,
+      allowNull: true,
+      defaultValue:''
+     }
     },
     {
       timestamps: true,
