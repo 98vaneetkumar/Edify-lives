@@ -1536,10 +1536,12 @@ module.exports = {
           where: {
             id: payload.videoId,
           },
+          raw: true
         });
+        console.log("=============", video)
         let objToSaveNotification = {
           senderId: req.user.id,
-          receiverId: video.userId,
+          recevierId: video.userId,
           message: "Liked your video",
           type: 5,
         }
@@ -1588,7 +1590,7 @@ module.exports = {
       });
       let objToSaveNotification = {
         senderId: req.user.id,
-        receiverId: video.userId,
+        recevierId: video.userId,
         message: "Commented on your video",
         type: 6,
       }
@@ -2067,6 +2069,7 @@ module.exports = {
   },
   likeUnlikeGroupPost: async (req, res) => {
     try {
+      console.log("===", req.body)
       let schema = Joi.object().keys({
         groupId: Joi.string().required(),
         groupPostId: Joi.string().required(),

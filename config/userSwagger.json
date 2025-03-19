@@ -1952,7 +1952,7 @@
           },
           {
             "name": "groupPostId",
-            "in": "query",
+            "in": "formData",
             "description": "Enter the groupPostId",
             "required": false,
             "type": "string",
