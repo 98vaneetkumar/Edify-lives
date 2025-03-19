@@ -2678,9 +2678,30 @@ module.exports = {
           ],
         },
         where: where,
-        limit,
-        offset,
+        // limit,
+        // offset,
         order: [["createdAt", "DESC"]],
+      });
+      let count = await Models.userModel.findAll({
+        attributes: {
+          include: [
+            // Check if the logged-in user follows this user  ifollow -- following
+            [
+              Sequelize.literal(
+                `(SELECT COUNT(id) FROM follow WHERE followerId = '${req.user.id}' AND followingId = users.id)`
+              ),
+              "iFollow",
+            ],
+            // Check if this user follows the logged-in user  heFollowsMe -- flower
+            [
+              Sequelize.literal(
+                `(SELECT COUNT(id) FROM follow WHERE followerId = users.id AND followingId = '${req.user.id}')`
+              ),
+              "heFollowsMe",
+            ],
+          ],
+        },
+        where: where,
       });
       //1 for following  2 for follwer none for all
      // 1 = following, 2 = follower, else both
@@ -2692,10 +2713,24 @@ module.exports = {
         followList=followList
       }
 
+      if(req.query.type==1){
+        count=count.filter((e) => e.dataValues.iFollow == 1);
+      }else if (req.query.type == 2){
+        count=count.filter((e) => e.dataValues.heFollowsMe == 1);
+
+      }else{
+        count=count
+      }
+
+      let resp={
+        count:count.length,
+        followList:followList,
+      }
+
       return commonHelper.success(
         res,
         Response.success_msg.getFollowList,
-        followList
+        resp
       );
     } catch (error) {
       console.log("error", error);
