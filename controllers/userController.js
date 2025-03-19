@@ -2713,7 +2713,7 @@ module.exports = {
         comment: payload.comment,
       };
       let response1 = await Models.dailyBreadCommentModel.create(objToSave);
-      let response = await Models.dailyBreadCommentModel.findAll({
+      let response = await Models.dailyBreadCommentModel.findOne({
         where: {
           id: response1.id,
         },
