@@ -48,7 +48,7 @@
             "description": "Enter the userId",
             "required": false,
             "type": "number",
-            "value": 
+            "value": ""
           }
         ],
         "responses": {}
