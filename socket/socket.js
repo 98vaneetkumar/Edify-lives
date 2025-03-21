@@ -6,7 +6,7 @@ Models.messageModel.belongsTo(Models.userModel, { foreignKey: 'senderId', as: 's
 Models.messageModel.belongsTo(Models.userModel, { foreignKey: 'receiverId', as: 'receiver' });
 Models.chatConstantModel.belongsTo(Models.userModel, { foreignKey: 'senderId', as: 'sender' });
 Models.chatConstantModel.belongsTo(Models.userModel, { foreignKey: 'receiverId', as: 'receiver' });
-Models.chatConstantModel.hasOne(Models.messageModel, { foreignKey: 'chatConstantId', as: 'lastMessageIds' });
+Models.chatConstantModel.belongsTo(Models.messageModel, { foreignKey: 'lastMessageId', as: 'lastMessageIds' });
 
 module.exports = function (io) {
   console.log("Inside the socket");
@@ -71,7 +71,7 @@ module.exports = function (io) {
                 "id",
                 "firstName",
                 "lastName",
-                "image",
+                "profilePicture",
                 "email",
               ],
             },
@@ -82,7 +82,7 @@ module.exports = function (io) {
                 "id",
                 "firstName",
                 "lastName",
-                "image",
+                "profilePicture",
                 "email",
               ],
             },
@@ -90,7 +90,7 @@ module.exports = function (io) {
         });
 
         if (findConstant) {
-          let c = await Models.messageModel.update(
+          await Models.messageModel.update(
             { readStatus: 1 }, // Values to update
             {
               where: {
@@ -100,7 +100,7 @@ module.exports = function (io) {
               },
             }
           );
-          console.log("this is update test", c);
+
           const chatList = await Models.messageModel.findAll({
             where: {
               [Op.and]: [
@@ -114,11 +114,10 @@ module.exports = function (io) {
                       receiverId: get_data.senderId,
                       senderId: get_data.receiverId,
                     },
-                    { chatConstantId: findConstant.id },
                   ],
                 },
                 {
-                  deletedId: { [Op.ne]: get_data.senderId },
+                  // deletedId: { [Op.ne]: get_data.senderId },
                 },
               ],
             },
@@ -126,51 +125,51 @@ module.exports = function (io) {
               {
                 model: Models.userModel,
                 as: "sender",
-                attributes: ["id","firstName", "lastName", "image"],
+                attributes: ["id","firstName", "lastName", "profilePicture"],
               },
               {
                 model: Models.userModel,
                 as: "receiver",
-                attributes: ["id","firstName", "lastName", "image"],
+                attributes: ["id","firstName", "lastName", "profilePicture"],
               },
             ],
           });
-          // Populate receiver's profile image;
-          const count = await Models.messageModel.count({
-            where: {
-              [Op.and]: [
-                {
-                  [Op.or]: [
-                    {
-                      [Op.and]: [
-                        { senderId: get_data.senderId },
-                        { receiverId: get_data.receiverId },
-                      ],
-                    },
-                    {
-                      [Op.and]: [
-                        { receiverId: get_data.senderId },
-                        { senderId: get_data.receiverId },
-                      ],
-                    },
-                    { chatConstantId: findConstant.id },
-                  ],
-                },
-                {
-                  [Op.and]: [
-                    { deletedId: { [Op.ne]: get_data.senderId } },
-                    { readStatus: 0 },
-                  ],
-                },
-              ],
-            },
-          });
+          // Populate receiver's profile profilePicture;
+          // const count = await Models.messageModel.count({
+          //   where: {
+          //     [Op.and]: [
+          //       {
+          //         [Op.or]: [
+          //           {
+          //             [Op.and]: [
+          //               { senderId: get_data.senderId },
+          //               { receiverId: get_data.receiverId },
+          //             ],
+          //           },
+          //           {
+          //             [Op.and]: [
+          //               { receiverId: get_data.senderId },
+          //               { senderId: get_data.receiverId },
+          //             ],
+          //           },
+          //           // { chatConstantId: findConstant.id },
+          //         ],
+          //       },
+          //       {
+          //         [Op.and]: [
+          //           { deletedId: { [Op.ne]: get_data.senderId } },
+          //           { readStatus: 0 },
+          //         ],
+          //       },
+          //     ],
+          //   },
+          // });
 
           const success_message = {
             success_message: "Users Chats",
             code: 200,
             senderDetail: findConstant,
-            unread_message_count: count,
+            // unread_message_count: count,
             getdata: chatList.map((message) => {
               const isMessageFromSender = message.senderId == get_data.senderId;
 
@@ -178,13 +177,13 @@ module.exports = function (io) {
                 id: message.id,
                 senderId: message.senderId,
                 receiverId: message.receiverId,
-                chatConstantId: message.chatConstantId,
+                // chatConstantId: message.chatConstantId,
                 message: message.message,
                 readStatus: message.readStatus,
                 messageType: message.messageType,
                 thumbnail: message.thumbnail,
                 deletedId: message.deletedId,
-                image: message.image,
+                profilePicture: message.profilePicture,
                 createdAt: message.createdAt,
                 updatedAt: message.updatedAt,
                 messageside: isMessageFromSender ? "sender" : "other",
@@ -229,7 +228,7 @@ module.exports = function (io) {
                 "id",
                 "firstName",
                 "lastName",
-                "image",
+                "profilePicture",
                 "email",
               ],
             },
@@ -240,7 +239,7 @@ module.exports = function (io) {
                 "id",
                 "firstName",
                 "lastName",
-                "image",
+                "profilePicture",
                 "email",
               ],
             },
@@ -279,9 +278,9 @@ module.exports = function (io) {
           );
         }
 
-        const allSocketUsers = await Models.socketUser.findAll({
+        const allSocketUsers = await Models.userModel.findAll({
           where: {
-            userId: {
+            id: {
               [Op.ne]: get_data.senderId, // Exclude the get_data.senderId
             },
           },
@@ -307,20 +306,25 @@ module.exports = function (io) {
         uniqueGetdata.forEach((constant) => {
           const senderId = constant.senderId;
           const receiverId = constant.receiverId;
+          console.log("senderId",senderId);
+          console.log("receiverId",receiverId);
+          console.log("unreadMessageCounts",unreadMessageCounts);
+          
+          
           // Determine the user ID for whom you want to count unread message
           const userId = senderId == get_data.senderId ? receiverId : senderId;
           // Check if the user ID is valid and exists in unreadMessageCounts
           if (userId !== null && unreadMessageCounts[userId] !== undefined) {
             // Add the unreadCount property to the object
-            constant.unreadCount = unreadMessageCounts[userId];
+            constant.dataValues.unreadCount = unreadMessageCounts[userId];
           } else {
             // Handle the case where unreadMessageCounts doesn't have data for this user
-            constant.unreadCount = 0;
+            constant.dataValues.unreadCount = 0;
           }
           if (userId !== null && onlineStatusMap[userId]) {
-            constant.onlineStatus = true; // User is online
+            constant.dataValues.onlineStatus = true; // User is online
           } else {
-            constant.onlineStatus = false; // User is offline
+            constant.dataValues.onlineStatus = false; // User is offline
           }
           if (
             constant.deletedId == get_data.senderId &&
@@ -517,7 +521,7 @@ module.exports = function (io) {
             receiverId: data.receiverId,
             message: data.message,
             messageType: data.messageType,
-            chatConstantId: checkChatConstant.id,
+            // chatConstantId: checkChatConstant.id,
             thumbnail:
               data.messageType == 2 || data.messageType == 3
                 ? data.thumbnail
@@ -604,6 +608,7 @@ module.exports = function (io) {
           const createChatConstant = await Models.chatConstantModel.create({
             senderId: data.senderId,
             receiverId: data.receiverId,
+            lastMessageId:null
           });
           // Create a new message and associate it with the chat constant
           const saveMsg = await Models.messageModel.create({
@@ -611,7 +616,7 @@ module.exports = function (io) {
             receiverId: data.receiverId,
             message: data.message,
             messageType: data.messageType,
-            chatConstantId: createChatConstant.id,
+            // chatConstantId: createChatConstant.id,
             thumbnail:
               data.messageType == 2 || data.messageType == 3
                 ? data.thumbnail
@@ -655,7 +660,7 @@ module.exports = function (io) {
             const getMsgs = getMsg;
             const getSocketId = await Models.userModel.findOne({
               where: {
-                userId: data.receiverId,
+                id: data.receiverId,
               },
             });
 

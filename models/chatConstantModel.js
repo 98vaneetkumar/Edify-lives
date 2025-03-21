@@ -25,7 +25,8 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         },
         lastMessageId:{
             type: Sequelize.UUID,
-            allowNull: false,
+            allowNull: true,
+            defaultValue:"",
             references: {
                 model: "message", // name of Target model
                 key: "id", // key in Target model that we"re referencing
