@@ -117,7 +117,10 @@ module.exports = function (io) {
                   ],
                 },
                 {
-                  // deletedId: { [Op.ne]: get_data.senderId },
+                  [Op.or]: [
+                    { deletedId: null }, // message not deleted by anyone
+                    { deletedId: { [Op.ne]: get_data.senderId } } // or deleted by someone else but not this sender
+                  ],
                 },
               ],
             },
@@ -125,45 +128,46 @@ module.exports = function (io) {
               {
                 model: Models.userModel,
                 as: "sender",
-                attributes: ["id","firstName", "lastName", "profilePicture"],
+                attributes: ["id", "firstName", "lastName", "profilePicture"],
               },
               {
                 model: Models.userModel,
                 as: "receiver",
-                attributes: ["id","firstName", "lastName", "profilePicture"],
+                attributes: ["id", "firstName", "lastName", "profilePicture"],
               },
             ],
+            order: [["createdAt", "ASC"]], // Optional: sort by message time
           });
+          
           // Populate receiver's profile profilePicture;
-          // const count = await Models.messageModel.count({
-          //   where: {
-          //     [Op.and]: [
-          //       {
-          //         [Op.or]: [
-          //           {
-          //             [Op.and]: [
-          //               { senderId: get_data.senderId },
-          //               { receiverId: get_data.receiverId },
-          //             ],
-          //           },
-          //           {
-          //             [Op.and]: [
-          //               { receiverId: get_data.senderId },
-          //               { senderId: get_data.receiverId },
-          //             ],
-          //           },
-          //           // { chatConstantId: findConstant.id },
-          //         ],
-          //       },
-          //       {
-          //         [Op.and]: [
-          //           { deletedId: { [Op.ne]: get_data.senderId } },
-          //           { readStatus: 0 },
-          //         ],
-          //       },
-          //     ],
-          //   },
-          // });
+          const count = await Models.messageModel.count({
+            where: {
+              [Op.and]: [
+                {
+                  [Op.or]: [
+                    {
+                      [Op.and]: [
+                        { senderId: get_data.senderId },
+                        { receiverId: get_data.receiverId },
+                      ],
+                    },
+                    {
+                      [Op.and]: [
+                        { receiverId: get_data.senderId },
+                        { senderId: get_data.receiverId },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  [Op.and]: [
+                    { deletedId: { [Op.ne]: get_data.senderId } },
+                    { readStatus: 0 },
+                  ],
+                },
+              ],
+            },
+          });
 
           const success_message = {
             success_message: "Users Chats",
@@ -305,12 +309,7 @@ module.exports = function (io) {
         // Add unread message counts to the constantList
         uniqueGetdata.forEach((constant) => {
           const senderId = constant.senderId;
-          const receiverId = constant.receiverId;
-          console.log("senderId",senderId);
-          console.log("receiverId",receiverId);
-          console.log("unreadMessageCounts",unreadMessageCounts);
-          
-          
+          const receiverId = constant.receiverId;          
           // Determine the user ID for whom you want to count unread message
           const userId = senderId == get_data.senderId ? receiverId : senderId;
           // Check if the user ID is valid and exists in unreadMessageCounts
@@ -326,11 +325,12 @@ module.exports = function (io) {
           } else {
             constant.dataValues.onlineStatus = false; // User is offline
           }
+          
           if (
-            constant.deletedId == get_data.senderId &&
-            constant.deletedLastMessageId != 0
+            constant.dataValues.deletedId == get_data.senderId &&
+            constant.dataValues.deletedLastMessageId != 0
           ) {
-            constant.lastMessageId = "";
+            constant.dataValues.lastMessageId = "";
             constant.lastMessageIds
               ? (constant.lastMessageIds.message = "")
               : "";
@@ -722,12 +722,14 @@ module.exports = function (io) {
               },
             ],
             deletedId: {
-              [Op.not]: 0, // Select message with a non-null deletedId
+              [Op.not]: null, // Select message with a non-null deletedId
             },
           },
         });
 
         if (getmessage && getmessage.length > 0) {
+          console.log("insideIf");
+          
           // Delete message permanently if they have a non-null deletedId
           await Models.messageModel.destroy({
             where: {
@@ -742,7 +744,7 @@ module.exports = function (io) {
                 },
               ],
               deletedId: {
-                [Op.not]: 0, // Select message with a non-null deletedId
+                [Op.not]: get_data.senderId, // Select message with a non-null deletedId
               },
             },
           });
@@ -764,6 +766,8 @@ module.exports = function (io) {
             }
           );
         } else {
+          console.log("insideElse");
+
           // Update or add new message with the current sender's deletedId
           await Models.messageModel.update(
             { deletedId: get_data.senderId },
@@ -780,7 +784,7 @@ module.exports = function (io) {
                   },
                 ],
                 deletedId: {
-                  [Op.eq]: 0, // Select message with a null deletedId
+                  [Op.eq]: null, // Select message with a non-null deletedId
                 },
               },
             }

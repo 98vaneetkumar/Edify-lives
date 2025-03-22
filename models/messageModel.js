@@ -36,6 +36,7 @@ module.exports = (Sequelize, sequelize, DataTypes) => {
         deletedId:{
             type: Sequelize.UUID,
             allowNull: true,
+            defaultValue:null,
             references: {
                 model: "users", // name of Target model
                 key: "id", // key in Target model that we"re referencing
