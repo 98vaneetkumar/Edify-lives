@@ -121,6 +121,8 @@ module.exports=function(){
 
     router.post("/paymentIntent",authentication,controller.userController.paymentIntent)
     router.post("/webHookFrontEnd",authentication,controller.userController.webHookFrontEnd)
+
+    router.post("/messageImageUpload",controller.userController.messageImageUpload);
     return router
 }
 

@@ -3526,5 +3526,20 @@ module.exports = {
       return commonHelper.error(res,Response.error_msg.internalServerError,error.message);
     }
   },
+  messageImageUpload:async(req,res)=>{
+    try {
+      let imagePath = null;
+      if (req.files?.image) {
+        imagePath = await commonHelper.fileUpload(
+          req.files.image,
+          "images"
+        );
+      }
+      return commonHelper.success(res,Response.success_msg.messageImageUpload,imagePath);
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res,Response.error_msg.internalServerError,error.message);
+    }
+  },
   
 };

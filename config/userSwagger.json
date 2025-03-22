@@ -2796,6 +2796,32 @@
         ],
         "responses": {}
       }
+    },
+    "/users/messageImageUpload": {
+      "post": {
+        "x-swagger-router-controller": "middleware-name1",
+        "operationId": "users-messageImageUpload-post",
+        "tags": ["Application Chat Image Upload"],
+        "description": "",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "image",
+            "in": "formData",
+            "description": "Profile picture to upload",
+            "required": false,
+            "type": "file",
+            "format": "binary",
+            "maxLength": 5242880,
+            "allowedMimeTypes": ["image/jpeg", "image/png"]
+          }
+        ],
+        "responses": {}
+      }
     }
   },
   "definitions": {}

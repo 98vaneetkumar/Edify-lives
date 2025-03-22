@@ -82,6 +82,7 @@ var success_msg = {
   getChristiansSeekingEmp: "Christians seeking employment fetched successfully",
   paymentIntent:"Payment intent create successfully",
   stripeWebHookFrontEnd:"Webhook hit successfully",
+  messageImageUpload:"Message Images upload successfully."
 };
 
 var failed_msg = {
