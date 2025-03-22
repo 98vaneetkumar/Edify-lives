@@ -653,6 +653,25 @@ module.exports = {
                 ),
                 "heFollowsMe",
               ],
+               // Determine follow status
+            [
+              Sequelize.literal(`
+              (CASE
+                WHEN (SELECT COUNT(id) FROM follow WHERE followerId = '${req.query.userId}' AND followingId = users.id) > 0 
+                AND (SELECT COUNT(id) FROM follow WHERE followerId = users.id AND followingId = '${req.query.userId}') > 0 
+                THEN 'Mutual'
+                
+                WHEN (SELECT COUNT(id) FROM follow WHERE followerId = '${req.query.userId}' AND followingId = users.id) > 0 
+                THEN 'I Follow'
+                
+                WHEN (SELECT COUNT(id) FROM follow WHERE followerId = users.id AND followingId = '${req.query.userId}') > 0 
+                THEN 'He Follows Me'
+                
+                ELSE 'None'
+              END)
+            `),
+              "followStatus",
+            ],
             [
               Sequelize.literal(
                 `(SELECT COUNT(id) FROM follow WHERE  followingId = '${req.query.userId}')`
@@ -1228,18 +1247,26 @@ module.exports = {
         let filters = Array.isArray(req.query.filter)
           ? req.query.filter
           : [req.query.filter];
-
+      
+        // Flatten and split all filters into individual words
+        filters = filters
+          .flatMap(filterString => filterString.split(' '))
+          .map(item => item.trim())
+          .filter(item => item.length > 0);
+          
         where = {
           [Op.or]: filters.map((filter) => ({
             [Op.or]: [
-              { growingUp: { [Op.like]: `%${filter.trim()}%` } },
-              { beforeJesus: { [Op.like]: `%${filter.trim()}%` } },
-              { findJesus: { [Op.like]: `%${filter.trim()}%` } },
-              { faithInJesus: { [Op.like]: `%${filter.trim()}%` } },
+              { growingUp: { [Op.like]: `%${filter}%` } },
+              { beforeJesus: { [Op.like]: `%${filter}%` } },
+              { findJesus: { [Op.like]: `%${filter}%` } },
+              { faithInJesus: { [Op.like]: `%${filter}%` } },
+              { testimoryType: { [Op.like]: `%${filter}%` } },
             ],
           })),
         };
       }
+      
 
       let response = await Models.testimonyPostModel.findAndCountAll({
         attributes: {
@@ -1752,6 +1779,11 @@ module.exports = {
         let filters = Array.isArray(req.query.filter)
           ? req.query.filter
           : [req.query.filter];
+               // Flatten and split all filters into individual words
+        filters = filters
+        .flatMap(filterString => filterString.split(' '))
+        .map(item => item.trim())
+        .filter(item => item.length > 0);
         where = {
           [Op.or]: filters.map((filter) => ({
             [Op.or]: [{ eventType: { [Op.like]: `%${filter.trim()}%` } }],
@@ -1872,6 +1904,11 @@ module.exports = {
         let filters = Array.isArray(req.query.filter)
           ? req.query.filter
           : [req.query.filter];
+               // Flatten and split all filters into individual words
+        filters = filters
+        .flatMap(filterString => filterString.split(' '))
+        .map(item => item.trim())
+        .filter(item => item.length > 0);
         where = {
           [Op.or]: filters.map((filter) => ({
             [Op.or]: [{ groupType: { [Op.like]: `%${filter.trim()}%` } }],
@@ -3370,6 +3407,11 @@ module.exports = {
         let filters = Array.isArray(req.query.filter)
           ? req.query.filter
           : [req.query.filter];
+               // Flatten and split all filters into individual words
+        filters = filters
+        .flatMap(filterString => filterString.split(' '))
+        .map(item => item.trim())
+        .filter(item => item.length > 0);
         where = {
           [Op.or]: filters.map((filter) => ({
             [Op.or]: [{ traitAndExperience: { [Op.like]: `%${filter.trim()}%` } }],
@@ -3420,6 +3462,11 @@ module.exports = {
         let filters = Array.isArray(req.query.filter)
           ? req.query.filter
           : [req.query.filter];
+               // Flatten and split all filters into individual words
+        filters = filters
+        .flatMap(filterString => filterString.split(' '))
+        .map(item => item.trim())
+        .filter(item => item.length > 0);
         where = {
           [Op.or]: filters.map((filter) => ({
             [Op.or]: [{ typeOfBusiness: { [Op.like]: `%${filter.trim()}%` } }],
