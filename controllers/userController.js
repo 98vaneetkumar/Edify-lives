@@ -638,6 +638,21 @@ module.exports = {
         where: { id: req.query.userId },
         attributes:{
           include:[
+              // Check if the logged-in user follows this user  ifollow -- following
+              [
+                Sequelize.literal(
+                  `(SELECT COUNT(id) FROM follow WHERE followerId = '${req.query.userId}' AND followingId = users.id)`
+                ),
+                "iFollow",
+              ],
+  
+              // Check if this user follows the logged-in user  heFollowsMe -- flower
+              [
+                Sequelize.literal(
+                  `(SELECT COUNT(id) FROM follow WHERE followerId = users.id AND followingId = '${req.query.userId}')`
+                ),
+                "heFollowsMe",
+              ],
             [
               Sequelize.literal(
                 `(SELECT COUNT(id) FROM follow WHERE  followingId = '${req.query.userId}')`
