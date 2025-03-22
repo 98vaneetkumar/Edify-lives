@@ -1257,13 +1257,13 @@ module.exports = {
         where = {
           [Op.or]: filters.map((filter) => ({
             [Op.or]: [
-              { growingUp: { [Op.like]: `%${filter}%` } },
-              { beforeJesus: { [Op.like]: `%${filter}%` } },
-              { findJesus: { [Op.like]: `%${filter}%` } },
-              { faithInJesus: { [Op.like]: `%${filter}%` } },
-              { testimoryType: { [Op.like]: `%${filter}%` } },
+              { growingUp: { [Op.like]: `%${filter.trim()}%` } },
+              { beforeJesus: { [Op.like]: `%${filter.trim()}%` } },
+              { findJesus: { [Op.like]: `%${filter.trim()}%` } },
+              { faithInJesus: { [Op.like]: `%${filter.trim()}%` } },
+              { testimoryType: { [Op.like]: `%${filter.trim()}%` } },
             ],
-          })),
+          })), 
         };
       }
       
