@@ -1739,7 +1739,7 @@ module.exports = {
           : [req.query.filter];
         where = {
           [Op.or]: filters.map((filter) => ({
-            [Op.or]: [{ eventType: { [Op.like]: `%${filter}%` } }],
+            [Op.or]: [{ eventType: { [Op.like]: `%${filter.trim()}%` } }],
           })),
         };
       }
