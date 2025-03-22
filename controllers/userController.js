@@ -1217,10 +1217,10 @@ module.exports = {
         where = {
           [Op.or]: filters.map((filter) => ({
             [Op.or]: [
-              { growingUp: { [Op.like]: `%${filter}%` } },
-              { beforeJesus: { [Op.like]: `%${filter}%` } },
-              { findJesus: { [Op.like]: `%${filter}%` } },
-              { faithInJesus: { [Op.like]: `%${filter}%` } },
+              { growingUp: { [Op.like]: `%${filter.trim()}%` } },
+              { beforeJesus: { [Op.like]: `%${filter.trim()}%` } },
+              { findJesus: { [Op.like]: `%${filter.trim()}%` } },
+              { faithInJesus: { [Op.like]: `%${filter.trim()}%` } },
             ],
           })),
         };
@@ -1859,7 +1859,7 @@ module.exports = {
           : [req.query.filter];
         where = {
           [Op.or]: filters.map((filter) => ({
-            [Op.or]: [{ groupType: { [Op.like]: `%${filter}%` } }],
+            [Op.or]: [{ groupType: { [Op.like]: `%${filter.trim()}%` } }],
           })),
         };
       }
@@ -3357,7 +3357,7 @@ module.exports = {
           : [req.query.filter];
         where = {
           [Op.or]: filters.map((filter) => ({
-            [Op.or]: [{ traitAndExperience: { [Op.like]: `%${filter}%` } }],
+            [Op.or]: [{ traitAndExperience: { [Op.like]: `%${filter.trim()}%` } }],
           })),
         };
       }
@@ -3407,7 +3407,7 @@ module.exports = {
           : [req.query.filter];
         where = {
           [Op.or]: filters.map((filter) => ({
-            [Op.or]: [{ typeOfBusiness: { [Op.like]: `%${filter}%` } }],
+            [Op.or]: [{ typeOfBusiness: { [Op.like]: `%${filter.trim()}%` } }],
           })),
         };
       }
