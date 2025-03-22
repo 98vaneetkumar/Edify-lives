@@ -3539,7 +3539,7 @@ module.exports = {
       });
       const ephemeralKey = await stripe.ephemeralKeys.create(
         { customer: userDetail.customerId },
-        { apiVersion: "2025-02-24" }
+        { apiVersion: "2022-11-15" }
       );
       const amount = parseFloat((req.body.amount * 100).toFixed(2));
 
