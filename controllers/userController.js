@@ -636,6 +636,23 @@ module.exports = {
     try {
       let response = await Models.userModel.findOne({
         where: { id: req.query.userId },
+        attributes:{
+          include:[
+            [
+              Sequelize.literal(
+                `(SELECT COUNT(id) FROM follow WHERE  followingId = '${req.query.userId}')`
+              ),
+              "followerCount ",
+            ],
+            [
+              Sequelize.literal(
+                `(SELECT COUNT(id) FROM follow WHERE followerId = '${req.query.userId}')`
+              ),
+              "followingCount",
+            ],
+
+          ]
+        },
         raw: true,
       });
       return commonHelper.success(
