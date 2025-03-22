@@ -1229,6 +1229,8 @@ module.exports = {
   },
   testimonyPostList: async (req, res) => {
     try {
+      console.log("req.query",req.query);
+      
       let limit = parseInt(req.query.limit, 10) || 10; // Default limit is 10
       let offset = (parseInt(req.query.skip, 10) || 0) * limit; // Corrected the radix to 10
 
