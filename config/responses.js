@@ -80,6 +80,8 @@ var success_msg = {
   grpPostList: "Group post list fetched successfully",
   getChristianCompanies: "Christian companies fetched successfully",
   getChristiansSeekingEmp: "Christians seeking employment fetched successfully",
+  paymentIntent:"Payment intent create successfully",
+  stripeWebHookFrontEnd:"Webhook hit successfully",
 };
 
 var failed_msg = {

@@ -119,6 +119,8 @@ module.exports=function(){
     router.get("/userTraitAndExperienceList",authentication, controller.userController.userTraitAndExperienceList)
     router.get("/userTypeOfBusinessList",authentication, controller.userController.userTypeOfBusinessList)
 
+    router.post("/paymentIntent",authentication,controller.userController.paymentIntent)
+    router.post("/webHookFrontEnd",authentication,controller.userController.webHookFrontEnd)
     return router
 }
 

@@ -11,7 +11,7 @@ const otpManager = require("node-twillo-otp-manager")(
   process.env.TWILIO_SERVICE_SID
 );
 const secretKey = process.env.SECRET_KEY;
-
+const stripe = require("stripe")(process.env.STRIPE_SK_KEY);
 const commonHelper = require("../helpers/commonHelper.js");
 const helper = require("../helpers/validation.js");
 const Models = require("../models/index");
@@ -166,9 +166,15 @@ module.exports = {
       if (!/^\+?\d+$/.test(phone)) {
         return commonHelper.failed(res, Response.error_msg.invalidPhoneNumber);
       }
+      const customer = await stripe.customers.create({
+        description: "Edify",
+        email: req.body.email,
+      });
+      let customerId = customer.id;
 
       // Object to save
       let objToSave = {
+        customerId:customerId,
         firstName: payload.firstName,
         lastName: payload.lastName,
         email: payload.email,
@@ -237,12 +243,20 @@ module.exports = {
       if (!isPasswordValid) {
         return commonHelper.failed(res, Response.failed_msg.invalidPassword);
       }
-
+      let customerId;
+      if(user&&user.customerId==null){
+        const customer = await stripe.customers.create({
+          description: "Edify",
+          email: req.body.email,
+        });
+         customerId = customer.id;
+      }
       await Models.userModel.update(
         {
           deviceToken: payload.deviceToken,
           deviceType: payload.deviceType,
           verifyStatus: 0,
+          customerId: user&&user.customerId?user.customerId:customerId
         },
         {
           where: {
@@ -3427,11 +3441,7 @@ module.exports = {
       let response = await Models.christianSeekingEmpModel.findAndCountAll({
         order: [["createdAt", "DESC"]],
       })
-      return commonHelper.success(
-        res,
-        Response.success_msg.getChristiansSeekingEmp,
-        response
-      );
+      return commonHelper.success(res,Response.success_msg.getChristiansSeekingEmp,response);
     } catch (error) {
       console.log("error", error);
       return commonHelper.error(
@@ -3439,6 +3449,81 @@ module.exports = {
         Response.error_msg.internalServerError,
         error.message
       );
+    }
+  },
+
+  paymentIntent:async(req,res)=>{
+    try {
+      let userDetail = await Models.userModel.findOne({
+        where: { id: req.user.id },
+        raw: true,
+      });
+      const ephemeralKey = await stripe.ephemeralKeys.create(
+        { customer: userDetail.customerId },
+        { apiVersion: "2025-02-24" }
+      );
+      const amount = parseFloat((req.body.amount * 100).toFixed(2));
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: amount,
+        currency: "USD",
+        customer: userDetail.customerId,
+        // In the latest version of the API, specifying the `automatic_payment_methods` parameter is optional because Stripe enables its functionality by default.
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      });
+      let result = {
+        paymentIntent: paymentIntent,
+        ephemeralKey: ephemeralKey.secret,
+        customer: userDetail.customerId,
+        publishableKey: process.env.STRIPE_PK_KEY,
+        transactionId:paymentIntent.id
+      };
+      let adminId=await Models.userModel.findOne({
+        where:{
+          role:0
+        },
+        raw:true
+      })
+      let objToSave={
+        senderId:req.user.id,
+        receiverId:adminId.id,
+        amount:req.body.amount,
+        transactionId:paymentIntent.id
+      }
+      await Models.transactionModel.create(objToSave)
+      return commonHelper.success(res,Response.success_msg.paymentIntent,result);
+
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res,Response.error_msg.internalServerError,error.message);
+    }
+  },
+  webHookFrontEnd:async(req,res)=>{
+    try {
+      const paymentIntent = await stripe.paymentIntents.retrieve(
+        req.body.transactionId
+      );
+       await Models.transactionModel.update(
+        {
+          payment_status:
+            paymentIntent.status === "succeeded"
+              ? "succeeded"
+              : paymentIntent.status,
+              
+        },
+        {
+          where: {
+            transactionId: req.body.transactionId,
+          },
+        }
+      );
+      return commonHelper.success(res,Response.success_msg.stripeWebHookFrontEnd);
+
+    } catch (error) {
+      console.log("error",error);
+      return commonHelper.error(res,Response.error_msg.internalServerError,error.message);
     }
   },
   

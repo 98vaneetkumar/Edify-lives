@@ -9,6 +9,7 @@ const otpManager = require("node-twillo-otp-manager")(
   process.env.TWILIO_SERVICE_SID
 );
 const secretKey = process.env.SECRET_KEY;
+const stripe = require("stripe")(process.env.STRIPE_SK_KEY);
 
 const commonHelper = require("../helpers/commonHelper.js");
 const helper = require("../helpers/validation.js");
@@ -80,9 +81,15 @@ module.exports = {
       if (!/^\+?\d+$/.test(phone)) {
         return commonHelper.failed(res, Response.error_msg.invalidPhoneNumber);
       }
+      const customer = await stripe.customers.create({
+        description: "Edify",
+        email: req.body.email,
+      });
+      let customerId = customer.id;
   
       // Object to save
       let objToSave = {
+        customerId:customerId,
         email: payload.email,
         role: 3,
         countryCode,

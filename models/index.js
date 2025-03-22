@@ -46,5 +46,6 @@ module.exports = {
   eventTypeModel: require("./eventTypeModel")(Sequelize, sequelize, Sequelize.DataTypes),
   christianOwnedCompaniesModel: require("./christianOwnedCompaniesModel")(Sequelize, sequelize, Sequelize.DataTypes),
   christianSeekingEmpModel: require("./christianSeekingEmpModel")(Sequelize, sequelize, Sequelize.DataTypes),
+  transactionModel:require("./transactionModel")(Sequelize, sequelize, Sequelize.DataTypes)
 };
  
